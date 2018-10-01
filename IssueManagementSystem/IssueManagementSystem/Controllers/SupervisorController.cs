@@ -13,5 +13,9 @@ namespace IssueManagementSystem.Controllers
         {
             return View();
         }
+        public ActionResult MachinBreakdown()
+        {
+            return View();
+        }
     }
 }
