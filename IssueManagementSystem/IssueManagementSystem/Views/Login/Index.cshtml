@@ -23,7 +23,7 @@
         <div class="controls">
             <input type="text" name="username" placeholder="Username" class="form-control" />
             <input type="text" name="username" placeholder="Password" class="form-control" />
-            <button type="button" class="btn btn-default btn-block btn-custom">Login</button>
+            <button type="button" class="btn btn-default btn-block btn-custom"  onclick="@("window.location.href='" + @Url.Action("selectIssue", "Supervisor") + "'");" >Login</button>
         </div><!-- /.controls -->
     </div><!-- /#login-box -->
 

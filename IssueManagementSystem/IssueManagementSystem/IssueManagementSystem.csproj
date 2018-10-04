@@ -160,11 +160,13 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\machine.jpg" />
     <Content Include="Content\images\profile.jpg" />
     <Content Include="Content\images\background.jpg" />
     <Content Include="Content\images\flinteclogo.png" />
     <Content Include="Content\login.css" />
     <Content Include="Content\SupervisorStyles\supervisorLayout.css" />
+    <Content Include="Content\SupervisorStyles\supervisorStyle.css" />
     <Content Include="Scripts\3.30bootstrap.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -188,6 +190,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\SupervisorScripts\machineBrakedown.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -201,6 +204,7 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Shared\supervisorsLayout.cshtml" />
     <Content Include="Views\Supervisor\selectIssue.cshtml" />
+    <Content Include="Views\Supervisor\MachinBreakdown.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
