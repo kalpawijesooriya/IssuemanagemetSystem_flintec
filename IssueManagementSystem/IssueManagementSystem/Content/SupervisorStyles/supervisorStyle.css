@@ -114,3 +114,6 @@ body{
   -webkit-transform:scale(0) !important;
   transform:scale(0) !important;
 }
+h2 {
+    text-align: center;
+}

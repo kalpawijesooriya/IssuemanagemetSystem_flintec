@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Settings";
+    Layout = "~/Views/Shared/BranchSideNav.cshtml";
+}
+<link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
+<link href="~/Content/adminstyles/Settings.css" rel="stylesheet" />
+<div id="page-wrapper" style="padding-top:6%">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Settings</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+
+
+    <select onclick="lineFunction()" class="dropbtn">
+        Select Line
+
+
+        <option>line 1</option>
+        <option>line 2</option>
+        <option>line 3</option>
+
+
+    </select>
+
+</div>
+<script src="~/Scripts/AdminScripts/jquery.js"></script>
+<script src="~/Scripts/AdminScripts/select2-min.js"></script>
+<script src="~/Scripts/AdminScripts/settings.js"></script>
+
