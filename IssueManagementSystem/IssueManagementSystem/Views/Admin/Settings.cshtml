@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = "Settings";
+    Layout = "~/Views/Shared/BranchSideNav.cshtml";
+}
+<link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
+<link href="~/Content/adminstyles/Settings.css" rel="stylesheet" />
+<div id="page-wrapper" class="container" style="padding-top:5%">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Settings</h1>
+        </div>
+        <h3 class="page-header textalline-center">Create New Line</h3>
+    </div>
+
+    <div class="row select-margins">
+        <div class="col">
+            <label for="selectdepartment"> Department</label>
+            <select style=" width:20%" class="js-example-placeholder-single js-states form-control" id="selectdepartment" name="selectdepartment">
+                <option></option>
+                <option>Assembly</option>
+                <option>Machine Shop</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row select-margins">
+        <div class="col">
+            <label for="selectline"> Line</label>
+            <select style=" width:20%" class="js-example-placeholder-single js-states form-control" id="selectline" name="selectline">
+                <option></option>
+                <option>line 1</option>
+                <option>line 2</option>
+                <option>line 3</option>
+            </select>
+        </div>
+    </div>
+
+    <button class='btn btn-success' data-target='#modal1' data-toggle='modal'>Show Modal</button>
+    <!-- start dro map in the draw new map model-->
+    <div class="container">
+        <div class="modal" data-keyboard="false" id="modal1" tabindex="-1" style="color:black; margin-top:10px;background-color: transparent;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header background">
+                        <h4 class="modal-title" style="margin:auto;">Draw New Map</h4>
+                        <button class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <!-- draw new map model body-->
+                    <div class="modal-body" style="display:flex;">
+
+                        <div style="display:inline-grid;grid-template-columns: 60%  10%">
+                            <div id="container">
+                                <canvas id="canvas1" style="border: 1px solid black;" width="400" height="600">
+                                    <br>
+                                    This text is displayed if your browser does not support HTML5 Canvas.<br>
+                                </canvas>
+                            </div>
+
+                            <div style="">
+                                <input id="w" placeholder="width" value="50">width><br>
+                                <input id="h" placeholder="height" value="50">height><br>
+                                <input id="color" class="jscolor" value="ab2567">
+                                <button id="addNewShapeButton">Add</button>
+                                <button id="deleteBox">Delete</button>
+                                <button id="saveMap">Save</button>
+                                <p>Clicked Element: <span id="elementID"></span></p>
+
+
+                                <!--   <button id="colorButton" >Color</button>  -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ends draw new map model-->
+
+
+</div>
+<script src="~/Scripts/AdminScripts/jscolar.js"></script>
+<script src="~/Scripts/AdminScripts/jquery.js"></script>
+<script src="~/Scripts/AdminScripts/select2-min.js"></script>
+<script src="~/Scripts/AdminScripts/settings.js"></script>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
