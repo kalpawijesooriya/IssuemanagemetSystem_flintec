@@ -169,6 +169,7 @@
     <Content Include="Content\adminstyles\bootstrap.min.css" />
     <Content Include="Scripts\AdminScripts\jquery.js" />
     <Content Include="Scripts\AdminScripts\jquery.min.js" />
+    <Content Include="Scripts\AdminScripts\jscolar.js" />
     <Content Include="Scripts\AdminScripts\morris-data.js" />
     <Content Include="Scripts\AdminScripts\morris.min.js" />
     <Content Include="Scripts\AdminScripts\raphael.js" />
