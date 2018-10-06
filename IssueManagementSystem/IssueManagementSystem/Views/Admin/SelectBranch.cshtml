@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "SelectBranch";
+    Layout = "~/Views/Shared/supervisorsLayout.cshtml";
+}
+<link href="~/Content/adminstyles/selectBranch.css" rel='stylesheet' />
+<div class="container margin-top" style="margin-top:2%">
+    <h2>Select Branch</h2>
+
+    <br>
+    <div class="row" style="margin-left:40%">
+        <div class="col-md-3">
+            <a href="#" class="btn btn-warning btn-lg btn-block btn-huge  center-block" onclick="@("window.location.href='" + @Url.Action("Katunayake", "Admin") + "'");">Katunayake</a>
+        </div>
+    </div>
+    <hr>
+    <div class="row" style="margin-left:40%;">
+        <div class="col-md-3">
+            <button id="singlebutton" name="singlebutton" class="btn btn-danger center-block btn-lg btn-block btn-huge">Koggala</button>
+        </div>
+    </div>
+</div>
+
+
+
+

@@ -147,6 +147,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="dbController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\SupervisorController.cs" />
     <Compile Include="Global.asax.cs">
@@ -156,10 +158,29 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\3.3.0bootstrap.min.css" />
+    <Content Include="Content\adminstyles\AdminBranchSideNav.css" />
+    <Content Include="Content\adminstyles\select2-min.css" />
+    <Content Include="Content\adminstyles\Settings.css" />
+    <Content Include="Scripts\AdminScripts\bootstrap.min.js" />
+    <Content Include="Content\adminstyles\metisMenu.css" />
+    <Content Include="Content\adminstyles\metisMenu.min.css" />
+    <Content Include="Content\adminstyles\morris.css" />
+    <Content Include="Content\adminstyles\sb-admin-2.css" />
+    <Content Include="Content\SupervisorStyles\metisMenu.min.css" />
+    <Content Include="Content\adminstyles\bootstrap.min.css" />
+    <Content Include="Scripts\AdminScripts\jquery.js" />
+    <Content Include="Scripts\AdminScripts\jquery.min.js" />
+    <Content Include="Scripts\AdminScripts\jscolar.js" />
+    <Content Include="Scripts\AdminScripts\morris-data.js" />
+    <Content Include="Scripts\AdminScripts\morris.min.js" />
+    <Content Include="Scripts\AdminScripts\raphael.js" />
+    <Content Include="Scripts\AdminScripts\raphael.min.js" />
+    <Content Include="Content\adminstyles\selectBranch.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\adminstyles\font-awesome.min.css" />
     <Content Include="Content\images\machine.jpg" />
     <Content Include="Content\images\profile.jpg" />
     <Content Include="Content\images\background.jpg" />
@@ -172,13 +193,15 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Scripts\jquery-1.11.1.min.js" />
+    <Content Include="Scripts\AdminScripts\metisMenu.js" />
+    <Content Include="Scripts\AdminScripts\metisMenu.min.js" />
+    <Content Include="Scripts\AdminScripts\sb-admin-2.js" />
+    <Content Include="Scripts\AdminScripts\select2-min.js" />
+    <Content Include="Scripts\AdminScripts\settings.js" />
     <Content Include="Scripts\login.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -205,6 +228,11 @@
     <Content Include="Views\Shared\supervisorsLayout.cshtml" />
     <Content Include="Views\Supervisor\selectIssue.cshtml" />
     <Content Include="Views\Supervisor\MachinBreakdown.cshtml" />
+    <Content Include="Views\Admin\SelectBranch.cshtml" />
+    <Content Include="Views\Admin\Katunayake.cshtml" />
+    <Content Include="Views\Shared\BranchSideNav.cshtml" />
+    <Content Include="Views\Admin\SelectSection.cshtml" />
+    <Content Include="Views\Admin\Settings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -217,10 +245,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
