@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IssueManagementSystem.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -23,7 +24,10 @@ namespace IssueManagementSystem.Controllers
         }
         public ActionResult Settings()
         {
+            issue_management_systemEntities db = new issue_management_systemEntities();
+            line line = db.line().Lines.SilgleOrdefault();
             return View();
         }
+        
     }
 }

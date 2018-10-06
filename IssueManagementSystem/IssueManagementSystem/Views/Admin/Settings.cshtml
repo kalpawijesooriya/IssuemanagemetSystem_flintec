@@ -50,31 +50,55 @@
                     <!-- draw new map model body-->
                     <div class="modal-body" style="display:flex;">
 
-                        <div style="display:inline-grid;grid-template-columns: 60%  10%">
-                            <div id="container">
-                                <canvas id="canvas1" style="border: 1px solid black;" width="400" height="600">
-                                    <br>
-                                    This text is displayed if your browser does not support HTML5 Canvas.<br>
-                                </canvas>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <canvas id="canvas1" style="border: 1px solid black;" width="400" height="600">
+                                        <br>
+                                        This text is displayed if your browser does not support HTML5 Canvas.<br>
+                                    </canvas>
+                                </div>
+                                <div class="col-lg-3">
+
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-lg-1">
+                                                <label for="w">Width</label>
+                                                <input id="w" anme="w" class="form-control" placeholder="width" value="50">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-1">
+                                                <label for="h">Height</label>
+                                                <input id="h" name="h" class="form-control" placeholder="height" value="50">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-1">
+                                                <label for="color">Color</label>
+                                                <input id="color" name="color" class="jscolor form-control " value="ab2567" style="">
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <button id="addNewShapeButton" class="btn btn-primary">Add</button>
+                                                <button id="deleteBox" class="btn btn-danger">Delete</button>
+                                            </div>
+                                        </div>
+                                        <p>Clicked Element: <span id="elementID"></span></p>
+                                        <!--   <button id="colorButton" >Color</button>  -->
+                                    </div>
+                                </div>
+
                             </div>
+                            
 
-                            <div style="">
-                                <input id="w" placeholder="width" value="50">width><br>
-                                <input id="h" placeholder="height" value="50">height><br>
-                                <input id="color" class="jscolor" value="ab2567">
-                                <button id="addNewShapeButton">Add</button>
-                                <button id="deleteBox">Delete</button>
-                                <button id="saveMap">Save</button>
-                                <p>Clicked Element: <span id="elementID"></span></p>
-
-
-                                <!--   <button id="colorButton" >Color</button>  -->
-                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" id="saveMap" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
