@@ -10,14 +10,14 @@ namespace IssueManagementSystem
     public class dbController
     {
 
-        SqlConnection cnn;
+        public SqlConnection cnn;
 
 
         public  dbController()
             {
                 string connetionString;
-                connetionString = @"Data Source=SERVER_NAME;Initial Catalog=DB_NAME;User ID=USER_NAME;Password=demol23";
-                  //Add correct connection string 
+                connetionString = @"Data Source=RASITHA;Initial Catalog=IMS_TEMP_DB;User ID=admin;Password=1234";
+                //Add correct connection string 
                 cnn = new SqlConnection(connetionString);
                 cnn.Open();
 
