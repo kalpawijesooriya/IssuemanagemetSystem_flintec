@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="issue_management_systemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="department">
+    <Key>
+      <PropertyRef Name="department_id" />
+    </Key>
+    <Property Name="department_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="department_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="department_lines" Relationship="Self.FK_department_lines_departments" FromRole="departments" ToRole="department_lines" />
+  </EntityType>
+  <EntityType Name="display">
+    <Key>
+      <PropertyRef Name="display_id" />
+    </Key>
+    <Property Name="display_id" Type="Int32" Nullable="false" />
+    <Property Name="raspberry_ip_address" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="line_line_id" Type="Int32" />
+    <NavigationProperty Name="line" Relationship="Self.FK_display_line" FromRole="display" ToRole="line" />
+  </EntityType>
+  <EntityType Name="employee">
+    <Key>
+      <PropertyRef Name="emp_id" />
+    </Key>
+    <Property Name="emp_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="emp_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="department_id" Type="Int32" Nullable="false" />
+    <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="issue_occurrence">
+    <Key>
+      <PropertyRef Name="issue_occurrence_id" />
+    </Key>
+    <Property Name="issue_occurrence_id" Type="Int32" Nullable="false" />
+    <Property Name="date_time" Type="DateTime" Precision="3" />
+    <Property Name="material_id" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="machine_machine_id" Type="Int32" />
+    <Property Name="line_line_id" Type="Int32" />
+    <Property Name="issue_issue_ID" Type="Int32" />
+    <Property Name="responsible_person_emp_id" Type="Int32" />
+    <NavigationProperty Name="issue" Relationship="Self.FK_issue_occurrence_issues" FromRole="issue_occurrence" ToRole="issues" />
+    <NavigationProperty Name="line" Relationship="Self.FK_issue_occurrence_line" FromRole="issue_occurrence" ToRole="line" />
+  </EntityType>
+  <EntityType Name="issue">
+    <Key>
+      <PropertyRef Name="issue_id" />
+    </Key>
+    <Property Name="issue_id" Type="Int32" Nullable="false" />
+    <Property Name="issue1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="issue_occurrence" Relationship="Self.FK_issue_occurrence_issues" FromRole="issues" ToRole="issue_occurrence" />
+  </EntityType>
+  <EntityType Name="line">
+    <Key>
+      <PropertyRef Name="line_id" />
+    </Key>
+    <Property Name="line_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="line_map" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="display_display_id" Type="Int32" />
+    <Property Name="department_id" Type="Int32" />
+    <NavigationProperty Name="displays" Relationship="Self.FK_display_line" FromRole="line" ToRole="display" />
+    <NavigationProperty Name="issue_occurrence" Relationship="Self.FK_issue_occurrence_line" FromRole="line" ToRole="issue_occurrence" />
+    <NavigationProperty Name="line_machine" Relationship="Self.FK_line_machine_line" FromRole="line" ToRole="line_machine" />
+    <NavigationProperty Name="line_supervisor" Relationship="Self.FK_line_supervisor_line" FromRole="line" ToRole="line_supervisor" />
+  </EntityType>
+  <EntityType Name="line_supervisor">
+    <Key>
+      <PropertyRef Name="logged_in_time" />
+      <PropertyRef Name="supervisor_emp_id" />
+    </Key>
+    <Property Name="logged_in_time" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="supervisor_emp_id" Type="Int32" Nullable="false" />
+    <Property Name="line_line_id" Type="Int32" />
+    <NavigationProperty Name="line" Relationship="Self.FK_line_supervisor_line" FromRole="line_supervisor" ToRole="line" />
+  </EntityType>
+  <EntityType Name="machine">
+    <Key>
+      <PropertyRef Name="machine_id" />
+    </Key>
+    <Property Name="machine_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="machine_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="department_lines">
+    <Key>
+      <PropertyRef Name="department_id" />
+      <PropertyRef Name="line_id" />
+      <PropertyRef Name="line_name" />
+    </Key>
+    <Property Name="department_id" Type="Int32" Nullable="false" />
+    <Property Name="line_id" Type="Int32" Nullable="false" />
+    <Property Name="line_name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="department" Relationship="Self.FK_department_lines_departments" FromRole="department_lines" ToRole="departments" />
+  </EntityType>
+  <EntityType Name="line_machine">
+    <Key>
+      <PropertyRef Name="machine_id" />
+      <PropertyRef Name="line_id" />
+    </Key>
+    <Property Name="machine_id" Type="Int32" Nullable="false" />
+    <Property Name="line_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="line" Relationship="Self.FK_line_machine_line" FromRole="line_machine" ToRole="line" />
+  </EntityType>
+  <Association Name="FK_department_lines_departments">
+    <End Role="departments" Type="Self.department" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="department_lines" Type="Self.department_lines" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="departments">
+        <PropertyRef Name="department_id" />
+      </Principal>
+      <Dependent Role="department_lines">
+        <PropertyRef Name="department_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_display_line">
+    <End Role="line" Type="Self.line" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="display" Type="Self.display" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="line">
+        <PropertyRef Name="line_id" />
+      </Principal>
+      <Dependent Role="display">
+        <PropertyRef Name="line_line_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_issue_occurrence_issues">
+    <End Role="issues" Type="Self.issue" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="issue_occurrence" Type="Self.issue_occurrence" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="issues">
+        <PropertyRef Name="issue_id" />
+      </Principal>
+      <Dependent Role="issue_occurrence">
+        <PropertyRef Name="issue_issue_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_issue_occurrence_line">
+    <End Role="line" Type="Self.line" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="issue_occurrence" Type="Self.issue_occurrence" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="line">
+        <PropertyRef Name="line_id" />
+      </Principal>
+      <Dependent Role="issue_occurrence">
+        <PropertyRef Name="line_line_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_line_machine_line">
+    <End Role="line" Type="Self.line" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="line_machine" Type="Self.line_machine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="line">
+        <PropertyRef Name="line_id" />
+      </Principal>
+      <Dependent Role="line_machine">
+        <PropertyRef Name="line_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_line_supervisor_line">
+    <End Role="line" Type="Self.line" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="line_supervisor" Type="Self.line_supervisor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="line">
+        <PropertyRef Name="line_id" />
+      </Principal>
+      <Dependent Role="line_supervisor">
+        <PropertyRef Name="line_line_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="issue_management_systemEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="departments" EntityType="Self.department" />
+    <EntitySet Name="displays" EntityType="Self.display" />
+    <EntitySet Name="employees" EntityType="Self.employee" />
+    <EntitySet Name="issue_occurrence" EntityType="Self.issue_occurrence" />
+    <EntitySet Name="issues" EntityType="Self.issue" />
+    <EntitySet Name="lines" EntityType="Self.line" />
+    <EntitySet Name="line_supervisor" EntityType="Self.line_supervisor" />
+    <EntitySet Name="machines" EntityType="Self.machine" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="department_lines" EntityType="Self.department_lines" />
+    <EntitySet Name="line_machine" EntityType="Self.line_machine" />
+    <AssociationSet Name="FK_department_lines_departments" Association="Self.FK_department_lines_departments">
+      <End Role="departments" EntitySet="departments" />
+      <End Role="department_lines" EntitySet="department_lines" />
+    </AssociationSet>
+    <AssociationSet Name="FK_display_line" Association="Self.FK_display_line">
+      <End Role="line" EntitySet="lines" />
+      <End Role="display" EntitySet="displays" />
+    </AssociationSet>
+    <AssociationSet Name="FK_issue_occurrence_issues" Association="Self.FK_issue_occurrence_issues">
+      <End Role="issues" EntitySet="issues" />
+      <End Role="issue_occurrence" EntitySet="issue_occurrence" />
+    </AssociationSet>
+    <AssociationSet Name="FK_issue_occurrence_line" Association="Self.FK_issue_occurrence_line">
+      <End Role="line" EntitySet="lines" />
+      <End Role="issue_occurrence" EntitySet="issue_occurrence" />
+    </AssociationSet>
+    <AssociationSet Name="FK_line_machine_line" Association="Self.FK_line_machine_line">
+      <End Role="line" EntitySet="lines" />
+      <End Role="line_machine" EntitySet="line_machine" />
+    </AssociationSet>
+    <AssociationSet Name="FK_line_supervisor_line" Association="Self.FK_line_supervisor_line">
+      <End Role="line" EntitySet="lines" />
+      <End Role="line_supervisor" EntitySet="line_supervisor" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

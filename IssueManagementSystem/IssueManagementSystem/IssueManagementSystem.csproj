@@ -45,10 +45,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -147,19 +155,99 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="dbController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\Connection.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\SupervisorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\department.cs">
+      <DependentUpon>ISMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\department_lines.cs">
+      <DependentUpon>ISMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\display.cs">
+      <DependentUpon>ISMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\employee.cs">
+      <DependentUpon>ISMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ISMModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ISMModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ISMModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ISMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ISMModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ISMModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\issue.cs">
+      <DependentUpon>ISMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\issue_occurrence.cs">
+      <DependentUpon>ISMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\line.cs">
+      <DependentUpon>ISMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\line_machine.cs">
+      <DependentUpon>ISMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\line_supervisor.cs">
+      <DependentUpon>ISMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\machine.cs">
+      <DependentUpon>ISMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>ISMModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\3.3.0bootstrap.min.css" />
+    <Content Include="Content\adminstyles\AdminBranchSideNav.css" />
+    <Content Include="Content\adminstyles\select2-min.css" />
+    <Content Include="Content\adminstyles\Settings.css" />
+    <Content Include="Models\ISMModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ISMModel.Context.cs</LastGenOutput>
+      <DependentUpon>ISMModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\ISMModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ISMModel.edmx</DependentUpon>
+      <LastGenOutput>ISMModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Scripts\AdminScripts\bootstrap.min.js" />
+    <Content Include="Content\adminstyles\metisMenu.css" />
+    <Content Include="Content\adminstyles\metisMenu.min.css" />
+    <Content Include="Content\adminstyles\morris.css" />
+    <Content Include="Content\adminstyles\sb-admin-2.css" />
+    <Content Include="Content\SupervisorStyles\metisMenu.min.css" />
+    <Content Include="Content\adminstyles\bootstrap.min.css" />
+    <Content Include="Scripts\AdminScripts\jquery.js" />
+    <Content Include="Scripts\AdminScripts\jquery.min.js" />
+    <Content Include="Scripts\AdminScripts\jscolar.js" />
+    <Content Include="Scripts\AdminScripts\morris-data.js" />
+    <Content Include="Scripts\AdminScripts\morris.min.js" />
+    <Content Include="Scripts\AdminScripts\raphael.js" />
+    <Content Include="Scripts\AdminScripts\raphael.min.js" />
+    <Content Include="Content\adminstyles\selectBranch.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\adminstyles\font-awesome.min.css" />
     <Content Include="Content\images\machine.jpg" />
     <Content Include="Content\images\profile.jpg" />
     <Content Include="Content\images\background.jpg" />
@@ -172,13 +260,22 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EntityDeploy Include="Models\ISMModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ISMModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ISMModel.edmx.diagram">
+      <DependentUpon>ISMModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Scripts\jquery-1.11.1.min.js" />
+    <Content Include="Scripts\AdminScripts\metisMenu.js" />
+    <Content Include="Scripts\AdminScripts\metisMenu.min.js" />
+    <Content Include="Scripts\AdminScripts\sb-admin-2.js" />
+    <Content Include="Scripts\AdminScripts\select2-min.js" />
+    <Content Include="Scripts\AdminScripts\settings.js" />
     <Content Include="Scripts\login.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -205,10 +302,15 @@
     <Content Include="Views\Shared\supervisorsLayout.cshtml" />
     <Content Include="Views\Supervisor\selectIssue.cshtml" />
     <Content Include="Views\Supervisor\MachinBreakdown.cshtml" />
+    <Content Include="Views\Admin\SelectBranch.cshtml" />
+    <Content Include="Views\Admin\Katunayake.cshtml" />
+    <Content Include="Views\Shared\BranchSideNav.cshtml" />
+    <Content Include="Views\Admin\SelectSection.cshtml" />
+    <Content Include="Views\Admin\Settings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Views\Connection\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -217,10 +319,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
