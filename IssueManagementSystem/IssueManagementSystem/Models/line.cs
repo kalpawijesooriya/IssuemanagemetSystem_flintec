@@ -25,9 +25,12 @@ namespace IssueManagementSystem.Models
     
         public int line_id { get; set; }
         public string name { get; set; }
-        public string line_map { get; set; }
-        public Nullable<int> display_display_id { get; set; }
         public Nullable<int> department_id { get; set; }
+        public string map { get; set; }
+        public Nullable<bool> red { get; set; }
+        public Nullable<bool> green { get; set; }
+        public Nullable<bool> yellow { get; set; }
+        public Nullable<bool> blue { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<display> displays { get; set; }

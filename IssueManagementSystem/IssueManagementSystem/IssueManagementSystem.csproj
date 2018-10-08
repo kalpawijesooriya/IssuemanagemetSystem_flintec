@@ -164,52 +164,55 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\department.cs">
-      <DependentUpon>ISMModel.tt</DependentUpon>
+      <DependentUpon>IsmModelKal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\department_lines.cs">
-      <DependentUpon>ISMModel.tt</DependentUpon>
+      <DependentUpon>IsmModelKal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\display.cs">
-      <DependentUpon>ISMModel.tt</DependentUpon>
+      <DependentUpon>IsmModelKal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\employee.cs">
-      <DependentUpon>ISMModel.tt</DependentUpon>
+      <DependentUpon>IsmModelKal.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ISMModel.Context.cs">
+    <Compile Include="Models\IsmModelKal.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ISMModel.Context.tt</DependentUpon>
+      <DependentUpon>IsmModelKal.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ISMModel.cs">
+    <Compile Include="Models\IsmModelKal.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ISMModel.tt</DependentUpon>
+      <DependentUpon>IsmModelKal.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ISMModel.Designer.cs">
+    <Compile Include="Models\IsmModelKal.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ISMModel.edmx</DependentUpon>
+      <DependentUpon>IsmModelKal.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\issue.cs">
-      <DependentUpon>ISMModel.tt</DependentUpon>
+      <DependentUpon>IsmModelKal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\issue_occurrence.cs">
-      <DependentUpon>ISMModel.tt</DependentUpon>
+      <DependentUpon>IsmModelKal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\line.cs">
-      <DependentUpon>ISMModel.tt</DependentUpon>
+      <DependentUpon>IsmModelKal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\line_machine.cs">
-      <DependentUpon>ISMModel.tt</DependentUpon>
+      <DependentUpon>IsmModelKal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\line_supervisor.cs">
-      <DependentUpon>ISMModel.tt</DependentUpon>
+      <DependentUpon>IsmModelKal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\machine.cs">
-      <DependentUpon>ISMModel.tt</DependentUpon>
+      <DependentUpon>IsmModelKal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>ISMModel.tt</DependentUpon>
+      <DependentUpon>IsmModelKal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>IsmModelKal.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -218,15 +221,15 @@
     <Content Include="Content\adminstyles\AdminBranchSideNav.css" />
     <Content Include="Content\adminstyles\select2-min.css" />
     <Content Include="Content\adminstyles\Settings.css" />
-    <Content Include="Models\ISMModel.Context.tt">
+    <Content Include="Models\IsmModelKal.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ISMModel.Context.cs</LastGenOutput>
-      <DependentUpon>ISMModel.edmx</DependentUpon>
+      <DependentUpon>IsmModelKal.edmx</DependentUpon>
+      <LastGenOutput>IsmModelKal.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\ISMModel.tt">
+    <Content Include="Models\IsmModelKal.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ISMModel.edmx</DependentUpon>
-      <LastGenOutput>ISMModel.cs</LastGenOutput>
+      <DependentUpon>IsmModelKal.edmx</DependentUpon>
+      <LastGenOutput>IsmModelKal.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\AdminScripts\bootstrap.min.js" />
     <Content Include="Content\adminstyles\metisMenu.css" />
@@ -263,12 +266,12 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Models\ISMModel.edmx">
+    <EntityDeploy Include="Models\IsmModelKal.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ISMModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>IsmModelKal.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\ISMModel.edmx.diagram">
-      <DependentUpon>ISMModel.edmx</DependentUpon>
+    <Content Include="Models\IsmModelKal.edmx.diagram">
+      <DependentUpon>IsmModelKal.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\AdminScripts\metisMenu.js" />

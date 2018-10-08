@@ -24,3 +24,4 @@ IssueManagementSystem/.vs/config/applicationhost.config
 *.opensdf
 
 IssueManagementSystem/.vs/IssueManagementSystem/v15/Server/sqlite3/db.lock
+IssueManagementSystem/IssueManagementSystem/bin/IssueManagementSystem.dll.config
