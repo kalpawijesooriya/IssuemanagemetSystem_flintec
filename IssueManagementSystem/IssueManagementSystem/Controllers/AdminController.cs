@@ -25,7 +25,7 @@ namespace IssueManagementSystem.Controllers
         public ActionResult Settings()
         {
             issue_management_systemEntities db = new issue_management_systemEntities();
-            line line = db.line().Lines.SilgleOrdefault();
+          //  line line = db.line().Lines.SilgleOrdefault();
             return View();
         }
         

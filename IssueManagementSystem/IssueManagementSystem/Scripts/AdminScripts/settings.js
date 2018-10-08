@@ -12,7 +12,7 @@
     // `data.children` contains the actual options that we are matching against
     var filteredChildren = [];
     $.each(data.children, function (idx, child) {
-        if (child.text.toUpperCase().indexOf(params.term.toUpperCase()) == 0) {
+        if (child.text.toUpperCase().indexOf(params.term.toUpperCase()) === 0) {
             filteredChildren.push(child);
         }
     });
@@ -189,7 +189,7 @@ function CanvasState(canvas) {
 
     document.getElementById("saveMap").addEventListener("click", function () {
         console.log(myState.shapes);
-        console.log(JSON.stringify(myState.shapes));//
+        console.log(JSON.stringify(myState.shapes));
         console.log(JSON.parse(JSON.stringify(myState.shapes)));
     });
 
@@ -262,7 +262,7 @@ CanvasState.prototype.draw = function () {
 
         // draw selection
         // right now this is just a stroke along the edge of the selected Shape
-        if (this.selection != null) {
+        if (this.selection !== null) {
             ctx.strokeStyle = this.selectionColor;
             ctx.lineWidth = this.selectionWidth;
             var mySel = this.selection;

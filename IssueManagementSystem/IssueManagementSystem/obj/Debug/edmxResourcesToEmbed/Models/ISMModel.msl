@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="issue_management_systemModelStoreContainer" CdmEntityContainer="issue_management_systemEntities">
+    <EntitySetMapping Name="departments">
+      <EntityTypeMapping TypeName="issue_management_systemModel.department">
+        <MappingFragment StoreEntitySet="departments">
+          <ScalarProperty Name="department_id" ColumnName="department_id" />
+          <ScalarProperty Name="department_name" ColumnName="department_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="displays">
+      <EntityTypeMapping TypeName="issue_management_systemModel.display">
+        <MappingFragment StoreEntitySet="display">
+          <ScalarProperty Name="display_id" ColumnName="display_id" />
+          <ScalarProperty Name="raspberry_ip_address" ColumnName="raspberry_ip_address" />
+          <ScalarProperty Name="line_line_id" ColumnName="line_line_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="employees">
+      <EntityTypeMapping TypeName="issue_management_systemModel.employee">
+        <MappingFragment StoreEntitySet="employee">
+          <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+          <ScalarProperty Name="emp_name" ColumnName="emp_name" />
+          <ScalarProperty Name="department_id" ColumnName="department_id" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="position" ColumnName="position" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="issue_occurrence">
+      <EntityTypeMapping TypeName="issue_management_systemModel.issue_occurrence">
+        <MappingFragment StoreEntitySet="issue_occurrence">
+          <ScalarProperty Name="issue_occurrence_id" ColumnName="issue_occurrence_id" />
+          <ScalarProperty Name="date_time" ColumnName="date_time" />
+          <ScalarProperty Name="material_id" ColumnName="material_id" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="machine_machine_id" ColumnName="machine_machine_id" />
+          <ScalarProperty Name="line_line_id" ColumnName="line_line_id" />
+          <ScalarProperty Name="issue_issue_ID" ColumnName="issue_issue_ID" />
+          <ScalarProperty Name="responsible_person_emp_id" ColumnName="responsible_person_emp_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="issues">
+      <EntityTypeMapping TypeName="issue_management_systemModel.issue">
+        <MappingFragment StoreEntitySet="issues">
+          <ScalarProperty Name="issue_id" ColumnName="issue_id" />
+          <ScalarProperty Name="issue1" ColumnName="issue" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="lines">
+      <EntityTypeMapping TypeName="issue_management_systemModel.line">
+        <MappingFragment StoreEntitySet="line">
+          <ScalarProperty Name="line_id" ColumnName="line_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="line_map" ColumnName="line_map" />
+          <ScalarProperty Name="display_display_id" ColumnName="display_display_id" />
+          <ScalarProperty Name="department_id" ColumnName="department_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="line_supervisor">
+      <EntityTypeMapping TypeName="issue_management_systemModel.line_supervisor">
+        <MappingFragment StoreEntitySet="line_supervisor">
+          <ScalarProperty Name="logged_in_time" ColumnName="logged_in_time" />
+          <ScalarProperty Name="supervisor_emp_id" ColumnName="supervisor_emp_id" />
+          <ScalarProperty Name="line_line_id" ColumnName="line_line_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="machines">
+      <EntityTypeMapping TypeName="issue_management_systemModel.machine">
+        <MappingFragment StoreEntitySet="machines">
+          <ScalarProperty Name="machine_id" ColumnName="machine_id" />
+          <ScalarProperty Name="machine_name" ColumnName="machine_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="issue_management_systemModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="department_lines">
+      <EntityTypeMapping TypeName="issue_management_systemModel.department_lines">
+        <MappingFragment StoreEntitySet="department_lines">
+          <ScalarProperty Name="department_id" ColumnName="department_id" />
+          <ScalarProperty Name="line_id" ColumnName="line_id" />
+          <ScalarProperty Name="line_name" ColumnName="line_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="line_machine">
+      <EntityTypeMapping TypeName="issue_management_systemModel.line_machine">
+        <MappingFragment StoreEntitySet="line_machine">
+          <ScalarProperty Name="machine_id" ColumnName="machine_id" />
+          <ScalarProperty Name="line_id" ColumnName="line_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
