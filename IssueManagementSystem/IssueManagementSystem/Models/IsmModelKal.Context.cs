@@ -13,18 +13,13 @@ namespace IssueManagementSystem.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class issue_management_systemEntities : DbContext
+    public partial class issue_management_systemEntities1 : DbContext
     {
-        public issue_management_systemEntities()
-            : base("name=issue_management_systemEntities")
+        public issue_management_systemEntities1()
+            : base("name=issue_management_systemEntities1")
         {
         }
-
-        internal object line()
-        {
-            throw new NotImplementedException();
-        }
-
+    
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -39,6 +34,7 @@ namespace IssueManagementSystem.Models
         public virtual DbSet<line_supervisor> line_supervisor { get; set; }
         public virtual DbSet<machine> machines { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<department_lines> department_lines { get; set; }
         public virtual DbSet<line_machine> line_machine { get; set; }
     }

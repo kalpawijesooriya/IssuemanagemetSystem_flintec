@@ -64,6 +64,7 @@ warning 6013: The table/view 'issue_management_system.dbo.issue_line_person' doe
           <Property Name="line_line_id" Type="int" />
           <Property Name="issue_issue_ID" Type="int" />
           <Property Name="responsible_person_emp_id" Type="int" />
+          <Property Name="issue_satus" Type="nchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="issues">
           <Key>
@@ -78,9 +79,12 @@ warning 6013: The table/view 'issue_management_system.dbo.issue_line_person' doe
           </Key>
           <Property Name="line_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" />
-          <Property Name="line_map" Type="nvarchar" MaxLength="500" />
-          <Property Name="display_display_id" Type="int" />
           <Property Name="department_id" Type="int" />
+          <Property Name="map" Type="nvarchar(max)" />
+          <Property Name="red" Type="bit" />
+          <Property Name="green" Type="bit" />
+          <Property Name="yellow" Type="bit" />
+          <Property Name="blue" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'issue_management_system.dbo.line_machine' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -117,6 +121,14 @@ warning 6002: The table/view 'issue_management_system.dbo.line_machine' does not
           <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="PassWord" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="emp_id" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_department_lines_departments">
           <End Role="departments" Type="Self.departments" Multiplicity="1">
@@ -218,6 +230,7 @@ error 6004: The table 'issue_management_system.dbo.issue_line_person' is referen
           <EntitySet Name="line_supervisor" EntityType="Self.line_supervisor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="machines" EntityType="Self.machines" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="department_lines" EntityType="Self.department_lines" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [department_lines].[department_id] AS [department_id], 
@@ -301,6 +314,7 @@ error 6004: The table 'issue_management_system.dbo.issue_line_person' is referen
           <Property Name="line_line_id" Type="Int32" />
           <Property Name="issue_issue_ID" Type="Int32" />
           <Property Name="responsible_person_emp_id" Type="Int32" />
+          <Property Name="issue_satus" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="issue" Relationship="Self.FK_issue_occurrence_issues" FromRole="issue_occurrence" ToRole="issues" />
           <NavigationProperty Name="line" Relationship="Self.FK_issue_occurrence_line" FromRole="issue_occurrence" ToRole="line" />
         </EntityType>
@@ -318,9 +332,12 @@ error 6004: The table 'issue_management_system.dbo.issue_line_person' is referen
           </Key>
           <Property Name="line_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="line_map" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="display_display_id" Type="Int32" />
           <Property Name="department_id" Type="Int32" />
+          <Property Name="map" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="red" Type="Boolean" />
+          <Property Name="green" Type="Boolean" />
+          <Property Name="yellow" Type="Boolean" />
+          <Property Name="blue" Type="Boolean" />
           <NavigationProperty Name="displays" Relationship="Self.FK_display_line" FromRole="line" ToRole="display" />
           <NavigationProperty Name="issue_occurrence" Relationship="Self.FK_issue_occurrence_line" FromRole="line" ToRole="issue_occurrence" />
           <NavigationProperty Name="line_machine" Relationship="Self.FK_line_machine_line" FromRole="line" ToRole="line_machine" />
@@ -352,6 +369,14 @@ error 6004: The table 'issue_management_system.dbo.issue_line_person' is referen
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="PassWord" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="emp_id" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="department_lines">
           <Key>
@@ -457,7 +482,7 @@ error 6004: The table 'issue_management_system.dbo.issue_line_person' is referen
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="issue_management_systemEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="issue_management_systemEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="departments" EntityType="Self.department" />
           <EntitySet Name="displays" EntityType="Self.display" />
           <EntitySet Name="employees" EntityType="Self.employee" />
@@ -467,6 +492,7 @@ error 6004: The table 'issue_management_system.dbo.issue_line_person' is referen
           <EntitySet Name="line_supervisor" EntityType="Self.line_supervisor" />
           <EntitySet Name="machines" EntityType="Self.machine" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="department_lines" EntityType="Self.department_lines" />
           <EntitySet Name="line_machine" EntityType="Self.line_machine" />
           <AssociationSet Name="FK_department_lines_departments" Association="Self.FK_department_lines_departments">
@@ -499,7 +525,7 @@ error 6004: The table 'issue_management_system.dbo.issue_line_person' is referen
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="issue_management_systemModelStoreContainer" CdmEntityContainer="issue_management_systemEntities">
+        <EntityContainerMapping StorageEntityContainer="issue_management_systemModelStoreContainer" CdmEntityContainer="issue_management_systemEntities1">
           <EntitySetMapping Name="departments">
             <EntityTypeMapping TypeName="issue_management_systemModel.department">
               <MappingFragment StoreEntitySet="departments">
@@ -540,6 +566,7 @@ error 6004: The table 'issue_management_system.dbo.issue_line_person' is referen
                 <ScalarProperty Name="line_line_id" ColumnName="line_line_id" />
                 <ScalarProperty Name="issue_issue_ID" ColumnName="issue_issue_ID" />
                 <ScalarProperty Name="responsible_person_emp_id" ColumnName="responsible_person_emp_id" />
+                <ScalarProperty Name="issue_satus" ColumnName="issue_satus" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -556,9 +583,12 @@ error 6004: The table 'issue_management_system.dbo.issue_line_person' is referen
               <MappingFragment StoreEntitySet="line">
                 <ScalarProperty Name="line_id" ColumnName="line_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="line_map" ColumnName="line_map" />
-                <ScalarProperty Name="display_display_id" ColumnName="display_display_id" />
                 <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="map" ColumnName="map" />
+                <ScalarProperty Name="red" ColumnName="red" />
+                <ScalarProperty Name="green" ColumnName="green" />
+                <ScalarProperty Name="yellow" ColumnName="yellow" />
+                <ScalarProperty Name="blue" ColumnName="blue" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -587,6 +617,15 @@ error 6004: The table 'issue_management_system.dbo.issue_line_person' is referen
                 <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="issue_management_systemModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
