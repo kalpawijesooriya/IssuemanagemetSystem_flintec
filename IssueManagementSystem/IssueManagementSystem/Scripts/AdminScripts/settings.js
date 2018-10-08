@@ -187,10 +187,24 @@ function CanvasState(canvas) {
         myState.addShape(new Shape(0, 0, w, h, "#" + color));
     });
 
-    document.getElementById("saveMap").addEventListener("click", function () {
+    document.getElementById("saveMap").addEventListener("click", function () {    
         console.log(myState.shapes);
         console.log(JSON.stringify(myState.shapes));
         console.log(JSON.parse(JSON.stringify(myState.shapes)));
+
+        $.ajax({
+            async: "false",
+            type: "POST",
+            dataType: 'JSON',
+            url: "/admin/addMap",
+            data: { mapJSON: JSON.stringify(myState.shapes)},
+            success: function (itemNameArray)
+            {
+                alert(JSON.stringify(myState.shapes) );
+            }
+
+        });
+
     });
 
     //myState.selection.x
