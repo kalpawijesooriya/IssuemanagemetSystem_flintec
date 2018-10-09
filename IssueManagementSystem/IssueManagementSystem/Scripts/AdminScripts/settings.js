@@ -188,16 +188,19 @@ function CanvasState(canvas) {
     });
 
     document.getElementById("saveMap").addEventListener("click", function () {    
-        console.log(myState.shapes);
-        console.log(JSON.stringify(myState.shapes));
-        console.log(JSON.parse(JSON.stringify(myState.shapes)));
+
+        var map = JSON.stringify(myState.shapes));
+        var department_id = document.getElementById("selectdepartment").value;
+        var line = document.getElementById("selectline").value;
+        var ipAddress = document.getElementById("raspberrypi_ip").value;
+        //console.log(JSON.parse(JSON.stringify(myState.shapes)));
 
         $.ajax({
             async: "false",
             type: "POST",
             dataType: 'JSON',
             url: "/admin/addMap",
-            data: { mapJSON: JSON.stringify(myState.shapes)},
+            data: { mapJSON: map, department_id: department_id, line:line, ipAddress:ipAddress},
             success: function (itemNameArray)
             {
                 alert(JSON.stringify(myState.shapes) );

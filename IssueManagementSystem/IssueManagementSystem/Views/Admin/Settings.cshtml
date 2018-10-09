@@ -3,6 +3,7 @@
     ViewBag.Title = "Settings";
     Layout = "~/Views/Shared/BranchSideNav.cshtml";
 }
+
 <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
 <link href="~/Content/adminstyles/Settings.css" rel="stylesheet" />
 <div id="page-wrapper" class="container" style="padding-top:5%">
@@ -104,16 +105,7 @@
                     </div>
                     <div class="modal-footer">
                         <Button type="button" id="saveMap" class="btn btn-primary">Save changes</Button>
-                        @{
-                         /*   void saveMap_OnClick(object sender, EventArgs e)
-                            {
-                                System.Diagnostics.Debug.WriteLine("ererer");
-                                dbController db = new dbController();
-                                String query = "UPDATE line SET map='ererer' WHERE line_id ='ag1'";
-                                db.runQuery_update_or_delete(query);
 
-                            }*/
-                        }
                         <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
                     </div>
                 </div>
