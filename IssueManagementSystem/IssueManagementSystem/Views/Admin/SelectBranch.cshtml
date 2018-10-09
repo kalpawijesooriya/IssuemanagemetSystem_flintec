@@ -2,11 +2,15 @@
 @{
     ViewBag.Title = "SelectBranch";
     Layout = "~/Views/Shared/supervisorsLayout.cshtml";
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
 }
 <link href="~/Content/adminstyles/selectBranch.css" rel='stylesheet' />
 <div class="container margin-top" style="margin-top:2%">
     <h2>Select Branch</h2>
-
+   
     <br>
     <div class="row" style="margin-left:40%">
         <div class="col-md-3">
