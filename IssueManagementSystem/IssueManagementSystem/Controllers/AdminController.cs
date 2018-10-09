@@ -24,12 +24,25 @@ namespace IssueManagementSystem.Controllers
         }
         public ActionResult Settings()
         {
-         
-          //  line line = db.line().Lines.SilgleOrdefault();
+
+            // issue_management_systemEntities db = new issue_management_systemEntities();
+            // line line = db.line().Lines.SilgleOrdefault();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult addMap(String mapJSON)
+        {
+
+            System.Diagnostics.Debug.WriteLine("map json string:"  +mapJSON);
+
+            dbController db = dbController.getInstance();
+            String query = "UPDATE line SET line.map='"+ mapJSON +"' where line_id = '1'";
+            db.runQuery_update_or_delete(query);
+
             return View();
         }
 
 
-        
     }
 }
