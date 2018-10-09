@@ -16,8 +16,11 @@ namespace IssueManagementSystem.Models
     public partial class User
     {   [Required(ErrorMessage ="Plese Enter Your UserName")]
         public string UserName { get; set; }
+
         [Required(ErrorMessage = "Plese Enter Your User PassWord")]
         public string PassWord { get; set; }
+
         public int emp_id { get; set; }
+       public String LoginErrorMessage { get; set; }
     }
 }

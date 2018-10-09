@@ -1,8 +1,12 @@
 ﻿
 @{
     ViewBag.Title = "Katunayake";
-   
+
     Layout = "~/Views/Shared/BranchSideNav.cshtml";
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
 }
 
 <div id="page-wrapper" style="padding-top:4%">
