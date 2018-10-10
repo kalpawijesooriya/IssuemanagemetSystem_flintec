@@ -1,78 +1,7 @@
 ﻿
-@{
-    ViewBag.Title = "MachinBreakdown";
-    Layout = "~/Views/Shared/supervisorsLayout.cshtml";
-}
-@model IssueManagementSystem.Models.line_map
-
-<link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
-
-<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-<div class="container margin ">
-    <h2>Machine Breakdown</h2>
-    <hr />
-    <h3>Select the machine</h3>
-
-
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="container-liquid">
-                <div style="display:inline-grid;grid-template-columns: 90%  50%">
-                    <div id="container">
-                        <canvas id="canvas1" style="border: 1px solid black;" width="400" height="600">
-                            <br>
-                            This text is displayed if your browser does not support HTML5 Canvas.<br>
-                        </canvas>
-                    </div>
-
-                    <div style="">
-
-                        <button id="loadMap">Load</button>
-                        <p>selected element :<span id="elementID"></span></p>
-
-                        <!--   <button id="colorButton" >Color</button>  -->
-                    </div>
-                </div>
-
-
-
-            </div>
-        </div>
-        <div class="col-sm-6 machine">
-            <div class="form-group machine">
-                <label for="exampleFormControlTextarea1">Machine</label>
-                <input type="text" class="form-control" rows="3" disabled>
-            </div>
-
-            <div class="form-group machine">
-                <label for="exampleFormControlTextarea1">Extra Information</label>
-                <textarea class="form-control" rows="3" required></textarea>
-            </div>
-            <div class="container-fluid row ">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12 button-holder">
-                            <div class="ajax-button">
-                                <div class="fa fa-check done"></div>
-                                <div class="fa fa-close failed"></div>
-                                <input id="submit" class="submit" type="button" value="Submit" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="~/Scripts/jquery-3.3.1.slim.min.js"></script>
-    <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
-    
-</div>
-<script>
-
-    
 var jsonText = '@ViewBag.map';
-    //this JSOn will be taken from database
-    Console.log(@ViewBag.map);
+//this JSOn will be taken from database
+alert(String(@ViewBag.map));
 
 function Shape(x, y, w, h, fill) {
     this.x = x || 0;
@@ -260,9 +189,3 @@ function createObjectArray(jsonText) {
 }
 
 window.onload = init;
-
-</script>
-
-
-
-

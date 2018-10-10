@@ -25,6 +25,5 @@ namespace IssueManagementSystem.Models
         public string issue_satus { get; set; }
     
         public virtual issue issue { get; set; }
-        public virtual line line { get; set; }
     }
 }

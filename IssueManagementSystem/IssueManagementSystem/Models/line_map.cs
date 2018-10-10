@@ -12,9 +12,14 @@ namespace IssueManagementSystem.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class line_machine
+    public partial class line_map
     {
-        public int machine_id { get; set; }
+        public int line_map_id { get; set; }
         public int line_id { get; set; }
+        public string map { get; set; }
+        public Nullable<bool> red { get; set; }
+        public Nullable<bool> green { get; set; }
+        public Nullable<bool> yellow { get; set; }
+        public Nullable<bool> blue { get; set; }
     }
 }

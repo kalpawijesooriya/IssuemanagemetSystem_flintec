@@ -2,35 +2,37 @@
 @{
     ViewBag.Title = "selectIssue";
     Layout = "~/Views/Shared/supervisorsLayout.cshtml";
-    if(Session["userID"]==null)
+    if (Session["userID"] == null)
     {
         Response.Redirect("~/Login/Index");
     }
+
 }
-  <body>
-      <div class="container" style="margin-top:5%">
-          <br>
-         
-          <div class="row">
-              <div class="col-md-3">
-                  <button type="button" class="btn btn-danger btn-lg btn-block btn-huge margin btn_bottom_margin " id="btn_MB" onclick="@("window.location.href='" + @Url.Action("MachinBreakdown", "Supervisor") + "'");">Machine Breakdown</button>
-              </div>
-              <div class="col-md-3">
-                  <button type="button" class="btn btn-success btn-lg btn-block btn-huge btn_bottom_margin " id="btn_TI">Technical Issue</button>
-              </div>
-          </div>
 
-          <div class="row">
-              <div class="col-md-3">
-                  <button type="button" class="btn btn-warning btn-lg btn-block btn-huge margin btn_bottom_margin " id="btn_MD">Material Delay</button>
-              </div>
-              <div class="col-md-3">
-                  <button type="button" class="btn btn-primary btn-lg btn-block btn-huge btn_bottom_margin " id="btn_IT">Software/IT Issue</button>
-              </div>
-          </div>
-      </div>
+<body>
+    <div class="container" style="margin-top:5%">
+        <br>
 
-  </body>
+        <div class="row">
+            <div class="col-md-3">
+                <button type="button" class="btn btn-danger btn-lg btn-block btn-huge margin btn_bottom_margin " id="btn_MB" onclick="@("window.location.href='" + @Url.Action("MachinBreakdown", "Supervisor") + "'");">Machine Breakdown</button>
+            </div>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-success btn-lg btn-block btn-huge btn_bottom_margin " id="btn_TI">Technical Issue</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <button type="button" class="btn btn-warning btn-lg btn-block btn-huge margin btn_bottom_margin " id="btn_MD">Material Delay</button>
+            </div>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-primary btn-lg btn-block btn-huge btn_bottom_margin " id="btn_IT">Software/IT Issue</button>
+            </div>
+        </div>
+    </div>
+
+</body>
 <link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
 
 

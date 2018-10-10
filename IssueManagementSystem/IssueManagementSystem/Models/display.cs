@@ -15,9 +15,7 @@ namespace IssueManagementSystem.Models
     public partial class display
     {
         public int display_id { get; set; }
+        public Nullable<int> line_id { get; set; }
         public string raspberry_ip_address { get; set; }
-        public Nullable<int> line_line_id { get; set; }
-    
-        public virtual line line { get; set; }
     }
 }

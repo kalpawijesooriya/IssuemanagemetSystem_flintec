@@ -14,31 +14,10 @@ namespace IssueManagementSystem.Models
     
     public partial class line
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public line()
-        {
-            this.displays = new HashSet<display>();
-            this.issue_occurrence = new HashSet<issue_occurrence>();
-            this.line_machine = new HashSet<line_machine>();
-            this.line_supervisor = new HashSet<line_supervisor>();
-        }
-    
+        public int department_id { get; set; }
         public int line_id { get; set; }
-        public string name { get; set; }
-        public Nullable<int> department_id { get; set; }
-        public string map { get; set; }
-        public Nullable<bool> red { get; set; }
-        public Nullable<bool> green { get; set; }
-        public Nullable<bool> yellow { get; set; }
-        public Nullable<bool> blue { get; set; }
+        public string line_name { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<display> displays { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<issue_occurrence> issue_occurrence { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<line_machine> line_machine { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<line_supervisor> line_supervisor { get; set; }
+        public virtual department department { get; set; }
     }
 }

@@ -13,10 +13,10 @@ namespace IssueManagementSystem.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class issue_management_systemEntities1 : DbContext
+    public partial class issue_management_systemEntities : DbContext
     {
-        public issue_management_systemEntities1()
-            : base("name=issue_management_systemEntities1")
+        public issue_management_systemEntities()
+            : base("name=issue_management_systemEntities")
         {
         }
     
@@ -30,12 +30,13 @@ namespace IssueManagementSystem.Models
         public virtual DbSet<employee> employees { get; set; }
         public virtual DbSet<issue_occurrence> issue_occurrence { get; set; }
         public virtual DbSet<issue> issues { get; set; }
-        public virtual DbSet<line> lines { get; set; }
+        public virtual DbSet<line_map> line_map { get; set; }
         public virtual DbSet<line_supervisor> line_supervisor { get; set; }
         public virtual DbSet<machine> machines { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<department_lines> department_lines { get; set; }
         public virtual DbSet<line_machine> line_machine { get; set; }
+        public virtual DbSet<line> lines { get; set; }
+        public virtual DbSet<material> materials { get; set; }
     }
 }

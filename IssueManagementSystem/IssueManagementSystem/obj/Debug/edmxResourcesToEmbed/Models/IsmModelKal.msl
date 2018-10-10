@@ -12,9 +12,9 @@
     <EntitySetMapping Name="displays">
       <EntityTypeMapping TypeName="issue_management_systemModel.display">
         <MappingFragment StoreEntitySet="display">
+          <ScalarProperty Name="line_id" ColumnName="line_id" />
           <ScalarProperty Name="display_id" ColumnName="display_id" />
           <ScalarProperty Name="raspberry_ip_address" ColumnName="raspberry_ip_address" />
-          <ScalarProperty Name="line_line_id" ColumnName="line_line_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -53,34 +53,12 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="lines">
-      <EntityTypeMapping TypeName="issue_management_systemModel.line">
-        <MappingFragment StoreEntitySet="line">
-          <ScalarProperty Name="line_id" ColumnName="line_id" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="department_id" ColumnName="department_id" />
-          <ScalarProperty Name="map" ColumnName="map" />
-          <ScalarProperty Name="red" ColumnName="red" />
-          <ScalarProperty Name="green" ColumnName="green" />
-          <ScalarProperty Name="yellow" ColumnName="yellow" />
-          <ScalarProperty Name="blue" ColumnName="blue" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="line_supervisor">
       <EntityTypeMapping TypeName="issue_management_systemModel.line_supervisor">
         <MappingFragment StoreEntitySet="line_supervisor">
           <ScalarProperty Name="logged_in_time" ColumnName="logged_in_time" />
           <ScalarProperty Name="supervisor_emp_id" ColumnName="supervisor_emp_id" />
           <ScalarProperty Name="line_line_id" ColumnName="line_line_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="machines">
-      <EntityTypeMapping TypeName="issue_management_systemModel.machine">
-        <MappingFragment StoreEntitySet="machines">
-          <ScalarProperty Name="machine_id" ColumnName="machine_id" />
-          <ScalarProperty Name="machine_name" ColumnName="machine_name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -104,20 +82,41 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="department_lines">
-      <EntityTypeMapping TypeName="issue_management_systemModel.department_lines">
-        <MappingFragment StoreEntitySet="department_lines">
-          <ScalarProperty Name="department_id" ColumnName="department_id" />
+    <EntitySetMapping Name="line_machine">
+      <EntityTypeMapping TypeName="IsTypeOf(issue_management_systemModel.line_machine)">
+        <MappingFragment StoreEntitySet="line_machine">
           <ScalarProperty Name="line_id" ColumnName="line_id" />
-          <ScalarProperty Name="line_name" ColumnName="line_name" />
+          <ScalarProperty Name="machine_id" ColumnName="machine_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="line_machine">
-      <EntityTypeMapping TypeName="issue_management_systemModel.line_machine">
-        <MappingFragment StoreEntitySet="line_machine">
-          <ScalarProperty Name="machine_id" ColumnName="machine_id" />
+    <EntitySetMapping Name="line_map">
+      <EntityTypeMapping TypeName="issue_management_systemModel.line_map">
+        <MappingFragment StoreEntitySet="line_map">
+          <ScalarProperty Name="blue" ColumnName="blue" />
+          <ScalarProperty Name="yellow" ColumnName="yellow" />
+          <ScalarProperty Name="green" ColumnName="green" />
+          <ScalarProperty Name="red" ColumnName="red" />
+          <ScalarProperty Name="map" ColumnName="map" />
           <ScalarProperty Name="line_id" ColumnName="line_id" />
+          <ScalarProperty Name="line_map_id" ColumnName="line_map_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="line1">
+      <EntityTypeMapping TypeName="issue_management_systemModel.line1">
+        <MappingFragment StoreEntitySet="lines">
+          <ScalarProperty Name="line_name" ColumnName="line_name" />
+          <ScalarProperty Name="line_id" ColumnName="line_id" />
+          <ScalarProperty Name="department_id" ColumnName="department_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="materials">
+      <EntityTypeMapping TypeName="issue_management_systemModel.material">
+        <MappingFragment StoreEntitySet="materials">
+          <ScalarProperty Name="material_id" ColumnName="material_id" />
+          <ScalarProperty Name="material1" ColumnName="material" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

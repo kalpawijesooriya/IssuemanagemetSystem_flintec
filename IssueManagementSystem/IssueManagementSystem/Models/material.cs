@@ -12,12 +12,9 @@ namespace IssueManagementSystem.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class department_lines
+    public partial class material
     {
-        public int department_id { get; set; }
-        public int line_id { get; set; }
-        public string line_name { get; set; }
-    
-        public virtual department department { get; set; }
+        public string material1 { get; set; }
+        public string material_id { get; set; }
     }
 }

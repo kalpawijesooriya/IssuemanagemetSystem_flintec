@@ -17,13 +17,13 @@ namespace IssueManagementSystem.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public department()
         {
-            this.department_lines = new HashSet<department_lines>();
+            this.lines = new HashSet<line>();
         }
     
         public int department_id { get; set; }
         public string department_name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<department_lines> department_lines { get; set; }
+        public virtual ICollection<line> lines { get; set; }
     }
 }

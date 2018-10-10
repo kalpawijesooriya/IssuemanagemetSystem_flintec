@@ -17,7 +17,5 @@ namespace IssueManagementSystem.Models
         public System.DateTime logged_in_time { get; set; }
         public int supervisor_emp_id { get; set; }
         public Nullable<int> line_line_id { get; set; }
-    
-        public virtual line line { get; set; }
     }
 }
