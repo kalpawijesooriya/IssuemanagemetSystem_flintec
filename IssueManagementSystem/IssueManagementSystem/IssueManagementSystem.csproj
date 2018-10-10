@@ -196,6 +196,9 @@
     <Compile Include="Models\line.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\line_computer.cs">
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\line_machine.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
@@ -209,6 +212,12 @@
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\material.cs">
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagrams_Result.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagram.cs">
@@ -316,6 +325,7 @@
     <Content Include="Views\Shared\BranchSideNav.cshtml" />
     <Content Include="Views\Admin\SelectSection.cshtml" />
     <Content Include="Views\Admin\Settings.cshtml" />
+    <Content Include="Views\Supervisor\MaterialDelay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
