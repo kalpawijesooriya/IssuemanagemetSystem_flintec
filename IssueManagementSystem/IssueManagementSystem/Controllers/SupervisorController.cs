@@ -20,9 +20,9 @@ namespace IssueManagementSystem.Controllers
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
 
-                var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == 1).FirstOrDefault();
+                var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == 3).FirstOrDefault();
                 var mapInfo = db.line_map.Where(y => y.line_id == lineInfo.line_line_id).FirstOrDefault();
-                ViewBag.map = mapInfo.map;
+                ViewData["map"] = mapInfo.map.ToString().Trim();
                 return View();
                
             }
