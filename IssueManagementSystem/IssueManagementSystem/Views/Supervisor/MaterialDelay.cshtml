@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "MaterialDelay";
+    Layout = "~/Views/Supervisor/supervisorsLayout.cshtml";
+}
+
+<link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
+
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+<div class="materials">
+    <button onclick="myFunction()" class="dropbtn">Materials</button>
+    <div id="myDropdown" class="dropdown-content">
+        <a href="#">Material 1</a>
+        <a href="#">Material 2</a>
+        <a href="#">Material 3</a>
+    </div>
+</div>
+
+<script>
+
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropbtn')) {
+
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>
+
+<div class="container-fluid row ">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 button-holder">
+                <div class="ajax-button">
+                    <div class="fa fa-check done"></div>
+                    <div class="fa fa-close failed"></div>
+                    <input id="submit" class="submit" type="button" value="Submit" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

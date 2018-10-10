@@ -316,6 +316,7 @@
     <Content Include="Views\Shared\BranchSideNav.cshtml" />
     <Content Include="Views\Admin\SelectSection.cshtml" />
     <Content Include="Views\Admin\Settings.cshtml" />
+    <Content Include="Views\Supervisor\MaterialDelay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
