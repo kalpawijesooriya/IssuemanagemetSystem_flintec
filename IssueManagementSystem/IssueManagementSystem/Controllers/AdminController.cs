@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
+using System.Net.Mime;
 using System.Web;
 using System.Web.Mvc;
 
@@ -65,8 +67,8 @@ namespace IssueManagementSystem.Controllers
             String query4 = "INSERT INTO display(line_id,raspberry_ip_address) VALUES('"+added_lineID+"','"+ipAddress+"') ";
             db.runQuery_update_or_delete(query4);
 
-            Response.Write("data to be returned");
-            return View();
+
+            return Content("query executed", MediaTypeNames.Text.Plain);
         }
 
     }
