@@ -71,5 +71,13 @@ namespace IssueManagementSystem.Controllers
             return Content("query executed", MediaTypeNames.Text.Plain);
         }
 
+
+        [HttpPost]
+        public ActionResult retrieveData() {
+
+
+            return View();
+            // return Json(persons, JsonRequestBehavior.AllowGet);
+        }
     }
 }

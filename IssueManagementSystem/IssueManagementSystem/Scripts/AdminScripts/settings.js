@@ -33,11 +33,15 @@
 }
 $('#selectdepartment').select2({
     placeholder: "Select Department.....",
-    allowClear: true
+    allowClear: false
 });
 $('#selectline').select2({
     placeholder: "Select Line.....",
-    allowClear: true
+    allowClear: false
+});
+$('#machineSelectBox').select2({
+    placeholder: "Select Machine.....",
+    allowClear: false
 });
 
 
