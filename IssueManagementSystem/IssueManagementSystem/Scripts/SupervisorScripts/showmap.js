@@ -1,7 +1,6 @@
 ﻿
-var jsonText = '@ViewBag.map';
-//this JSOn will be taken from database
-alert(String(@ViewBag.map));
+var jsonText = document.getElementById("map").textContent;
+
 
 function Shape(x, y, w, h, fill) {
     this.x = x || 0;
@@ -70,7 +69,7 @@ function CanvasState(canvas) {
                 var mySel = shapes[i];
                 myState.selection = mySel;
                 myState.valid = false;
-                document.getElementById("elementID").innerHTML = i;
+                document.getElementById("machine").value = i;
                 return;
             }
         }
@@ -97,9 +96,7 @@ function CanvasState(canvas) {
     }, true);
 
 
-    document.getElementById("loadMap").addEventListener("click", function () {
-
-    });
+    
 
 
     this.selectionColor = '#f4dc42';

@@ -8,7 +8,7 @@
         <EntityTypeShape EntityType="issue_management_systemModel.department" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="issue_management_systemModel.display" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="issue_management_systemModel.employee" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="issue_management_systemModel.issue_occurrence" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="issue_management_systemModel.issue_occurrence" Width="2" PointX="3.125" PointY="4.125" IsExpanded="true" />
         <EntityTypeShape EntityType="issue_management_systemModel.issue" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="issue_management_systemModel.line_map" Width="1.5" PointX="5.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="issue_management_systemModel.line_supervisor" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
@@ -20,6 +20,7 @@
         <EntityTypeShape EntityType="issue_management_systemModel.material" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="issue_management_systemModel.FK_department_lines_departments" ManuallyRouted="false" />
         <AssociationConnector Association="issue_management_systemModel.FK_issue_occurrence_issues" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="issue_management_systemModel.line_computer" Width="1.5" PointX="8.375" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
