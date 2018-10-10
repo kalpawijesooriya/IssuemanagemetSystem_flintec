@@ -3,33 +3,26 @@
     ViewBag.Title = "MachinBreakdown";
     Layout = "~/Views/Shared/supervisorsLayout.cshtml";
 }
+
 <link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
 
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <div class="container margin ">
     <h2>Machine Breakdown</h2>
-    <hr />
+    <hr/>
     <h3>Select the machine</h3>
-
 
     <div class="row">
         <div class="col-sm-6">
             <div class="container-liquid">
                 <div class="row">
-                    <div class="col-xs-6 col-sm-6 col-md-3 text-center leftspan" id="Machine_1"><h6>Machine 1</h6><img style="height:50px;width:50px;margin:5px" src="~/Content/images/machine.jpg"></div>
-                    <div class="col-xs-6 col-sm-6 col-md-3 text-center leftspan" id="Machine_2"><h6>Machine 2</h6> <img style="height:50px;width:50px;margin:5px" src="~/Content/images/machine.jpg"></div>
-                    <div class="col-xs-12"></div>
-                    <div class="col-xs-6 col-sm-6 col-md-3 text-center leftspan" id="Machine_3"><h6>Machine 3</h6> <img style="height:50px;width:50px;margin:5px" src="~/Content/images/machine.jpg"></div>
-                    <div class="col-xs-6 col-sm-6 col-md-3 text-center leftspan" id="Machine_4"><h6>Machine 4</h6> <img style="height:50px;width:50px;margin:5px" src="~/Content/images/machine.jpg"></div>
-                    <div class="col-xs-12"></div>
-                    <div class="col-xs-6 col-sm-6 col-md-3 text-center leftspan" id="Machine_5"><h6>Machine 5</h6><img style="height:50px;width:50px;margin:5px" src="~/Content/images/machine.jpg"></div>
-                    <div class="col-xs-6 col-sm-6 col-md-3 text-center leftspan" id="Machine_6"><h6>Machine 6</h6> <img style="height:50px;width:50px;margin:5px" src="~/Content/images/machine.jpg"></div>
-                    <div class="col-xs-12"></div>
-                    <div class="col-xs-6 col-sm-6 col-md-3 text-center leftspan" id="Machine_7"><h6>Machine 7</h6> <img style="height:50px;width:50px;margin:5px" src="~/Content/images/machine.jpg"></div>
-                    <div class="col-xs-6 col-sm-6 col-md-3 text-center leftspan" id="six"><h6>Machine 8</h6> <img style="height:50px;width:50px;margin:5px" src="~/Content/images/machine.jpg"></div>
-                    <div class="col-xs-12"></div>
-                    <div class="col-xs-6 col-sm-6 col-md-3 text-center leftspan" id="Machine_9"><h6>Machine 9</h6> <img style="height:50px;width:50px;margin:5px" src="~/Content/images/machine.jpg"></div>
-                    <div class="col-xs-6 col-sm-6 col-md-3 text-center leftspan" id="Machine_10"><h6>Machine 10</h6> <img style="height:50px;width:50px;margin:5px" src="~/Content/images/machine.jpg"></div>
+
+                    <canvas id="canvas1" style="border: 1px solid black;" width="400" height="600">
+                        <br>
+                        This text is displayed if your browser does not support HTML5 Canvas.<br>
+                    </canvas>
+ 
+                    <p>selected element :<span id="elementID"></span></p>
                 </div>
 
             </div>

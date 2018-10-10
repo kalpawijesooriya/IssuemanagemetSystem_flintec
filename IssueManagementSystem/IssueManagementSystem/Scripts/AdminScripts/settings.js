@@ -40,6 +40,9 @@ $('#selectline').select2({
     allowClear: true
 });
 
+
+
+
 //Draw a map js
 // By Simon Sarris
 // www.simonsarris.com
@@ -189,10 +192,12 @@ function CanvasState(canvas) {
 
     document.getElementById("saveMap").addEventListener("click", function () {    
 
-        var map = JSON.stringify(myState.shapes));
-        var department_id = document.getElementById("selectdepartment").value;
-        var line = document.getElementById("selectline").value;
+        var map = JSON.stringify(myState.shapes);
+        var department =(document.getElementById("selectdepartment").value).toString();
+        var line = (document.getElementById("selectline").value).toString();
         var ipAddress = document.getElementById("raspberrypi_ip").value;
+
+        console.log(ipAddress);
         //console.log(JSON.parse(JSON.stringify(myState.shapes)));
 
         $.ajax({
@@ -200,10 +205,10 @@ function CanvasState(canvas) {
             type: "POST",
             dataType: 'JSON',
             url: "/admin/addMap",
-            data: { mapJSON: map, department_id: department_id, line:line, ipAddress:ipAddress},
+            data: { mapJSON: map, department:department, line:line, ipAddress:ipAddress},
             success: function (itemNameArray)
             {
-                alert(JSON.stringify(myState.shapes) );
+                alert(itemNameArray);
             }
 
         });

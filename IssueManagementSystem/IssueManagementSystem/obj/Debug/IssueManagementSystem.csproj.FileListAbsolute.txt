@@ -1,4 +1,3 @@
-
 F:\UNIVERSITY\YEAR 3\SEM 2\PROJECT\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\ApplicationInsights.config
 F:\UNIVERSITY\YEAR 3\SEM 2\PROJECT\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\IssueManagementSystem.dll.config
 F:\UNIVERSITY\YEAR 3\SEM 2\PROJECT\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\IssueManagementSystem.dll
@@ -185,12 +184,6 @@ C:\Users\rasitha_g\Documents\GitHub\IssuemanagemetSystem_flintec\IssueManagement
 C:\Users\rasitha_g\Documents\GitHub\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.csproj.CopyComplete
 C:\Users\rasitha_g\Documents\GitHub\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.dll
 C:\Users\rasitha_g\Documents\GitHub\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.pdb
-
-F:\UNIVERSITY\YEAR 3\SEM 2\PROJECT\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\EntityFramework.dll
-F:\UNIVERSITY\YEAR 3\SEM 2\PROJECT\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\EntityFramework.SqlServer.dll
-F:\UNIVERSITY\YEAR 3\SEM 2\PROJECT\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\EntityFramework.xml
-F:\UNIVERSITY\YEAR 3\SEM 2\PROJECT\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\EntityFramework.SqlServer.xml
-
 G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\ApplicationInsights.config
 G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\IssueManagementSystem.dll.config
 G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\IssueManagementSystem.dll

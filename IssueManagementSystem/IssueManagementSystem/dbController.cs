@@ -58,56 +58,35 @@ namespace IssueManagementSystem
 
             SqlDataReader reader = cmd.ExecuteReader();
 
-              /*
-                    if (reader.HasRows)
-                    {
-                            while (reader.Read())
-                            {
-                                Console.WriteLine("{0}\t{1}", reader.GetInt32(0),
-                                reader.GetString(1));
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("No rows found.");
-                        }
-                        reader.Close();
-                    }
-             */
-
             return reader;
         }
 
 
-        public SqlDataReader get_1st_column_1st_row_data(String query)
+        public String get_1st_column_1st_row_data(String query)
         {
             SqlCommand cmd = new SqlCommand();
 
             cmd.CommandText = query;
             cmd.CommandType = CommandType.Text;
             cmd.Connection = cnn;
-
+            String data = null;
             SqlDataReader reader = cmd.ExecuteReader();
 
-            /*
-                  if (reader.HasRows)
-                  {
-                          while (reader.Read())
-                          {
-                              Console.WriteLine("{0}\t{1}", reader.GetInt32(0),
-                              reader.GetString(1));
-                          }
+            
+                      if (reader.HasRows)
+                      {
+                            while (reader.Read())
+                            {
+                                data = reader.GetValue(0).ToString();
+                            }
                       }
                       else
                       {
                           Console.WriteLine("No rows found.");
                       }
                       reader.Close();
-                  }
-           */
-
-            return reader;
+                 
+            return data;
         }
     }
-}
 }
