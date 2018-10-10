@@ -361,7 +361,7 @@ error 6004: The table 'issue_management_system.dbo.issue_line_person' is referen
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="issue_management_systemEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="issue_management_systemEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="departments" EntityType="Self.department" />
           <EntitySet Name="displays" EntityType="Self.display" />
           <EntitySet Name="employees" EntityType="Self.employee" />
@@ -389,7 +389,7 @@ error 6004: The table 'issue_management_system.dbo.issue_line_person' is referen
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="issue_management_systemModelStoreContainer" CdmEntityContainer="issue_management_systemEntities">
+        <EntityContainerMapping StorageEntityContainer="issue_management_systemModelStoreContainer" CdmEntityContainer="issue_management_systemEntities1">
           <EntitySetMapping Name="departments">
             <EntityTypeMapping TypeName="issue_management_systemModel.department">
               <MappingFragment StoreEntitySet="departments">

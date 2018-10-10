@@ -13,10 +13,10 @@ namespace IssueManagementSystem.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class issue_management_systemEntities : DbContext
+    public partial class issue_management_systemEntities1 : DbContext
     {
-        public issue_management_systemEntities()
-            : base("name=issue_management_systemEntities")
+        public issue_management_systemEntities1()
+            : base("name=issue_management_systemEntities1")
         {
         }
     

@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\Models\issue_management_system.edmx'. 
+﻿// T4 code generation is enabled for model 'G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\Models\IssueManagementSystem.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

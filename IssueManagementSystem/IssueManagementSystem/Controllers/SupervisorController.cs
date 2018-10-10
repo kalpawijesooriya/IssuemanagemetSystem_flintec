@@ -17,7 +17,7 @@ namespace IssueManagementSystem.Controllers
         }
         public ActionResult MachinBreakdown()
         {
-            using (issue_management_systemEntities db = new issue_management_systemEntities())
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
 
                 var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == 1).FirstOrDefault();

@@ -18,7 +18,7 @@ namespace IssueManagementSystem.Controllers
         [HttpPost]
         public ActionResult Autherize(IssueManagementSystem.Models.User userModel)
         {
-            using (issue_management_systemEntities db =new issue_management_systemEntities())
+            using (issue_management_systemEntities1 db =new issue_management_systemEntities1())
             {
                 var userDetails =db.Users.Where(x => x.UserName == userModel.UserName && x.PassWord== userModel.PassWord).FirstOrDefault();
                 if (userDetails == null)
