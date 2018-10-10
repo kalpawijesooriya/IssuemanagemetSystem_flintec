@@ -44,7 +44,7 @@ namespace IssueManagementSystem.Controllers
                 {
                     issueModel.issue_satus = "";
                     issueModel.issue_issue_ID = 1;
-                    issueModel.responsible_person_emp_id = 5;//get specific employe 
+                    issueModel.responsible_person_emp_id = 5;//get specific employee 
                     issueModel.date_time = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss",
                                        System.Globalization.CultureInfo.InvariantCulture);;
                     db.issue_occurrence.Add(issueModel);

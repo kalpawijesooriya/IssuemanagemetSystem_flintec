@@ -87,7 +87,7 @@ function CanvasState(canvas) {
                 var mySel = shapes[i];
                 myState.selection = mySel;
                 myState.valid = false;
-                document.getElementById("elementID").innerHTML = i;
+                document.getElementById("machine").value = i;
                 return;
             }
         }

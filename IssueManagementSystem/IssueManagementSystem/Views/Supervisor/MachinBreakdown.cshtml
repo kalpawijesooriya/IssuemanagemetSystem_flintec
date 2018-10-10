@@ -94,6 +94,7 @@ function Shape(x, y, w, h, fill) {
     this.w = w || 1;
     this.h = h || 1;
     this.fill = fill || '#AAAAAA';
+    this.machine = machine || 'NULL*';
 }
 
 
@@ -276,8 +277,11 @@ function createObjectArray(jsonText) {
 window.onload = init;
 
 </script>
-    <script src="~/Scripts/SupervisorScripts/showmap.js"></script>
-</div>
+
+<script src="~/Scripts/SupervisorScripts/showmap.js">
+
+</script>
+
 
 
 

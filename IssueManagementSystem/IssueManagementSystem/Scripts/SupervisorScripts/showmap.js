@@ -2,12 +2,13 @@
 var jsonText = document.getElementById("map").textContent;
 
 
-function Shape(x, y, w, h, fill) {
+function Shape(x, y, w, h, fill, machine) {
     this.x = x || 0;
     this.y = y || 0;
     this.w = w || 1;
     this.h = h || 1;
     this.fill = fill || '#AAAAAA';
+    this.machine = machine || 'NULL*';
 }
 
 
@@ -69,7 +70,7 @@ function CanvasState(canvas) {
                 var mySel = shapes[i];
                 myState.selection = mySel;
                 myState.valid = false;
-                document.getElementById("machine").value = i;
+                document.getElementById("machine").value = mySel.machine;
                 return;
             }
         }
@@ -178,7 +179,7 @@ function createObjectArray(jsonText) {
 
 
     for (var i = 0; i < arr.length; i++) {
-        newArray.push(new Shape(arr[i].x, arr[i].y, arr[i].w, arr[i].h, arr[i].fill));
+        newArray.push(new Shape(arr[i].x, arr[i].y, arr[i].w, arr[i].h, arr[i].fill, arr[i].machine ));
     }
     console.log(newArray);
 
