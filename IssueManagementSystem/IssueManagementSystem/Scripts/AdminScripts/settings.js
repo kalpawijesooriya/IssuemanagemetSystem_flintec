@@ -55,15 +55,16 @@ $('#selectline').select2({
 
 // Constructor for Shape objects to hold data for all drawn objects.
 // For now they will just be defined as rectangles.
-function Shape(x, y, w, h, fill) {
+function Shape(x, y, w, h, fill,machine) {
     // This is a very simple and unsafe constructor. All we're doing is checking if the values exist.
     // "x || 0" just means "if there is a value for x, use that. Otherwise use 0."
     // But we aren't checking anything else! We could put "Lalala" for the value of x 
     this.x = x || 0;
     this.y = y || 0;
-    this.w = w || 1;
-    this.h = h || 1;
+    this.w = w || 10;
+    this.h = h || 10;
     this.fill = fill || '#AAAAAA';
+    this.machine = machine || 'NULL*';
 }
 
 // Draws this shape to a given context
@@ -145,7 +146,7 @@ function CanvasState(canvas) {
                 myState.dragging = true;
                 myState.selection = mySel;
                 myState.valid = false;
-                document.getElementById("elementID").innerHTML = i;
+                document.getElementById("elementID").innerHTML = shapes[i].machine;
                 return;
             }
         }
@@ -169,7 +170,6 @@ function CanvasState(canvas) {
         }
     }, true);
 
-
     canvas.addEventListener('mouseup', function (e) {
         myState.dragging = false;
     }, true);
@@ -180,38 +180,49 @@ function CanvasState(canvas) {
         var w = Number(document.getElementById("w").value);
         var h = Number(document.getElementById("h").value);
         var color = document.getElementById("color").value;
-        myState.addShape(new Shape(mouse.x - 10, mouse.y - 10, w, h, "#" + color));
+        var machine_id = document.getElementById("machineSelectBox").value;
+
+        myState.addShape(new Shape(mouse.x - 10, mouse.y - 10, w, h, "#" + color,machine_id));
     }, true);
 
     document.getElementById("addNewShapeButton").addEventListener("click", function () {
         var w = Number(document.getElementById("w").value);
         var h = Number(document.getElementById("h").value);
         var color = document.getElementById("color").value;
-        myState.addShape(new Shape(0, 0, w, h, "#" + color));
+        var machine_id = document.getElementById("machineSelectBox").value;
+        myState.addShape(new Shape(0, 0, w, h, "#" + color, machine_id));
+
     });
 
     document.getElementById("saveMap").addEventListener("click", function () {    
 
-        var map = JSON.stringify(myState.shapes);
-        var department =(document.getElementById("selectdepartment").value).toString();
-        var line = (document.getElementById("selectline").value).toString();
-        var ipAddress = document.getElementById("raspberrypi_ip").value;
+        if (myState.shapes.length!= 0) {
+            var map = JSON.stringify(myState.shapes);
+            var department = (document.getElementById("selectdepartment").value).toString();
+            var line = (document.getElementById("selectline").value).toString();
+            var ipAddress = document.getElementById("raspberrypi_ip").value;
 
-        console.log(ipAddress);
-        //console.log(JSON.parse(JSON.stringify(myState.shapes)));
+            console.log(map);
+            //console.log(JSON.parse(JSON.stringify(myState.shapes)));
 
-        $.ajax({
-            async: "false",
-            type: "POST",
-            dataType: 'JSON',
-            url: "/admin/addMap",
-            data: { mapJSON: map, department:department, line:line, ipAddress:ipAddress},
-            success: function (itemNameArray)
-            {
-                alert(itemNameArray);
-            }
+            $.ajax({
+                type: "POST",
+                dataType: 'text',
+                url: "/admin/addMap",
+                data: { mapJSON: map, department: department, line: line, ipAddress: ipAddress },
+                success: function (itemNameArray) {
+                    alert("Done");
+                },
+                error: function () {
+                    alert("Error");
+                }
 
-        });
+            });
+        }
+        else {
+            alert("Please create the map !");
+
+        }
 
     });
 
