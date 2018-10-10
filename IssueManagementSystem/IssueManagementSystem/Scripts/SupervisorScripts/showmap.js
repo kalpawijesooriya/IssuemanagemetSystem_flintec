@@ -1,24 +1,7 @@
-﻿$(document).ready(function () {
-    $(".submit").click(function () {
-        $(".submit").addClass("loading");
-        setTimeout(function () {
-            $(".submit").addClass("hide-loading");
-            // For failed icon just replace ".done" with ".failed"
-            $(".done").addClass("finish");
-        }, 3000);
-        setTimeout(function () {
-            $(".submit").removeClass("loading");
-            $(".submit").removeClass("hide-loading");
-            $(".done").removeClass("finish");
-            $(".failed").removeClass("finish");
-        }, 3100);
-    })
-});
-
-
-//var jsonText = '[{"x":247,"y":247,"w":50,"h":50,"fill":"#AB2567"},{"x":248,"y":36,"w":50,"h":150,"fill":"#4BAB54"},{"x":181,"y":186,"w":60,"h":60,"fill":"#AB8352"}]';
+﻿
+var jsonText = '@ViewBag.map';
 //this JSOn will be taken from database
-
+alert(String(@ViewBag.map));
 
 function Shape(x, y, w, h, fill) {
     this.x = x || 0;
@@ -64,7 +47,7 @@ function CanvasState(canvas) {
 
     this.valid = false; // when set to false, the canvas will redraw everything
     this.shapes = [];  // the collection of things to be drawn
-    //this.shapes = createObjectArray(jsonText);
+    this.shapes = createObjectArray(jsonText);
     this.dragging = false; // Keep track of when we are dragging
     // the current selected object. In the future we could turn this into an array for multiple selection
     this.selection = null;
@@ -112,6 +95,11 @@ function CanvasState(canvas) {
     canvas.addEventListener('mouseup', function (e) {
         myState.dragging = false;
     }, true);
+
+
+    document.getElementById("loadMap").addEventListener("click", function () {
+
+    });
 
 
     this.selectionColor = '#f4dc42';
@@ -184,7 +172,7 @@ function init() {
 }
 
 
-function createObjectArray(jsonText){
+function createObjectArray(jsonText) {
 
     console.log(jsonText);
     var arr = JSON.parse(jsonText);

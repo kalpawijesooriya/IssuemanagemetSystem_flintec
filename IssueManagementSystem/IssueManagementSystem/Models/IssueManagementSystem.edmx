@@ -1,0 +1,543 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="issue_management_systemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="departments">
+          <Key>
+            <PropertyRef Name="department_id" />
+          </Key>
+          <Property Name="department_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="department_name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="display">
+          <Key>
+            <PropertyRef Name="display_id" />
+          </Key>
+          <Property Name="display_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="line_id" Type="int" />
+          <Property Name="raspberry_ip_address" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="emp_id" />
+          </Key>
+          <Property Name="emp_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="emp_name" Type="varchar" MaxLength="50" />
+          <Property Name="department_id" Type="int" Nullable="false" />
+          <Property Name="phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="position" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'issue_management_system.dbo.issue_line_person' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="issue_line_person">
+          <Property Name="issue_id" Type="int" />
+          <Property Name="line_id" Type="int" />
+          <Property Name="emp_id" Type="int" />
+          <Property Name="assigned_date" Type="date" />
+          <Property Name="current_status" Type="bit" />
+        </EntityType>-->
+        <EntityType Name="issue_occurrence">
+          <Key>
+            <PropertyRef Name="issue_occurrence_id" />
+          </Key>
+          <Property Name="issue_occurrence_id" Type="int" Nullable="false" />
+          <Property Name="date_time" Type="datetime" />
+          <Property Name="material_id" Type="varchar" MaxLength="45" />
+          <Property Name="description" Type="varchar" MaxLength="45" />
+          <Property Name="machine_machine_id" Type="int" />
+          <Property Name="line_line_id" Type="int" />
+          <Property Name="issue_issue_ID" Type="int" />
+          <Property Name="responsible_person_emp_id" Type="int" />
+          <Property Name="issue_satus" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="issues">
+          <Key>
+            <PropertyRef Name="issue_id" />
+          </Key>
+          <Property Name="issue_id" Type="int" Nullable="false" />
+          <Property Name="issue" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'issue_management_system.dbo.line_machine' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="line_machine">
+          <Key>
+            <PropertyRef Name="machine_id" />
+            <PropertyRef Name="line_id" />
+          </Key>
+          <Property Name="machine_id" Type="int" Nullable="false" />
+          <Property Name="line_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="line_map">
+          <Key>
+            <PropertyRef Name="line_map_id" />
+          </Key>
+          <Property Name="line_map_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="line_id" Type="int" Nullable="false" />
+          <Property Name="map" Type="nvarchar(max)" />
+          <Property Name="red" Type="bit" />
+          <Property Name="green" Type="bit" />
+          <Property Name="yellow" Type="bit" />
+          <Property Name="blue" Type="bit" />
+        </EntityType>
+        <EntityType Name="line_supervisor">
+          <Key>
+            <PropertyRef Name="logged_in_time" />
+            <PropertyRef Name="supervisor_emp_id" />
+          </Key>
+          <Property Name="logged_in_time" Type="datetime" Nullable="false" />
+          <Property Name="supervisor_emp_id" Type="int" Nullable="false" />
+          <Property Name="line_line_id" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'issue_management_system.dbo.lines' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="lines">
+          <Key>
+            <PropertyRef Name="department_id" />
+            <PropertyRef Name="line_id" />
+          </Key>
+          <Property Name="department_id" Type="int" Nullable="false" />
+          <Property Name="line_id" Type="int" Nullable="false" />
+          <Property Name="line_name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="machines">
+          <Key>
+            <PropertyRef Name="machine_id" />
+          </Key>
+          <Property Name="machine_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="machine_name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'issue_management_system.dbo.materials' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="materials">
+          <Key>
+            <PropertyRef Name="material_id" />
+          </Key>
+          <Property Name="material" Type="varchar" MaxLength="45" />
+          <Property Name="material_id" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="PassWord" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="emp_id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_department_lines_departments">
+          <End Role="departments" Type="Self.departments" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="lines" Type="Self.lines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="departments">
+              <PropertyRef Name="department_id" />
+            </Principal>
+            <Dependent Role="lines">
+              <PropertyRef Name="department_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+error 6004: The table 'issue_management_system.dbo.issue_line_person' is referenced by a relationship, but cannot be found.
+        <Association Name="FK_issue_line_person_issues" />-->
+        <Association Name="FK_issue_occurrence_issues">
+          <End Role="issues" Type="Self.issues" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="issue_occurrence" Type="Self.issue_occurrence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="issues">
+              <PropertyRef Name="issue_id" />
+            </Principal>
+            <Dependent Role="issue_occurrence">
+              <PropertyRef Name="issue_issue_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="issue_management_systemModelStoreContainer">
+          <EntitySet Name="departments" EntityType="Self.departments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="display" EntityType="Self.display" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="issue_occurrence" EntityType="Self.issue_occurrence" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="issues" EntityType="Self.issues" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="line_map" EntityType="Self.line_map" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="line_supervisor" EntityType="Self.line_supervisor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="machines" EntityType="Self.machines" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="line_machine" EntityType="Self.line_machine" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [line_machine].[machine_id] AS [machine_id], 
+    [line_machine].[line_id] AS [line_id]
+    FROM [dbo].[line_machine] AS [line_machine]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="lines" EntityType="Self.lines" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [lines].[department_id] AS [department_id], 
+    [lines].[line_id] AS [line_id], 
+    [lines].[line_name] AS [line_name]
+    FROM [dbo].[lines] AS [lines]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="materials" EntityType="Self.materials" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [materials].[material] AS [material], 
+    [materials].[material_id] AS [material_id]
+    FROM [dbo].[materials] AS [materials]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_department_lines_departments" Association="Self.FK_department_lines_departments">
+            <End Role="departments" EntitySet="departments" />
+            <End Role="lines" EntitySet="lines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_issue_occurrence_issues" Association="Self.FK_issue_occurrence_issues">
+            <End Role="issues" EntitySet="issues" />
+            <End Role="issue_occurrence" EntitySet="issue_occurrence" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="issue_management_systemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="department">
+          <Key>
+            <PropertyRef Name="department_id" />
+          </Key>
+          <Property Name="department_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="department_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="lines" Relationship="Self.FK_department_lines_departments" FromRole="departments" ToRole="lines" />
+        </EntityType>
+        <EntityType Name="display">
+          <Key>
+            <PropertyRef Name="display_id" />
+          </Key>
+          <Property Name="display_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="line_id" Type="Int32" />
+          <Property Name="raspberry_ip_address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="emp_id" />
+          </Key>
+          <Property Name="emp_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="emp_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="department_id" Type="Int32" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="issue_occurrence">
+          <Key>
+            <PropertyRef Name="issue_occurrence_id" />
+          </Key>
+          <Property Name="issue_occurrence_id" Type="Int32" Nullable="false" />
+          <Property Name="date_time" Type="DateTime" Precision="3" />
+          <Property Name="material_id" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="machine_machine_id" Type="Int32" />
+          <Property Name="line_line_id" Type="Int32" />
+          <Property Name="issue_issue_ID" Type="Int32" />
+          <Property Name="responsible_person_emp_id" Type="Int32" />
+          <Property Name="issue_satus" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="issue" Relationship="Self.FK_issue_occurrence_issues" FromRole="issue_occurrence" ToRole="issues" />
+        </EntityType>
+        <EntityType Name="issue">
+          <Key>
+            <PropertyRef Name="issue_id" />
+          </Key>
+          <Property Name="issue_id" Type="Int32" Nullable="false" />
+          <Property Name="issue1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="issue_occurrence" Relationship="Self.FK_issue_occurrence_issues" FromRole="issues" ToRole="issue_occurrence" />
+        </EntityType>
+        <EntityType Name="line_map">
+          <Key>
+            <PropertyRef Name="line_map_id" />
+          </Key>
+          <Property Name="line_map_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="line_id" Type="Int32" Nullable="false" />
+          <Property Name="map" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="red" Type="Boolean" />
+          <Property Name="green" Type="Boolean" />
+          <Property Name="yellow" Type="Boolean" />
+          <Property Name="blue" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="line_supervisor">
+          <Key>
+            <PropertyRef Name="logged_in_time" />
+            <PropertyRef Name="supervisor_emp_id" />
+          </Key>
+          <Property Name="logged_in_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="supervisor_emp_id" Type="Int32" Nullable="false" />
+          <Property Name="line_line_id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="machine">
+          <Key>
+            <PropertyRef Name="machine_id" />
+          </Key>
+          <Property Name="machine_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="machine_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserName" />
+          </Key>
+          <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PassWord" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="emp_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="line_machine">
+          <Key>
+            <PropertyRef Name="machine_id" />
+            <PropertyRef Name="line_id" />
+          </Key>
+          <Property Name="machine_id" Type="Int32" Nullable="false" />
+          <Property Name="line_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="line">
+          <Key>
+            <PropertyRef Name="department_id" />
+            <PropertyRef Name="line_id" />
+          </Key>
+          <Property Name="department_id" Type="Int32" Nullable="false" />
+          <Property Name="line_id" Type="Int32" Nullable="false" />
+          <Property Name="line_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="department" Relationship="Self.FK_department_lines_departments" FromRole="lines" ToRole="departments" />
+        </EntityType>
+        <EntityType Name="material">
+          <Key>
+            <PropertyRef Name="material_id" />
+          </Key>
+          <Property Name="material1" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="material_id" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_department_lines_departments">
+          <End Role="departments" Type="Self.department" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="lines" Type="Self.line" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="departments">
+              <PropertyRef Name="department_id" />
+            </Principal>
+            <Dependent Role="lines">
+              <PropertyRef Name="department_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_issue_occurrence_issues">
+          <End Role="issues" Type="Self.issue" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="issue_occurrence" Type="Self.issue_occurrence" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="issues">
+              <PropertyRef Name="issue_id" />
+            </Principal>
+            <Dependent Role="issue_occurrence">
+              <PropertyRef Name="issue_issue_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="issue_management_systemEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="departments" EntityType="Self.department" />
+          <EntitySet Name="displays" EntityType="Self.display" />
+          <EntitySet Name="employees" EntityType="Self.employee" />
+          <EntitySet Name="issue_occurrence" EntityType="Self.issue_occurrence" />
+          <EntitySet Name="issues" EntityType="Self.issue" />
+          <EntitySet Name="line_map" EntityType="Self.line_map" />
+          <EntitySet Name="line_supervisor" EntityType="Self.line_supervisor" />
+          <EntitySet Name="machines" EntityType="Self.machine" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="line_machine" EntityType="Self.line_machine" />
+          <EntitySet Name="lines" EntityType="Self.line" />
+          <EntitySet Name="materials" EntityType="Self.material" />
+          <AssociationSet Name="FK_department_lines_departments" Association="Self.FK_department_lines_departments">
+            <End Role="departments" EntitySet="departments" />
+            <End Role="lines" EntitySet="lines" />
+          </AssociationSet>
+          <AssociationSet Name="FK_issue_occurrence_issues" Association="Self.FK_issue_occurrence_issues">
+            <End Role="issues" EntitySet="issues" />
+            <End Role="issue_occurrence" EntitySet="issue_occurrence" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="issue_management_systemModelStoreContainer" CdmEntityContainer="issue_management_systemEntities1">
+          <EntitySetMapping Name="departments">
+            <EntityTypeMapping TypeName="issue_management_systemModel.department">
+              <MappingFragment StoreEntitySet="departments">
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="department_name" ColumnName="department_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="displays">
+            <EntityTypeMapping TypeName="issue_management_systemModel.display">
+              <MappingFragment StoreEntitySet="display">
+                <ScalarProperty Name="display_id" ColumnName="display_id" />
+                <ScalarProperty Name="line_id" ColumnName="line_id" />
+                <ScalarProperty Name="raspberry_ip_address" ColumnName="raspberry_ip_address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employees">
+            <EntityTypeMapping TypeName="issue_management_systemModel.employee">
+              <MappingFragment StoreEntitySet="employee">
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+                <ScalarProperty Name="emp_name" ColumnName="emp_name" />
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="position" ColumnName="position" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="issue_occurrence">
+            <EntityTypeMapping TypeName="issue_management_systemModel.issue_occurrence">
+              <MappingFragment StoreEntitySet="issue_occurrence">
+                <ScalarProperty Name="issue_occurrence_id" ColumnName="issue_occurrence_id" />
+                <ScalarProperty Name="date_time" ColumnName="date_time" />
+                <ScalarProperty Name="material_id" ColumnName="material_id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="machine_machine_id" ColumnName="machine_machine_id" />
+                <ScalarProperty Name="line_line_id" ColumnName="line_line_id" />
+                <ScalarProperty Name="issue_issue_ID" ColumnName="issue_issue_ID" />
+                <ScalarProperty Name="responsible_person_emp_id" ColumnName="responsible_person_emp_id" />
+                <ScalarProperty Name="issue_satus" ColumnName="issue_satus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="issues">
+            <EntityTypeMapping TypeName="issue_management_systemModel.issue">
+              <MappingFragment StoreEntitySet="issues">
+                <ScalarProperty Name="issue_id" ColumnName="issue_id" />
+                <ScalarProperty Name="issue1" ColumnName="issue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="line_map">
+            <EntityTypeMapping TypeName="issue_management_systemModel.line_map">
+              <MappingFragment StoreEntitySet="line_map">
+                <ScalarProperty Name="line_map_id" ColumnName="line_map_id" />
+                <ScalarProperty Name="line_id" ColumnName="line_id" />
+                <ScalarProperty Name="map" ColumnName="map" />
+                <ScalarProperty Name="red" ColumnName="red" />
+                <ScalarProperty Name="green" ColumnName="green" />
+                <ScalarProperty Name="yellow" ColumnName="yellow" />
+                <ScalarProperty Name="blue" ColumnName="blue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="line_supervisor">
+            <EntityTypeMapping TypeName="issue_management_systemModel.line_supervisor">
+              <MappingFragment StoreEntitySet="line_supervisor">
+                <ScalarProperty Name="logged_in_time" ColumnName="logged_in_time" />
+                <ScalarProperty Name="supervisor_emp_id" ColumnName="supervisor_emp_id" />
+                <ScalarProperty Name="line_line_id" ColumnName="line_line_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="machines">
+            <EntityTypeMapping TypeName="issue_management_systemModel.machine">
+              <MappingFragment StoreEntitySet="machines">
+                <ScalarProperty Name="machine_id" ColumnName="machine_id" />
+                <ScalarProperty Name="machine_name" ColumnName="machine_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="issue_management_systemModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="issue_management_systemModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="line_machine">
+            <EntityTypeMapping TypeName="issue_management_systemModel.line_machine">
+              <MappingFragment StoreEntitySet="line_machine">
+                <ScalarProperty Name="machine_id" ColumnName="machine_id" />
+                <ScalarProperty Name="line_id" ColumnName="line_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="lines">
+            <EntityTypeMapping TypeName="issue_management_systemModel.line">
+              <MappingFragment StoreEntitySet="lines">
+                <ScalarProperty Name="department_id" ColumnName="department_id" />
+                <ScalarProperty Name="line_id" ColumnName="line_id" />
+                <ScalarProperty Name="line_name" ColumnName="line_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="materials">
+            <EntityTypeMapping TypeName="issue_management_systemModel.material">
+              <MappingFragment StoreEntitySet="materials">
+                <ScalarProperty Name="material1" ColumnName="material" />
+                <ScalarProperty Name="material_id" ColumnName="material_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

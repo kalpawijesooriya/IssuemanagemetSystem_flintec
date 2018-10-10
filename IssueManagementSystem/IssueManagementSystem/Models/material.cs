@@ -12,9 +12,9 @@ namespace IssueManagementSystem.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class line_machine
+    public partial class material
     {
-        public int machine_id { get; set; }
-        public int line_id { get; set; }
+        public string material1 { get; set; }
+        public string material_id { get; set; }
     }
 }

@@ -11,10 +11,17 @@ namespace IssueManagementSystem.Models
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class line_machine
+    using System.ComponentModel.DataAnnotations;
+
+    public partial class User
     {
-        public int machine_id { get; set; }
-        public int line_id { get; set; }
+        [Required(ErrorMessage = "Plese Enter Your UserName")]
+        public string UserName { get; set; }
+
+        [Required(ErrorMessage = "Plese Enter Your User PassWord")]
+        public string PassWord { get; set; }
+
+        public int emp_id { get; set; }
+        public String LoginErrorMessage { get; set; }
     }
 }

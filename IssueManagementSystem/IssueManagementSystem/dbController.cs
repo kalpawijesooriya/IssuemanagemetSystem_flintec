@@ -10,22 +10,31 @@ namespace IssueManagementSystem
     public class dbController
     {
 
-        public SqlConnection cnn;
+        private  SqlConnection cnn;
+        static dbController dbCtrlObject ;
 
+        public static dbController getInstance()
+        {
+            if (dbCtrlObject==null) {
+                dbCtrlObject=  new dbController();
+                return dbCtrlObject;
+            }
 
-        public  dbController()
+            else
+                return dbCtrlObject;
+        }
+
+        private dbController()
             {
                 string connetionString;
-                connetionString = @"Data Source=RASITHA;Initial Catalog=IMS_TEMP_DB;User ID=admin;Password=1234";
-                //Add correct connection string 
+                connetionString = System.Configuration.ConfigurationManager.ConnectionStrings["ims"].ConnectionString;
                 cnn = new SqlConnection(connetionString);
                 cnn.Open();
-
             }
 
         public void runQuery_update_or_delete(String query) {
 
-            // updateCmd.Parameters.Clear();
+            //updateCmd.Parameters.Clear();
             //updateCmd.Parameters.AddWithValue(@key, MyKey);
 
 
@@ -49,27 +58,35 @@ namespace IssueManagementSystem
 
             SqlDataReader reader = cmd.ExecuteReader();
 
-              /*
-                    if (reader.HasRows)
-                    {
-                            while (reader.Read())
-                            {
-                                Console.WriteLine("{0}\t{1}", reader.GetInt32(0),
-                                reader.GetString(1));
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("No rows found.");
-                        }
-                        reader.Close();
-                    }
-             */
-
             return reader;
         }
 
 
+        public String get_1st_column_1st_row_data(String query)
+        {
+            SqlCommand cmd = new SqlCommand();
 
+            cmd.CommandText = query;
+            cmd.CommandType = CommandType.Text;
+            cmd.Connection = cnn;
+            String data = null;
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            
+                      if (reader.HasRows)
+                      {
+                            while (reader.Read())
+                            {
+                                data = reader.GetValue(0).ToString();
+                            }
+                      }
+                      else
+                      {
+                          Console.WriteLine("No rows found.");
+                      }
+                      reader.Close();
+                 
+            return data;
+        }
     }
 }
