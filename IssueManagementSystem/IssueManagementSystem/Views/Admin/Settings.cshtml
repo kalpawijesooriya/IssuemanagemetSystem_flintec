@@ -85,15 +85,15 @@
                                 <div class="row">
                                     <div class="col-lg-2">
                                         <label for="h">Machine</label>
-                                            <select class="js-example-placeholder-single js-states form-control" id="machineSelectBox" name="machineSelectBox">
-                                                <option></option>
-                                                <option>Machine 1</option>
-                                                <option>Machine 2</option>
-                                                <option>Machine 3</option>
-                                                <option>Machine 4</option>
-                                                <option>Machine 5</option>
-                                                <option>Machine 6</option>
-                                            </select>
+                                        <select class="js-example-placeholder-single js-states form-control" id="machineSelectBox" name="machineSelectBox">
+                                            <option></option>
+                                                @{
+                                                    for (var i = 10; i < 21; i++)
+                                                    {
+                                                        <option>Machine @i</option>
+                                                    }
+                                                 }
+                                        </select>
                                     </div>
                                 </div>
 

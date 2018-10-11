@@ -371,3 +371,5 @@ IssueManagementSystem/.vs/config/applicationhost.config
 
 IssueManagementSystem/IssueManagementSystem/obj/Debug/IssueManagementSystem.csproj.FileListAbsolute.txt
 IssueManagementSystem/.vs/IssueManagementSystem/v15/.suo
+*.cache
+IssueManagementSystem/IssueManagementSystem/obj/Debug/IssueManagementSystem.csproj.CoreCompileInputs.cache

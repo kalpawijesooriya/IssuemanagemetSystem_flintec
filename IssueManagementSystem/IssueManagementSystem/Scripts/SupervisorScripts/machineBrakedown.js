@@ -16,8 +16,8 @@
 });
 
 
-//var jsonText = '[{"x":247,"y":247,"w":50,"h":50,"fill":"#AB2567"},{"x":248,"y":36,"w":50,"h":150,"fill":"#4BAB54"},{"x":181,"y":186,"w":60,"h":60,"fill":"#AB8352"}]';
-//this JSOn will be taken from database
+//  var jsonText = '[{"x":247,"y":247,"w":50,"h":50,"fill":"#AB2567"},{"x":248,"y":36,"w":50,"h":150,"fill":"#4BAB54"},{"x":181,"y":186,"w":60,"h":60,"fill":"#AB8352"}]';
+//  this JSOn will be taken from database
 
 
 function Shape(x, y, w, h, fill) {
@@ -87,7 +87,7 @@ function CanvasState(canvas) {
                 var mySel = shapes[i];
                 myState.selection = mySel;
                 myState.valid = false;
-                document.getElementById("elementID").innerHTML = i;
+                document.getElementById("machine").value = i;
                 return;
             }
         }
