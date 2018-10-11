@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IssueManagementSystem.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -88,5 +89,14 @@ namespace IssueManagementSystem
                  
             return data;
         }
+        public issue_management_systemEntities1 Databaseobject()
+        {
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+            {
+                return db;
+            }
+
+        }
     }
+   
 }
