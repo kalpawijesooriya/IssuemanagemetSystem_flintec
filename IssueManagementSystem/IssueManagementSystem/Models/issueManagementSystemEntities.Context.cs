@@ -32,6 +32,7 @@ namespace IssueManagementSystem.Models
         public virtual DbSet<employee> employees { get; set; }
         public virtual DbSet<issue_occurrence> issue_occurrence { get; set; }
         public virtual DbSet<issue> issues { get; set; }
+        public virtual DbSet<line_computer> line_computer { get; set; }
         public virtual DbSet<line_map> line_map { get; set; }
         public virtual DbSet<line_supervisor> line_supervisor { get; set; }
         public virtual DbSet<machine> machines { get; set; }
@@ -40,7 +41,6 @@ namespace IssueManagementSystem.Models
         public virtual DbSet<line_machine> line_machine { get; set; }
         public virtual DbSet<line> lines { get; set; }
         public virtual DbSet<material> materials { get; set; }
-        public virtual DbSet<line_computer> line_computer { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

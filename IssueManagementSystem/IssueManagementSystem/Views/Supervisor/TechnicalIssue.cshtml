@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "MachinBreakdown";
+    ViewBag.Title = "Technical Issue";
     Layout = "~/Views/Shared/supervisorsLayout.cshtml";
     if (Session["userID"] == null)
     {
@@ -16,7 +16,7 @@
 
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <div class="container margin ">
-    <h2>Machine Breakdown</h2>
+    <h2>Tecnical Issue</h2>
     <hr />
     <h3>Select the machine</h3>
 
@@ -41,11 +41,12 @@
             </div>
         </div>
         <div class="col-sm-3 machine">
-            @using (Html.BeginForm("AddIssueBreakedown", "Supervisor", FormMethod.Post))
+            @using (Html.BeginForm("AddIssueTechnical", "Supervisor", FormMethod.Post))
             {
                 <div class="form-group machine">
                     <label for="exampleFormControlTextarea1">Machine</label>
                     @Html.TextBoxFor(model => model.machine_machine_id, new { @class = "form-control", @id = "machine" })
+
                 </div>
                 <label id="map" style="display: none;">@ViewData["map"]</label>
                 <div class="form-group machine">
@@ -70,13 +71,14 @@
     </div>
     <script src="~/Scripts/jquery-3.3.1.slim.min.js"></script>
     <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
-    <script src="~/Scripts/SupervisorScripts/showmap.js"></script>
+
 
 </div>
 
 
+<script src="~/Scripts/SupervisorScripts/showmap.js">
 
-
+</script>
 
 
 
