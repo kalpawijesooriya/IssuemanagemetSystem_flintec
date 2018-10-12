@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewBag.Title = "NotificationsManagement";
+    Layout = "~/Views/Shared/BranchSideNav.cshtml";
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+
+<link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
+<link href="~/Content/adminstyles/Settings.css" rel="stylesheet" />
+
+<style>
+    .lableSet {
+        float: left;
+    }
+</style>
+
+<div id="page-wrapper" class="container" style="padding-top:40px;position:absolute">
+
+
+    <h1 class="page-header">Settings</h1>
+
+    <h3 class="page-header" style="margin-top:-10px;position:relative;">Manage Notifications</h3>
+
+    <div class="row">
+        <div style="display:grid; grid-template-columns:30% 30% 30%">
+
+
+            <div>
+                <div class="col-lg-12">
+
+                    <label class="lableSet" style="float:left"> Department</label>
+
+                    <select class="js-example-placeholder-single js-states form-control" id="selectdepartment" name="selectdepartment" style="width:100%">
+
+                        <option>Assembly</option>
+                        <option>Machining</option>
+                        <option>IT</option>
+                        <option>Engineering</option>
+                        <option>Maintenance</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <div class="col-lg-12">
+                    <label class="lableSet" style="float:left"> Line</label>
+
+                    <select class="js-example-placeholder-single js-states form-control" id="selectLine" name="selectLine" style="width:100%">
+                        <option>Potted</option>
+                        <option>Welder</option>
+                        <option>Guaging</option>
+                        <option>SM</option>
+                        <option>MD2</option>
+                        <option>Rocker</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <div class="col-lg-12" style="">
+                    <label class="lableSet" style="float:left">Issue</label>
+
+                    <select class="js-example-placeholder-single js-states form-control" id="selectIssue" name="selectIssue" style="width:100%">
+                        <option>Machine Breakdown</option>
+                        <option>Material Delay</option>
+                        <option>Technical Issue</option>
+                        <option>IT Issue</option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:20px;">
+
+
+        <ul id="sortable">
+            <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 1</li>
+            <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 2</li>
+            <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 3</li>
+            <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 4</li>
+            <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 5</li>
+            <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 6</li>
+            <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 7</li>
+        </ul>
+
+    </div>
+
+</div>
+
+
+<script src="~/Scripts/AdminScripts/jscolar.js"></script>
+<!--<script src="~/Scripts/AdminScripts/jquery.js"></script>-->
+<script src="~/Scripts/AdminScripts/select2-min.js"></script>
+<script src="~/Scripts/AdminScripts/notificationsManagement.js"></script>
+<!--<script src="~/Scripts/jquery-3.3.1.js"></script>
+
