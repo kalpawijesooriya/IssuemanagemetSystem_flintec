@@ -88,9 +88,8 @@ G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManageme
 G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\Microsoft.AI.WindowsServer.xml
 G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\Microsoft.AI.Web.xml
 G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.csprojAssemblyReference.cache
 G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.csproj.CoreCompileInputs.cache
 G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.csproj.CopyComplete
 G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.dll
 G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.pdb
-
+G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.csprojAssemblyReference.cache

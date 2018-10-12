@@ -53,14 +53,10 @@
     </div>
     <div class="container body-content" style="margin-bottom:4%">
         @RenderBody()
-
-      <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - FlinTec ISM Application</p>
-        </footer>
+        
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
+
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
