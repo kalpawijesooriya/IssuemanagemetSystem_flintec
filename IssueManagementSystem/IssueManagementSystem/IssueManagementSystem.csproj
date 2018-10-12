@@ -155,6 +155,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DisplayController.cs" />
     <Compile Include="dbController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\Connection.cs" />
@@ -331,6 +332,7 @@
     <Content Include="Views\Admin\Settings.cshtml" />
     <Content Include="Views\Supervisor\MaterialDelay.cshtml" />
     <Content Include="Views\Supervisor\TechnicalIssue.cshtml" />
+    <Content Include="Views\Display\Rasp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
