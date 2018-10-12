@@ -79,5 +79,12 @@ namespace IssueManagementSystem.Controllers
             return View();
             // return Json(persons, JsonRequestBehavior.AllowGet);
         }
+
+
+        public ActionResult NotificationsManagement()
+        {
+            return View();
+
+        }
     }
 }

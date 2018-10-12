@@ -234,8 +234,10 @@
     <Content Include="Content\adminstyles\AdminBranchSideNav.css" />
     <Content Include="Content\adminstyles\select2-min.css" />
     <Content Include="Content\adminstyles\Settings.css" />
+
     <Content Include="Content\SupervisorStyles\jquery-ui.css" />
     <Content Include="Models\issueManagementSystemEntities.Context.tt">
+
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>issueManagementSystemEntities.edmx</DependentUpon>
       <LastGenOutput>issueManagementSystemEntities.Context.cs</LastGenOutput>
@@ -292,6 +294,7 @@
     <Content Include="Scripts\AdminScripts\metisMenu.min.js" />
     <Content Include="Scripts\AdminScripts\sb-admin-2.js" />
     <Content Include="Scripts\AdminScripts\select2-min.js" />
+    <Content Include="Scripts\AdminScripts\notificationsManagement.js" />
     <Content Include="Scripts\AdminScripts\settings.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-ui.js" />
@@ -331,8 +334,14 @@
     <Content Include="Views\Admin\SelectSection.cshtml" />
     <Content Include="Views\Admin\Settings.cshtml" />
     <Content Include="Views\Supervisor\MaterialDelay.cshtml" />
+
+    <Content Include="Views\Admin\NotificationsManagement.cshtml" />
     <Content Include="Views\Supervisor\TechnicalIssue.cshtml" />
+
     <Content Include="Views\Display\Rasp.cshtml" />
+
+
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
