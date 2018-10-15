@@ -43,6 +43,11 @@ $('#machineSelectBox').select2({
     placeholder: "Select Machine.....",
     allowClear: false
 });
+$('#selectlineIssues').select2({
+    maximumSelectionLength: 5,
+    placeholder: "Select Issues.....",
+    allowClear: false
+});
 
 
 
@@ -198,7 +203,9 @@ function CanvasState(canvas) {
 
     });
 
-    document.getElementById("saveMap").addEventListener("click", function () {    
+    document.getElementById("saveMap").addEventListener("click", function () {
+
+
 
         if (myState.shapes.length!= 0) {
             var map = JSON.stringify(myState.shapes);
@@ -206,14 +213,19 @@ function CanvasState(canvas) {
             var line = (document.getElementById("selectline").value).toString();
             var ipAddress = document.getElementById("raspberrypi_ip").value;
 
-            console.log(map);
+            var issues = $("#selectlineIssues").val();
+            var issues_str = issues.toString();
+            var issues_array = issues_str.split(",");
+            var issues_JSON = JSON.stringify(issues_array);
+
+
             //console.log(JSON.parse(JSON.stringify(myState.shapes)));
 
             $.ajax({
                 type: "POST",
                 dataType: 'text',
                 url: "/admin/addMap",
-                data: { mapJSON: map, department: department, line: line, ipAddress: ipAddress },
+                data: { mapJSON: map, department: department, line: line, ipAddress: ipAddress, issues:issues_JSON },
                 success: function (itemNameArray) {
                     alert("Done");
                 },
