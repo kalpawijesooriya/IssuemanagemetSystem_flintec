@@ -33,7 +33,7 @@ namespace IssueManagementSystem.Controllers
         }
 
         [HttpPost]
-        public ActionResult addMap(String mapJSON,String department_id, String line, String ipAddress)
+        public ActionResult addMap(String mapJSON,String department_id, String line, String ipAddress,String issues)
         {
 
             dbController db = dbController.getInstance();
@@ -46,7 +46,7 @@ namespace IssueManagementSystem.Controllers
             String lineID = db.get_1st_column_1st_row_data(query1);
 
             //insert data in to line_map table
-            String query2 = "INSERT INTO [dbo].[line_map]([line_id],[map],[red],[green],[yellow],[blue])VALUES('"+lineID+"','"+mapJSON+"','0','0','0','0')";
+            String query2 = "INSERT INTO [dbo].[line_map]([line_id],[map],[red],[green],[yellow],[blue],issues)VALUES('"+lineID+"','"+mapJSON+"','0','0','0','0','"+issues+"')";
             db.runQuery_update_or_delete(query2);
 
             //get last added line id
