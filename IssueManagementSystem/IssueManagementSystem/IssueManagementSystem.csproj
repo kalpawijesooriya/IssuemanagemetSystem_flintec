@@ -235,6 +235,7 @@
     <Content Include="Content\adminstyles\notificationManagement.css" />
     <Content Include="Content\adminstyles\select2-min.css" />
     <Content Include="Content\adminstyles\Settings.css" />
+    <Content Include="Scripts\Display\showmapdisplay.js" />
     <Content Include="Content\SupervisorStyles\jquery-ui.css" />
     <Content Include="Models\issueManagementSystemEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
