@@ -232,12 +232,11 @@
   <ItemGroup>
     <Content Include="Content\3.3.0bootstrap.min.css" />
     <Content Include="Content\adminstyles\AdminBranchSideNav.css" />
+    <Content Include="Content\adminstyles\notificationManagement.css" />
     <Content Include="Content\adminstyles\select2-min.css" />
     <Content Include="Content\adminstyles\Settings.css" />
-
     <Content Include="Content\SupervisorStyles\jquery-ui.css" />
     <Content Include="Models\issueManagementSystemEntities.Context.tt">
-
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>issueManagementSystemEntities.edmx</DependentUpon>
       <LastGenOutput>issueManagementSystemEntities.Context.cs</LastGenOutput>
@@ -334,14 +333,9 @@
     <Content Include="Views\Admin\SelectSection.cshtml" />
     <Content Include="Views\Admin\Settings.cshtml" />
     <Content Include="Views\Supervisor\MaterialDelay.cshtml" />
-
     <Content Include="Views\Admin\NotificationsManagement.cshtml" />
     <Content Include="Views\Supervisor\TechnicalIssue.cshtml" />
-
     <Content Include="Views\Display\Rasp.cshtml" />
-
-
-
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
