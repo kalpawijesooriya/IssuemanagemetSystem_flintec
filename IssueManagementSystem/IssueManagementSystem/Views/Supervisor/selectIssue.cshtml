@@ -46,7 +46,7 @@
                     @foreach (var item in Model)
                     {
                     
-                        if (item.line_line_id == ViewBag.lineID)
+                        if ((item.line_line_id == ViewBag.lineID)&&(item.issue_satus=="1"))
                         {
                         issue_management_systemEntities1 db = new issue_management_systemEntities1();
                         var IssueInfo = db.issues.Where(x => x.issue_id == item.issue_issue_ID).FirstOrDefault();
