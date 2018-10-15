@@ -1,7 +1,47 @@
 ﻿
 @{
-    ViewBag.Title = "Rasp";
+    ViewBag.Title = "Raspberry";
+    
 }
 
-<h2>Rasp</h2>
+@model IssueManagementSystem.Models.issue_occurrence
+
+<link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<div class="container margin ">
+  
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="container-liquid">
+
+                <div style="display:inline-grid;grid-template-columns: 90%  50%">
+                    <div id="container">
+                        <canvas id="canvas1" style="border: 1px solid black;" width="400" height="600">
+                            <br>
+                            This text is displayed if your browser does not support HTML5 Canvas.<br>
+                        </canvas>
+                    </div>
+                    <label id="map" style="display: none;">[{"x":216,"y":368,"w":50,"h":50,"fill":"#000"},{"x":80,"y":254,"w":50,"h":50,"fill":"#ABA475"}]</label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.slim.min.js"></script>
+    <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
+    <script src="~/Scripts/Display/showmapdisplay.js"></script>
+
+</div>
+
+
+
+
+
+
+
+
+
 

@@ -21,5 +21,6 @@ namespace IssueManagementSystem.Models
         public Nullable<bool> green { get; set; }
         public Nullable<bool> yellow { get; set; }
         public Nullable<bool> blue { get; set; }
+        public string issues { get; set; }
     }
 }
