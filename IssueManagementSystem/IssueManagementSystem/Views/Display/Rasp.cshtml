@@ -1,39 +1,65 @@
 ﻿
 @{
     ViewBag.Title = "Raspberry";
-    
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
 }
-
 @model IssueManagementSystem.Models.issue_occurrence
 
-<link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-<div class="container margin ">
-  
-
+<link href="~/Content/Display/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Display/displaystyles.css" rel="stylesheet" />
+<div class="container-fluid margin">
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-5">
             <div class="container-liquid">
 
                 <div style="display:inline-grid;grid-template-columns: 90%  50%">
                     <div id="container">
-                        <canvas id="canvas1" style="border: 1px solid black;" width="400" height="600">
-                            <br>
-                            This text is displayed if your browser does not support HTML5 Canvas.<br>
+                        <canvas id="canvas1" style="border: 1px solid black;" width="500" height="600">
+                            <br> This text is displayed if your browser does not support HTML5 Canvas. <br>
                         </canvas>
                     </div>
                     <label id="map" style="display: none;">[{"x":216,"y":368,"w":50,"h":50,"fill":"#000"},{"x":80,"y":254,"w":50,"h":50,"fill":"#ABA475"}]</label>
                 </div>
             </div>
         </div>
+        <div class="col-sm-6">
+            <div class="card text-white bg-danger mb-3" style="max-width:60rem;">
+                <div class="card-header">Machine Breakdown</div>
+                <div class="card-body">
 
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+            <div class="card text-white bg-warning mb-3" style="max-width: 60rem;">
+                <div class="card-header">Matirial Delay</div>
+                <div class="card-body">
+
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+            <div class="card text-white bg-success mb-3" style="max-width: 60rem;">
+                <div class="card-header">Technical Issue</div>
+                <div class="card-body">
+
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+            <div class="card text-white bg-primary mb-3" style="max-width: 60rem;">
+                <div class="card-header">IT/Software Issue</div>
+                <div class="card-body">
+
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                </div>
+            </div>
+
+        </div>
     </div>
-    <script src="~/Scripts/jquery.min.js"></script>
-    <script src="~/Scripts/jquery-3.3.1.slim.min.js"></script>
-    <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
-    <script src="~/Scripts/Display/showmapdisplay.js"></script>
 
+    <script src="~/Scripts/3.30bootstrap.min.js"></script>
+    <script src="~/Scripts/Display/showmapdisplay.js"></script>
 </div>
 
 

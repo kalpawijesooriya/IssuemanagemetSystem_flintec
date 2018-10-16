@@ -23,6 +23,7 @@ namespace IssueManagementSystem.Controllers
                 var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
                 ViewBag.lineID = lineInfo.line_line_id;
                 List<issue_occurrence> issue = db.issue_occurrence.ToList();
+               
                 return View(issue);
             }
                
@@ -54,6 +55,21 @@ namespace IssueManagementSystem.Controllers
                 var mapInfo = db.line_map.Where(y => y.line_id == lineInfo.line_line_id).FirstOrDefault();
                 ViewData["map"] = mapInfo.map.ToString().Trim(); //get the map arry to ViewData
                 return View(); 
+
+            }
+
+        }
+        public ActionResult MaterialDelay()//MaterialDelay View
+        {
+            int userID = (int)Session["userID"];// get current supervisorID
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
+            {
+
+                var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
+                ViewBag.lineID = lineInfo.line_line_id;
+                var mapInfo = db.line_map.Where(y => y.line_id == lineInfo.line_line_id).FirstOrDefault();
+                ViewData["map"] = mapInfo.map.ToString().Trim(); //get the map arry to ViewData
+                return View();
 
             }
 
@@ -90,7 +106,7 @@ namespace IssueManagementSystem.Controllers
 
             }
 
-            return RedirectToAction("MachinBreakdown", "Supervisor");
+            return RedirectToAction("selectIssue", "Supervisor");
         }
 
         [HttpPost]//add Tecnical Issues to database
@@ -124,7 +140,7 @@ namespace IssueManagementSystem.Controllers
 
             }
 
-            return RedirectToAction("TechnicalIssue", "Supervisor");
+            return RedirectToAction("selectIssue", "Supervisor");
         }
 
         [HttpPost]//solovedIssueMethod
@@ -175,7 +191,7 @@ namespace IssueManagementSystem.Controllers
 
         private void sendMail()
         {
-            using (MailMessage mm = new MailMessage("flintec.ism.alerts@gmail.com", "kalpa.wijesooriya94@gmail.com"))
+            using (MailMessage mm = new MailMessage("flintec.ism.alerts@gmail.com", "kalpa.wijesooriya@outlook.com"))
             {
                 mm.Subject = "machine breakedown Notification";
                 mm.Body = "This is test message";
@@ -185,7 +201,7 @@ namespace IssueManagementSystem.Controllers
                 {
                     smtp.Host = "smtp.gmail.com";
                     smtp.EnableSsl = true;
-                    NetworkCredential NetworkCred = new NetworkCredential("	flintec.ism.alerts@gmail.com", "ism@flintec");
+                    NetworkCredential NetworkCred = new NetworkCredential("flintec.ism.alerts@gmail.com", "ism@flintec");
                     smtp.UseDefaultCredentials = true;
                     smtp.Credentials = NetworkCred;
                     smtp.Port = 587;

@@ -13,5 +13,10 @@ namespace IssueManagementSystem.Controllers
         {
             return View();
         }
+
+        public ActionResult slect()
+        {
+            return View();
+        }
     }
 }

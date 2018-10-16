@@ -13,7 +13,6 @@ namespace IssueManagementSystem.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-
     public partial class User
     {
         [Required(ErrorMessage = "Plese Enter Your UserName")]
@@ -21,9 +20,8 @@ namespace IssueManagementSystem.Models
 
         [Required(ErrorMessage = "Plese Enter Your User PassWord")]
         public string PassWord { get; set; }
-
+        public string Role { get; set; }
         public int emp_id { get; set; }
         public String LoginErrorMessage { get; set; }
-        public string Role { get; set; }
     }
 }
