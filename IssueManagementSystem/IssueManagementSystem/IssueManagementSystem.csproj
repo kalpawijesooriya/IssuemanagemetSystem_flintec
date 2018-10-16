@@ -266,6 +266,7 @@
   <ItemGroup>
     <Content Include="Content\3.3.0bootstrap.min.css" />
     <Content Include="Content\adminstyles\AdminBranchSideNav.css" />
+    <Content Include="Content\adminstyles\notificationManagement.css" />
     <Content Include="Content\adminstyles\select2-min.css" />
     <Content Include="Content\adminstyles\Settings.css" />
     <Content Include="Content\bootstrap-grid.css" />
