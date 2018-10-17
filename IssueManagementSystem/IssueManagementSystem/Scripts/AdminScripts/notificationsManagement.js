@@ -14,3 +14,13 @@ $('#selectIssue').select2({
     placeholder: "Select Issue....",
     allowClear: false
 });
+
+$('#Name').select2({
+    placeholder: "Search Name....",
+    allowClear: false
+});
+
+$('#Department').select2({
+    placeholder: "Search Department....",
+    allowClear: false
+});

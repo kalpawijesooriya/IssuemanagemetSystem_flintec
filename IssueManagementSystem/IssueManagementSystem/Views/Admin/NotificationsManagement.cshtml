@@ -8,6 +8,10 @@
     }
 }
 
+@using IssueManagementSystem.Models;
+@model List<IssueManagementSystem.Models.User_tbl>
+
+
 <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
 <link href="~/Content/adminstyles/Settings.css" rel="stylesheet" />
 <link href="~/Content/adminstyles/notificationManagement.css" rel="stylesheet" />
@@ -129,73 +133,116 @@
 
         <button class="btn btn-success glyphicons-chevron-left" style="margin-top:10px;" data-toggle="modal" data-target="#modal1">Add a person</button>
         <!-- start dro map in the draw new map model-->
-      
-               <div class="container">
-                   <div class="modal" data-keyboard="false" id="modal1" tabindex="-1" style="color:black; margin-top:10px;background-color: transparent;">
-                       <div class="modal-dialog">
-                           <div class="modal-content">
-                               <div class="modal-header background">
-                                   <h4 class="modal-title" style="margin:auto;">Draw New Map</h4>
-                                   <button class="close" data-dismiss="modal">&times;</button>
-                               </div>
-                               <!- - draw new map model body - ->
-            <div class="modal-body" style="display:flex;">
 
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <canvas id="canvas1" style="border: 1px solid black;" width="400" height="600">
-                                <br>
-                                This text is displayed if your browser does not support HTML5 Canvas.<br>
-                            </canvas>
+        <div class="container">
+            <div class="modal" data-keyboard="false" id="modal1" style="color:black; margin-top:10px;background-color: transparent;">
+                <div class="modal-dialog" style="width:70%;">
+                    <div class="modal-content">
+                        <div class="modal-header background">
+                            <h4 class="modal-title" style="margin:auto;">Search person</h4>
+                            <button class="close" data-dismiss="modal" style="margin-top:-20px;">&times;</button>
                         </div>
-                        <div class="col-lg-3">
-
+                        <!- - draw new map model body - ->
+                        <div class="modal-body" style="display:flex;">
                             <div class="container">
+                                <div class=" page-header row">
+                                    <div class="col-lg-4" style="">
+                                        <label class="lableSet" style="float:left">Department</label>
+
+                                        <select class="js-example-placeholder-single js-states form-control" id="Department" name="Department" style="width:100%">
+                                            <option></option>
+
+                                            @foreach (var user in Model)
+                                            {
+                                                <option> @user.Department</option>
+                                            }
+
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-8" style="">
+                                        <label class="lableSet" style="float:left">Name</label>
+
+                                        <select class="js-example-placeholder-single js-states form-control" id="Name" name="Name" style="width:100%">
+                                            <option></option>
+                                            @foreach (var user in Model)
+                                            {
+                                                <option> @user.Name</option>
+                                            }
+                                        </select>
+                                    </div>
+
+                                </div>
+
                                 <div class="row">
-                                    <div class="col-lg-1">
-                                        <label for="w">Width</label>
-                                        <input id="w" anme="w" class="form-control" placeholder="width" value="50">
+
+                                    <div class="col-lg-4">
+                                        <img src="~/Content/images/profile.jpg" width="70%" height="70%" style="margin-top:10px;" />
+                                    </div>
+
+                                    <div class="col-lg-8" style="margin-top:20px;">
+                                        <div class="row">
+                                            <p class="col-lg-2" style="float:left">
+                                                Name:
+                                            </p>
+                                            <p class="col-lg-9" style="float:left" id="name">
+
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-lg-2" style="float:left">
+                                                Department:
+                                            </p>
+                                            <p class="col-lg-9" style="float:left" id="dept">
+
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-lg-2" style="float:left">
+                                                emp ID:
+                                            </p>
+                                            <p class="col-lg-9" style="float:left" id="dept">
+
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-lg-2" style="float:left">
+                                                Position:
+                                            </p>
+                                            <p class="col-lg-9" style="float:left">
+
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-lg-2" style="float:left">
+                                                Phone:
+                                            </p>
+                                            <p class="col-lg-9" style="float:left">
+
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-lg-2" style="float:left">
+                                                E-mail:
+                                            </p>
+                                            <p class="col-lg-9" style="float:left">
+
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-lg-1">
-                                        <label for="h">Height</label>
-                                        <input id="h" name="h" class="form-control" placeholder="height" value="50">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-1">
-                                        <label for="color">Color</label>
-                                        <input id="color" name="color" class="jscolor form-control " value="ab2567" style="">
-                                    </div>
-                                </div>
-                                <br />
-                                <div class="row">
-                                    <div class="col-lg-2">
-                                        <button id="addNewShapeButton" class="btn btn-primary">Add</button>
-                                        <button id="deleteBox" class="btn btn-danger">Delete</button>
-                                    </div>
-                                </div>
-                                <p>Clicked Element: <span id="elementID"></span></p>
-                                <!- -   <button id="colorButton" >Color</button>  - ->
                             </div>
                         </div>
+                        <div class="modal-footer">
+                            <Button type="button" id="saveMap" class="btn btn-primary">Save changes</Button>
 
-                    </div>
-
-    </div>
-            </div>
-            <div class="modal-footer">
-                <Button type="button" id="saveMap" class="btn btn-primary">Save changes</Button>
-
-                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
-            </div>
-        </div>
+                            <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                        </div>
                     </div>
                 </div>
             </div>
-    
+        </div>
+
         <!-- ends draw new map model-->
 
     </div>

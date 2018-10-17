@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
@@ -198,67 +198,70 @@
     </Compile>
     <Compile Include="ISMHub.cs" />
     <Compile Include="Models\department.cs">
-      <DependentUpon>issueManagementSystemEntities.tt</DependentUpon>
+      <DependentUpon>issue_management_system.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\display.cs">
-      <DependentUpon>issueManagementSystemEntities.tt</DependentUpon>
+      <DependentUpon>issue_management_system.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\employee.cs">
-      <DependentUpon>issueManagementSystemEntities.tt</DependentUpon>
+      <DependentUpon>issue_management_system.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\issue.cs">
-      <DependentUpon>issueManagementSystemEntities.tt</DependentUpon>
+      <DependentUpon>issue_management_system.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\issueManagementSystemEntities.Context.cs">
+    <Compile Include="Models\issue_management_system.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>issueManagementSystemEntities.Context.tt</DependentUpon>
+      <DependentUpon>issue_management_system.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\issueManagementSystemEntities.cs">
+    <Compile Include="Models\issue_management_system.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>issueManagementSystemEntities.tt</DependentUpon>
+      <DependentUpon>issue_management_system.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\issueManagementSystemEntities.Designer.cs">
+    <Compile Include="Models\issue_management_system.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>issueManagementSystemEntities.edmx</DependentUpon>
+      <DependentUpon>issue_management_system.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\issue_occurrence.cs">
-      <DependentUpon>issueManagementSystemEntities.tt</DependentUpon>
+      <DependentUpon>issue_management_system.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\line.cs">
-      <DependentUpon>issueManagementSystemEntities.tt</DependentUpon>
+      <DependentUpon>issue_management_system.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\line_computer.cs">
-      <DependentUpon>issueManagementSystemEntities.tt</DependentUpon>
+      <DependentUpon>issue_management_system.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\line_machine.cs">
-      <DependentUpon>issueManagementSystemEntities.tt</DependentUpon>
+      <DependentUpon>issue_management_system.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\line_map.cs">
-      <DependentUpon>issueManagementSystemEntities.tt</DependentUpon>
+      <DependentUpon>issue_management_system.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\line_supervisor.cs">
-      <DependentUpon>issueManagementSystemEntities.tt</DependentUpon>
+      <DependentUpon>issue_management_system.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\machine.cs">
-      <DependentUpon>issueManagementSystemEntities.tt</DependentUpon>
+      <DependentUpon>issue_management_system.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\material.cs">
-      <DependentUpon>issueManagementSystemEntities.tt</DependentUpon>
+      <DependentUpon>issue_management_system.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>issueManagementSystemEntities.tt</DependentUpon>
+      <DependentUpon>issue_management_system.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_helpdiagrams_Result.cs">
-      <DependentUpon>issueManagementSystemEntities.tt</DependentUpon>
+      <DependentUpon>issue_management_system.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>issueManagementSystemEntities.tt</DependentUpon>
+      <DependentUpon>issue_management_system.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
-      <DependentUpon>issueManagementSystemEntities.tt</DependentUpon>
+      <DependentUpon>issue_management_system.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User_tbl.cs">
+      <DependentUpon>issue_management_system.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -269,6 +272,8 @@
     <Content Include="Content\adminstyles\notificationManagement.css" />
     <Content Include="Content\adminstyles\select2-min.css" />
     <Content Include="Content\adminstyles\Settings.css" />
+
+    <Content Include="Models\issue_management_system.Context.tt"/>
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -285,15 +290,18 @@
     <Content Include="Scripts\Display\showmapdisplay.js" />
     <Content Include="Content\SupervisorStyles\jquery-ui.css" />
     <Content Include="Models\issueManagementSystemEntities.Context.tt">
+
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>issueManagementSystemEntities.edmx</DependentUpon>
-      <LastGenOutput>issueManagementSystemEntities.Context.cs</LastGenOutput>
+      <DependentUpon>issue_management_system.edmx</DependentUpon>
+      <LastGenOutput>issue_management_system.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\issueManagementSystemEntities.tt">
+    <Content Include="Models\issue_management_system.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>issueManagementSystemEntities.edmx</DependentUpon>
-      <LastGenOutput>issueManagementSystemEntities.cs</LastGenOutput>
+      <DependentUpon>issue_management_system.edmx</DependentUpon>
+      <LastGenOutput>issue_management_system.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\Display\showmapdisplay.js" />
+    <Content Include="Content\SupervisorStyles\jquery-ui.css" />
     <Content Include="Scripts\AdminScripts\bootstrap.min.js" />
     <Content Include="Content\adminstyles\metisMenu.css" />
     <Content Include="Content\adminstyles\metisMenu.min.css" />
@@ -328,12 +336,12 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Models\issueManagementSystemEntities.edmx">
+    <EntityDeploy Include="Models\issue_management_system.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>issueManagementSystemEntities.Designer.cs</LastGenOutput>
+      <LastGenOutput>issue_management_system.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\issueManagementSystemEntities.edmx.diagram">
-      <DependentUpon>issueManagementSystemEntities.edmx</DependentUpon>
+    <Content Include="Models\issue_management_system.edmx.diagram">
+      <DependentUpon>issue_management_system.edmx</DependentUpon>
     </Content>
     <Content Include="Content\Display\css\.DS_Store" />
     <Content Include="Content\Display\css\bootstrap-grid.css.map" />

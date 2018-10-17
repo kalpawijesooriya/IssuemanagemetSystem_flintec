@@ -23,7 +23,7 @@ namespace IssueManagementSystem.Controllers
                 var userDetails =db.Users.Where(x => x.UserName == userModel.UserName && x.PassWord== userModel.PassWord).FirstOrDefault();
                 if (userDetails == null)
                 {
-                    userModel.LoginErrorMessage = "Woring UserName or Password.";//show login erroe message
+                    userModel.LoginErrorMessage = "Wrong UserName or Password.";//show login erroe message
                     return View("Index", userModel);
                 }
                 else {
