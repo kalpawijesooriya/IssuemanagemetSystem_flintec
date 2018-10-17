@@ -1,12 +1,13 @@
 ﻿
 @{
     ViewBag.Title = "Raspberry";
-    //if (Session["userID"] == null)
-  //  {
-       //Response.Redirect("~/Login/Index");
-   // }
+    if (Session["userID"] == null)
+      {
+    Response.Redirect("~/Login/Index");
+     }
 }
-@model IssueManagementSystem.Models.issue_occurrence
+@using IssueManagementSystem.Models;
+@model List<IssueManagementSystem.Models.issue_occurrence>
 
 <link href="~/Content/Display/css/bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/Display/displaystyles.css" rel="stylesheet" />
@@ -26,11 +27,35 @@
             </div>
         </div>
         <div class="col-sm-6">
-            <div class="card text-white bg-danger mb-3" style="max-width:60rem;">
+            <div class="card text-white bg-danger mb-3" style="max-width:80rem;">
                 <div class="card-header">Machine Breakdown</div>
                 <div class="card-body" id="breakediv">
+                    <table class="table" style="max-width:80rem;">
+                        <thead>
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Machine</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Responsible person</th>
 
-                  
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewBag.issueoccourInfo)
+                            {
+                                if (item.issue_issue_ID == 1)
+                                {
+                            <tr>
+                                <td>@item.date_time</td>
+                                <td>@item.machine_machine_id</td>
+                                <td>@item.description</td>
+                                <td>@item.responsible_person_emp_id</td>
+                            </tr>
+                                }
+
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="card text-white bg-warning mb-3" style="max-width: 60rem;">
@@ -64,18 +89,21 @@
     <script src="~/Scripts/3.30bootstrap.min.js"></script>
     <script src="~/signalr/js"></script>
     <script>
-       
-            $.connection.hub.start()
-                .done(function () {
-                    console.log("Worked")
-                   
-                })
-                .fail(function () { alert("ERROR!") });
-      
 
-        $.connection.iSMHUB.client.announce = function (message)
+    $.connection.hub.start()
+        .done(function () {
+            console.log("Worked")
+
+        })
+        .fail(function () { alert("ERROR!") });
+
+
+        $.connection.iSMHUB.client.announce = function ()
         {
-            $("#breakediv").append(" <p >" + message + "<p>");
+
+            location.reload();//refresh the page when hub call to its chients
+
+           
         }
 
     </script>
