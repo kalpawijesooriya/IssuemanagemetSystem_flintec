@@ -20,6 +20,7 @@ namespace IssueManagementSystem.Models
         public issue_management_systemEntities1()
             : base("name=issue_management_systemEntities")
         {
+            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
