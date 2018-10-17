@@ -273,7 +273,7 @@
     <Content Include="Content\adminstyles\select2-min.css" />
     <Content Include="Content\adminstyles\Settings.css" />
 
-    <Content Include="Models\issue_management_system.Context.tt">
+    <Content Include="Models\issue_management_system.Context.tt"/>
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
