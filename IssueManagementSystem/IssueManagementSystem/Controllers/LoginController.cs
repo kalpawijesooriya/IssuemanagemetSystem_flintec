@@ -57,6 +57,8 @@ namespace IssueManagementSystem.Controllers
         {
             Session.Abandon();
             return RedirectToAction("Index","Login");
+
+
         }
     }
 }

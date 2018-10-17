@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "selectIssue";
     Layout = "~/Views/Shared/supervisorsLayout.cshtml";
-   
+
 
 }
 @using IssueManagementSystem.Models;
@@ -42,19 +42,19 @@
                 <div id="accordion" style="width:100%;margin-left:10%" class="pre-scrollable">
                     @foreach (var item in Model)
                     {
-                    
-                        if ((item.line_line_id == ViewBag.lineID)&&(item.issue_satus=="1"))
+
+                        if ((item.line_line_id == ViewBag.lineID) && (item.issue_satus == "1"))
                         {
-                        issue_management_systemEntities1 db = new issue_management_systemEntities1();
-                        var IssueInfo = db.issues.Where(x => x.issue_id == item.issue_issue_ID).FirstOrDefault();
-                 
-                        <h3>@item.issue_occurrence_id</h3>
-                        <div>
-                            <p>Issue Type :@IssueInfo.issue1</p>
-                            <p>Issue Info:@item.description</p>
-                            <p>Issue Post Date:@item.date_time</p>
-                            <button type="submit" class="btn btn-danger off" data-issue-occorid="@item.issue_occurrence_id" data-issueid="@item.issue_issue_ID">solved</button>
-                        </div>
+                            issue_management_systemEntities1 db = new issue_management_systemEntities1();
+                            var IssueInfo = db.issues.Where(x => x.issue_id == item.issue_issue_ID).FirstOrDefault();
+
+                            <h3>@item.issue_occurrence_id</h3>
+                            <div>
+                                <p>Issue Type :@IssueInfo.issue1</p>
+                                <p>Issue Info:@item.description</p>
+                                <p>Issue Post Date:@item.date_time</p>
+                                <button type="submit" class="btn btn-danger off" data-issue-occorid="@item.issue_occurrence_id" data-issueid="@item.issue_issue_ID">solved</button>
+                            </div>
 
                         }
                     }
@@ -64,18 +64,26 @@
         </div>
     </div>
 
- 
+
 
 
 </body>
 
 <link href="~/Content/SupervisorStyles/jquery-ui.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-ui.js"></script>
+<script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
+<script src="~/signalr/js"></script>
+<script>
+    $("#submit").click(function () {
+       
+    });
+
+</script>
 <script>
     $(function () {
         $("#accordion").accordion();
     });
- 
+
     $(".off").click(function () {//listen to soloed problum button;
         var container = $(this).closest('div');
         var hedder = $(this).closest('div').prev("h3");
@@ -87,13 +95,19 @@
                 // fadeout, then remove
                 console.log(data.Issueoccour_Id, data.Issue_Id)
                 container.fadeOut(800, function () { $(this).remove(); })
-                hedder.fadeOut(800, function () { $(this).remove();})
+                hedder.fadeOut(800, function () { $(this).remove(); })
             } else {
                 console.log("display an error message");
             }
         }).fail(function () {
             console.log(" oops");
-        });
+            });
+        $.connection.hub.start()
+            .done(function () {
+                console.log("Worked")
+                $.connection.iSMHUB.server.announce();
+            })
+            .fail(function () { alert("ERROR!") });
     });
 
 

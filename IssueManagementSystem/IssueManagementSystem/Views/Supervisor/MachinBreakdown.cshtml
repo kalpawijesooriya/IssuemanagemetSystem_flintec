@@ -17,9 +17,10 @@
 
 <div class="container margin ">
     <h2>Machine Breakdown</h2>
-    <hr/>
+    <hr />
     <h3>Select the machine</h3>
 
+    <input type="hidden" value="@Session["userID"]" id="userId" />
     <div class="row">
         <div class="col-sm-6">
             <div class="container-liquid">
@@ -61,7 +62,7 @@
 
         </div>
     </div>
-
+ 
     <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
     <script src="~/Scripts/SupervisorScripts/showmap.js"></script>
     <script src="~/Scripts/jquery.min.js"></script>
@@ -74,7 +75,7 @@
             $.connection.hub.start()
                 .done(function () {
                     console.log("Worked")
-                    $.connection.iSMHUB.server.announce("Connected!");
+                    $.connection.iSMHUB.server.announce();
                 })
                 .fail(function () { alert("ERROR!") });
         });
