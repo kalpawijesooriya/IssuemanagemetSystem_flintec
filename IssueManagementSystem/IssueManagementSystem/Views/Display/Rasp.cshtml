@@ -1,10 +1,10 @@
 ﻿
 @{
     ViewBag.Title = "Raspberry";
-    if (Session["userID"] == null)
-    {
-        Response.Redirect("~/Login/Index");
-    }
+    //if (Session["userID"] == null)
+  //  {
+       //Response.Redirect("~/Login/Index");
+   // }
 }
 @model IssueManagementSystem.Models.issue_occurrence
 
@@ -28,9 +28,9 @@
         <div class="col-sm-6">
             <div class="card text-white bg-danger mb-3" style="max-width:60rem;">
                 <div class="card-header">Machine Breakdown</div>
-                <div class="card-body">
+                <div class="card-body" id="breakediv">
 
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  
                 </div>
             </div>
             <div class="card text-white bg-warning mb-3" style="max-width: 60rem;">
@@ -58,8 +58,28 @@
         </div>
     </div>
 
-    <script src="~/Scripts/3.30bootstrap.min.js"></script>
     <script src="~/Scripts/Display/showmapdisplay.js"></script>
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
+    <script src="~/Scripts/3.30bootstrap.min.js"></script>
+    <script src="~/signalr/js"></script>
+    <script>
+       
+            $.connection.hub.start()
+                .done(function () {
+                    console.log("Worked")
+                   
+                })
+                .fail(function () { alert("ERROR!") });
+      
+
+        $.connection.iSMHUB.client.announce = function (message)
+        {
+            $("#breakediv").append(" <p >" + message + "<p>");
+        }
+
+    </script>
+
 </div>
 
 

@@ -14,10 +14,10 @@
 
 <link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
 
-<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
 <div class="container margin ">
     <h2>Machine Breakdown</h2>
-    <hr />
+    <hr/>
     <h3>Select the machine</h3>
 
     <div class="row">
@@ -66,11 +66,28 @@
                     </div>
                 </div>
             }
+
         </div>
     </div>
-    <script src="~/Scripts/jquery-3.3.1.slim.min.js"></script>
+
     <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
     <script src="~/Scripts/SupervisorScripts/showmap.js"></script>
+    <script src="~/Scripts/jquery.min.js"></script>
+    <link href="~/Content/SupervisorStyles/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
+    <script src="~/signalr/js"></script>
+    <script>
+        $("#submit").click(function () {
+            $.connection.hub.start()
+                .done(function () {
+                    console.log("Worked")
+                    $.connection.iSMHUB.server.announce("Connected!");
+                })
+                .fail(function () { alert("ERROR!") });
+        });
+
+    </script>
 
 </div>
 
