@@ -23,10 +23,9 @@ namespace IssueManagementSystem.Models
         public Nullable<int> emp_id { get; set; }
         public string Role { get; set; }
         public string Name { get; set; }
-        public string LoginErrorMessage { get; internal set; }
+        public string LoginErrorMessage { get; set; }
 
-        public int emp_id { get; set; }
-        public String LoginErrorMessage { get; set; }
+
 
     }
 }
