@@ -14,7 +14,20 @@ namespace IssueManagementSystem.Models
     
     public partial class machine
     {
-        public int machine_id { get; set; }
-        public string machine_name { get; set; }
+        public string Workstation_ID { get; set; }
+        public string Machine_ID { get; set; }
+        public string Agilent_ID { get; set; }
+        public string LDU_ID { get; set; }
+        public string LDU_Port { get; set; }
+        public string Agilent_Port { get; set; }
+        public Nullable<double> Rest_error { get; set; }
+        public Nullable<int> LDU_Baud_Rate { get; set; }
+        public Nullable<System.DateTime> Setup_date { get; set; }
+        public string @operator { get; set; }
+        public string Resistor_Agilent { get; set; }
+        public string Line { get; set; }
+        public string Master_cell { get; set; }
+        public Nullable<double> Machine_factor { get; set; }
+        public string USB_Port { get; set; }
     }
 }

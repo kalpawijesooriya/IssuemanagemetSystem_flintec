@@ -1,4 +1,4 @@
-﻿
+﻿using IssueManagementSystem.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -83,8 +83,14 @@ namespace IssueManagementSystem.Controllers
 
         public ActionResult NotificationsManagement()
         {
-            return View();
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
+            {
+                List<User_tbl> userList = db.User_tbl.ToList();
+                List<department> departments = db.departments.Distinct().ToList();
+                return View(userList);
+            }
 
         }
+
     }
 }

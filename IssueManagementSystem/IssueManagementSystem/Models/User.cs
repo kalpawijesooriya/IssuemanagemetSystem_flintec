@@ -11,19 +11,14 @@ namespace IssueManagementSystem.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
-
+    
     public partial class User
     {
-        [Required(ErrorMessage = "Plese Enter Your UserName")]
         public string UserName { get; set; }
-
-        [Required(ErrorMessage = "Plese Enter Your User PassWord")]
         public string PassWord { get; set; }
-
-        public int emp_id { get; set; }
-        public String LoginErrorMessage { get; set; }
+        public Nullable<int> emp_id { get; set; }
         public string Role { get; set; }
+        public string Name { get; set; }
+        public string LoginErrorMessage { get; internal set; }
     }
 }
