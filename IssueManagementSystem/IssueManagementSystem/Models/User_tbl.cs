@@ -11,12 +11,17 @@ namespace IssueManagementSystem.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
+    using System.ComponentModel.DataAnnotations;
     public partial class User_tbl
     {
         public int EmployeeNumber { get; set; }
         public string Name { get; set; }
+
+        [Required(ErrorMessage = "Plese Enter Your UserName")]
         public string UserName { get; set; }
+
+        [Required(ErrorMessage = "Plese Enter Your User PassWord")]
         public string Password { get; set; }
         public string SuplierAndIntrancit { get; set; }
         public string ChemicalAndMechaniacl { get; set; }
@@ -39,5 +44,6 @@ namespace IssueManagementSystem.Models
         public string Position { get; set; }
         public string Role { get; set; }
         public string Department { get; set; }
+        public string LoginErrorMessage { get; set; }
     }
 }

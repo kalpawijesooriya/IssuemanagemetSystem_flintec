@@ -17,13 +17,13 @@ namespace IssueManagementSystem.Controllers
         }
 
  
-        public ActionResult Rasp()
+        public ActionResult Rasp(int id)
         {
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) {
 
 
-
-                ViewBag.issueoccourInfo = db.issue_occurrence.Where(x => x.line_line_id == 3 && x.issue_satus=="1").ToList();
+                ViewBag.id = id;
+                ViewBag.issueoccourInfo = db.issue_occurrence.Where(x => x.line_line_id == id && x.issue_satus=="1").ToList();
                
                
             }
