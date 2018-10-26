@@ -14,7 +14,7 @@ namespace IssueManagementSystem.Models
     
     public partial class employee
     {
-        public int emp_id { get; set; }
+        public int EmployeeNumber { get; set; }
         public string emp_name { get; set; }
         public int department_id { get; set; }
         public string phone { get; set; }

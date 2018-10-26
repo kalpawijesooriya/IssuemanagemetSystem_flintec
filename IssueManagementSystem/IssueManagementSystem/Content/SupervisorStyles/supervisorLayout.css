@@ -1,5 +1,11 @@
 ﻿.logo {
-    width:40%;
-    height:200%;
- 
+   max-height:60px;
+   height:80%;
+   min-height:40px;
+   margin-top:0px;
+
+}
+nav {
+    min-height: 70px;
+    max-height: 80px;
 }

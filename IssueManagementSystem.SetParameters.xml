@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <setParameter name="IIS Web Application Name" value="IssueManagemanetSystem" />
+  <setParameter name="ims-Web.config Connection String" value="Data Source=192.168.1.110;Initial Catalog=issue_management_system;User ID=admin;Password=1234" />
+  <setParameter name="issue_management_systemEntities-Web.config Connection String" value="metadata=res://*/;provider=System.Data.SqlClient;provider connection string=&quot;Data Source=192.168.1.110;Initial Catalog=issue_management_system;User ID=admin;Password=1234&quot;" />
+</parameters>

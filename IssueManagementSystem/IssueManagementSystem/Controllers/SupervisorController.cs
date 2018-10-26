@@ -15,7 +15,8 @@ namespace IssueManagementSystem.Controllers
 {
     public class SupervisorController : Controller
     {
-        Communication com = new Communication(); //make a object for communication class
+
+        Communication com = new Communication();
         // GET: Supervisor
         public ActionResult selectIssue()// select issue view
         {
@@ -24,13 +25,8 @@ namespace IssueManagementSystem.Controllers
                 int userID = (int)Session["userID"];
                 var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
                 ViewBag.lineID = lineInfo.line_line_id;
-                List<issue_occurrence> issue = db.issue_occurrence.ToList();
-                
-                   
-                  
-               
-                
-                return View(issue);
+                List<issue_occurrence> issue = db.issue_occurrence.ToList();     
+               return View(issue);
             }
                
 
@@ -116,16 +112,17 @@ namespace IssueManagementSystem.Controllers
                     issueModel.issue_satus = "1";
                     issueModel.issue_issue_ID = 1;//Issue id is 1 for Machine Brakedown
                     issueModel.responsible_person_emp_id = 5;//get specific employee 
-                    issueModel.date_time = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss",System.Globalization.CultureInfo.InvariantCulture);;
+                    var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                    issueModel.date_time = date;
                     db.issue_occurrence.Add(issueModel);
                     db.SaveChanges();
                     if (issueModel.issue_occurrence_id > 0)
                     {
+                        var line = db.lines.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
+                        string msg = line.line_name + " line IT/SoftWare issue has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
                         var displayInfo = db.displays.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
-                        ViewBag.Success = "Inserted";
-                        com.lightON("1", displayInfo.raspberry_ip_address);
-                        com.sendMail();
-                       // com.Send_SMS();
+                        com.lightON("1", displayInfo.raspberry_ip_address);//turn on the Light
+                        sendCD(lineInfo.line_line_id, 1, msg);
                     }
                     ModelState.Clear();
                 }
@@ -152,16 +149,17 @@ namespace IssueManagementSystem.Controllers
                     issueModel.issue_satus = "1";
                     issueModel.issue_issue_ID = 3;//Issue id is 2 for Machine Brakedown
                     issueModel.responsible_person_emp_id = 5;//get specific employee 
-                    issueModel.date_time = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture); ;
+                    var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                    issueModel.date_time = date;
                     db.issue_occurrence.Add(issueModel);
                     db.SaveChanges();
                     if (issueModel.issue_occurrence_id > 0)
                     {
+                        var line = db.lines.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
                         var displayInfo = db.displays.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
-                        ViewBag.Success = "Inserted";
-                        com.lightON("3", displayInfo.raspberry_ip_address);
-                        com.sendMail();
-                        com.Send_SMS();
+                        string msg = line.line_name + " line IT/SoftWare issue has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
+                        com.lightON("3", displayInfo.raspberry_ip_address);//turn on the Light
+                        sendCD(lineInfo.line_line_id, 3, msg);
                     }
                     ModelState.Clear();
                 }
@@ -188,17 +186,18 @@ namespace IssueManagementSystem.Controllers
                     issueModel.issue_satus = "1";
                     issueModel.issue_issue_ID = 5;//Issue id is 5 for IT Issue
                     issueModel.responsible_person_emp_id = 5;//get specific employee 
-                    issueModel.date_time = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture); ;
+                 
+                    var date=DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture); 
+                    issueModel.date_time = date;
                     db.issue_occurrence.Add(issueModel);
                     db.SaveChanges();
                     if (issueModel.issue_occurrence_id > 0)
                     {
+                        var line = db.lines.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault(); 
+                        string msg = line.line_name + " line IT/SoftWare issue has been occurred at "+date+". Special Note of Line supervisor - "+ issueModel.description;
                         var displayInfo = db.displays.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
-                        ViewBag.Success = "Inserted";
-                        com.lightON("5", displayInfo.raspberry_ip_address);
-                        com.sendMail();
-                        com.Send_SMS();
-                        
+                        com.lightON("5", displayInfo.raspberry_ip_address);//turn on the Light
+                        sendCD(lineInfo.line_line_id, 5,msg);
                        
                     }
                     ModelState.Clear();
@@ -206,7 +205,23 @@ namespace IssueManagementSystem.Controllers
 
             }
 
-            return null;
+            return RedirectToAction("selectIssue", "Supervisor");
+        }
+
+        private void sendCD(int? line_line_id, int issueId,string msg)
+        {
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+            {
+                 var communicationInfo = db.issue_line_person.Where(x => x.line_id == line_line_id && x.issue_id == issueId).ToList();
+                foreach (var item in communicationInfo)
+                {
+                    var personInfo=db.User_tbl.Where(y => y.EmployeeNumber==item.EmployeeNumber).FirstOrDefault();
+                    CommunicationData cd = new CommunicationData(personInfo.Phone,msg,personInfo.EMail,item.email,item.call,item.message);
+                    com.setCD(cd);
+                }
+               
+             
+            }
         }
 
         [HttpPost]//solovedIssueMethod
@@ -238,10 +253,12 @@ namespace IssueManagementSystem.Controllers
             }
             if (count == 0) {// if cout ==0 light will off
                 var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
-                com.lightOFF(issueId.ToString(), displayInfo.raspberry_ip_address);
+                //com.lightOFF(issueId.ToString(), displayInfo.raspberry_ip_address);
             }
             return Json(true);
-        }  
+        }
+
+       
        
     }
 }
