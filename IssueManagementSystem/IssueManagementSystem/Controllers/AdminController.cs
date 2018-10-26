@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Dynamic;
 using System.Linq;
 using System.Net;
 using System.Net.Mime;
@@ -86,8 +87,15 @@ namespace IssueManagementSystem.Controllers
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
             {
                 List<User_tbl> userList = db.User_tbl.ToList();
-                List<department> departments = db.departments.Distinct().ToList();
-                return View(userList);
+                List<department> departments = db.departments.ToList();
+
+
+
+                dynamic mymodel = new ExpandoObject();
+                mymodel.users = userList;
+                mymodel.departments = departments;
+
+                return View(mymodel);
             }
 
         }
