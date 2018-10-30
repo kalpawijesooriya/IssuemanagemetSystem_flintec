@@ -13,30 +13,45 @@
     <script src="~/Scripts/jquery.signalR-2.3.0.js"></script>
     <script src="/signalr/hubs"></script>
     <script src="~/Scripts/knockout-3.4.2.js"></script>
+    <link href="~/Content/SupervisorStyles/supervisorLayout.css" />
     <script src="~/Scripts/knockout.mapping-latest.js"></script>
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top" >
-        <div class="container">
-            <div class="navbar-header">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a class="navbar-brand" rel="home" href="https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/introduction/adding-a-view" title="Buy Sell Rent Everyting">
-                            <img height="45" class="d-inline-block align-top" alt="" src="~/Content/images/flinteclogo.png">
-                        </a>
-                    </li>   
-                    <li  style="float: right;">
-                        <div class="navbar-collapse collapse">
-                            <ul class="nav navbar-nav navbar-left">
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <img class="img-circle" width="45" height="45" alt="" src="~/Content/images/profile.jpg"> <span class="caret"></span></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><div>
-                                            <ul class="nav navbar-nav navbar-left">
-                                                <li>
-                                                    <strong style="margin-left:20px">Kalpa Wijesooriya</strong>
-                                                </li>
-                                            </ul>
+<body style="padding-top:0px" >
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0;position:fixed;width:100%;width:100%;background-color:#222222">
+        <div class="navbar-header" style="float:right">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only0">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        
+
+            <ul class="nav navbar-top-links navbar-left">
+
+                <li style="float:left">
+                    <a class="navbar-brand" rel="home" href="#">
+                        <img class="d-inline-block align-top logo" alt="" src="~/Content/images/flinteclogo.png">
+                    </a>
+                </li>
+
+            </ul>
+            <ul class="nav navbar-top-links navbar-right" style="margin-right:2%">
+                <li >
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <img class="img-circle" width="45" height="45" alt="" src="~/Content/images/profile.jpg"> <span class="caret"></span></a>
+                                
+                                    <ul class="dropdown-menu" role="menu" style="background-color:#fff">
+                                        <li>
+                                            <div>
+                                                <ul class="nav navbar-nav navbar-left">
+                                                    <li>
+                                                        <strong style="margin-left:20px">Kalpa Wijesooriya</strong>
+                                                    </li>
+                                                </ul>
                                             </div>
                                         </li>
                                         <li><a href="#" style="color:darkgrey">kalpa.wijesooriya@flintec.com</a></li>
@@ -45,25 +60,28 @@
                                         <li><a href="#">Separated link</a></li>
                                         <li class="divider"></li>
                                         <li><a href="#">One more separated link</a></li>
+                                        
                                     </ul>
-                                </li>
-                            </ul>
+                                
+                            </li>
+                        </ul>
 
-                        </div>
-                    </li>
-                </ul>
-            </div>
-           
+                    </div>
+                </li>
+            </ul>
+
+       
+
+        </nav>
+
+        <div class="container body-content" style="padding-top:7%">
+
+            @RenderBody()
+
         </div>
-    </div>
-    <div class="container body-content" style="margin-bottom:4%">
-
-        @RenderBody()
-
-    </div>
 
 
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
 </body>
 </html>

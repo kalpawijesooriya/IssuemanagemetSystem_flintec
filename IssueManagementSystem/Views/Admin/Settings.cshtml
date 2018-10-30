@@ -1,0 +1,230 @@
+﻿
+@{
+    ViewBag.Title = "Settings";
+    Layout = "~/Views/Shared/BranchSideNav.cshtml";
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+
+<link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
+<link href="~/Content/adminstyles/Settings.css" rel="stylesheet" />
+<div id="page-wrapper" class="container"  style="padding-top:50px;position:absolute">
+
+    <div class="row select-margins">
+        <div class="col-lg-4">
+            <h1 class="page-header" >Settings</h1>
+            <h3 style="margin-top:-10px;" class="page-header textalline-center">Create New Line</h3>
+            <div class="col-lg-12">
+                <div class="row">
+
+                    <div class="col-lg-4">
+                        <label for="selectdepartment"> Department</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <select class="js-example-placeholder-single js-states form-control" id="selectdepartment" name="selectdepartment">
+                            <option></option>
+                            <option>Assembly</option>
+                            <option>Machining</option>
+                            <option>IT</option>
+                            <option>Engineering</option>
+                            <option>Maintenance</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:20px;">
+                    <div class="col-lg-4">
+                        <label for="selectline"> Line</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <select class="js-example-placeholder-single js-states form-control" id="selectline" name="selectline">
+                            <option></option>
+                            <option>Potted</option>
+                            <option>Welder</option>
+                            <option>SM</option>
+                            <option>Guaging</option>
+                            <option>Rocker</option>
+                            <option>MD2</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top:20px;margin-bottom:20px;">
+                    <div class="col-lg-4">
+                        <label for="selectlineIssues" style="margin-top:5px;">Issues</label>
+                    </div>
+                    <div class="col-lg-8">
+                        <select class="js-example-placeholder-basic-multiple-limit js-states form-control" id="selectlineIssues" name="selectlineIssues" multiple="true">
+                            <option></option>
+                            <option>Machine Breakdown</option>
+                            <option>Material Delay</option>
+                            <option>Technical Issue</option>
+                            <option>Quality Issue</option>
+                            <option>IT Issue</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row" style="margin-top:200px;width:70%;margin-left:10%">
+                <label for="raspberrypi_ip">Raspberry-Pi Module IP Address</label>
+                <input type="text" id="raspberrypi_ip" name="raspberrypi_ip" class="form-control" />
+
+            </div>
+
+            <div class="row" style="margin-top:30px;margin-left:25%">
+
+                <button class='btn btn-success' id="saveMap" style="margin:auto">Save Created Line</button>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="row">
+            <!--    <button class='btn btn-success' data-target='#modal1' data-toggle='modal'>Draw New Map</button> -->
+            </div>
+            <div class="row">
+                <div class="container">
+                    <div class="row" style="margin-top:40px;">
+                        <div class="col-lg-4" >
+                            <label>Floor Map</label>
+                            <canvas id="canvas1" style="border: 1px solid black;" width="400" height="600">
+                                <br>
+                                This text is displayed if your browser does not support HTML5 Canvas.<br>
+                            </canvas>
+
+                        </div>
+                        <div class="col-lg-3">
+
+                            <div class="container" style="margin-left:10px">
+
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <label for="h">Machine</label>
+                                        <select class="js-example-placeholder-single js-states form-control" id="machineSelectBox" name="machineSelectBox">
+                                            <option></option>
+                                                @{
+                                                    for (var i = 10; i < 21; i++)
+                                                    {
+                                                        <option>Machine @i</option>
+                                                    }
+                                                 }
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-1">
+                                        <label for="w">Width</label>
+                                        <input id="w" anme="w" class="form-control" placeholder="width" value="50">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-1">
+                                        <label for="h">Height</label>
+                                        <input id="h" name="h" class="form-control" placeholder="height" value="50">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-1">
+                                        <label for="color">Color</label>
+                                        <input id="color" name="color" class="jscolor form-control " value="ab2567" style="">
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <button id="addNewShapeButton" class="btn btn-primary">Add</button>
+                                        <button id="deleteBox" class="btn btn-danger">Delete</button>
+                                    </div>
+                                </div>
+                                <p>Selected MAchine: <span id="elementID"></span></p>
+                                <!--   <button id="colorButton">Color</button>  -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- start dro map in the draw new map model-->
+    <!--
+           <div class="container">
+               <div class="modal" data-keyboard="false" id="modal1" tabindex="-1" style="color:black; margin-top:10px;background-color: transparent;">
+                   <div class="modal-dialog">
+                       <div class="modal-content">
+                           <div class="modal-header background">
+                               <h4 class="modal-title" style="margin:auto;">Draw New Map</h4>
+                               <button class="close" data-dismiss="modal">&times;</button>
+                           </div>
+                           <!- - draw new map model body - ->
+        <div class="modal-body" style="display:flex;">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <canvas id="canvas1" style="border: 1px solid black;" width="400" height="600">
+                            <br>
+                            This text is displayed if your browser does not support HTML5 Canvas.<br>
+                        </canvas>
+                    </div>
+                    <div class="col-lg-3">
+
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-1">
+                                    <label for="w">Width</label>
+                                    <input id="w" anme="w" class="form-control" placeholder="width" value="50">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-1">
+                                    <label for="h">Height</label>
+                                    <input id="h" name="h" class="form-control" placeholder="height" value="50">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-1">
+                                    <label for="color">Color</label>
+                                    <input id="color" name="color" class="jscolor form-control " value="ab2567" style="">
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <button id="addNewShapeButton" class="btn btn-primary">Add</button>
+                                    <button id="deleteBox" class="btn btn-danger">Delete</button>
+                                </div>
+                            </div>
+                            <p>Clicked Element: <span id="elementID"></span></p>
+                            <!- -   <button id="colorButton" >Color</button>  - ->
+                        </div>
+                    </div>
+
+                </div>
+             
+</div>
+        </div>
+        <div class="modal-footer">
+            <Button type="button" id="saveMap" class="btn btn-primary">Save changes</Button>
+
+            <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+                </div>
+            </div>
+        </div>
+-->
+        <!-- ends draw new map model-->
+
+
+</div>
+<script src="~/Scripts/AdminScripts/jscolar.js"></script>
+<script src="~/Scripts/AdminScripts/jquery.js"></script>
+<script src="~/Scripts/AdminScripts/select2-min.js"></script>
+<script src="~/Scripts/AdminScripts/settings.js"></script>
+<script src="~/Scripts/jquery-3.3.1.js"></script>

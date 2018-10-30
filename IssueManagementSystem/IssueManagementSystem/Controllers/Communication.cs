@@ -1,16 +1,75 @@
-﻿using System;
+﻿using IssueManagementSystem.Models;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Threading;
 using System.Web;
 
 namespace IssueManagementSystem.Controllers
 {
+   
     public class Communication
     {
+        static Queue numberList = new Queue();
+        static bool gsm_status = true;
+
+        public Communication()
+        {
+          
+        }
+
+        public void setCD(CommunicationData cd) {
+
+            numberList.Enqueue(cd);          
+            doCommunicate();
+        }
+
+
+
+
+        private void doCommunicate()
+        {
+           
+           
+
+            if (gsm_status)
+            {
+                CommunicationData communicateData = (CommunicationData)numberList.Dequeue();
+                try
+                {
+                    gsm_status = false;
+                     
+                    if (communicateData.getEmail()==1)
+                        sendMail(communicateData.getEmailAddress());
+
+                    if (communicateData.getMessage()==1) 
+                    send_SMS(communicateData.getNumber(), communicateData.getMsg());
+
+                    if (communicateData.getCall() ==1)
+                        take_Call(communicateData.getNumber(), communicateData.getMsg());
+
+                    gsm_status = true;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
+            }
+            else
+            {
+                int milliseconds = 2000;
+                Thread.Sleep(milliseconds);
+                doCommunicate();
+            }
+
+            }
+
         public void lightON(string light, string ip)
         {
             string url = "http://"+ip+"/led.php?on=" + light;
@@ -27,9 +86,9 @@ namespace IssueManagementSystem.Controllers
             HttpWebResponse webResponse = (HttpWebResponse)webReq.GetResponse();
         }
 
-        public void sendMail()
+        public void sendMail(string emailAddress)
         {
-            using (MailMessage mm = new MailMessage("flintec.ism.alerts@gmail.com", "kalpa.wijesooriya@outlook.com"))
+            using (MailMessage mm = new MailMessage("ppts@flintec.com", emailAddress))
             {
                 mm.Subject = "machine breakedown Notification";
                 mm.Body = "This is test message";
@@ -37,55 +96,91 @@ namespace IssueManagementSystem.Controllers
                 mm.IsBodyHtml = false;
                 using (SmtpClient smtp = new SmtpClient())
                 {
-                    smtp.Host = "smtp.gmail.com";
+                    smtp.Host = "smtp-mail.outlook.com";
                     smtp.EnableSsl = true;
-                    NetworkCredential NetworkCred = new NetworkCredential("flintec.ism.alerts@gmail.com", "ism@flintec");
+                    NetworkCredential NetworkCred = new NetworkCredential("ppts@flintec.com", "user1082@#");
                     smtp.UseDefaultCredentials = true;
                     smtp.Credentials = NetworkCred;
                     smtp.Port = 587;
                     smtp.Send(mm);
                    
+                   // Debug.WriteLine("This is count : " + count.ToString());
+
                 }
             }
 
         }
 
-        public void Send_SMS()
+        public  void send_SMS(string number,string message)
         {
 
-            try
-            {
-                ASCIIEncoding encoding = new ASCIIEncoding();
-                string postData = "p=94789091710&m=sjghs";
-                byte[] data = encoding.GetBytes(postData);
+           
 
-                WebRequest request = WebRequest.Create("http://192.168.137.104/sms_call.php");
-                request.Method = "POST";
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.ContentLength = data.Length;
+                    ASCIIEncoding encoding = new ASCIIEncoding();
+                   
+                    
+                    string postData = "p=" + number + "&m="+ message;
+                    byte[] data = encoding.GetBytes(postData);
 
-                Stream stream = request.GetRequestStream();
-                stream.Write(data, 0, data.Length);
-                stream.Close();
+                    WebRequest request = WebRequest.Create("http://192.168.137.238/sms_call.php");
+                    request.Method = "POST";
+                    request.ContentType = "application/x-www-form-urlencoded";
+                    request.ContentLength = data.Length;
 
-                WebResponse response = request.GetResponse();
-                stream = response.GetResponseStream();
+                    Stream stream = request.GetRequestStream();
+                    stream.Write(data, 0, data.Length);
+                    stream.Close();
 
-                StreamReader sr = new StreamReader(stream);
+                    WebResponse response = request.GetResponse();
+                    stream = response.GetResponseStream();
 
-                var cs = sr.ReadToEnd();
+                    StreamReader sr = new StreamReader(stream);
 
-                sr.Close();
-                stream.Close();
 
-            }
-            catch (Exception ex)
-            {
+                    var cs = sr.ReadToEnd().Trim();
+                    Debug.WriteLine("SMS Respond: "+ cs);
 
-            }
+                    sr.Close();
+                    stream.Close();
 
+        }
+
+        public void take_Call(string number, string message)
+        {
+
+
+
+            ASCIIEncoding encoding = new ASCIIEncoding();
+
+
+            string postData = "p=" + number + "&c=" + message;
+            byte[] data = encoding.GetBytes(postData);
+
+            WebRequest request = WebRequest.Create("http://192.168.137.238/sms_call.php");
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = data.Length;
+
+            Stream stream = request.GetRequestStream();
+            stream.Write(data, 0, data.Length);
+            stream.Close();
+
+            WebResponse response = request.GetResponse();
+            stream = response.GetResponseStream();
+
+            StreamReader sr = new StreamReader(stream);
+
+
+            var cs = sr.ReadToEnd().Trim();
+            Debug.WriteLine("Call Respond: " + cs);
+            sr.Close();
+            stream.Close();
 
 
         }
+
+
+
+
     }
 }
