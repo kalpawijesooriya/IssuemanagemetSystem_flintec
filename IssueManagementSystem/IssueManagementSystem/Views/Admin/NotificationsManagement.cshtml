@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "NotificationsManagement";
     Layout = "~/Views/Shared/BranchSideNav.cshtml";
     if (Session["userID"] == null)
@@ -9,9 +8,6 @@
 }
 
 @using IssueManagementSystem.Models;
-
-
-
 
 <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
 <link href="~/Content/adminstyles/Settings.css" rel="stylesheet" />
@@ -23,9 +19,7 @@
     }
 </style>
 
-<div id="page-wrapper" class="container" style="padding-top:40px;position:absolute">
-
-
+<div id="page-wrapper" class="container" style="padding-top:40px;position:absolute;">
     <h1 class="page-header">Settings</h1>
 
     <h3 class="page-header" style="margin-top:-10px;position:relative;">Manage Notifications</h3>
@@ -74,6 +68,7 @@
                         <option>Material Delay</option>
                         <option>Technical Issue</option>
                         <option>IT Issue</option>
+                        <option>Quality Isuue</option>
                     </select>
                 </div>
             </div>
@@ -93,6 +88,7 @@
                 $("#sortable").sortable();
                 $("#sortable").disableSelection();
             });
+
         </script>
         <h4 class="page-header">Order of Notifying</h4>
         <link href="~/Content/SupervisorStyles/jquery-ui.css" rel="stylesheet" />
@@ -104,14 +100,18 @@
                     <div><p>Email</p></div>
                     <div><p>SMS</p></div>
                     <div><p>Call</p></div>
-                    <div><p>Send alert after</p></div>
-                    <div><p>Call repeating time</p></div>
+                    <div><p>Send alert after(minutes)</p></div>
+                    <div><p>Call repeating time(minutes)</p></div>
                 </div>
             </li>
         </ul>
 
         <button class="btn btn-success glyphicons-chevron-left" style="margin-top:10px;" data-toggle="modal" data-target="#modal1">Add a person</button>
-        <!-- start dro map in the draw new map model-->
+ 
+        <button class="btn btn-primary glyphicons-chevron-left" style="margin-top:10px;" onclick="saveList();">Save List</button>
+     
+
+        <!-- start draw map in the draw new map model-->
 
         <div class="container">
             <div class="modal" data-keyboard="false" id="modal1" style="color:black; margin-top:10px;background-color: transparent;">
@@ -128,7 +128,7 @@
                                     <div class="col-lg-4" style="">
                                         <label class="lableSet" style="float:left">Department</label>
 
-                                        <select class="js-example-placeholder-single js-states form-control" id="Department" name="Department" style="width:100%" >
+                                        <select class="js-example-placeholder-single js-states form-control" id="Department" name="Department" style="width:100%" onchange="fillNameDropDown()">
                                             <option></option>
 
                                             @foreach (var department in Model.departments)
@@ -142,11 +142,11 @@
                                     <div class="col-lg-8" style="">
                                         <label class="lableSet" style="float:left">Name</label>
 
-                                        <select class="js-example-placeholder-single js-states form-control" id="Name" name="Name" style="width:100%">
+                                        <select class="js-example-placeholder-single js-states form-control" id="Name" name="Name" style="width:100%" onchange="fillDepartmentDropDown(),fillUserDetails()">
                                             <option></option>
                                             @foreach (var user in Model.users)
                                             {
-                                                <option> @user.Name</option>
+                                                <option> @user.EmployeeNumber - @user.Name   </option>
                                             }
                                         </select>
                                     </div>
@@ -165,15 +165,7 @@
                                                 Name:
                                             </p>
                                             <p class="col-lg-9" style="float:left" id="name">
-                                       
-                                               @{ 
-                                                   using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
-                                                   {
 
-                                                      // var phoneNumber = db.User_tbl.Where(x => x.EmployeeNumber == userID).FirstOrDefault();
-
-                                                   }
-                                               }
                                             </p>
                                         </div>
                                         <div class="row">
@@ -181,7 +173,7 @@
                                                 Department:
                                             </p>
                                             <p class="col-lg-9" style="float:left" id="dept">
-                                               
+
                                             </p>
                                         </div>
                                         <div class="row">
@@ -204,7 +196,7 @@
                                             <p class="col-lg-2" style="float:left">
                                                 Phone:
                                             </p>
-                                            <p class="col-lg-9" style="float:left"  id="phone">
+                                            <p class="col-lg-9" style="float:left" id="phone">
 
                                             </p>
                                         </div>
@@ -212,7 +204,7 @@
                                             <p class="col-lg-2" style="float:left">
                                                 E-mail:
                                             </p>
-                                            <p class="col-lg-9" style="float:left"  id="email">
+                                            <p class="col-lg-9" style="float:left" id="email">
 
                                             </p>
                                         </div>
