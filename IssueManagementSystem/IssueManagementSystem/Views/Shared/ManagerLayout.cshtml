@@ -504,7 +504,8 @@
             $.connection.hub.start();
             getData();
 
-            function getData() {
+            function getData()
+            {
                 var divNotificaion = $('#divNotificaion');
                 var divNotificaionmobile = $('#divNotificaionmobile');
                 $.ajax({
@@ -526,13 +527,13 @@
                                     var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
 
                                     if (data[i].Type == 'email') {
-                                        var notification = ' <div class="notifi__item"><div class="bg-c1 img-cir img-40"><i class="zmdi zmdi-email-open"></i></div>' +
+                                        var notification = ' <div class="notifi__item" id="' + data[i].NotificationId +'"  onclick="deleteFunction(this)"><div class="bg-c1 img-cir img-40"><i class="zmdi zmdi-email-open"></i></div>' +
                                             ' <div class="content"><p>You have a new email'
                                             + data[i].Message +
                                             '</p> <span class="date">' + day + ' ' + date[1] + ' ' + date[2] + '</span></div></div>'
                                     }
                                     if (data[i].Type == 'issue') {
-                                        var notification = ' <div class="notifi__item"><div class="bg-c2 img-cir img-40"><i class="fa fa-gears (alias)"></i></div>' +
+                                        var notification = ' <div class="notifi__item" id="' + data[i].NotificationId +'" onclick="deleteFunction(this)"><div class="bg-c2 img-cir img-40"><i class="fa fa-gears (alias)"></i></div>' +
                                             ' <div class="content"><p>New issue has been occured'
                                             + data[i].Message +
                                             '</p> <span class="date">' + day + ' ' + date[1] + ' ' + date[2] + '</span></div></div>'
@@ -556,6 +557,14 @@
                 });
             }
         })
+
+        function deleteFunction(div)
+        {
+            var data = { Issueoccour_Id: $(this).data('issue-occorid'), Issue_Id: $(this).data('issueid') };
+            var url = '@Url.Action("hideNotification", "Manager")?notificationId=' + div.id ;
+
+            $.post(url)
+        }
     </script>
 </body>
 </html>

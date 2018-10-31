@@ -181,7 +181,7 @@ namespace IssueManagementSystem.Controllers
                     String issue_name = user["issue_id"].ToString();
                     var issue = db.issues.Where(x => x.issue1 == issue_name).FirstOrDefault();
 
-                    String query_1 = @"INSERT INTO [dbo].[issue_line_person]
+                    string query_1 = @"INSERT INTO [dbo].[issue_line_person]
                                      ([issue_id],[line_id],[EmployeeNumber],[assigned_date],[email],[call],
                                      [message],[callRepetitionTime],[sendAlertAfter],[levelOfResponsibility],[issue_line_person_id])
                                      VALUES("+issue.issue_id+","+line.line_id+","+user["EmployeeNumber"]+",'"+user["assigned_date"]+"',"

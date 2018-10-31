@@ -30,5 +30,17 @@ namespace IssueManagementSystem.Controllers
 
         }
 
+        public JsonResult hideNotification(int? notificationId)
+        {
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+            {
+                string query = "UPDATE tbl_Notifications SET Status = 0 WHERE NotificationId = "+ notificationId ;
+                db.Database.ExecuteSqlCommand(query);
+               
+
+            }
+            return Json(true);
+        }
+
     }
 }

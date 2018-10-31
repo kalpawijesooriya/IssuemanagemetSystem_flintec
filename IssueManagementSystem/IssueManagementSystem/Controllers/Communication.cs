@@ -19,7 +19,7 @@ namespace IssueManagementSystem.Controllers
     {
         static Queue numberList = new Queue();
         static bool gsm_status = true;
-        dbController db = dbController.getInstance();
+      
         public Communication()
         {
           
@@ -51,9 +51,13 @@ namespace IssueManagementSystem.Controllers
                     if (communicateData.getEmail() == 1)
                     {
                         sendMail(communicateData.getEmailAddress());
-
-                        string query = "INSERT INTO [dbo].tbl_Notification(Ststus,Message,Type,EmployeeNumber,Date) VALUES('1','" + communicateData.getMsg() + "','email','"+ communicateData.getEmployeeNumber()+ "','"+ date + "') ";
-                        db.runQuery_update_or_delete(query);
+                        using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+                        {
+                            string query = "INSERT INTO tbl_Notifications ([Status],[Message],[Type],[EmployeeNumber],[Date]) VALUES( 1,'" + communicateData.getMsg() + "','email','" + communicateData.getEmployeeNumber() + "','" + date + "') ";
+                            db.Database.ExecuteSqlCommand(query);
+                        }
+                           
+                       
 
                     }
 
