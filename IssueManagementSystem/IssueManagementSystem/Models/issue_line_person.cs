@@ -17,7 +17,7 @@ namespace IssueManagementSystem.Models
         public Nullable<int> issue_id { get; set; }
         public Nullable<int> line_id { get; set; }
         public Nullable<int> EmployeeNumber { get; set; }
-        public Nullable<System.DateTime> assigned_date { get; set; }
+        public System.DateTime assigned_date { get; set; }
         public int email { get; set; }
         public int call { get; set; }
         public int message { get; set; }

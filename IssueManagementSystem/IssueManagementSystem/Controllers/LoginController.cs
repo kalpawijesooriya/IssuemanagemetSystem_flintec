@@ -29,6 +29,9 @@ namespace IssueManagementSystem.Controllers
                 else {
                     Session["userID"] = userDetails.EmployeeNumber;//retrive Userid of login user
                     Session["userName"] = userDetails.UserName.Trim();//retrive USerName of login user
+                    Session["name"] = userDetails.Name.Trim();
+                    Session["email"] = userDetails.EMail.Trim();
+                    
                     string username = Session["userName"].ToString();
                     string role = userDetails.Role.ToString().Trim();//retrive the user role
                     if (role.Equals("supervisor"))//if user is supervisor goto the supervisor page
@@ -43,6 +46,9 @@ namespace IssueManagementSystem.Controllers
                     else if (role.Equals("admin"))
 
                         return RedirectToAction("SelectBranch", "Admin");
+                    else if (role.Equals("manager"))
+
+                        return RedirectToAction("Index", "Manager");
                     else
                         return RedirectToAction("Index", "Login");
 

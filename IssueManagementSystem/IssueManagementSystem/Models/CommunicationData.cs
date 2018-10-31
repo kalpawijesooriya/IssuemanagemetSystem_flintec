@@ -11,10 +11,11 @@ namespace IssueManagementSystem.Models
         private string msg;
         private string emailAddress;
         private int call, email, message;
-   
-   
+        private int EmployeeNumber;
 
-        public CommunicationData(string number, string msg, string emailAddress, int email, int call, int message)
+
+
+        public CommunicationData(string number, string msg, string emailAddress, int email, int call, int message,int EmployeeNumber)
         {
             this.number = number;
             this.msg = msg;
@@ -22,7 +23,7 @@ namespace IssueManagementSystem.Models
             this.email = email;
             this.message = message;
             this.call = call;
-
+            this.EmployeeNumber = EmployeeNumber;
         }
 
 
@@ -48,6 +49,10 @@ namespace IssueManagementSystem.Models
         public int getMessage()
         {
             return message;
+        }
+        public int getEmployeeNumber()
+        {
+            return EmployeeNumber;
         }
 
     }

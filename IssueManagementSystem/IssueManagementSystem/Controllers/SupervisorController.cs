@@ -96,7 +96,7 @@ namespace IssueManagementSystem.Controllers
         }
 
         [HttpPost] //add Breakedown to database
-        public ActionResult AddIssueBreakedown(IssueManagementSystem.Models.issue_occurrence issueModel)
+        public ActionResult AddIssueBreakedown(issue_occurrence issueModel)
         {
             var time = DateTime.Now;
             string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");//get today to string variable
@@ -133,7 +133,7 @@ namespace IssueManagementSystem.Controllers
         }
 
         [HttpPost]//add Tecnical Issues to database
-        public ActionResult AddIssueTechnical(IssueManagementSystem.Models.issue_occurrence issueModel)
+        public ActionResult AddIssueTechnical(issue_occurrence issueModel)
         {
             var time = DateTime.Now;
             string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
@@ -170,7 +170,7 @@ namespace IssueManagementSystem.Controllers
         }
 
         [HttpPost]//add IT Issues to database
-        public ActionResult AddIssueIT(IssueManagementSystem.Models.issue_occurrence issueModel)
+        public ActionResult AddIssueIT(issue_occurrence issueModel)
         {
             var time = DateTime.Now;
             string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
@@ -189,6 +189,10 @@ namespace IssueManagementSystem.Controllers
                  
                     var date=DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture); 
                     issueModel.date_time = date;
+
+                    
+
+
                     db.issue_occurrence.Add(issueModel);
                     db.SaveChanges();
                     if (issueModel.issue_occurrence_id > 0)
@@ -216,7 +220,7 @@ namespace IssueManagementSystem.Controllers
                 foreach (var item in communicationInfo)
                 {
                     var personInfo=db.User_tbl.Where(y => y.EmployeeNumber==item.EmployeeNumber).FirstOrDefault();
-                    CommunicationData cd = new CommunicationData(personInfo.Phone,msg,personInfo.EMail,item.email,item.call,item.message);
+                    CommunicationData cd = new CommunicationData(personInfo.Phone,msg,personInfo.EMail,item.email,item.call,item.message,personInfo.EmployeeNumber);
                     com.setCD(cd);
                 }
                
@@ -258,7 +262,8 @@ namespace IssueManagementSystem.Controllers
             return Json(true);
         }
 
-       
-       
+        
+
+
     }
 }

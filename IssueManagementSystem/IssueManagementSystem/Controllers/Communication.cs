@@ -10,15 +10,16 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading;
 using System.Web;
+using System.Web.Mvc;
 
 namespace IssueManagementSystem.Controllers
 {
-   
+  
     public class Communication
     {
         static Queue numberList = new Queue();
         static bool gsm_status = true;
-
+        dbController db = dbController.getInstance();
         public Communication()
         {
           
@@ -35,21 +36,32 @@ namespace IssueManagementSystem.Controllers
 
         private void doCommunicate()
         {
-           
-           
+      
 
             if (gsm_status)
             {
                 CommunicationData communicateData = (CommunicationData)numberList.Dequeue();
                 try
                 {
+                   var time = DateTime.Now;
+                   string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
+                    var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                     gsm_status = false;
-                     
-                    if (communicateData.getEmail()==1)
+
+                    if (communicateData.getEmail() == 1)
+                    {
                         sendMail(communicateData.getEmailAddress());
 
-                    if (communicateData.getMessage()==1) 
-                    send_SMS(communicateData.getNumber(), communicateData.getMsg());
+                        string query = "INSERT INTO [dbo].tbl_Notification(Ststus,Message,Type,EmployeeNumber,Date) VALUES('1','" + communicateData.getMsg() + "','email','"+ communicateData.getEmployeeNumber()+ "','"+ date + "') ";
+                        db.runQuery_update_or_delete(query);
+
+                    }
+
+                    if (communicateData.getMessage() == 1)
+                    
+                        send_SMS(communicateData.getNumber(), communicateData.getMsg());
+
+                    
 
                     if (communicateData.getCall() ==1)
                         take_Call(communicateData.getNumber(), communicateData.getMsg());
@@ -179,6 +191,7 @@ namespace IssueManagementSystem.Controllers
 
         }
 
+        
 
 
 

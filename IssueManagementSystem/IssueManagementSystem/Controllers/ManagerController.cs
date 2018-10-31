@@ -11,20 +11,24 @@ namespace IssueManagementSystem.Controllers
     public class ManagerController : Controller
     {
         // GET: Manager
-        Communication com= new Communication();
-
         public ActionResult Index()
         {
-            return View();
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+            {
+                ViewBag.BrakedownCount = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID==1).Count();
+                ViewBag.MaterialDelayCount = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 2).Count();
+                ViewBag.TechnicalIssue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 3).Count();
+                ViewBag.QualityIsuue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 4).Count();
+                ViewBag.ITIsuue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 1).Count();
+            }
+                return View();
         }
-        [HttpPost]
-        public void sms(IssueManagementSystem.Models.User_tbl userModel)
+
+        public JsonResult GetNotification()
         {
-            string number = userModel.Phone;
-            string msg = userModel.UserName;
-           // CommunicationData cd = new CommunicationData(number, msg);
-            
-           // com.setCD(cd); 
+            return Json(NotificaionService.GetNotification(), JsonRequestBehavior.AllowGet);
+
         }
+
     }
 }

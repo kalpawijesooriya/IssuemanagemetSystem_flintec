@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
     $(".submit").click(function () {
         $(".submit").addClass("loading");
-        setTimeout(function () {
+       setTimeout(function () {
             $(".submit").addClass("hide-loading");
             // For failed icon just replace ".done" with ".failed"
             $(".done").addClass("finish");
