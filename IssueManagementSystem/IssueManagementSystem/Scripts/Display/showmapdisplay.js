@@ -96,10 +96,36 @@ function CanvasState(canvas) {
         myState.dragging = false;
     }, true);
 
+    setInterval(function () {
+
+        for (var i = 0; i < myState.shapes.length; i++) {
+
+            var mySelx = myState.shapes[i];
+
+            for (var k = 0; k < blinking_machines.length; k++) {
+                if (myState.shapes[i].machine == blinking_machines[k]) {
+
+                    if (globalvariable == 1) {
+                        //  console.log("blinkColor" + globalvariable);
+                        myState.ctx.strokeStyle = myState.blinkColor;
+                        myState.ctx.lineWidth = myState.selectionWidth;
+                        myState.ctx.strokeRect(mySelx.x, mySelx.y, mySelx.w, mySelx.h);
+
+                    }
+                    if (globalvariable == 0) {
+                        // console.log("selectionColor" + globalvariable);
+                        myState.ctx.strokeStyle = myState.selectionColor;
+                        myState.ctx.lineWidth = myState.selectionWidth;
+                        myState.ctx.strokeRect(mySelx.x, mySelx.y, mySelx.w, mySelx.h);
+
+                    }
+                }
+            }
+        }
+    }, 10);
 
 
-
-
+    this.blinkColor = '#ff4000';
     this.selectionColor = '#f4dc42';
     this.selectionWidth = 5;
     this.interval = 30;
@@ -163,10 +189,19 @@ CanvasState.prototype.getMouse = function (e) {
 
     return { x: mx, y: my };
 }
+globalvariable = 0;
 
 function init() {
     var s = new CanvasState(document.getElementById('canvas1'));
 
+    setInterval(function (){
+        //console.log(globalvariable);
+        if (globalvariable == 0) { globalvariable = 1; }
+        else { globalvariable = 0; }
+    }, 100);
+
+    var xa = ["Machine 10", "Machine 11", "Machine 12", "Machine 13"];
+    set_blinking_machines(xa);
 }
 
 
@@ -187,3 +222,10 @@ function createObjectArray(jsonText) {
 }
 
 window.onload = init;
+
+blinking_machines;
+
+function set_blinking_machines(blinking_machines_A) {
+
+    blinking_machines = blinking_machines_A;
+}
