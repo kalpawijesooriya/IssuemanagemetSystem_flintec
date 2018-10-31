@@ -33,15 +33,16 @@
         </EntityType>
         <EntityType Name="issue_line_person">
           <Key>
+            <PropertyRef Name="assigned_date" />
             <PropertyRef Name="issue_line_person_id" />
           </Key>
           <Property Name="issue_id" Type="int" />
           <Property Name="line_id" Type="int" />
           <Property Name="EmployeeNumber" Type="int" />
-          <Property Name="assigned_date" Type="date" />
-          <Property Name="email" Type="int" />
-          <Property Name="call" Type="int" />
-          <Property Name="message" Type="int" />
+          <Property Name="assigned_date" Type="datetime" Nullable="false" />
+          <Property Name="email" Type="int" Nullable="false" />
+          <Property Name="call" Type="int" Nullable="false" />
+          <Property Name="message" Type="int" Nullable="false" />
           <Property Name="callRepetitionTime" Type="varchar" MaxLength="50" />
           <Property Name="sendAlertAfter" Type="varchar" MaxLength="50" />
           <Property Name="levelOfResponsibility" Type="int" />
@@ -141,8 +142,8 @@ warning 6002: The table/view 'issue_management_system.dbo.machines' does not hav
           <Property Name="USB_Port" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'issue_management_system.dbo.materials' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="materials">
+warning 6002: The table/view 'issue_management_system.dbo.material' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="material">
           <Key>
             <PropertyRef Name="material_id" />
           </Key>
@@ -159,15 +160,14 @@ warning 6002: The table/view 'issue_management_system.dbo.materials' does not ha
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
-        <EntityType Name="User">
+        <EntityType Name="tbl_Notifications">
           <Key>
-            <PropertyRef Name="UserName" />
+            <PropertyRef Name="NotificationId" />
           </Key>
-          <Property Name="UserName" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="PassWord" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="EmployeeNumber" Type="int" />
-          <Property Name="Role" Type="varchar" MaxLength="50" />
-          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="NotificationId" Type="int" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
+          <Property Name="Message" Type="varchar" MaxLength="50" />
+          <Property Name="ExtraColumn" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="User_tbl">
           <Key>
@@ -238,7 +238,7 @@ warning 6002: The table/view 'issue_management_system.dbo.materials' does not ha
           <EntitySet Name="line_map" EntityType="Self.line_map" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="line_supervisor" EntityType="Self.line_supervisor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Notifications" EntityType="Self.tbl_Notifications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_tbl" EntityType="Self.User_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="line_machine" EntityType="Self.line_machine" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -272,11 +272,11 @@ warning 6002: The table/view 'issue_management_system.dbo.materials' does not ha
     [machines].[USB_Port] AS [USB_Port]
     FROM [dbo].[machines] AS [machines]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="materials" EntityType="Self.materials" store:Type="Tables" store:Schema="dbo">
+          <EntitySet Name="material" EntityType="Self.material" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-    [materials].[material] AS [material], 
-    [materials].[material_id] AS [material_id]
-    FROM [dbo].[materials] AS [materials]</DefiningQuery>
+    [material].[material] AS [material], 
+    [material].[material_id] AS [material_id]
+    FROM [dbo].[material] AS [material]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_department_lines_departments" Association="Self.FK_department_lines_departments">
             <End Role="departments" EntitySet="departments" />
@@ -321,15 +321,16 @@ warning 6002: The table/view 'issue_management_system.dbo.materials' does not ha
         </EntityType>
         <EntityType Name="issue_line_person">
           <Key>
+            <PropertyRef Name="assigned_date" />
             <PropertyRef Name="issue_line_person_id" />
           </Key>
           <Property Name="issue_id" Type="Int32" />
           <Property Name="line_id" Type="Int32" />
           <Property Name="EmployeeNumber" Type="Int32" />
-          <Property Name="assigned_date" Type="DateTime" Precision="0" />
-          <Property Name="email" Type="Int32" />
-          <Property Name="call" Type="Int32" />
-          <Property Name="message" Type="Int32" />
+          <Property Name="assigned_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="email" Type="Int32" Nullable="false" />
+          <Property Name="call" Type="Int32" Nullable="false" />
+          <Property Name="message" Type="Int32" Nullable="false" />
           <Property Name="callRepetitionTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="sendAlertAfter" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="levelOfResponsibility" Type="Int32" />
@@ -397,15 +398,14 @@ warning 6002: The table/view 'issue_management_system.dbo.materials' does not ha
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityType Name="User">
+        <EntityType Name="tbl_Notifications">
           <Key>
-            <PropertyRef Name="UserName" />
+            <PropertyRef Name="NotificationId" />
           </Key>
-          <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PassWord" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="EmployeeNumber" Type="Int32" />
-          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NotificationId" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ExtraColumn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="User_tbl">
           <Key>
@@ -510,7 +510,7 @@ warning 6002: The table/view 'issue_management_system.dbo.materials' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="issue_management_systemEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="issue_management_systemEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="departments" EntityType="Self.department" />
           <EntitySet Name="displays" EntityType="Self.display" />
           <EntitySet Name="employees" EntityType="Self.employee" />
@@ -521,7 +521,7 @@ warning 6002: The table/view 'issue_management_system.dbo.materials' does not ha
           <EntitySet Name="line_map" EntityType="Self.line_map" />
           <EntitySet Name="line_supervisor" EntityType="Self.line_supervisor" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="tbl_Notifications" EntityType="Self.tbl_Notifications" />
           <EntitySet Name="User_tbl" EntityType="Self.User_tbl" />
           <EntitySet Name="line_machine" EntityType="Self.line_machine" />
           <EntitySet Name="lines" EntityType="Self.line" />
@@ -541,7 +541,7 @@ warning 6002: The table/view 'issue_management_system.dbo.materials' does not ha
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="issue_management_systemModelStoreContainer" CdmEntityContainer="issue_management_systemEntities">
+        <EntityContainerMapping StorageEntityContainer="issue_management_systemModelStoreContainer" CdmEntityContainer="issue_management_systemEntities1">
           <EntitySetMapping Name="departments">
             <EntityTypeMapping TypeName="issue_management_systemModel.department">
               <MappingFragment StoreEntitySet="departments">
@@ -653,14 +653,13 @@ warning 6002: The table/view 'issue_management_system.dbo.materials' does not ha
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="issue_management_systemModel.User">
-              <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
-                <ScalarProperty Name="EmployeeNumber" ColumnName="EmployeeNumber" />
-                <ScalarProperty Name="Role" ColumnName="Role" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
+          <EntitySetMapping Name="tbl_Notifications">
+            <EntityTypeMapping TypeName="issue_management_systemModel.tbl_Notifications">
+              <MappingFragment StoreEntitySet="tbl_Notifications">
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="ExtraColumn" ColumnName="ExtraColumn" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -735,7 +734,7 @@ warning 6002: The table/view 'issue_management_system.dbo.materials' does not ha
           </EntitySetMapping>
           <EntitySetMapping Name="materials">
             <EntityTypeMapping TypeName="issue_management_systemModel.material">
-              <MappingFragment StoreEntitySet="materials">
+              <MappingFragment StoreEntitySet="material">
                 <ScalarProperty Name="material1" ColumnName="material" />
                 <ScalarProperty Name="material_id" ColumnName="material_id" />
               </MappingFragment>

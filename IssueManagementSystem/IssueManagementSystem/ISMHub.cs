@@ -15,5 +15,11 @@ namespace IssueManagementSystem
             Clients.All.Announce();
 
         }
+        public static void Send()
+        {
+
+            IHubContext context = GlobalHost.ConnectionManager.GetHubContext<ISMHUB>();
+            context.Clients.All.displayStatus();
+        }
     }
 }

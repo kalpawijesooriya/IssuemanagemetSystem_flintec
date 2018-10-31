@@ -63,7 +63,7 @@ namespace IssueManagementSystem
         }
 
 
-        public String get_1st_column_1st_row_data(String query)
+        public string get_1st_column_1st_row_data(String query)
         {
             SqlCommand cmd = new SqlCommand();
 
