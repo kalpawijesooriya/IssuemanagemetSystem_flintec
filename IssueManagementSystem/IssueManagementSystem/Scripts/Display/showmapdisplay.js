@@ -96,10 +96,36 @@ function CanvasState(canvas) {
         myState.dragging = false;
     }, true);
 
+    setInterval(function () {
+
+        for (var i = 0; i < myState.shapes.length; i++) {
+
+            var mySelx = myState.shapes[i];
+
+            for (var k = 0; k < blinking_machines.length; k++) {
+                if (myState.shapes[i].machine == blinking_machines[k]) {
+
+                    if (globalvariable == 1) {
+                        //  console.log("blinkColor" + globalvariable);
+                        myState.ctx.strokeStyle = myState.blinkColor;
+                        myState.ctx.lineWidth = myState.selectionWidth;
+                        myState.ctx.strokeRect(mySelx.x, mySelx.y, mySelx.w, mySelx.h);
+
+                    }
+                    if (globalvariable == 0) {
+                        // console.log("selectionColor" + globalvariable);
+                        myState.ctx.strokeStyle = myState.selectionColor;
+                        myState.ctx.lineWidth = myState.selectionWidth;
+                        myState.ctx.strokeRect(mySelx.x, mySelx.y, mySelx.w, mySelx.h);
+
+                    }
+                }
+            }
+        }
+    }, 10);
 
 
-
-
+    this.blinkColor = '#ff4000';
     this.selectionColor = '#f4dc42';
     this.selectionWidth = 5;
     this.interval = 30;
@@ -163,10 +189,34 @@ CanvasState.prototype.getMouse = function (e) {
 
     return { x: mx, y: my };
 }
+globalvariable = 0;
 
 function init() {
     var s = new CanvasState(document.getElementById('canvas1'));
 
+    setInterval(function (){
+        //console.log(globalvariable);
+        if (globalvariable == 0) { globalvariable = 1; }
+        else { globalvariable = 0; }
+    }, 100);
+
+    
+     
+
+    $.ajax({
+        type: "POST",
+        dataType: 'text',
+        url: "/Display/getBlinkingMachinesList",
+        data: { line:'5'},
+        success: function (line_data) {
+            var obj = JSON.parse(line_data);
+            console.log(obj);
+            set_blinking_machines(obj);
+        },
+        error: function () {
+            alert("Error occurred");
+        }
+    });
 }
 
 
@@ -177,13 +227,18 @@ function createObjectArray(jsonText) {
     console.log(arr);
     var newArray = new Array();
 
-
-    for (var i = 0; i < arr.length; i++) {
-        newArray.push(new Shape(arr[i].x, arr[i].y, arr[i].w, arr[i].h, arr[i].fill, arr[i].machine));
+    for (var i = 0; i < arr.length; i++)
+        {
+            newArray.push(new Shape(arr[i].x, arr[i].y, arr[i].w, arr[i].h, arr[i].fill, arr[i].machine));
     }
-    console.log(newArray);
-
     return newArray;
 }
 
 window.onload = init;
+blinking_machines = new Array();
+
+function set_blinking_machines(blinking_machines_A) {
+    for (var i = 0; i < blinking_machines_A.length;i++) {
+        blinking_machines.push(blinking_machines_A[i].machine_machine_id) ;
+    }
+}

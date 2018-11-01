@@ -27,9 +27,7 @@ namespace IssueManagementSystem.Controllers
                 ViewBag.lineID = lineInfo.line_line_id;
                 List<issue_occurrence> issue = db.issue_occurrence.ToList();     
                return View(issue);
-            }
-               
-
+            }    
         }
 
         public ActionResult MachinBreakdown()//machine breakedown view
@@ -37,14 +35,11 @@ namespace IssueManagementSystem.Controllers
             int userID = (int)Session["userID"];// get current supervisorID
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
             {
-
                 var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
                 var mapInfo = db.line_map.Where(y => y.line_id == lineInfo.line_line_id).FirstOrDefault();
                 ViewData["map"] = mapInfo.map.ToString().Trim();//get the map arry to ViewData
                 return View();
-
             }
-
         }
 
         public ActionResult TechnicalIssue()//Technical Issue View
@@ -127,9 +122,7 @@ namespace IssueManagementSystem.Controllers
                     }
                     ModelState.Clear();
                 }
-
             }
-
             return RedirectToAction("selectIssue", "Supervisor");
         }
 
@@ -165,9 +158,7 @@ namespace IssueManagementSystem.Controllers
                     }
                     ModelState.Clear();
                 }
-
             }
-
             return RedirectToAction("selectIssue", "Supervisor");
         }
 
@@ -192,9 +183,6 @@ namespace IssueManagementSystem.Controllers
                     var date=DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture); 
                     issueModel.date_time = date;
 
-                    
-
-
                     db.issue_occurrence.Add(issueModel);
                     db.SaveChanges();
                     if (issueModel.issue_occurrence_id > 0)
@@ -208,11 +196,10 @@ namespace IssueManagementSystem.Controllers
                     }
                     ModelState.Clear();
                 }
-
             }
-
             return RedirectToAction("selectIssue", "Supervisor");
         }
+
 
         private void sendCD(int? line_line_id, int issueId,string msg,string subject)
         {
@@ -237,48 +224,42 @@ namespace IssueManagementSystem.Controllers
                     var personInfo=db.User_tbl.Where(y => y.EmployeeNumber==item.EmployeeNumber).FirstOrDefault();
                     CommunicationData cd = new CommunicationData(personInfo.Phone,msg,personInfo.EMail,item.email,item.call,item.message,personInfo.EmployeeNumber, subject);
                     com.setCD(cd);
+
                 }
-               
-             
             }
-        }
 
         [HttpPost]//solovedIssueMethod
         public JsonResult SolvedIssue(int? issueId,int? issueOccourId)
-        {  //update Issueststus as 0
-            issue_management_systemEntities1 db = new issue_management_systemEntities1();
-            var issueoccourInfo= db.issue_occurrence.Where(x => x.issue_occurrence_id == issueOccourId).FirstOrDefault();
-            issueoccourInfo.issue_satus = "0";
-            db.SaveChanges();
+            {  
+                //update Issueststus as 0
+                issue_management_systemEntities1 db = new issue_management_systemEntities1();
+                var issueoccourInfo= db.issue_occurrence.Where(x => x.issue_occurrence_id == issueOccourId).FirstOrDefault();
+                issueoccourInfo.issue_satus = "0";
+                db.SaveChanges();
 
-            int userID = (int)Session["userID"];
-            var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
+                int userID = (int)Session["userID"];
+                var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
 
-            var line_id = lineInfo.line_line_id;
+                var line_id = lineInfo.line_line_id;
 
-
-            //get the list of Issuueoccurrence table
-            List<issue_occurrence> issue = db.issue_occurrence.ToList();
-            int count = 0;
-            foreach(var item in issue )
-            {    //check issue id == to clicked issueid
-                if (item.issue_issue_ID== issueId && item.line_line_id==line_id) { 
-                  //if any status is there under selected issueid and line id cout will up
-                if (item.issue_satus=="1")
-                {
-                    count++;
+                //get the list of Issuueoccurrence table
+                List<issue_occurrence> issue = db.issue_occurrence.ToList();
+                int count = 0;
+                foreach(var item in issue )
+                {    //check issue id == to clicked issueid
+                    if (item.issue_issue_ID== issueId && item.line_line_id==line_id) { 
+                         //if any status is there under selected issueid and line id cout will up
+                        if (item.issue_satus=="1")
+                            {
+                                count++;
+                            }
+                    }
                 }
+                if (count == 0) {// if cout ==0 light will off
+                    var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
+                    //com.lightOFF(issueId.ToString(), displayInfo.raspberry_ip_address);
                 }
+                return Json(true);
             }
-            if (count == 0) {// if cout ==0 light will off
-                var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
-                //com.lightOFF(issueId.ToString(), displayInfo.raspberry_ip_address);
-            }
-            return Json(true);
-        }
-
-        
-
-
     }
 }

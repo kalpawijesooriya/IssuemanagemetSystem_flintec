@@ -262,6 +262,7 @@ function CanvasState(canvas) {
     });
 
 
+
     /*   document.getElementById("colorButton").addEventListener("click", function(){
          console.log( myState.shapes[1]);
           myState.shapes[1].x =0; 
@@ -274,6 +275,7 @@ function CanvasState(canvas) {
     // **** Options! ****
 
     this.selectionColor = '#f4dc42';
+
     this.selectionWidth = 5;
     this.interval = 30;
     setInterval(function () { myState.draw(); }, myState.interval);
@@ -290,6 +292,8 @@ CanvasState.prototype.clear = function () {
 
 // While draw is called as often as the INTERVAL variable demands,
 // It only ever does something if the canvas gets invalidated by our code
+
+
 CanvasState.prototype.draw = function () {
     // if our state is invalid, redraw and validate!
     if (!this.valid) {
@@ -354,13 +358,22 @@ CanvasState.prototype.getMouse = function (e) {
 // You could uncomment this init() reference and place the script reference inside the body tag
 //init();
 
+
+
+
+
 function init() {
     var s = new CanvasState(document.getElementById('canvas1'));
+    
+
     //  s.addShape(new Shape(60,140,40,60, 'lightskyblue'));
+
+
 }
 
-// Now go make something amazing!
-
 window.onload = init;
+
+
 // end of draw map js
+
 
