@@ -200,8 +200,23 @@ function init() {
         else { globalvariable = 0; }
     }, 100);
 
-    var xa = ["Machine 10", "Machine 11", "Machine 12", "Machine 13"];
-    set_blinking_machines(xa);
+    
+     
+
+    $.ajax({
+        type: "POST",
+        dataType: 'text',
+        url: "/Display/getBlinkingMachinesList",
+        data: { line:'5'},
+        success: function (line_data) {
+            var obj = JSON.parse(line_data);
+            console.log(obj);
+            set_blinking_machines(obj);
+        },
+        error: function () {
+            alert("Error occurred");
+        }
+    });
 }
 
 
@@ -216,14 +231,14 @@ function createObjectArray(jsonText) {
         {
             newArray.push(new Shape(arr[i].x, arr[i].y, arr[i].w, arr[i].h, arr[i].fill, arr[i].machine));
     }
-
-    console.log(newArray);
     return newArray;
 }
 
 window.onload = init;
-blinking_machines;
+blinking_machines = new Array();
 
 function set_blinking_machines(blinking_machines_A) {
-    blinking_machines = blinking_machines_A;
+    for (var i = 0; i < blinking_machines_A.length;i++) {
+        blinking_machines.push(blinking_machines_A[i].machine_machine_id) ;
+    }
 }

@@ -104,10 +104,8 @@ namespace IssueManagementSystem.Controllers
         [HttpPost]
         public ActionResult fillDepartmentDropDown(string person_name)
         {
-
-            return Json("9989", JsonRequestBehavior.AllowGet);
+            return Json("What", JsonRequestBehavior.AllowGet);
         }
-
 
         [HttpPost]
         public ActionResult fillNameDropDown(string department)
@@ -118,17 +116,14 @@ namespace IssueManagementSystem.Controllers
                 var c = db.Database.SqlQuery<string>(query_1).ToList();
                 return Json(c, JsonRequestBehavior.AllowGet);
             }
-
         }
         class user_temp {
-
             public string Name { get; set; }
             public string Department { get; set; }
             public string Position { get; set; }
             public string Phone { get; set; }
             public string EMail { get; set; }
             public int EmployeeNumber { get; set; }
-
         }
 
         [HttpPost]
@@ -148,7 +143,6 @@ namespace IssueManagementSystem.Controllers
 
         class issue_line_person_temp
         {
-
             public string issue_id { get; set; }
             public string line_id { get; set; }
             public string EmployeeNumber { get; set; }
@@ -160,7 +154,6 @@ namespace IssueManagementSystem.Controllers
             public int sendAlertAfter { get; set; }
             public int levelOfResponsibility { get; set; }
             public int issue_line_person_id { get; set; }
-            
         }
 
         [HttpPost]
@@ -185,8 +178,8 @@ namespace IssueManagementSystem.Controllers
                                      ([issue_id],[line_id],[EmployeeNumber],[assigned_date],[email],[call],
                                      [message],[callRepetitionTime],[sendAlertAfter],[levelOfResponsibility],[issue_line_person_id])
                                      VALUES("+issue.issue_id+","+line.line_id+","+user["EmployeeNumber"]+",'"+user["assigned_date"]+"',"
-                                     + user["email"] + "," + user["call"] + "," + user["message"] + ",'" + user["callRepetitionTime"] + "','"
-                                     + user["sendAlertAfter"]+"',"+user["levelOfResponsibility"]+","+user["issue_line_person_id"]+")";
+                                     +user["email"] + "," + user["call"] + "," + user["message"] + ",'" + user["callRepetitionTime"] + "','"
+                                     +user["sendAlertAfter"]+"',"+user["levelOfResponsibility"]+","+user["issue_line_person_id"]+")";
 
                    System.Diagnostics.Debug.WriteLine(query_1);
 
