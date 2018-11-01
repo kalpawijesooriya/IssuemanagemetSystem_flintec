@@ -1,0 +1,267 @@
+﻿@{
+    ViewBag.Title = "NotificationsManagement";
+    Layout = "~/Views/Shared/CellEngineerLayout.cshtml";
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+
+@using IssueManagementSystem.Models;
+
+<link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
+<link href="~/Content/adminstyles/Settings.css" rel="stylesheet" />
+<link href="~/Content/adminstyles/notificationManagement.css" rel="stylesheet" />
+<script src="~/Scripts/AdminScripts/jquery.js"></script>
+<script src="~/Scripts/jquery-ui.js"></script>
+<style>
+    .lableSet {
+        float: left;
+    }
+</style>
+<div class="page-content--bgf7">
+    <!-- BREADCRUMB-->
+    <section class="au-breadcrumb2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="au-breadcrumb-content">
+                        <div class="au-breadcrumb-left">
+                            <span class="au-breadcrumb-span">You are here:</span>
+                            <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                <li class="list-inline-item active">
+                                    <a href="#">Home</a>
+                                </li>
+                                <li class="list-inline-item seprate">
+                                    <span>/</span>
+                                </li>
+                                <li class="list-inline-item">Dashboard</li>
+                            </ul>
+                        </div>
+                        <form class="au-form-icon--sm" action="" method="post">
+                            <input class="au-input--w300 au-input--style2" type="text" placeholder="Search for datas &amp; reports...">
+                            <button class="au-btn--submit2" type="submit">
+                                <i class="zmdi zmdi-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div id="page-wrapper" class="container" style="padding-top:40px;position:absolute;">
+        <h1 class="page-header">Settings</h1>
+
+        <h3 class="page-header" style="margin-top:-10px;position:relative;">Manage Notifications</h3>
+
+        <div class="row">
+            <div style="display:grid; grid-template-columns:30% 30% 30%">
+
+
+                <div>
+                    <div class="col-lg-12">
+
+                        <label class="lableSet" style="float:left"> Department</label>
+
+                        <select class="js-example-placeholder-single js-states form-control" id="selectdepartment" name="selectdepartment" style="width:100%">
+
+                            <option>Assembly</option>
+                            <option>Machining</option>
+                            <option>IT</option>
+                            <option>Engineering</option>
+                            <option>Maintenance</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="col-lg-12">
+                        <label class="lableSet" style="float:left"> Line</label>
+
+                        <select class="js-example-placeholder-single js-states form-control" id="selectLine" name="selectLine" style="width:100%">
+                            <option>Potted</option>
+                            <option>Welder</option>
+                            <option>Guaging</option>
+                            <option>SM</option>
+                            <option>MD2</option>
+                            <option>Rocker</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="col-lg-12" style="">
+                        <label class="lableSet" style="float:left">Issue</label>
+
+                        <select class="js-example-placeholder-single js-states form-control" id="selectIssue" name="selectIssue" style="width:100%">
+                            <option>Machine Breakdown</option>
+                            <option>Material Delay</option>
+                            <option>Technical Issue</option>
+                            <option>IT Issue</option>
+                            <option>Quality Isuue</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:20px;">
+
+
+
+
+            <script>
+                window.onload = $(function () {
+
+                    $("#sortable").sortable();
+                    $("#sortable").disableSelection();
+                });
+
+            </script>
+            <h4 class="page-header">Order of Notifying</h4>
+            <link href="~/Content/SupervisorStyles/jquery-ui.css" rel="stylesheet" />
+
+            <ul id="sortable">
+                <li style="overflow:hidden; display:flex; height:50px;">
+                    <div style="display:grid;grid-template-columns:4fr 1fr 1fr 1fr 1fr 1fr">
+                        <div><p>Name </p></div>
+                        <div><p>Email</p></div>
+                        <div><p>SMS</p></div>
+                        <div><p>Call</p></div>
+                        <div><p>Send alert after(minutes)</p></div>
+                        <div><p>Call repeating time(minutes)</p></div>
+                    </div>
+                </li>
+            </ul>
+
+            <button class="btn btn-success glyphicons-chevron-left" style="margin-top:10px;" data-toggle="modal" data-target="#modal1">Add a person</button>
+
+            <button class="btn btn-primary glyphicons-chevron-left" style="margin-top:10px;" onclick="saveList();">Save List</button>
+
+
+            <!-- start draw map in the draw new map model-->
+
+            <div class="container">
+                <div class="modal" data-keyboard="false" id="modal1" style="color:black; margin-top:10px;background-color: transparent;">
+                    <div class="modal-dialog" style="width:70%;">
+                        <div class="modal-content">
+                            <div class="modal-header background">
+                                <h4 class="modal-title" style="margin:auto;">Search person</h4>
+                                <button class="close" data-dismiss="modal" style="margin-top:-20px;">&times;</button>
+                            </div>
+                            <!-- draw new map model body -->
+                            <div class="modal-body" style="display:flex;">
+                                <div class="container">
+                                    <div class=" page-header row">
+                                        <div class="col-lg-4" style="">
+                                            <label class="lableSet" style="float:left">Department</label>
+
+                                            <select class="js-example-placeholder-single js-states form-control" id="Department" name="Department" style="width:100%" onchange="fillNameDropDown()">
+                                                <option></option>
+
+                                                @foreach (var department in Model.departments)
+                                                {
+                                                    <option> @department.department_name</option>
+                                                }
+
+                                            </select>
+                                        </div>
+
+                                        <div class="col-lg-8" style="">
+                                            <label class="lableSet" style="float:left">Name</label>
+
+                                            <select class="js-example-placeholder-single js-states form-control" id="Name" name="Name" style="width:100%" onchange="fillDepartmentDropDown(),fillUserDetails()">
+                                                <option></option>
+                                                @foreach (var user in Model.users)
+                                                {
+                                                    <option> @user.EmployeeNumber - @user.Name   </option>
+                                                }
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-lg-4">
+                                            <img src="~/Content/images/profile.jpg" width="70%" height="70%" style="margin-top:10px;" />
+                                        </div>
+
+                                        <div class="col-lg-8" style="margin-top:20px;">
+                                            <div class="row">
+                                                <p class="col-lg-2" style="float:left">
+                                                    Name:
+                                                </p>
+                                                <p class="col-lg-9" style="float:left" id="name">
+
+                                                </p>
+                                            </div>
+                                            <div class="row">
+                                                <p class="col-lg-2" style="float:left">
+                                                    Department:
+                                                </p>
+                                                <p class="col-lg-9" style="float:left" id="dept">
+
+                                                </p>
+                                            </div>
+                                            <div class="row">
+                                                <p class="col-lg-2" style="float:left">
+                                                    emp ID:
+                                                </p>
+                                                <p class="col-lg-9" style="float:left" id="empID">
+
+                                                </p>
+                                            </div>
+                                            <div class="row">
+                                                <p class="col-lg-2" style="float:left">
+                                                    Position:
+                                                </p>
+                                                <p class="col-lg-9" style="float:left" id="position">
+
+                                                </p>
+                                            </div>
+                                            <div class="row">
+                                                <p class="col-lg-2" style="float:left">
+                                                    Phone:
+                                                </p>
+                                                <p class="col-lg-9" style="float:left" id="phone">
+
+                                                </p>
+                                            </div>
+                                            <div class="row">
+                                                <p class="col-lg-2" style="float:left">
+                                                    E-mail:
+                                                </p>
+                                                <p class="col-lg-9" style="float:left" id="email">
+
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <Button type="button" id="saveMap" class="btn btn-primary" onclick="addPerson()">Add</Button>
+
+                                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ends draw new map model-->
+        </div>
+
+    </div>
+</div>
+
+
+<script src="~/Scripts/AdminScripts/jscolar.js"></script>
+<script src="~/Scripts/AdminScripts/select2-min.js"></script>
+<script src="~/Scripts/AdminScripts/notificationsManagement.js"></script>
+
+
+<!-- <script src="~/Scripts/AdminScripts/jquery.js"></script> -->
+<!-- <script src="~/Scripts/jquery-3.3.1.js"></script> -->
+<!--

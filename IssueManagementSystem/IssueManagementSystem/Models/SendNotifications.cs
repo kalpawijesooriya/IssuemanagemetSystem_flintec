@@ -59,7 +59,7 @@ namespace IssueManagementSystem.Models
                                 Message = reader["Message"] != DBNull.Value ? (string)reader["Message"] : "",
                                 Type = reader["Type"] != DBNull.Value ? (string)reader["Type"] : "",
                                 EmployeeNumber = (int)reader["EmployeeNumber"],
-                                Date = reader["Date"].ToString()
+                                Dates = reader["Date"].ToString()
 
 
                         });
@@ -74,7 +74,7 @@ namespace IssueManagementSystem.Models
             }
             catch (Exception ex)
             {
-
+                System.Diagnostics.Debug.WriteLine("Error :" + ex);
                 return null;
             }
 

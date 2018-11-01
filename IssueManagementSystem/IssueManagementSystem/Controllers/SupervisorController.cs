@@ -114,6 +114,7 @@ namespace IssueManagementSystem.Controllers
                     issueModel.responsible_person_emp_id = 5;//get specific employee 
                     var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                     issueModel.date_time = date;
+                    issueModel.location = (string)Session["location"];
                     db.issue_occurrence.Add(issueModel);
                     db.SaveChanges();
                     if (issueModel.issue_occurrence_id > 0)
@@ -122,7 +123,7 @@ namespace IssueManagementSystem.Controllers
                         string msg = line.line_name + " line IT/SoftWare issue has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
                         var displayInfo = db.displays.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
                         com.lightON("1", displayInfo.raspberry_ip_address);//turn on the Light
-                        sendCD(lineInfo.line_line_id, 1, msg);
+                        sendCD(lineInfo.line_line_id, 1, msg, "Machine Brakedown has been occurred");
                     }
                     ModelState.Clear();
                 }
@@ -151,6 +152,7 @@ namespace IssueManagementSystem.Controllers
                     issueModel.responsible_person_emp_id = 5;//get specific employee 
                     var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                     issueModel.date_time = date;
+                    issueModel.location = (string)Session["location"];
                     db.issue_occurrence.Add(issueModel);
                     db.SaveChanges();
                     if (issueModel.issue_occurrence_id > 0)
@@ -159,7 +161,7 @@ namespace IssueManagementSystem.Controllers
                         var displayInfo = db.displays.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
                         string msg = line.line_name + " line IT/SoftWare issue has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
                         com.lightON("3", displayInfo.raspberry_ip_address);//turn on the Light
-                        sendCD(lineInfo.line_line_id, 3, msg);
+                        sendCD(lineInfo.line_line_id, 3, msg, "Tecnical Issue has been occered");
                     }
                     ModelState.Clear();
                 }
@@ -186,7 +188,7 @@ namespace IssueManagementSystem.Controllers
                     issueModel.issue_satus = "1";
                     issueModel.issue_issue_ID = 5;//Issue id is 5 for IT Issue
                     issueModel.responsible_person_emp_id = 5;//get specific employee 
-                 
+                    issueModel.location = (string)Session["location"];
                     var date=DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture); 
                     issueModel.date_time = date;
 
@@ -201,7 +203,7 @@ namespace IssueManagementSystem.Controllers
                         string msg = line.line_name + " line IT/SoftWare issue has been occurred at "+date+". Special Note of Line supervisor - "+ issueModel.description;
                         var displayInfo = db.displays.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
                         com.lightON("5", displayInfo.raspberry_ip_address);//turn on the Light
-                        sendCD(lineInfo.line_line_id, 5,msg);
+                        sendCD(lineInfo.line_line_id, 5,msg,"IT/Software Issue has been occered");
                        
                     }
                     ModelState.Clear();
@@ -212,15 +214,28 @@ namespace IssueManagementSystem.Controllers
             return RedirectToAction("selectIssue", "Supervisor");
         }
 
-        private void sendCD(int? line_line_id, int issueId,string msg)
+        private void sendCD(int? line_line_id, int issueId,string msg,string subject)
         {
+            var time = DateTime.Now;
+            string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
+            var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+           
+           
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
-                 var communicationInfo = db.issue_line_person.Where(x => x.line_id == line_line_id && x.issue_id == issueId).ToList();
+                var userDetails = db.User_tbl.Where(x => x.Role == "manager").ToList();
+                foreach (var item in userDetails)
+                {
+                    string query = "INSERT INTO tbl_Notifications ([Status],[Message],[Type],[EmployeeNumber],[Date]) VALUES( 1,'" + msg + "','issue','" + item.EmployeeNumber + "','" + date + "') ";
+                    db.Database.ExecuteSqlCommand(query);
+                }
+            
+           
+                var communicationInfo = db.issue_line_person.Where(x => x.line_id == line_line_id && x.issue_id == issueId).ToList();
                 foreach (var item in communicationInfo)
                 {
                     var personInfo=db.User_tbl.Where(y => y.EmployeeNumber==item.EmployeeNumber).FirstOrDefault();
-                    CommunicationData cd = new CommunicationData(personInfo.Phone,msg,personInfo.EMail,item.email,item.call,item.message,personInfo.EmployeeNumber);
+                    CommunicationData cd = new CommunicationData(personInfo.Phone,msg,personInfo.EMail,item.email,item.call,item.message,personInfo.EmployeeNumber, subject);
                     com.setCD(cd);
                 }
                

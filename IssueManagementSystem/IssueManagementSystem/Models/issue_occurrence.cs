@@ -23,6 +23,7 @@ namespace IssueManagementSystem.Models
         public Nullable<int> issue_issue_ID { get; set; }
         public Nullable<int> responsible_person_emp_id { get; set; }
         public string issue_satus { get; set; }
+        public string location { get; set; }
     
         public virtual issue issue { get; set; }
     }

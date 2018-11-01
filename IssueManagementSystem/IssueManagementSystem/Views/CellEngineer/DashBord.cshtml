@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "DashBord";
+    Layout = "~/Views/Shared/CellEngineerLayout.cshtml";
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+
+<h2>DashBord</h2>
+

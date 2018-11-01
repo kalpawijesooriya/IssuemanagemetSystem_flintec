@@ -43,32 +43,31 @@ namespace IssueManagementSystem.Controllers
                 CommunicationData communicateData = (CommunicationData)numberList.Dequeue();
                 try
                 {
-                   var time = DateTime.Now;
-                   string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
+                    var time = DateTime.Now;
+                    string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
                     var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                     gsm_status = false;
+                    var msg = communicateData.getMsg();
+
+                  
 
                     if (communicateData.getEmail() == 1)
                     {
-                        sendMail(communicateData.getEmailAddress());
+                        sendMail(communicateData.getEmailAddress(),msg,communicateData.getsubject());
                         using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
                         {
-                            string query = "INSERT INTO tbl_Notifications ([Status],[Message],[Type],[EmployeeNumber],[Date]) VALUES( 1,'" + communicateData.getMsg() + "','email','" + communicateData.getEmployeeNumber() + "','" + date + "') ";
+                            string query = "INSERT INTO tbl_Notifications ([Status],[Message],[Type],[EmployeeNumber],[Date]) VALUES( 1,'" + msg + "','email','" + communicateData.getEmployeeNumber() + "','" + date + "') ";
                             db.Database.ExecuteSqlCommand(query);
-                        }
-                           
-                       
-
+                        }                                                 
                     }
 
-                    if (communicateData.getMessage() == 1)
-                    
-                        send_SMS(communicateData.getNumber(), communicateData.getMsg());
+                    if (communicateData.getMessage() == 1)                    
+                        send_SMS(communicateData.getNumber(), msg);
 
                     
 
                     if (communicateData.getCall() ==1)
-                        take_Call(communicateData.getNumber(), communicateData.getMsg());
+                        take_Call(communicateData.getNumber(), msg);
 
                     gsm_status = true;
                 }
@@ -102,12 +101,12 @@ namespace IssueManagementSystem.Controllers
             HttpWebResponse webResponse = (HttpWebResponse)webReq.GetResponse();
         }
 
-        public void sendMail(string emailAddress)
+        public void sendMail(string emailAddress, string msg,string subject)
         {
             using (MailMessage mm = new MailMessage("ppts@flintec.com", emailAddress))
             {
-                mm.Subject = "machine breakedown Notification";
-                mm.Body = "This is test message";
+                mm.Subject = subject;
+                mm.Body = msg;
 
                 mm.IsBodyHtml = false;
                 using (SmtpClient smtp = new SmtpClient())
