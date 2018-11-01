@@ -212,20 +212,18 @@ function createObjectArray(jsonText) {
     console.log(arr);
     var newArray = new Array();
 
-
-    for (var i = 0; i < arr.length; i++) {
-        newArray.push(new Shape(arr[i].x, arr[i].y, arr[i].w, arr[i].h, arr[i].fill, arr[i].machine));
+    for (var i = 0; i < arr.length; i++)
+        {
+            newArray.push(new Shape(arr[i].x, arr[i].y, arr[i].w, arr[i].h, arr[i].fill, arr[i].machine));
     }
-    console.log(newArray);
 
+    console.log(newArray);
     return newArray;
 }
 
 window.onload = init;
-
 blinking_machines;
 
 function set_blinking_machines(blinking_machines_A) {
-
     blinking_machines = blinking_machines_A;
 }
