@@ -10,16 +10,13 @@
 namespace IssueManagementSystem.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class tbl_Notifications
+    public partial class sp_helpdiagrams_Result
     {
-        public int NotificationId { get; set; }
-        public int Status { get; set; }
-        public string Message { get; set; }
-        public string Type { get; set; }
-        public int EmployeeNumber { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
-        public string Dates { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

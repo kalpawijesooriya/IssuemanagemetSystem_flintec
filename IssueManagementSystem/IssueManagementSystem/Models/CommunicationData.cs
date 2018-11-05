@@ -8,14 +8,14 @@ namespace IssueManagementSystem.Models
     public class CommunicationData
     {
         private string number;
-        private string msg;
+        private string msg,subject;
         private string emailAddress;
         private int call, email, message;
         private int EmployeeNumber;
 
 
 
-        public CommunicationData(string number, string msg, string emailAddress, int email, int call, int message,int EmployeeNumber)
+        public CommunicationData(string number, string msg, string emailAddress, int email, int call, int message,int EmployeeNumber,string subject)
         {
             this.number = number;
             this.msg = msg;
@@ -24,6 +24,7 @@ namespace IssueManagementSystem.Models
             this.message = message;
             this.call = call;
             this.EmployeeNumber = EmployeeNumber;
+            this.subject = subject;
         }
 
 
@@ -33,6 +34,10 @@ namespace IssueManagementSystem.Models
 
         public string getMsg() {
             return msg;
+        }
+        public string getsubject()
+        {
+            return subject;
         }
         public string getEmailAddress()
         {

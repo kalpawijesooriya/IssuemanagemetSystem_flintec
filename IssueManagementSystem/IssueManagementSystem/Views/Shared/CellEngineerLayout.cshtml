@@ -54,9 +54,9 @@
 
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="@Url.Action("NotificationsManagement","CellEngineer")">
                                     <i class="fas fa-shopping-basket"></i>
-                                    <span class="bot-line"></span>eCommerce
+                                    <span class="bot-line"></span>Notification Management
                                 </a>
                             </li>
                             <li>
@@ -131,10 +131,10 @@
                             <i class="zmdi zmdi-notifications"></i>
                             <span class="badge" style="color:white;font-size:initial;font-family:'Bodoni MT'" id="ntCnt"></span>
                             <div class="notifi-dropdown notifi-dropdown--no-bor js-dropdown" id="divNotificaion">
-                               
-                              
-                               
-                                
+
+
+
+
                             </div>
                         </div>
                         <div class="header-button-item js-item-menu">
@@ -221,7 +221,7 @@
                                         </div>
                                     </div>
                                     <div class="account-dropdown__footer">
-                                        <a href="#">
+                                        <a href="@Url.Action("LogOut","Login")">
                                             <i class="zmdi zmdi-power"></i>Logout
                                         </a>
                                     </div>
@@ -352,7 +352,7 @@
 
 
 
-                      
+
                     </div>
                 </div>
                 <div class="header-button-item js-item-menu">
@@ -439,7 +439,7 @@
                                 </div>
                             </div>
                             <div class="account-dropdown__footer">
-                                <a href="#">
+                                <a href="@Url.Action("LogOut","Login")">
                                     <i class="zmdi zmdi-power"></i>Logout
                                 </a>
                             </div>
@@ -487,85 +487,6 @@
 
     <script src="~/signalr/Hubs"></script>
 
-    <script>
-        $(document).ready(function () {
-            debugger
-            // Proxy created on the fly
-            var hub = $.connection.myHub;
-
-
-            // Declare a function on the hub hub so the server can invoke it
-            hub.client.displayStatus = function () {
-                debugger
-                getData();
-            };
-
-            // Start the connection
-            $.connection.hub.start();
-            getData();
-
-            function getData()
-            {
-                var divNotificaion = $('#divNotificaion');
-                var divNotificaionmobile = $('#divNotificaionmobile');
-                $.ajax({
-                    url: '/Manager/GetNotification',
-                    type: 'GET',
-                    datatype: 'json',
-                    success: function (data) {
-                        debugger
-                        data = $.parseJSON(data);
-                        if (data.length > 0) {
-                            divNotificaion.empty();
-                            //// set Count
-                            var notiCount = 0;
-
-
-                            for (var i = 0; i < data.length; i++) {
-                                if (data[i].EmployeeNumber ==@Session["userID"] && data[i].Status==1) {
-                                    var date = data[i].Dates.split(' ');
-                                    var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
-
-                                    if (data[i].Type == 'email') {
-                                        var notification = ' <div class="notifi__item" id="' + data[i].NotificationId +'"  onclick="deleteFunction(this)"><div class="bg-c1 img-cir img-40"><i class="zmdi zmdi-email-open"></i></div>' +
-                                            ' <div class="content"><p>You have a new email'
-                                            + data[i].Message +
-                                            '</p> <span class="date">' + day + ' ' + date[1] + ' ' + date[2] + '</span></div></div>'
-                                    }
-                                    if (data[i].Type == 'issue') {
-                                        var notification = ' <div class="notifi__item" id="' + data[i].NotificationId +'" onclick="deleteFunction(this)"><div class="bg-c2 img-cir img-40"><i class="fa fa-gears (alias)"></i></div>' +
-                                            ' <div class="content"><p>New issue has been occured'
-                                            + data[i].Message +
-                                            '</p> <span class="date">' + day + ' ' + date[1] + ' ' + date[2] + '</span></div></div>'
-                                    }
-                                    
-
-
-                                    divNotificaion.append(notification);
-                                    divNotificaionmobile.append(notification);
-                                    notiCount++
-                                    
-                                    
-                                }
-                                $('#ntCnt').text(notiCount);
-                                $('#cntmobile').text(notiCount);
-                            }
-
-                        }
-                    }, error: function (r, e, w) {
-                    }
-                });
-            }
-        })
-
-        function deleteFunction(div)
-        {
-            var data = { Issueoccour_Id: $(this).data('issue-occorid'), Issue_Id: $(this).data('issueid') };
-            var url = '@Url.Action("hideNotification", "Manager")?notificationId=' + div.id ;
-
-            $.post(url)
-        }
-    </script>
 </body>
 </html>
 
