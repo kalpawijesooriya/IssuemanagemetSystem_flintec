@@ -54,6 +54,9 @@ namespace IssueManagementSystem.Controllers
                     else if (role.Equals("CellEngineer"))
 
                         return RedirectToAction("DashBord", "CellEngineer");
+                    else if (role.Equals("responsiblePerson"))
+
+                        return RedirectToAction("Index", "ResponsiblePerson");
                     else
                         return RedirectToAction("Index", "Login");
 

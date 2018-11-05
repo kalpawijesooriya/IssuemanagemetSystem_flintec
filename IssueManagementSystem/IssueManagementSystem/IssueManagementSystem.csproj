@@ -191,6 +191,7 @@
     <Compile Include="Controllers\Communication.cs" />
     <Compile Include="Controllers\DisplayController.cs" />
     <Compile Include="Controllers\ManagerController.cs" />
+    <Compile Include="Controllers\ResponsiblePersonController.cs" />
     <Compile Include="dbController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\IssueHub.cs" />
     <Compile Include="Hubs\MyHub.cs" />
     <Compile Include="ISMHub.cs" />
     <Compile Include="Models\CommunicationData.cs" />
@@ -255,6 +257,7 @@
     <Compile Include="Models\material.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SendIssues.cs" />
     <Compile Include="Models\SendNotifications.cs" />
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
@@ -393,10 +396,6 @@
     <Content Include="Content\Display\css\bootstrap-reboot.min.css.map" />
     <Content Include="Content\Display\css\bootstrap.css.map" />
     <Content Include="Content\Display\css\bootstrap.min.css.map" />
-    <Content Include="Scripts\bootstrap.min.js.map" />
-    <Content Include="Scripts\bootstrap.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap-reboot.min.css.map" />
     <Content Include="Content\bootstrap-reboot.css.map" />
@@ -548,6 +547,7 @@
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\slick.min.js" />
+    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\SupervisorScripts\machineBrakedown.js" />
     <Content Include="Scripts\SupervisorScripts\showmap.js" />
     <Content Include="Scripts\wow.min.js" />
@@ -575,11 +575,6 @@
     <Content Include="Views\Admin\NotificationsManagement.cshtml" />
     <Content Include="Views\Supervisor\TechnicalIssue.cshtml" />
     <Content Include="Views\Display\Rasp.cshtml" />
-    <Content Include="Scripts\README.md" />
-    <Content Include="Scripts\popper.min.js.map" />
-    <Content Include="Scripts\popper.js.map" />
-    <Content Include="Scripts\popper-utils.min.js.map" />
-    <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Supervisor\ITIssue.cshtml" />
     <Content Include="Views\Manager\Index.cshtml" />
     <Content Include="Views\Shared\ManagerLayout.cshtml" />
@@ -588,9 +583,12 @@
     <Content Include="Views\Shared\CellEngineerLayout.cshtml" />
     <Content Include="Views\CellEngineer\DashBord.cshtml" />
     <Content Include="Views\CellEngineer\NotificationsManagement.cshtml" />
+    <Content Include="Views\Shared\ResponsiblepersonLayout.cshtml" />
+    <Content Include="Views\ResponsiblePerson\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\Responsibleperson\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css.map" />

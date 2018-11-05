@@ -19,5 +19,6 @@ namespace IssueManagementSystem.Hubs
             IHubContext context = GlobalHost.ConnectionManager.GetHubContext<MyHub>();
             context.Clients.All.displayStatus();
         }
+       
     }
 }

@@ -1,0 +1,287 @@
+﻿@{
+ViewBag.Title = "Index";
+Layout = "~/Views/Shared/ResponsiblePersonLayout.cshtml";
+
+if (Session["userID"] == null)
+{
+    Response.Redirect("~/Login/Index");
+}
+
+}
+@using IssueManagementSystem.Models;
+
+<div class="page-content--bgf7" >
+    <div >
+        <!-- BREADCRUMB-->
+        <section class="au-breadcrumb2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="au-breadcrumb-content">
+                            <div class="au-breadcrumb-left">
+                                <span class="au-breadcrumb-span">You are here:</span>
+                                <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                    <li class="list-inline-item active">
+                                        <a href="#">Home</a>
+                                    </li>
+                                    <li class="list-inline-item seprate">
+                                        <span>/</span>
+                                    </li>
+                                    <li class="list-inline-item">Dashboard</li>
+                                </ul>
+                            </div>
+                            <form class="au-form-icon--sm" action="" method="post">
+                                <input class="au-input--w300 au-input--style2" type="text" placeholder="Search for datas &amp; reports...">
+                                <button class="au-btn--submit2" type="submit">
+                                    <i class="zmdi zmdi-search"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="welcome p-t-10">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="title-4">
+                            Welcome back
+                            <span>@Session["name"], You have <span id="issueCnt"></span> new jobs!</span>
+                        </h1>
+                        <hr class="line-seprate">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="welcome p-t-10" style="padding-top:50px;padding-bottom:50px">
+            <div class="container-fluid">
+
+
+                <div class="row" id="divIssue" style="margin: auto;">
+
+
+                </div>
+
+            </div>
+        </section>
+        <div class="modal fade" id="moreIssueInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" >
+                        <div class="row" >
+                            <div class="col" id="issueData">
+                            </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <h4 class="text-center" style="color:#ff9800;margin-top:20px">If you complete the job send feedback to us</h4>
+                                        <label style="margin-top:15px" for="comment">Your Comment:</label>
+                                        <textarea class="form-control" rows="5" id="comment"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/signalr/Hubs"></script>
+
+ 
+
+    <script>
+    $(document).ready(function () {
+        debugger
+        // Proxy created on the fly
+        var hub = $.connection.issueHub;
+        var issueCount = 0;
+
+        // Declare a function on the hub hub so the server can invoke it
+        hub.client.displayStatus = function () {
+            debugger
+            getData();
+        };
+
+        // Start the connection
+        $.connection.hub.start();
+        getData();
+
+        function getData()
+        {
+
+            var divissue = $('#divIssue');
+
+            $.ajax({
+                    url: '/ResponsiblePerson/GetNotification',
+                    type: 'GET',
+                    datatype: 'json',
+                    success: function (issuedata) {
+                    debugger
+                    issuedata = $.parseJSON(issuedata);
+                    if (issuedata.length > 0) {
+                        divissue.empty();
+
+
+
+
+                        for (var i = 0; i < issuedata.length; i++) {
+
+
+
+                                    if ((issuedata[i].responsible_person_emp_id ==@Session["userID"]) && (issuedata[i].issue_satus== "1")) {
+
+                                        var line_id = issuedata[i].line_line_id
+                                        var issueid = issuedata[i].issue_issue_ID
+
+                                        get_line(line_id, issueid, divissue, issuedata[i])
+
+
+
+
+                                    }
+
+
+
+                        }
+
+
+                    }
+                }, error: function (r, e, w) {
+                }
+            });
+        }
+
+
+        function get_line(line_id, issueid, divissue, issuedata) {
+
+            var line = new Object();
+
+            $.ajax({
+                type: "POST",
+                url: "/ResponsiblePerson/getlineInfo?list_id=" + line_id,
+                data: JSON.stringify(line),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+
+                success: function (response) {
+                    if (response != null) {
+
+                        var lineName = response.line_name.toString();;
+                        if (issueid == 1) { mb(lineName, divissue, issuedata)}
+                        else if (issueid == 2) { md(lineName, divissue, issuedata)}
+                        else if (issueid == 3) { ti(lineName, divissue, issuedata)}
+                        else if (issueid == 4) { qi(lineName, divissue, issuedata)}
+                        else if (issueid == 5) { it(lineName, divissue, issuedata)}
+
+                    } else {
+                        alert("Something went wrong");
+                    }
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+
+
+        function it(lineName, divissue, issuedata) {
+            var date = issuedata.date.split(' ');
+            var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
+            var msg = 'In <strong> ' + lineName + '</strong> Line new IT / Software Issue has been occoured at <strong> ' + day + '</strong > on ' + date[1] + '.You are the Responsible person for that.';
+            var issue = '<div class="col-md-6 col-lg-3" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--blue"><span class="desc" style="color:white">IT/Software Issue</span><div class="icon" ><i class="zmdi zmdi-windows"></i></div></div><div class="card-body"><h5 class="card-title">Card title</h5><p class="card-text">' + msg + '</p> <div class="text-right"> <button style="color:#1183ff" class="card-link" data-toggle="modal" data-target="#moreIssueInfo" data-msg="' + msg + '" data-issueinfo="' + issuedata.issue_occurrence_id + '" data-dis="' + issuedata.description+'" onclick="myfunction(this)">Show More >></button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
+            issueCount++
+
+                divissue.append(issue)
+                divissue.show('slow');
+
+
+            $('#issueCnt').text(issueCount);
+        }
+        function mb(lineName, divissue, issuedata) {
+            var date = issuedata.date.split(' ');
+            var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
+            var msg = 'In <strong> ' + lineName + ' Line </strong> new Machine Brakedown has been occoured on <strong> ' + issuedata.machine_machine_id + '</strong > at ' + day + '</strong > on ' + date[1] + '.You are the Responsible person for that.'
+            var issue = '<div class="col-md-6 col-lg-3" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--red"><span class="desc" style="color:white">Machine Brakedown</span><div class="icon" ><i class="zmdi zmdi-settings zmdi-hc-spin"></i></div></div><div class="card-body"><h5 class="card-title">Card title</h5><p class="card-text">' + msg + '</p> <div class="text-right"> <button style="color:#1183ff" class="card-link" data-toggle="modal" data-target="#moreIssueInfo" data-msg="' + msg + '" data-issueinfo="' + issuedata.issue_occurrence_id + '" data-dis="' + issuedata.description+'" onclick="myfunction(this)">Show More >></button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
+            issueCount++
+
+                divissue.append(issue)
+                divissue.show('slow');
+
+            $('#issueCnt').text(issueCount);
+        }
+        function ti(lineName, divissue, issuedata) {
+            var date = issuedata.date.split(' ');
+            var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
+            var msg = 'In <strong>' + lineName + '</strong> Line new Technical Issue has been occoured. At <strong> ' + day + '</strong> on ' + date[1] +' You are the Responsible person for that.'
+            var issue = '<div class="col-md-6 col-lg-3" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--green"><span class="desc" style="color:white">Technical Issue</span><div class="icon" ><i class="fas fa-wrench"></i></div></div><div class="card-body"><h5 class="card-title">Card title</h5><p class="card-text">' + msg + '</p> <div class="text-right"> <button style="color:#1183ff" class="card-link" data-toggle="modal" data-target="#moreIssueInfo" data-msg="' + msg + '" data-issueinfo="' + issuedata.issue_occurrence_id + '" data-dis="' + issuedata.description +'" onclick="myfunction(this)">Show More >></button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
+            issueCount++
+
+                divissue.append(issue)
+                divissue.show('slow');
+
+            $('#issueCnt').text(issueCount);
+        }
+        function md(lineName, divissue, issuedata) {
+            var date = issuedata.date.split(' ');
+            var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
+            var msg = 'In <strong> ' + lineName + ' Line</strong> new Material Delay has been occouered. At <strong> ' + day + '</strong> on ' + date[1] + ' You are the responible person for that.'
+            var issue = '<div class="col-md-6 col-lg-3" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--orange"><span class="desc" style="color:white">Material Delay</span><div class="icon" ><i class="zmdi animated infinite wobble zmdi-shopping-cart"></i></div></div><div class="card-body"><h5 class="card-title">Card title</h5><p class="card-text">' + msg + '</p> <div class="text-right"><button style="color:#1183ff" class="card-link" data-toggle="modal" data-target="#moreIssueInfo" data-msg="' + msg + '" data-issueinfo="' + issuedata.issue_occurrence_id + '" data-dis="' + issuedata.description +'" onclick="myfunction(this)">Show More >></button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
+            issueCount++
+
+                divissue.append(issue)
+                divissue.show('slow');
+
+            $('#issueCnt').text(issueCount);
+        }
+        function qi(lineName, divissue, issuedata) {
+            var date = issuedata.date.split(' ');
+            var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
+            var msg = 'In <strong>' + lineName + '</strong> Line Qulity Issue has been occored at <strong> ' + day + ' </strong> on ' + date[1] + '. You are the Responsible person for that.'
+            var issue = '<div class="col-md-6 col-lg-3" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--blue"><span class="desc" style="color:white">Qulity Issue</span><div class="icon" ><i class="zmdi zmdi-brightness-auto"></i></div></div><div class="card-body"><h5 class="card-title">Card title</h5><p class="card-text"> ' + msg + '</p><div class="text-right"> <button style="color:#1183ff" class="card-link" data-toggle="modal" data-target="#moreIssueInfo" data-msg="' + msg + '" data-issueinfo="' + issuedata.issue_occurrence_id + '" data-dis="' + issuedata.description +'" onclick="myfunction(this)">Show More >></button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
+            issueCount++
+
+                divissue.append(issue)
+                divissue.show('slow');
+
+            $('#issueCnt').text(issueCount);
+        }
+
+
+
+
+
+
+
+    })
+        function myfunction(param) {
+            $("#issueData").empty();
+            var msg = $(param).data('msg');
+            var id = $(param).data('issueinfo');
+            var dis = $(param).data('dis');
+            var issueInfo = '<p>' + msg + '</p></br><p><strong>supervisor Note : </strong>' + dis+' </p>'
+            $('#issueData').append(issueInfo) 
+    }
+
+
+        </script>
+    </div>
+</div>

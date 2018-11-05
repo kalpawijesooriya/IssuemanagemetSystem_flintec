@@ -11,7 +11,7 @@ namespace IssueManagementSystem.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class tbl_Notifications
     {
         public int NotificationId { get; set; }

@@ -48,12 +48,13 @@ namespace IssueManagementSystem.Controllers
                     var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                     gsm_status = false;
                     var msg = communicateData.getMsg();
+                    var emailAddress = communicateData.getEmailAddress();
+                    var mobileNumber = communicateData.getNumber();
 
-                  
 
-                    if (communicateData.getEmail() == 1)
+                    if (communicateData.getEmail() == 1 && emailAddress!= null)
                     {
-                        sendMail(communicateData.getEmailAddress(),msg,communicateData.getsubject());
+                        sendMail(emailAddress, msg,communicateData.getsubject());
                         using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
                         {
                             string query = "INSERT INTO tbl_Notifications ([Status],[Message],[Type],[EmployeeNumber],[Date]) VALUES( 1,'" + msg + "','email','" + communicateData.getEmployeeNumber() + "','" + date + "') ";
@@ -61,19 +62,20 @@ namespace IssueManagementSystem.Controllers
                         }                                                 
                     }
 
-                    if (communicateData.getMessage() == 1)                    
-                        send_SMS(communicateData.getNumber(), msg);
+                    if (communicateData.getMessage() == 1 && mobileNumber != null)                    
+                        send_SMS(mobileNumber, msg);
 
                     
 
-                    if (communicateData.getCall() ==1)
-                        take_Call(communicateData.getNumber(), msg);
+                    if (communicateData.getCall() ==1 && mobileNumber!=null)
+                        take_Call(mobileNumber, msg);
 
-                    gsm_status = true;
+                       gsm_status = true;
                 }
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex);
+                    gsm_status = true;
                 }
             }
             else

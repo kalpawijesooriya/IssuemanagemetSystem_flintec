@@ -61,7 +61,9 @@
           <Property Name="issue_issue_ID" Type="int" />
           <Property Name="responsible_person_emp_id" Type="int" />
           <Property Name="issue_satus" Type="varchar" MaxLength="1" />
-          <Property Name="location" Type="nchar" MaxLength="3" />
+          <Property Name="location" Type="nvarchar" MaxLength="50" />
+          <Property Name="responsible_person_confirm_status" Type="int" />
+          <Property Name="responsible_person_confirm_feedback" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="issues">
           <Key>
@@ -170,7 +172,7 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <Property Name="Message" Type="varchar(max)" />
           <Property Name="Type" Type="varchar" MaxLength="50" />
           <Property Name="EmployeeNumber" Type="int" Nullable="false" />
-          <Property Name="Date" Type="datetime" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="User_tbl">
           <Key>
@@ -261,6 +263,7 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SqlQueryNotificationStoredProcedure_f203e0c7_c97f_47e5_bf8c_cbb8634fa815" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="SqlQueryNotificationStoredProcedure-f203e0c7-c97f-47e5-bf8c-cbb8634fa815" />
         <EntityContainer Name="issue_management_systemModelStoreContainer">
           <EntitySet Name="departments" EntityType="Self.departments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="display" EntityType="Self.display" Schema="dbo" store:Type="Tables" />
@@ -382,8 +385,10 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <Property Name="issue_issue_ID" Type="Int32" />
           <Property Name="responsible_person_emp_id" Type="Int32" />
           <Property Name="issue_satus" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="location" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="issue" Relationship="Self.FK_issue_occurrence_issues" FromRole="issue_occurrence" ToRole="issues" />
+          <Property Name="responsible_person_confirm_status" Type="Int32" />
+          <Property Name="responsible_person_confirm_feedback" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="issue">
           <Key>
@@ -590,6 +595,7 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="SqlQueryNotificationStoredProcedure_f203e0c7_c97f_47e5_bf8c_cbb8634fa815" ReturnType="Collection(Guid)" />
         </EntityContainer>
         <EntityType Name="tbl_Notifications">
           <Key>
@@ -600,7 +606,7 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EmployeeNumber" Type="Int32" Nullable="false" />
-          <Property Name="Date" Type="DateTime" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <Property Name="Date" Type="DateTime" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" Precision="3" Nullable="false" />
         </EntityType>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -668,6 +674,8 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <EntitySetMapping Name="issue_occurrence">
             <EntityTypeMapping TypeName="issue_management_systemModel.issue_occurrence">
               <MappingFragment StoreEntitySet="issue_occurrence">
+                <ScalarProperty Name="responsible_person_confirm_feedback" ColumnName="responsible_person_confirm_feedback" />
+                <ScalarProperty Name="responsible_person_confirm_status" ColumnName="responsible_person_confirm_status" />
                 <ScalarProperty Name="issue_occurrence_id" ColumnName="issue_occurrence_id" />
                 <ScalarProperty Name="date_time" ColumnName="date_time" />
                 <ScalarProperty Name="material_id" ColumnName="material_id" />
@@ -844,6 +852,7 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="issue_management_systemModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="issue_management_systemModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="SqlQueryNotificationStoredProcedure_f203e0c7_c97f_47e5_bf8c_cbb8634fa815" FunctionName="issue_management_systemModel.Store.SqlQueryNotificationStoredProcedure_f203e0c7_c97f_47e5_bf8c_cbb8634fa815" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

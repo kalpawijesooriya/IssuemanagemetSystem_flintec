@@ -131,10 +131,10 @@
                             <i class="zmdi zmdi-notifications"></i>
                             <span class="badge" style="color:white;font-size:initial;font-family:'Bodoni MT'" id="ntCnt"></span>
                             <div class="notifi-dropdown notifi-dropdown--no-bor js-dropdown" id="divNotificaion">
-                               
-                              
-                               
-                                
+
+
+
+
                             </div>
                         </div>
                         <div class="header-button-item js-item-menu">
@@ -352,7 +352,7 @@
 
 
 
-                      
+
                     </div>
                 </div>
                 <div class="header-button-item js-item-menu">
@@ -456,7 +456,7 @@
                     <div class="col-md-12">
                         <div class="copyright">
                             <p>Copyright © @DateTime.Now.Year - Flintec-ISM Application All rights reserved.</p>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -539,37 +539,36 @@
                                             + data[i].Message +
                                             '</p> <span class="date">' + day + ' ' + date[1] + ' ' + date[2] + '</span></div></div>'
                                     }
-                                    
-                                    
 
 
+
+                                    notiCount++
+                                   
                                     divNotificaion.append(notification);
                                     divNotificaionmobile.append(notification);
-                                    notiCount++
-                                    
-                                    
+                                   
+
                                 }
                                 $('#ntCnt').text(notiCount);
                                 $('#cntmobile').text(notiCount);
-
-                               
+                                
                             }
-
-                        }
-                        if (notiCount == 0) {
-                            var notification = '<div class="notifi__footer"><a href="#">No notifications</a> </div>'
-                            divNotificaion.append(notification);
-                            divNotificaionmobile.append(notification);
+                            if (notiCount == 0) {
+                                var notification = '<div class="notifi__footer"><a href="#">No notifications</a> </div>'
+                                divNotificaion.append(notification);
+                                divNotificaionmobile.append(notification);
+                            }
+                            
                         }
                     }, error: function (r, e, w) {
-                    }
+                       }
                 });
             }
         })
 
         function deleteFunction(div)
         {
-            var data = { Issueoccour_Id: $(this).data('issue-occorid'), Issue_Id: $(this).data('issueid') };
+           
             var url = '@Url.Action("hideNotification", "Manager")?notificationId=' + div.id ;
 
             $.post(url)
