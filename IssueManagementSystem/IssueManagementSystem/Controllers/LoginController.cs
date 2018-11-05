@@ -44,28 +44,25 @@ namespace IssueManagementSystem.Controllers
                         return RedirectToAction("Rasp", "Display");
                     }
                     else if (role.Equals("admin"))
-
                         return RedirectToAction("SelectBranch", "Admin");
-                    else if (role.Equals("manager"))
 
+                    else if (role.Equals("manager"))
                         return RedirectToAction("Index", "Manager");
+
+                    else if (role.Equals("responsiblePerson"))
+                        return RedirectToAction("Index", "responsiblePerson");
+
                     else
                         return RedirectToAction("Index", "Login");
 
-
                 }
-            }
-        
-
-           
+            }         
         }
 
         public ActionResult LogOut()// logout methord
         {
             Session.Abandon();
             return RedirectToAction("Index","Login");
-
-
         }
     }
 }

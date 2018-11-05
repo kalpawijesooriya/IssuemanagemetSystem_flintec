@@ -580,6 +580,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ResponsiblePerson\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css.map" />
