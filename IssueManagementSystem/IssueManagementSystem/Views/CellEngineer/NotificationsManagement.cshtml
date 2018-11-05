@@ -12,11 +12,16 @@
 <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
 <link href="~/Content/adminstyles/Settings.css" rel="stylesheet" />
 <link href="~/Content/adminstyles/notificationManagement.css" rel="stylesheet" />
+<link href="~/Content/SupervisorStyles/jquery-ui.css" rel="stylesheet" />
 <script src="~/Scripts/AdminScripts/jquery.js"></script>
-<script src="~/Scripts/jquery-ui.js"></script>
+
 <style>
     .lableSet {
         float: left;
+    }
+
+    .modal-backdrop {
+        z-index: -1 !important;
     }
 </style>
 <div class="page-content--bgf7">
@@ -49,10 +54,11 @@
             </div>
         </div>
     </section>
-    <div id="page-wrapper" class="container" style="padding-top:40px;position:absolute;">
+</div>
+    <div id="page-wrapper" class="container" style="padding-top:0px;">
         <h1 class="page-header">Settings</h1>
 
-        <h3 class="page-header" style="margin-top:-10px;position:relative;">Manage Notifications</h3>
+        <h3 class="page-header" style="margin-top:-10px;">Manage Notifications</h3>
 
         <div class="row">
             <div style="display:grid; grid-template-columns:30% 30% 30%">
@@ -108,43 +114,44 @@
 
         <div class="row" style="margin-top:20px;">
 
-
-
-
             <script>
                 window.onload = $(function () {
 
-                    $("#sortable").sortable();
+                    $("#sortable").sortable({
+                        items: "li:not(#unsortable)"
+                    });
+
                     $("#sortable").disableSelection();
                 });
 
             </script>
             <h4 class="page-header">Order of Notifying</h4>
-            <link href="~/Content/SupervisorStyles/jquery-ui.css" rel="stylesheet" />
 
-            <ul id="sortable">
-                <li style="overflow:hidden; display:flex; height:50px;">
-                    <div style="display:grid;grid-template-columns:4fr 1fr 1fr 1fr 1fr 1fr">
-                        <div><p>Name </p></div>
-                        <div><p>Email</p></div>
-                        <div><p>SMS</p></div>
-                        <div><p>Call</p></div>
-                        <div><p>Send alert after(minutes)</p></div>
-                        <div><p>Call repeating time(minutes)</p></div>
-                    </div>
-                </li>
-            </ul>
+            <div>
+                <ul id="sortable">
+                    <li id="unsortable" style="overflow:hidden; display:flex; height:50px;">
+                        <div style="display:grid;grid-template-columns:4fr 1fr 1fr 1fr 1fr 1fr">
+                            <div><p>Name </p></div>
+                            <div><p>Email</p></div>
+                            <div><p>SMS</p></div>
+                            <div><p>Call</p></div>
+                            <div><p>Send alert after(minutes)</p></div>
+                            <div><p>Call repeating time(minutes)</p></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
 
             <button class="btn btn-success glyphicons-chevron-left" style="margin-top:10px;" data-toggle="modal" data-target="#modal1">Add a person</button>
 
-            <button class="btn btn-primary glyphicons-chevron-left" style="margin-top:10px;" onclick="saveList();">Save List</button>
+            <button class="btn btn-primary glyphicons-chevron-left" style="margin-top:10px;margin-left:10px" onclick="saveList();">Save List</button>
 
 
             <!-- start draw map in the draw new map model-->
 
             <div class="container">
                 <div class="modal" data-keyboard="false" id="modal1" style="color:black; margin-top:10px;background-color: transparent;">
-                    <div class="modal-dialog" style="width:70%;">
+                    <div class="modal-dialog" style="width:200%;">
                         <div class="modal-content">
                             <div class="modal-header background">
                                 <h4 class="modal-title" style="margin:auto;">Search person</h4>
@@ -244,7 +251,7 @@
                             <div class="modal-footer">
                                 <Button type="button" id="saveMap" class="btn btn-primary" onclick="addPerson()">Add</Button>
 
-                                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-success" data-dismiss="modal" >Close</button>
                             </div>
                         </div>
                     </div>
@@ -254,14 +261,10 @@
         </div>
 
     </div>
-</div>
 
 
+
+<script src="~/Scripts/jquery-ui.js"></script>
 <script src="~/Scripts/AdminScripts/jscolar.js"></script>
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
 <script src="~/Scripts/AdminScripts/notificationsManagement.js"></script>
-
-
-<!-- <script src="~/Scripts/AdminScripts/jquery.js"></script> -->
-<!-- <script src="~/Scripts/jquery-3.3.1.js"></script> -->
-<!--

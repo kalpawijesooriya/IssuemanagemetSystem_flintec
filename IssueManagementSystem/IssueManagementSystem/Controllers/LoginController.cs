@@ -40,7 +40,6 @@ namespace IssueManagementSystem.Controllers
                     {
                         return RedirectToAction("selectIssue", "Supervisor");
                     }
-                   
                     else if (role.Equals("display")) //if user is display goto the display page
                     {
                         return RedirectToAction("Rasp", "Display");
@@ -56,7 +55,6 @@ namespace IssueManagementSystem.Controllers
 
                     else
                         return RedirectToAction("Index", "Login");
-
                 }
             }         
         }

@@ -112,7 +112,6 @@ namespace IssueManagementSystem.Controllers
 
                 foreach (JObject user in list_user)
                 {
-
                     //get line id of particular line name
                     String line_name = user["line_id"].ToString();
                     var line = db.lines.Where(x => x.line_name == line_name).FirstOrDefault();
@@ -130,10 +129,17 @@ namespace IssueManagementSystem.Controllers
 
                     System.Diagnostics.Debug.WriteLine(query_1);
 
-                    db.Database.ExecuteSqlCommand(query_1);
-                }
+                    try
+                        {
+                          db.Database.ExecuteSqlCommand(query_1);
+                        }
 
-                return Content("List Saved", MediaTypeNames.Text.Plain);
+                    catch (Exception ex)
+                        {
+                           return Json(ex.ToString(), JsonRequestBehavior.AllowGet);
+                        }
+                }
+                return Json("List Saved!", JsonRequestBehavior.AllowGet);
             }
         }
     }
