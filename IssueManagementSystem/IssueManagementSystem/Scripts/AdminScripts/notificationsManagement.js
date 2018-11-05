@@ -1,5 +1,4 @@
-﻿
-$('#selectdepartment').select2({
+﻿$('#selectdepartment').select2({
     placeholder: "Select Department.....",
     allowClear: false
 });
@@ -8,7 +7,6 @@ $('#selectLine').select2({
     placeholder: "Select Line....",
     allowClear: false
 });
-
 
 $('#selectIssue').select2({
     placeholder: "Select Issue....",
@@ -24,6 +22,7 @@ $('#Department').select2({
     placeholder: "Search Department....",
     allowClear: false
 });
+
 function addPerson() {
     var name  = document.getElementById("name").innerHTML;
     var empID = document.getElementById("empID").innerHTML;
@@ -67,7 +66,7 @@ function addLine(name, empID) {
     var main_div = document.createElement("div");
 
     list_element.className = "ui-state-default";
-    list_element.style.cssText = 'overflow:hidden; display:flex;';
+    list_element.style.cssText = 'overflow:hidden;display:flex;';
     main_div.style.cssText = 'display:grid;grid-template-columns:4fr 1fr 1fr 1fr 1fr 1fr;';
 
     var inner_div = list_element.appendChild(main_div);
@@ -250,15 +249,13 @@ function saveList() {
 
     $.ajax({
         type: "POST",
-        dataType: 'json',
+        dataType: 'text',
         url: "/admin/saveList",
         data: { userList_json: userList_json },
-        success: function (itemNameArray) {
-
-            alert(itemNameArray);
-
+        success: function (response) {
+            alert(response);
         },
-        error: function () {
+        error: function (response) {
             alert("Error occurred");
         }
     });

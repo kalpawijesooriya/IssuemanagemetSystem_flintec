@@ -17,7 +17,6 @@
     <!-- Bootstrap CSS-->
 
     <link href="~/Content/Manager/bootstrap.min.css" rel="stylesheet" />
-
     <link href="~/Content/animsition.min.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" />
     <link href="~/Content/animate.css" rel="stylesheet" />
@@ -26,12 +25,11 @@
     <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
     <link href="~/Content/perfect-scrollbar.css" rel="stylesheet" />
     <link href="~/Content/material-design-iconic-font.min.css" rel="stylesheet" />
+    <link href="~/Content/3.3.0bootstrap.min.css" rel="stylesheet" />
     <!-- Main CSS-->
     <link href="~/Content/theme.css" rel="stylesheet" />
 
-
 </head>
-
 
 <body class="animsition">
     <div class="page-wrapper">
@@ -56,7 +54,7 @@
                             <li>
                                 <a href="@Url.Action("NotificationsManagement","CellEngineer")">
                                     <i class="fas fa-shopping-basket"></i>
-                                    <span class="bot-line"></span>Notification Management
+                                    <span class="bot-line"></span>Notification Settings
                                 </a>
                             </li>
                             <li>
@@ -352,7 +350,6 @@
 
 
 
-
                     </div>
                 </div>
                 <div class="header-button-item js-item-menu">
@@ -448,9 +445,13 @@
                 </div>
             </div>
         </div>
-        @RenderBody()
+
+        <div class="" style="">
+            @RenderBody()
+        </div>
+
         <!-- COPYRIGHT-->
-        <section class="p-t-60 p-b-20">
+        <section class="p-t-60 p-b-20" style="z-index:-9999;">
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
@@ -464,28 +465,24 @@
         <!-- END COPYRIGHT-->
     </div>
 
-
-    <script src="~/Scripts/Manager/jquery-3.2.1.min.js"></script>
+    <script src="~/Scripts/AdminScripts/jquery.min.js"></script>
     <script src="~/Scripts/Manager/popper.min.js"></script>
-    <script src="~/Scripts/Manager/bootstrap.min.js"></script>
+    <script src="~/Scripts/3.30bootstrap.min.js"></script>
     <script src="~/Scripts/slick.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.0/moment.min.js"></script>
     <script src="~/Scripts/wow.min.js"></script>
     <script src="~/Scripts/animsition.min.js"></script>
     <script src="~/Scripts/bootstrap-progressbar.min.js"></script>
-
-    <script src="~/Scripts/jquery.waypoints.min.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
     <script src="~/Scripts/jquery.counterup.min.js"></script>
-
     <script src="~/Scripts/circle-progress.min.js"></script>
     <script src="~/Scripts/perfect-scrollbar.min.js"></script>
     <script src="~/Scripts/Chart.bundle.min.js"></script>
     <script src="~/Scripts/AdminScripts/select2-min.js"></script>
     <script src="~/Scripts/main.js"></script>
-    <script src="~/Scripts/jquery.min.js"></script>
     <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
-
     <script src="~/signalr/Hubs"></script>
+    <script src="~/Scripts/jquery.waypoints.min.js"></script>
 
 </body>
 </html>

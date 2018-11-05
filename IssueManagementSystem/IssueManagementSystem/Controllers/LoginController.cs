@@ -40,40 +40,34 @@ namespace IssueManagementSystem.Controllers
                     {
                         return RedirectToAction("selectIssue", "Supervisor");
                     }
-                   
                     else if (role.Equals("display")) //if user is display goto the display page
                     {
                         return RedirectToAction("Rasp", "Display");
                     }
                     else if (role.Equals("admin"))
-
                         return RedirectToAction("SelectBranch", "Admin");
+
                     else if (role.Equals("manager"))
-
                         return RedirectToAction("Index", "Manager");
-                    else if (role.Equals("CellEngineer"))
 
+                    else if (role.Equals("CellEngineer"))
                         return RedirectToAction("DashBord", "CellEngineer");
+
                     else if (role.Equals("responsiblePerson"))
 
                         return RedirectToAction("Index", "ResponsiblePerson");
+
+
                     else
                         return RedirectToAction("Index", "Login");
-
-
                 }
-            }
-        
-
-           
+            }         
         }
 
         public ActionResult LogOut()// logout methord
         {
             Session.Abandon();
             return RedirectToAction("Index","Login");
-
-
         }
     }
 }
