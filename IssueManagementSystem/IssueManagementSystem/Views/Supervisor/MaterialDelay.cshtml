@@ -8,36 +8,17 @@
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
 <div class="materials">
-    <button onclick="myFunction()" class="dropbtn">Materials</button>
-    <div id="myDropdown" class="dropdown-content">
-        <a href="#">Material 1</a>
-        <a href="#">Material 2</a>
-        <a href="#">Material 3</a>
-    </div>
+@Html.DropDownList("", new List<SelectListItem>
+{
+    new SelectListItem{Text = "", Value = "", Selected = true},
+    new SelectListItem{Text = "", Value = ""},
+    new SelectListItem{Text = "", Value = ""},
+}, "Select Material")
+
 </div>
 <script src="~/Scripts/jquery-3.3.1.slim.min.js"></script>
 <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
-<script>
-
-    function myFunction() {
-        document.getElementById("myDropdown").classList.toggle("show");
-    }
-
-
-    window.onclick = function (event) {
-        if (!event.target.matches('.dropbtn')) {
-
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            var i;
-            for (i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('show')) {
-                    openDropdown.classList.remove('show');
-                }
-            }
-        }
-    }
-</script>
+<script src="~/Scripts/SupervisorScripts/materialDelay.js"></script>
 
 <div class="container-fluid row ">
     <div class="container">
