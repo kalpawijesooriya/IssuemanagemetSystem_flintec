@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using System.Net.Mail;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 
 namespace IssueManagementSystem.Controllers
 {
@@ -205,24 +206,30 @@ namespace IssueManagementSystem.Controllers
             var time = DateTime.Now;
             string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
             var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-
+            Thread t = new Thread(() => {
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
-                var userDetails = db.User_tbl.Where(x => x.Role == "manager").ToList();
-                foreach (var item in userDetails)
-                {
-                    string query = "INSERT INTO tbl_Notifications ([Status],[Message],[Type],[EmployeeNumber],[Date]) VALUES( 1,'" + msg + "','issue','" + item.EmployeeNumber + "','" + date + "') ";
-                    db.Database.ExecuteSqlCommand(query);
-                }
+                
+                    var userDetails = db.User_tbl.Where(x => x.Role == "manager").ToList();
+                    foreach (var item in userDetails)
+                    {
+                        string query = "INSERT INTO tbl_Notifications ([Status],[Message],[Type],[EmployeeNumber],[Date]) VALUES( 1,'" + msg + "','issue','" + item.EmployeeNumber + "','" + date + "') ";
+                        db.Database.ExecuteSqlCommand(query);
+                    }
 
-                var communicationInfo = db.issue_line_person.Where(x => x.line_id == line_line_id && x.issue_id == issueId).ToList();
-                foreach (var item in communicationInfo)
-                {
-                    var personInfo = db.User_tbl.Where(y => y.EmployeeNumber == item.EmployeeNumber).FirstOrDefault();
-                    CommunicationData cd = new CommunicationData(personInfo.Phone, msg, personInfo.EMail, item.email, item.call, item.message, personInfo.EmployeeNumber, subject);
-                    com.setCD(cd);
-                }
+                    var communicationInfo = db.issue_line_person.Where(x => x.line_id == line_line_id && x.issue_id == issueId).ToList();
+                    foreach (var item in communicationInfo)
+                    {
+                        var personInfo = db.User_tbl.Where(y => y.EmployeeNumber == item.EmployeeNumber).FirstOrDefault();
+                        CommunicationData cd = new CommunicationData(personInfo.Phone, msg, personInfo.EMail, item.email, item.call, item.message, personInfo.EmployeeNumber, subject);
+                        com.setCD(cd);
+                    }
+              
+                
+               
             }
+            });
+            t.Start();
         }
 
         [HttpPost]//solovedIssueMethod

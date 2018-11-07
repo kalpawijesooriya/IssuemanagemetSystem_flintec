@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Web;
@@ -24,7 +25,7 @@ namespace IssueManagementSystem.Controllers
         {
           
         }
-
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void setCD(CommunicationData cd) {
 
             numberList.Enqueue(cd);          
@@ -33,8 +34,8 @@ namespace IssueManagementSystem.Controllers
 
 
 
-
-        private void doCommunicate()
+      
+        private  void doCommunicate()
         {
       
 
@@ -51,6 +52,8 @@ namespace IssueManagementSystem.Controllers
                     var emailAddress = communicateData.getEmailAddress();
                     var mobileNumber = communicateData.getNumber();
 
+                    if (communicateData.getCall() == 1 && mobileNumber != null)
+                        take_Call(mobileNumber, msg);
 
                     if (communicateData.getEmail() == 1 && emailAddress!= null)
                     {
@@ -67,8 +70,7 @@ namespace IssueManagementSystem.Controllers
 
                     
 
-                    if (communicateData.getCall() ==1 && mobileNumber!=null)
-                        take_Call(mobileNumber, msg);
+                   
 
                        gsm_status = true;
                 }
