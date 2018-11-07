@@ -146,5 +146,10 @@ namespace IssueManagementSystem.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
+    
+        public virtual ObjectResult<Nullable<System.Guid>> SqlQueryNotificationStoredProcedure_f203e0c7_c97f_47e5_bf8c_cbb8634fa815()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<System.Guid>>("SqlQueryNotificationStoredProcedure_f203e0c7_c97f_47e5_bf8c_cbb8634fa815");
+        }
     }
 }

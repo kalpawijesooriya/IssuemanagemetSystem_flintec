@@ -24,7 +24,9 @@ namespace IssueManagementSystem.Models
         public Nullable<int> responsible_person_emp_id { get; set; }
         public string issue_satus { get; set; }
         public string location { get; set; }
-    
+        public Nullable<int> responsible_person_confirm_status { get; set; }
+        public string responsible_person_confirm_feedback { get; set; }
+        public string date { get; set; }
         public virtual issue issue { get; set; }
     }
 }
