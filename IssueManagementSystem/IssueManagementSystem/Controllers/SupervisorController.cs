@@ -200,13 +200,11 @@ namespace IssueManagementSystem.Controllers
             return RedirectToAction("selectIssue", "Supervisor");
         }
 
-
         private void sendCD(int? line_line_id, int issueId, string msg, string subject)
         {
             var time = DateTime.Now;
             string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
             var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-
 
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
@@ -217,14 +215,12 @@ namespace IssueManagementSystem.Controllers
                     db.Database.ExecuteSqlCommand(query);
                 }
 
-
                 var communicationInfo = db.issue_line_person.Where(x => x.line_id == line_line_id && x.issue_id == issueId).ToList();
                 foreach (var item in communicationInfo)
                 {
                     var personInfo = db.User_tbl.Where(y => y.EmployeeNumber == item.EmployeeNumber).FirstOrDefault();
                     CommunicationData cd = new CommunicationData(personInfo.Phone, msg, personInfo.EMail, item.email, item.call, item.message, personInfo.EmployeeNumber, subject);
                     com.setCD(cd);
-
                 }
             }
         }

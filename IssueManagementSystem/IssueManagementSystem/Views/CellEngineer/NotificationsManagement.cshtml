@@ -19,9 +19,11 @@
     .lableSet {
         float: left;
     }
-
     .modal-backdrop {
         z-index: -1 !important;
+    }
+    .modal-content {
+        width: 100%;
     }
 </style>
 <div class="page-content--bgf7">
@@ -49,220 +51,207 @@
                                 <i class="zmdi zmdi-search"></i>
                             </button>
                         </form>
+
                     </div>
+                    <h2 style="margin-top:20px;">Notification Settings</h2>
                 </div>
             </div>
         </div>
     </section>
 </div>
-    <div id="page-wrapper" class="container" style="padding-top:0px;">
-        <h1 class="page-header">Settings</h1>
+<div id="page-wrapper" class="container" style="margin-top:40px;">
 
-        <h3 class="page-header" style="margin-top:-10px;">Manage Notifications</h3>
-
-        <div class="row">
-            <div style="display:grid; grid-template-columns:30% 30% 30%">
-
-
-                <div>
-                    <div class="col-lg-12">
-
-                        <label class="lableSet" style="float:left"> Department</label>
-
-                        <select class="js-example-placeholder-single js-states form-control" id="selectdepartment" name="selectdepartment" style="width:100%">
-
-                            <option>Assembly</option>
-                            <option>Machining</option>
-                            <option>IT</option>
-                            <option>Engineering</option>
-                            <option>Maintenance</option>
-                        </select>
-                    </div>
+    <div class="row">
+        <div style="display:grid; grid-template-columns:30% 30% 30%">
+            <div>
+                <div class="col-lg-12">
+                    <label class="lableSet" style="float:left"> Department</label>
+                    <select class="js-example-placeholder-single js-states form-control" id="selectdepartment" name="selectdepartment" style="width:100%">
+                        <option>Assembly</option>
+                        <option>Machining</option>
+                        <option>IT</option>
+                        <option>Engineering</option>
+                        <option>Maintenance</option>
+                    </select>
                 </div>
-
-                <div>
-                    <div class="col-lg-12">
-                        <label class="lableSet" style="float:left"> Line</label>
-
-                        <select class="js-example-placeholder-single js-states form-control" id="selectLine" name="selectLine" style="width:100%">
-                            <option>Potted</option>
-                            <option>Welder</option>
-                            <option>Guaging</option>
-                            <option>SM</option>
-                            <option>MD2</option>
-                            <option>Rocker</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="col-lg-12" style="">
-                        <label class="lableSet" style="float:left">Issue</label>
-
-                        <select class="js-example-placeholder-single js-states form-control" id="selectIssue" name="selectIssue" style="width:100%">
-                            <option>Machine Breakdown</option>
-                            <option>Material Delay</option>
-                            <option>Technical Issue</option>
-                            <option>IT Issue</option>
-                            <option>Quality Isuue</option>
-                        </select>
-                    </div>
-                </div>
-
             </div>
-        </div>
+            <div>
+                <div class="col-lg-12">
+                    <label class="lableSet" style="float:left"> Line</label>
 
-        <div class="row" style="margin-top:20px;">
-
-            <script>
-                window.onload = $(function () {
-
-                    $("#sortable").sortable({
-                        items: "li:not(#unsortable)"
-                    });
-
-                    $("#sortable").disableSelection();
-                });
-
-            </script>
-            <h4 class="page-header">Order of Notifying</h4>
+                    <select class="js-example-placeholder-single js-states form-control" id="selectLine" name="selectLine" style="width:100%">
+                        <option>Potted</option>
+                        <option>Welder</option>
+                        <option>Guaging</option>
+                        <option>SM</option>
+                        <option>MD2</option>
+                        <option>Rocker</option>
+                    </select>
+                </div>
+            </div>
 
             <div>
-                <ul id="sortable">
-                    <li id="unsortable" style="overflow:hidden; display:flex; height:50px;">
-                        <div style="display:grid;grid-template-columns:4fr 1fr 1fr 1fr 1fr 1fr">
-                            <div><p>Name </p></div>
-                            <div><p>Email</p></div>
-                            <div><p>SMS</p></div>
-                            <div><p>Call</p></div>
-                            <div><p>Send alert after(minutes)</p></div>
-                            <div><p>Call repeating time(minutes)</p></div>
-                        </div>
-                    </li>
-                </ul>
+                <div class="col-lg-12" style="">
+                    <label class="lableSet" style="float:left">Issue</label>
+
+                    <select class="js-example-placeholder-single js-states form-control" id="selectIssue" name="selectIssue" style="width:100%">
+                        <option>Machine Breakdown</option>
+                        <option>Material Delay</option>
+                        <option>Technical Issue</option>
+                        <option>IT Issue</option>
+                        <option>Quality Isuue</option>
+                    </select>
+                </div>
             </div>
 
-            <button class="btn btn-success glyphicons-chevron-left" style="margin-top:10px;" data-toggle="modal" data-target="#modal1">Add a person</button>
+        </div>
+    </div>
 
-            <button class="btn btn-primary glyphicons-chevron-left" style="margin-top:10px;margin-left:10px" onclick="saveList();">Save List</button>
+    <div class="row" style="margin-top:20px;">
 
+        <script>
+            window.onload = $(function () {
 
-            <!-- start draw map in the draw new map model-->
+                $("#sortable").sortable({
+                    items: "li:not(#unsortable)"
+                });
 
-            <div class="container">
-                <div class="modal" data-keyboard="false" id="modal1" style="color:black; margin-top:10px;background-color: transparent;">
-                    <div class="modal-dialog" style="width:200%;">
-                        <div class="modal-content">
-                            <div class="modal-header background">
-                                <h4 class="modal-title" style="margin:auto;">Search person</h4>
-                                <button class="close" data-dismiss="modal" style="margin-top:-20px;">&times;</button>
+                $("#sortable").disableSelection();
+            });
+
+        </script>
+        <h4 class="page-header">Order of Notifying</h4>
+        <div>
+            <ul id="sortable">
+                <li id="unsortable" style="overflow:hidden; display:flex; height:50px;">
+                    <div style="display:grid;grid-template-columns:4fr 1fr 1fr 1fr 1fr 1fr">
+                        <div><p>Name </p></div>
+                        <div><p>Email</p></div>
+                        <div><p>SMS</p></div>
+                        <div><p>Call</p></div>
+                        <div><p>Send alert after(minutes)</p></div>
+                        <div><p>Call repeating time(minutes)</p></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <button class="btn btn-success glyphicons-chevron-left" style="margin-top:10px;" data-toggle="modal" data-target="#modal1">Add a person</button>
+    <button class="btn btn-primary glyphicons-chevron-left" style="margin-top:10px;margin-left:10px" onclick="saveList();">Save List</button>
+</div>
+
+<!-- start draw map in the draw new map model-->
+<div class="container" style="">
+    <div class="modal lg fade " data-keyboard="false" id="modal1" style="color:black;background-color: transparent;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header background">
+                    <h4 class="modal-title" style="margin:auto;">Add a person</h4>
+                    <button class="close" data-dismiss="modal" style="margin-top:-20px;">&times;</button>
+                </div>
+                <!-- draw new map modal body -->
+                <div class="modal-body" style="display:flex;">
+                    <div class="container">
+                        <div class="page-header row">
+                            <div class="col-lg-4">
+                                <label class="lableSet" style="float:left">Department</label>
+
+                                <select class="js-example-placeholder-single js-states form-control" id="Department" name="Department" style="width:100%" onchange="fillNameDropDown()">
+                                    <option></option>
+
+                                    @foreach (var department in Model.departments)
+                                    {
+                                        <option> @department.department_name</option>
+                                    }
+
+                                </select>
                             </div>
-                            <!-- draw new map model body -->
-                            <div class="modal-body" style="display:flex;">
-                                <div class="container">
-                                    <div class=" page-header row">
-                                        <div class="col-lg-4" style="">
-                                            <label class="lableSet" style="float:left">Department</label>
 
-                                            <select class="js-example-placeholder-single js-states form-control" id="Department" name="Department" style="width:100%" onchange="fillNameDropDown()">
-                                                <option></option>
+                            <div class="col-lg-8" style="">
+                                <label class="lableSet" style="float:left">Name</label>
 
-                                                @foreach (var department in Model.departments)
-                                                {
-                                                    <option> @department.department_name</option>
-                                                }
+                                <select class="js-example-placeholder-single js-states form-control" id="Name" name="Name" style="width:100%" onchange="fillDepartmentDropDown(),fillUserDetails()">
+                                    <option></option>
 
-                                            </select>
-                                        </div>
+                                    @foreach (var user in Model.users)
+                                    {
+                                        <option> @user.EmployeeNumber - @user.Name   </option>
+                                    }
 
-                                        <div class="col-lg-8" style="">
-                                            <label class="lableSet" style="float:left">Name</label>
+                                </select>
+                            </div>
 
-                                            <select class="js-example-placeholder-single js-states form-control" id="Name" name="Name" style="width:100%" onchange="fillDepartmentDropDown(),fillUserDetails()">
-                                                <option></option>
-                                                @foreach (var user in Model.users)
-                                                {
-                                                    <option> @user.EmployeeNumber - @user.Name   </option>
-                                                }
-                                            </select>
-                                        </div>
+                        </div>
 
-                                    </div>
+                        <div class="row">
 
-                                    <div class="row">
+                            <div class="col-lg-4">
+                                <img src="~/Content/images/profile.jpg" width="70%" height="70%" style="margin-top:10px;" />
+                            </div>
 
-                                        <div class="col-lg-4">
-                                            <img src="~/Content/images/profile.jpg" width="70%" height="70%" style="margin-top:10px;" />
-                                        </div>
+                            <div class="col-lg-8" style="margin-top:20px;">
+                                <div class="row">
+                                    <p class="col-lg-2" style="float:left">
+                                        Name:
+                                    </p>
+                                    <p class="col-lg-9" style="float:left" id="name">
 
-                                        <div class="col-lg-8" style="margin-top:20px;">
-                                            <div class="row">
-                                                <p class="col-lg-2" style="float:left">
-                                                    Name:
-                                                </p>
-                                                <p class="col-lg-9" style="float:left" id="name">
-
-                                                </p>
-                                            </div>
-                                            <div class="row">
-                                                <p class="col-lg-2" style="float:left">
-                                                    Department:
-                                                </p>
-                                                <p class="col-lg-9" style="float:left" id="dept">
-
-                                                </p>
-                                            </div>
-                                            <div class="row">
-                                                <p class="col-lg-2" style="float:left">
-                                                    emp ID:
-                                                </p>
-                                                <p class="col-lg-9" style="float:left" id="empID">
-
-                                                </p>
-                                            </div>
-                                            <div class="row">
-                                                <p class="col-lg-2" style="float:left">
-                                                    Position:
-                                                </p>
-                                                <p class="col-lg-9" style="float:left" id="position">
-
-                                                </p>
-                                            </div>
-                                            <div class="row">
-                                                <p class="col-lg-2" style="float:left">
-                                                    Phone:
-                                                </p>
-                                                <p class="col-lg-9" style="float:left" id="phone">
-
-                                                </p>
-                                            </div>
-                                            <div class="row">
-                                                <p class="col-lg-2" style="float:left">
-                                                    E-mail:
-                                                </p>
-                                                <p class="col-lg-9" style="float:left" id="email">
-
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </p>
                                 </div>
-                            </div>
-                            <div class="modal-footer">
-                                <Button type="button" id="saveMap" class="btn btn-primary" onclick="addPerson()">Add</Button>
+                                <div class="row">
+                                    <p class="col-lg-2" style="float:left">
+                                        Department:
+                                    </p>
+                                    <p class="col-lg-9" style="float:left" id="dept">
 
-                                <button type="button" class="btn btn-success" data-dismiss="modal" >Close</button>
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-lg-2" style="float:left">
+                                        Emp ID:
+                                    </p>
+                                    <p class="col-lg-9" style="float:left" id="empID">
+
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-lg-2" style="float:left">
+                                        Position:
+                                    </p>
+                                    <p class="col-lg-9" style="float:left" id="position">
+
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-lg-2" style="float:left">
+                                        Phone:
+                                    </p>
+                                    <p class="col-lg-9" style="float:left" id="phone">
+
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-lg-2" style="float:left">
+                                        E-mail:
+                                    </p>
+                                    <p class="col-lg-9" style="float:left" id="email">
+
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="modal-footer">
+                    <Button type="button" id="saveMap" class="btn btn-primary" onclick="addPerson()">Add</Button>
+
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                </div>
             </div>
-            <!-- ends draw new map model-->
         </div>
-
     </div>
-
-
+</div>
+<!-- ends draw new map model-->
 
 <script src="~/Scripts/jquery-ui.js"></script>
 <script src="~/Scripts/AdminScripts/jscolar.js"></script>
