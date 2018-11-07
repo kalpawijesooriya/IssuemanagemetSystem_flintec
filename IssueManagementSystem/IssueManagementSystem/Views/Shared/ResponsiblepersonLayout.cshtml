@@ -490,14 +490,14 @@
 
     <script>
         $(document).ready(function () {
-            debugger
+          
             // Proxy created on the fly
             var hub = $.connection.myHub;
 
 
             // Declare a function on the hub hub so the server can invoke it
             hub.client.displayStatus = function () {
-                debugger
+               
                 getData();
             };
 
@@ -514,7 +514,7 @@
                     type: 'GET',
                     datatype: 'json',
                     success: function (data) {
-                        debugger
+                 
                         data = $.parseJSON(data);
                         if (data.length > 0) {
                             divNotificaion.empty();

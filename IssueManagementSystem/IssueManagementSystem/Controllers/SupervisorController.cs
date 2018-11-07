@@ -231,11 +231,15 @@ namespace IssueManagementSystem.Controllers
 
         [HttpPost]//solovedIssueMethod
         public JsonResult SolvedIssue(int? issueId,int? issueOccourId)
-            {  
-                //update Issueststus as 0
-                issue_management_systemEntities1 db = new issue_management_systemEntities1();
+            {
+               var time = DateTime.Now;
+               string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
+               var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+            //update Issueststus as 0
+            issue_management_systemEntities1 db = new issue_management_systemEntities1();
                 var issueoccourInfo= db.issue_occurrence.Where(x => x.issue_occurrence_id == issueOccourId).FirstOrDefault();
                 issueoccourInfo.issue_satus = "0";
+                issueoccourInfo.solved_date = date;
                 db.SaveChanges();
 
                 int userID = (int)Session["userID"];

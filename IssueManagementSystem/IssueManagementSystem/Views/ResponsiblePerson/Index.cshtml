@@ -69,29 +69,32 @@ if (Session["userID"] == null)
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                        <h4 class="modal-title text-center" id="exampleModalLongTitle" style="color:#ff9800;margin-left:40%">New Issue</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body" >
-                        <div class="row" >
+                        <div class="row">
                             <div class="col" id="issueData">
                             </div>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                        <h4 class="text-center" style="color:#ff9800;margin-top:20px">If you complete the job send feedback to us</h4>
-                                        <label style="margin-top:15px" for="comment">Your Comment:</label>
-                                        <textarea class="form-control" rows="5" id="comment"></textarea>
-                                    </div>
+                        </div>
+                        <div class="row" id="text">
+                            <div class="col">
+                                <div class="form-group" >
+                                    <h4 class="text-center" style="color:#ff9800;margin-top:20px" id="hedding">If you complete the job send feedback to us</h4>
+
+                                    <label style="margin-top:15px;color:#4CAF50; " for="comment"><strong>Your Comment:</strong></label>
+                                    
+                                    <p style="color:red;display:none" id="waring"><small>*Plese put your comment here</small> </p>
+                                    <textarea class="form-control" rows="5" id="comment"></textarea>
                                 </div>
                             </div>
                         </div>
+                    </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                      
+                        <button type="button" class="btn btn-success" id="savecomment">Submit</button>
                     </div>
                 </div>
             </div>
@@ -106,7 +109,7 @@ if (Session["userID"] == null)
 
     <script>
     $(document).ready(function () {
-        debugger
+   
         // Proxy created on the fly
         var hub = $.connection.issueHub;
         var issueCount = 0;
@@ -127,11 +130,11 @@ if (Session["userID"] == null)
             var divissue = $('#divIssue');
 
             $.ajax({
-                    url: '/ResponsiblePerson/GetNotification',
+                    url: '/ResponsiblePerson/GetIssues',
                     type: 'GET',
                     datatype: 'json',
                     success: function (issuedata) {
-                    debugger
+                 
                     issuedata = $.parseJSON(issuedata);
                     if (issuedata.length > 0) {
                         divissue.empty();
@@ -143,12 +146,25 @@ if (Session["userID"] == null)
 
 
 
-                                    if ((issuedata[i].responsible_person_emp_id ==@Session["userID"]) && (issuedata[i].issue_satus== "1")) {
+                            if ((issuedata[i].responsible_person_emp_id ==@Session["userID"]) && (issuedata[i].issue_satus=="1" || issuedata[i].responsible_person_confirm_status==1)) {
 
-                                        var line_id = issuedata[i].line_line_id
-                                        var issueid = issuedata[i].issue_issue_ID
+                                var line_id = issuedata[i].line_line_id
+                                var issueid = issuedata[i].issue_issue_ID
+                                var comment=null
+                                var issueStstus = 2;//issue not soled and not comment
+                                if (issuedata[i].responsible_person_confirm_status == 0 && issuedata[i].issue_satus == "1")
+                                {
+                                    issueStstus = 1;// if issue is not soled but commented
+                                    comment = issuedata[i].responsible_person_confirm_feedback
+                                }
 
-                                        get_line(line_id, issueid, divissue, issuedata[i])
+                                if (issuedata[i].responsible_person_confirm_status == 1 && issuedata[i].issue_satus == "0")
+                                {
+                                    issueStstus = 0;//issue is soled bt not comment
+                                }
+                                var index=i
+
+                                get_line(line_id, issueid, divissue, issuedata[i], issueStstus, comment, index)
 
 
 
@@ -167,8 +183,8 @@ if (Session["userID"] == null)
         }
 
 
-        function get_line(line_id, issueid, divissue, issuedata) {
-
+        function get_line(line_id, issueid, divissue, issuedata, issueStstus, comment, index) {
+            issueCount=0
             var line = new Object();
 
             $.ajax({
@@ -182,11 +198,11 @@ if (Session["userID"] == null)
                     if (response != null) {
 
                         var lineName = response.line_name.toString();;
-                        if (issueid == 1) { mb(lineName, divissue, issuedata)}
-                        else if (issueid == 2) { md(lineName, divissue, issuedata)}
-                        else if (issueid == 3) { ti(lineName, divissue, issuedata)}
-                        else if (issueid == 4) { qi(lineName, divissue, issuedata)}
-                        else if (issueid == 5) { it(lineName, divissue, issuedata)}
+                        if (issueid == 1) { mb(lineName, divissue, issuedata, issueStstus, comment, index)}
+                        else if (issueid == 2) { md(lineName, divissue, issuedata, issueStstus, comment, index)}
+                        else if (issueid == 3) { ti(lineName, divissue, issuedata, issueStstus, comment, index)}
+                        else if (issueid == 4) { qi(lineName, divissue, issuedata, issueStstus, comment, index)}
+                        else if (issueid == 5) { it(lineName, divissue, issuedata, issueStstus, comment, index)}
 
                     } else {
                         alert("Something went wrong");
@@ -203,11 +219,12 @@ if (Session["userID"] == null)
         }
 
 
-        function it(lineName, divissue, issuedata) {
-            var date = issuedata.date.split(' ');
+        function it(lineName, divissue, issuedata, issueStstus, comment, index) {
+            var date = issuedata.issueDate.split(' ');
             var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
             var msg = 'In <strong> ' + lineName + '</strong> Line new IT / Software Issue has been occoured at <strong> ' + day + '</strong > on ' + date[1] + '.You are the Responsible person for that.';
-            var issue = '<div class="col-md-6 col-lg-3" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--blue"><span class="desc" style="color:white">IT/Software Issue</span><div class="icon" ><i class="zmdi zmdi-windows"></i></div></div><div class="card-body"><h5 class="card-title">Card title</h5><p class="card-text">' + msg + '</p> <div class="text-right"> <button style="color:#1183ff" class="card-link" data-toggle="modal" data-target="#moreIssueInfo" data-msg="' + msg + '" data-issueinfo="' + issuedata.issue_occurrence_id + '" data-dis="' + issuedata.description+'" onclick="myfunction(this)">Show More >></button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
+
+            var issue = '<div class="col-md-6 col-lg-3" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--blue"><span class="desc" style="color:white">IT/Software Issue</span><div class="icon" ><i class="zmdi zmdi-windows"></i></div></div><div class="card-body"><h5 class="card-title" id="' + index+'"></h5><p class="card-text">' + msg + '</p> <div class="text-right"> <button style="color:#1183ff" class="card-link" data-toggle="modal" data-target="#moreIssueInfo" data-msg="' + msg + '" data-issueinfo="' + issuedata.issue_occurrence_id + '" data-dis="' + issuedata.description + '" data-ststus="' + issueStstus + '" data-comment="' + comment +'" onclick="myfunction(this)">Show More >></button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
             issueCount++
 
                 divissue.append(issue)
@@ -215,54 +232,69 @@ if (Session["userID"] == null)
 
 
             $('#issueCnt').text(issueCount);
+            if (issueStstus == 1) { $('#' + index).text("commented") }
+            if (issueStstus == 2) { $('#' + index) }
+            if (issueStstus == 0) { $('#' + index).text("Issue Solved")}
         }
-        function mb(lineName, divissue, issuedata) {
-            var date = issuedata.date.split(' ');
+        function mb(lineName, divissue, issuedata, issueStstus, comment, index) {
+            var date = issuedata.issueDate.split(' ');
             var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
-            var msg = 'In <strong> ' + lineName + ' Line </strong> new Machine Brakedown has been occoured on <strong> ' + issuedata.machine_machine_id + '</strong > at ' + day + '</strong > on ' + date[1] + '.You are the Responsible person for that.'
-            var issue = '<div class="col-md-6 col-lg-3" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--red"><span class="desc" style="color:white">Machine Brakedown</span><div class="icon" ><i class="zmdi zmdi-settings zmdi-hc-spin"></i></div></div><div class="card-body"><h5 class="card-title">Card title</h5><p class="card-text">' + msg + '</p> <div class="text-right"> <button style="color:#1183ff" class="card-link" data-toggle="modal" data-target="#moreIssueInfo" data-msg="' + msg + '" data-issueinfo="' + issuedata.issue_occurrence_id + '" data-dis="' + issuedata.description+'" onclick="myfunction(this)">Show More >></button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
+            var msg = 'In <strong> ' + lineName + ' Line </strong> new Machine Brakedown has been occoured on <strong> ' + issuedata.machine_machine_id + '</strong > at <strong >' + day + '</strong > on ' + date[1] + '.You are the Responsible person for that.'
+            var issue = '<div class="col-md-6 col-lg-3" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--red"><span class="desc" style="color:white">Machine Brakedown</span><div class="icon" ><i class="zmdi zmdi-settings zmdi-hc-spin"></i></div></div><div class="card-body"><h5 class="card-title" id="' + index +'"></h5><p class="card-text">' + msg + '</p> <div class="text-right"> <button style="color:#1183ff" class="card-link" data-toggle="modal" data-target="#moreIssueInfo" data-msg="' + msg + '" data-issueinfo="' + issuedata.issue_occurrence_id + '" data-dis="' + issuedata.description + '" data-ststus="' + issueStstus + '" data-comment="' + comment +'" onclick="myfunction(this)">Show More >></button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
             issueCount++
 
                 divissue.append(issue)
                 divissue.show('slow');
 
             $('#issueCnt').text(issueCount);
+            if (issueStstus == 1) { $('#' + index).text("commented")}
+            if (issueStstus == 2) { $('#' + index) }
+            if (issueStstus == 0) { $('#' + index).text("Issue Solved") }
         }
-        function ti(lineName, divissue, issuedata) {
-            var date = issuedata.date.split(' ');
+        function ti(lineName, divissue, issuedata, issueStstus, comment, index) {
+            var date = issuedata.issueDate.split(' ');
             var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
             var msg = 'In <strong>' + lineName + '</strong> Line new Technical Issue has been occoured. At <strong> ' + day + '</strong> on ' + date[1] +' You are the Responsible person for that.'
-            var issue = '<div class="col-md-6 col-lg-3" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--green"><span class="desc" style="color:white">Technical Issue</span><div class="icon" ><i class="fas fa-wrench"></i></div></div><div class="card-body"><h5 class="card-title">Card title</h5><p class="card-text">' + msg + '</p> <div class="text-right"> <button style="color:#1183ff" class="card-link" data-toggle="modal" data-target="#moreIssueInfo" data-msg="' + msg + '" data-issueinfo="' + issuedata.issue_occurrence_id + '" data-dis="' + issuedata.description +'" onclick="myfunction(this)">Show More >></button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
+            var issue = '<div class="col-md-6 col-lg-3" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--green"><span class="desc" style="color:white">Technical Issue</span><div class="icon" ><i class="fas fa-wrench"></i></div></div><div class="card-body"><h5 class="card-title" id="' + index +'"></h5><p class="card-text">' + msg + '</p> <div class="text-right"> <button style="color:#1183ff" class="card-link" data-toggle="modal" data-target="#moreIssueInfo" data-msg="' + msg + '" data-issueinfo="' + issuedata.issue_occurrence_id + '" data-dis="' + issuedata.description + '"  data-ststus="' + issueStstus + '" data-comment="' + comment +'" onclick="myfunction(this)">Show More >></button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
             issueCount++
 
                 divissue.append(issue)
                 divissue.show('slow');
 
             $('#issueCnt').text(issueCount);
+            if (issueStstus == 1) { $('#' + index).text("commented") }
+            if (issueStstus == 2) { $('#' + index) }
+            if (issueStstus == 0) { $('#' + index).text("Issue Solved") }
         }
-        function md(lineName, divissue, issuedata) {
-            var date = issuedata.date.split(' ');
+        function md(lineName, divissue, issuedata, issueStstus, comment, index) {
+            var date = issuedata.issueDate.split(' ');
             var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
             var msg = 'In <strong> ' + lineName + ' Line</strong> new Material Delay has been occouered. At <strong> ' + day + '</strong> on ' + date[1] + ' You are the responible person for that.'
-            var issue = '<div class="col-md-6 col-lg-3" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--orange"><span class="desc" style="color:white">Material Delay</span><div class="icon" ><i class="zmdi animated infinite wobble zmdi-shopping-cart"></i></div></div><div class="card-body"><h5 class="card-title">Card title</h5><p class="card-text">' + msg + '</p> <div class="text-right"><button style="color:#1183ff" class="card-link" data-toggle="modal" data-target="#moreIssueInfo" data-msg="' + msg + '" data-issueinfo="' + issuedata.issue_occurrence_id + '" data-dis="' + issuedata.description +'" onclick="myfunction(this)">Show More >></button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
+            var issue = '<div class="col-md-6 col-lg-3" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--orange"><span class="desc" style="color:white">Material Delay</span><div class="icon" ><i class="zmdi animated infinite wobble zmdi-shopping-cart"></i></div></div><div class="card-body"><h5 class="card-title" id="' + index +'"></h5><p class="card-text">' + msg + '</p> <div class="text-right"><button style="color:#1183ff" class="card-link" data-toggle="modal" data-target="#moreIssueInfo" data-msg="' + msg + '" data-issueinfo="' + issuedata.issue_occurrence_id + '" data-dis="' + issuedata.description + '"  data-ststus="' + issueStstus + '" data-comment="' + comment +'" onclick="myfunction(this)">Show More >></button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
             issueCount++
 
                 divissue.append(issue)
                 divissue.show('slow');
 
             $('#issueCnt').text(issueCount);
+            if (issueStstus == 1) { $('#' + index).text("commented")}
+            if (issueStstus == 2) { $('#' + index)}
+            if (issueStstus == 0) { $('#' + index).text("Issue Solved") }
         }
-        function qi(lineName, divissue, issuedata) {
-            var date = issuedata.date.split(' ');
+        function qi(lineName, divissue, issuedata, issueStstus, comment, index) {
+            var date = issuedata.issueDate.split(' ');
             var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
-            var msg = 'In <strong>' + lineName + '</strong> Line Qulity Issue has been occored at <strong> ' + day + ' </strong> on ' + date[1] + '. You are the Responsible person for that.'
-            var issue = '<div class="col-md-6 col-lg-3" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--blue"><span class="desc" style="color:white">Qulity Issue</span><div class="icon" ><i class="zmdi zmdi-brightness-auto"></i></div></div><div class="card-body"><h5 class="card-title">Card title</h5><p class="card-text"> ' + msg + '</p><div class="text-right"> <button style="color:#1183ff" class="card-link" data-toggle="modal" data-target="#moreIssueInfo" data-msg="' + msg + '" data-issueinfo="' + issuedata.issue_occurrence_id + '" data-dis="' + issuedata.description +'" onclick="myfunction(this)">Show More >></button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
+            var msg = 'In <strong>' + lineName + '</strong> Line Quality Issue has been occored at <strong> ' + day + ' </strong> on ' + date[1] + '. You are the Responsible person for that.'
+            var issue = '<div class="col-md-6 col-lg-3" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--blue"><span class="desc" style="color:white">Qulity Issue</span><div class="icon" ><i class="zmdi zmdi-brightness-auto"></i></div></div><div class="card-body"><h5 class="card-title" id="' + index +'"></h5><p class="card-text"> ' + msg + '</p><div class="text-right"> <button style="color:#1183ff" class="card-link" data-toggle="modal" data-target="#moreIssueInfo" data-msg="' + msg + '" data-issueinfo="' + issuedata.issue_occurrence_id + '" data-dis="' + issuedata.description + '"  data-ststus="' + issueStstus + '" data-comment="' +comment+'" onclick="myfunction(this)">Show More >></button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
             issueCount++
 
                 divissue.append(issue)
                 divissue.show('slow');
 
             $('#issueCnt').text(issueCount);
+            if (issueStstus == 1) { $('#' + index).text("commented")}
+            if (issueStstus == 2) { $('#' + index)}
+            if (issueStstus == 0) { $('#' + index).text("Issue Solved")}
         }
 
 
@@ -274,14 +306,60 @@ if (Session["userID"] == null)
     })
         function myfunction(param) {
             $("#issueData").empty();
+            $("#text").show();
+            var text = $("#comment")
+            $("#hedding").show()
+            text.val("")
             var msg = $(param).data('msg');
             var id = $(param).data('issueinfo');
             var dis = $(param).data('dis');
-            var issueInfo = '<p>' + msg + '</p></br><p><strong>supervisor Note : </strong>' + dis+' </p>'
+            var ststus = $(param).data('ststus')
+
+            if (ststus == 1) { text.prop('disabled', true); $("#savecomment").prop('disabled', true); text.val($(param).data('comment')); $("#hedding").hide() }
+            else if (ststus == 0) { text.prop('disabled', false); $("#savecomment").prop('disabled', false);}
+            else if (ststus == 2) { text.prop('disabled', false); $("#savecomment").prop('disabled', false);}
+            var issueInfo = '<p hidden id="id">'+id+'</p><p style="color:#4CAF50"><strong>Message : </strong></p><p>' + msg + '</p></br><p style="color:#4CAF50"><strong>supervisor Note : </strong></p><p class="mb-0">' + dis+' </p>'
             $('#issueData').append(issueInfo) 
-    }
+        }
+     
 
+        $("#savecomment").click(function () {
+            
+            if ($('#comment').val() == '') {
+                $('#comment').css('border-color', 'red');
+               
+                $("#waring").show();
+            }
+            else {
+                var data = {};
+                data.id = $("#id").text().trim();
+               
+               
 
+                $.ajax({
+                    type: "POST",
+                    url: "/ResponsiblePerson/savecomment?id=" + data.id + "&comment=" + $('#comment').val(),
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    dataType: "json"
+                }).done(function (response) {
+                    var body = $("#issueData")
+                    $("#text").hide();
+                    body.empty();
+                    if (response==1)
+                        body.append('<P style="color:red" class="text-center">We saved your comment for this Issue.But Issue is not solved yet.Plese Check That.</br>Thank You.</p>')
+                    else
+                        body.append('<P style="color:green" class="text-center">Issue is Solved. Grate work!</br>Thank You.</p>')
+                }).fail(function (response) {
+                    console.log('Error: ' + response);
+                });
+            }
+
+        });
+        $("#comment").click(function () {
+            $('#comment').css('border-color', '#ced4da');
+            $("#waring").hide();
+        });
         </script>
     </div>
 </div>

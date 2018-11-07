@@ -259,12 +259,6 @@
     </Compile>
     <Compile Include="Models\SendIssues.cs" />
     <Compile Include="Models\SendNotifications.cs" />
-    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_helpdiagrams_Result.cs">
-      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
@@ -341,7 +335,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>IssueManagementSystem.edmx</DependentUpon>
       <LastGenOutput>IssueManagementSystem.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </Content>
     <Content Include="Scripts\animsition.min.js" />
     <Content Include="Scripts\bootstrap-progressbar.min.js" />
@@ -494,6 +487,7 @@
     <Content Include="fonts\poppins\poppins-v5-latin-regular.ttf" />
     <Content Include="fonts\poppins\poppins-v5-latin-regular.woff" />
     <Content Include="fonts\poppins\poppins-v5-latin-regular.woff2" />
+    <Content Include="ClassDiagram1.cd" />
     <EntityDeploy Include="Models\IssueManagementSystem.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>IssueManagementSystem.Designer.cs</LastGenOutput>
@@ -501,7 +495,6 @@
     <Content Include="Models\IssueManagementSystem.edmx.diagram">
       <DependentUpon>IssueManagementSystem.edmx</DependentUpon>
     </Content>
-    <Content Include="ClassDiagram1.cd" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile2.pubxml" />
@@ -588,10 +581,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-
     <Folder Include="Scripts\Responsibleperson\" />
-
-   
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css.map" />
