@@ -234,40 +234,6 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
             </Dependent>
           </ReferentialConstraint>
         </Association>
-
-        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="SqlQueryNotificationStoredProcedure_697c5a91_0282_477f_958a_eeb2ece05020" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="SqlQueryNotificationStoredProcedure-697c5a91-0282-477f-958a-eeb2ece05020" />
-
         <EntityContainer Name="issue_management_systemModelStoreContainer">
           <EntitySet Name="departments" EntityType="Self.departments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="display" EntityType="Self.display" Schema="dbo" store:Type="Tables" />
@@ -391,18 +357,11 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <Property Name="responsible_person_emp_id" Type="Int32" />
           <Property Name="issue_satus" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-
           <Property Name="responsible_person_confirm_status" Type="Int32" />
           <Property Name="responsible_person_confirm_feedback" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="solved_date" Type="DateTime" Precision="3" />
           <Property Name="commented_date" Type="DateTime" Precision="3" />
-
           <NavigationProperty Name="issue" Relationship="Self.FK_issue_occurrence_issues" FromRole="issue_occurrence" ToRole="issues" />
-          <Property Name="issue_date" Type="DateTime" Precision="3" />
-          <Property Name="responsible_person_confirm_status" Type="Int32" />
-          <Property Name="responsible_person_confirm_feedback" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="solved_date" Type="DateTime" Precision="3" />
-          <Property Name="commented_date" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="issue">
           <Key>
@@ -591,30 +550,6 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
             <End Role="issue_occurrence" EntitySet="issue_occurrence" />
           </AssociationSet>
         </EntityContainer>
-
-        <EntityType Name="tbl_Notifications">
-          <Key>
-            <PropertyRef Name="NotificationId" />
-          </Key>
-          <Property Name="NotificationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Status" Type="Int32" Nullable="false" />
-          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EmployeeNumber" Type="Int32" Nullable="false" />
-          <Property Name="Date" Type="DateTime" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" Precision="3" Nullable="false" />
-        </EntityType>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
-        </ComplexType>
-
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -670,15 +605,8 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <EntitySetMapping Name="issue_occurrence">
             <EntityTypeMapping TypeName="issue_management_systemModel.issue_occurrence">
               <MappingFragment StoreEntitySet="issue_occurrence">
-                <ScalarProperty Name="commented_date" ColumnName="commented_date" />
-                <ScalarProperty Name="solved_date" ColumnName="solved_date" />
-                <ScalarProperty Name="responsible_person_confirm_feedback" ColumnName="responsible_person_confirm_feedback" />
-                <ScalarProperty Name="responsible_person_confirm_status" ColumnName="responsible_person_confirm_status" />
-                <ScalarProperty Name="issue_date" ColumnName="issue_date" />
                 <ScalarProperty Name="issue_occurrence_id" ColumnName="issue_occurrence_id" />
-
                 <ScalarProperty Name="issue_date" ColumnName="issue_date" />
-
                 <ScalarProperty Name="material_id" ColumnName="material_id" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="machine_machine_id" ColumnName="machine_machine_id" />

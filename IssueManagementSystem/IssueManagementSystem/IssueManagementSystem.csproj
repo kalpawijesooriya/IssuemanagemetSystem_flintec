@@ -260,9 +260,7 @@
     <Compile Include="Models\material.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
-
     <Compile Include="Models\SendIssues.cs" />
-
     <Compile Include="Models\Navision_db.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -278,7 +276,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Navision_db.edmx</DependentUpon>
     </Compile>
-
     <Compile Include="Models\SendNotifications.cs" />
     <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
@@ -519,14 +516,6 @@
     <Content Include="fonts\poppins\poppins-v5-latin-regular.woff" />
     <Content Include="fonts\poppins\poppins-v5-latin-regular.woff2" />
     <Content Include="ClassDiagram1.cd" />
-    <EntityDeploy Include="Models\IssueManagementSystem.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>IssueManagementSystem.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\IssueManagementSystem.edmx.diagram">
-      <DependentUpon>IssueManagementSystem.edmx</DependentUpon>
-    </Content>
-
     <Content Include="ClassDiagram1.cd" />
     <EntityDeploy Include="Models\Navision_db.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -535,7 +524,13 @@
     <Content Include="Models\Navision_db.edmx.diagram">
       <DependentUpon>Navision_db.edmx</DependentUpon>
     </Content>
-
+    <EntityDeploy Include="Models\IssueManagementSystem.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>IssueManagementSystem.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\IssueManagementSystem.edmx.diagram">
+      <DependentUpon>IssueManagementSystem.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile2.pubxml" />
