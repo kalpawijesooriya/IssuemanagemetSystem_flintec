@@ -210,6 +210,9 @@
     <Compile Include="Models\employee.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FLINTEC_Item.cs">
+      <DependentUpon>Navision_db.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\issue.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
@@ -254,6 +257,21 @@
     </Compile>
     <Compile Include="Models\material.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Navision_db.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Navision_db.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Navision_db.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Navision_db.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Navision_db.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Navision_db.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\SendNotifications.cs" />
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
@@ -339,6 +357,16 @@
       <DependentUpon>IssueManagementSystem.edmx</DependentUpon>
       <LastGenOutput>IssueManagementSystem.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Models\Navision_db.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Navision_db.edmx</DependentUpon>
+      <LastGenOutput>Navision_db.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Navision_db.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Navision_db.edmx</DependentUpon>
+      <LastGenOutput>Navision_db.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\animsition.min.js" />
     <Content Include="Scripts\bootstrap-progressbar.min.js" />
@@ -503,6 +531,13 @@
       <DependentUpon>IssueManagementSystem.edmx</DependentUpon>
     </Content>
     <Content Include="ClassDiagram1.cd" />
+    <EntityDeploy Include="Models\Navision_db.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Navision_db.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Navision_db.edmx.diagram">
+      <DependentUpon>Navision_db.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile2.pubxml" />

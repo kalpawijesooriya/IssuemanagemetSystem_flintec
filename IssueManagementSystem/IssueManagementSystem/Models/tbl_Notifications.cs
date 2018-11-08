@@ -19,7 +19,6 @@ namespace IssueManagementSystem.Models
         public string Message { get; set; }
         public string Type { get; set; }
         public int EmployeeNumber { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
-        public string Dates { get; set; }
+        public System.DateTime Date { get; set; }
     }
 }

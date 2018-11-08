@@ -53,15 +53,19 @@
             <PropertyRef Name="issue_occurrence_id" />
           </Key>
           <Property Name="issue_occurrence_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="date_time" Type="datetime" />
+          <Property Name="issue_date" Type="datetime" />
           <Property Name="material_id" Type="varchar" MaxLength="45" />
-          <Property Name="description" Type="varchar" MaxLength="45" />
+          <Property Name="description" Type="varchar(max)" />
           <Property Name="machine_machine_id" Type="nvarchar" MaxLength="50" />
           <Property Name="line_line_id" Type="int" />
           <Property Name="issue_issue_ID" Type="int" />
           <Property Name="responsible_person_emp_id" Type="int" />
           <Property Name="issue_satus" Type="varchar" MaxLength="1" />
-          <Property Name="location" Type="nchar" MaxLength="3" />
+          <Property Name="location" Type="nvarchar" MaxLength="50" />
+          <Property Name="responsible_person_confirm_status" Type="int" />
+          <Property Name="responsible_person_confirm_feedback" Type="varchar(max)" />
+          <Property Name="solved_date" Type="datetime" />
+          <Property Name="commented_date" Type="datetime" />
         </EntityType>
         <EntityType Name="issues">
           <Key>
@@ -170,7 +174,7 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <Property Name="Message" Type="varchar(max)" />
           <Property Name="Type" Type="varchar" MaxLength="50" />
           <Property Name="EmployeeNumber" Type="int" Nullable="false" />
-          <Property Name="Date" Type="datetime" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="User_tbl">
           <Key>
@@ -261,6 +265,7 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SqlQueryNotificationStoredProcedure_697c5a91_0282_477f_958a_eeb2ece05020" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" StoreFunctionName="SqlQueryNotificationStoredProcedure-697c5a91-0282-477f-958a-eeb2ece05020" />
         <EntityContainer Name="issue_management_systemModelStoreContainer">
           <EntitySet Name="departments" EntityType="Self.departments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="display" EntityType="Self.display" Schema="dbo" store:Type="Tables" />
@@ -376,14 +381,19 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <Property Name="issue_occurrence_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="date_time" Type="DateTime" Precision="3" />
           <Property Name="material_id" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="machine_machine_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="line_line_id" Type="Int32" />
           <Property Name="issue_issue_ID" Type="Int32" />
           <Property Name="responsible_person_emp_id" Type="Int32" />
           <Property Name="issue_satus" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="location" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+          <Property Name="location" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="issue" Relationship="Self.FK_issue_occurrence_issues" FromRole="issue_occurrence" ToRole="issues" />
+          <Property Name="issue_date" Type="DateTime" Precision="3" />
+          <Property Name="responsible_person_confirm_status" Type="Int32" />
+          <Property Name="responsible_person_confirm_feedback" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="solved_date" Type="DateTime" Precision="3" />
+          <Property Name="commented_date" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="issue">
           <Key>
@@ -600,7 +610,7 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EmployeeNumber" Type="Int32" Nullable="false" />
-          <Property Name="Date" Type="DateTime" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <Property Name="Date" Type="DateTime" a:GetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" Precision="3" Nullable="false" />
         </EntityType>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -668,8 +678,12 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <EntitySetMapping Name="issue_occurrence">
             <EntityTypeMapping TypeName="issue_management_systemModel.issue_occurrence">
               <MappingFragment StoreEntitySet="issue_occurrence">
+                <ScalarProperty Name="commented_date" ColumnName="commented_date" />
+                <ScalarProperty Name="solved_date" ColumnName="solved_date" />
+                <ScalarProperty Name="responsible_person_confirm_feedback" ColumnName="responsible_person_confirm_feedback" />
+                <ScalarProperty Name="responsible_person_confirm_status" ColumnName="responsible_person_confirm_status" />
+                <ScalarProperty Name="issue_date" ColumnName="issue_date" />
                 <ScalarProperty Name="issue_occurrence_id" ColumnName="issue_occurrence_id" />
-                <ScalarProperty Name="date_time" ColumnName="date_time" />
                 <ScalarProperty Name="material_id" ColumnName="material_id" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="machine_machine_id" ColumnName="machine_machine_id" />
