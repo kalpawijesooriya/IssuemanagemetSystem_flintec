@@ -200,6 +200,12 @@ namespace IssueManagementSystem.Controllers
             return RedirectToAction("selectIssue", "Supervisor");
         }
 
+        [HttpPost]//add IT Issues to database
+        public ActionResult AddMaterialDelay(issue_occurrence issueModel) {
+
+            return Json("");
+        }
+
 
         private void sendCD(int? line_line_id, int issueId, string msg, string subject)
         {
