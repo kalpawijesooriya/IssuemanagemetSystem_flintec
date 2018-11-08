@@ -10,34 +10,9 @@
 
 <link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
 
-<body body >
-   
-    <div class="container-fluid" style="margin-top:5%;">
-        <div class="row">
-            <div class="col-md-6">
-                <h2>Select Issue</h2>
-                <div class="container">
-                    <br>
-                   
-                    <div class="row">
-                        <div class="col-md-3">
-                            <button type="button" class="btn btn-danger btn-lg btn-block btn-huge margin btn_bottom_margin " id="btn_MB" onclick="@("window.location.href='" + @Url.Action("MachinBreakdown", "Supervisor") + "'");">Machine Breakdown</button>
-                        </div>
-                        <div class="col-md-3">
-                            <button type="button" class="btn btn-success btn-lg btn-block btn-huge btn_bottom_margin " id="btn_TI" onclick="@("window.location.href='" + @Url.Action("TechnicalIssue", "Supervisor") + "'");">Technical Issue</button>
-                        </div>
-                    </div>
+<body body>
 
-                    <div class="row">
-                        <div class="col-md-3">
-                            <button type="button" class="btn btn-warning btn-lg btn-block btn-huge margin btn_bottom_margin" id="btn_MD" onclick="@("window.location.href='" + @Url.Action("MaterialDelay", "Supervisor") + "'");">Material Delay</button>
-                        </div>
-                        <div class="col-md-3">
-                            <button type="button" class="btn btn-primary btn-lg btn-block btn-huge btn_bottom_margin" id="btn_IT" onclick="@("window.location.href='" + @Url.Action("ITIssue", "Supervisor") + "'");">Software/IT Issue</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="container-fluid" style="margin-top:5%;">
             <div class="col-md-6">
                 <h2>Issue List</h2>
                 <div id="accordion" style="width:100%;margin-left:10%" class="pre-scrollable">
@@ -69,14 +44,14 @@
 
 
 </body>
-
+<script src="~/Scripts/jquery.min.js"></script>
 <link href="~/Content/SupervisorStyles/jquery-ui.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-ui.js"></script>
 <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
 <script src="~/signalr/js"></script>
 <script>
     $("#submit").click(function () {
-       
+
     });
 
 </script>
@@ -111,6 +86,6 @@
             .fail(function () { alert("ERROR!") });
     });
 
-   
+
 </script>
 

@@ -106,17 +106,18 @@ namespace IssueManagementSystem.Controllers
                    
                     issueModel.line_line_id = lineInfo.line_line_id;
                     issueModel.issue_satus = "1";
+                    issueModel.responsible_person_confirm_status =1;
                     issueModel.issue_issue_ID = 1;//Issue id is 1 for Machine Brakedown
                     issueModel.responsible_person_emp_id = 5;//get specific employee 
                     var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-                    issueModel.date_time = date;
+                    issueModel.issue_date = date;
                     issueModel.location = (string)Session["location"];
                     db.issue_occurrence.Add(issueModel);
                     db.SaveChanges();
                     if (issueModel.issue_occurrence_id > 0)
                     {
                         var line = db.lines.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
-                        string msg = line.line_name + " line IT/SoftWare issue has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
+                        string msg = line.line_name + "Machine Brakedown has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
                         var displayInfo = db.displays.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
                         com.lightON("1", displayInfo.raspberry_ip_address);//turn on the Light
                         sendCD(lineInfo.line_line_id, 1, msg, "Machine Brakedown has been occurred");
@@ -139,13 +140,13 @@ namespace IssueManagementSystem.Controllers
                 {
                     int userID = (int)Session["userID"];
                     var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
-                  
+                    issueModel.responsible_person_confirm_status = 1;
                     issueModel.line_line_id = lineInfo.line_line_id;
                     issueModel.issue_satus = "1";
                     issueModel.issue_issue_ID = 3;//Issue id is 2 for Machine Brakedown
                     issueModel.responsible_person_emp_id = 5;//get specific employee 
                     var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-                    issueModel.date_time = date;
+                    issueModel.issue_date = date;
                     issueModel.location = (string)Session["location"];
                     db.issue_occurrence.Add(issueModel);
                     db.SaveChanges();
@@ -153,7 +154,7 @@ namespace IssueManagementSystem.Controllers
                     {
                         var line = db.lines.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
                         var displayInfo = db.displays.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
-                        string msg = line.line_name + " line IT/SoftWare issue has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
+                        string msg = line.line_name + " line Tecnical Issue has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
                         com.lightON("3", displayInfo.raspberry_ip_address);//turn on the Light
                         sendCD(lineInfo.line_line_id, 3, msg, "Tecnical Issue has been occered");
                     }
@@ -175,14 +176,14 @@ namespace IssueManagementSystem.Controllers
                 {
                     int userID = (int)Session["userID"];
                     var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
-
+                    issueModel.responsible_person_confirm_status = 1;
                     issueModel.line_line_id = lineInfo.line_line_id;
                     issueModel.issue_satus = "1";
                     issueModel.issue_issue_ID = 5;//Issue id is 5 for IT Issue
                     issueModel.responsible_person_emp_id = 5;//get specific employee 
                     issueModel.location = (string)Session["location"];
                     var date=DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture); 
-                    issueModel.date_time = date;
+                    issueModel.issue_date = date;
 
                     db.issue_occurrence.Add(issueModel);
                     db.SaveChanges();
@@ -224,10 +225,11 @@ namespace IssueManagementSystem.Controllers
                         CommunicationData cd = new CommunicationData(personInfo.Phone, msg, personInfo.EMail, item.email, item.call, item.message, personInfo.EmployeeNumber, subject);
                         com.setCD(cd);
                     }
-              
+
+
+                    System.Diagnostics.Debug.WriteLine("Thread is end");
+                }
                 
-               
-            }
             });
             t.Start();
         }
