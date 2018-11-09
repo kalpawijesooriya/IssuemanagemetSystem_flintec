@@ -242,6 +242,7 @@
     <Compile Include="Models\line.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\LineIssue.cs" />
     <Compile Include="Models\line_computer.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>

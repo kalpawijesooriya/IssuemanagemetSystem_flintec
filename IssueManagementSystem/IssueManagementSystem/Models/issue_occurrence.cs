@@ -33,7 +33,7 @@ namespace IssueManagementSystem.Models
         public string issueDate { get; set; }
         public string solvedDate { get; set; }
         public string commentedDate { get; set; }
-
+        public string responciblepersonName { get; set; }
         public virtual issue issue { get; set; }
     }
 }

@@ -28,9 +28,9 @@ namespace IssueManagementSystem.Controllers
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
                 var lineInfo=db.lines.Where(x => x.line_id ==list_id).FirstOrDefault();
-               line line=new line {
+                line line=new line {
                     line_id = lineInfo.line_id,
-                    line_name = lineInfo.line_name,
+                    line_name = lineInfo.line_name
                    
                 };
                 return Json(line, JsonRequestBehavior.AllowGet);
