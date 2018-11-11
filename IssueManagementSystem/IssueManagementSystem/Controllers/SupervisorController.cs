@@ -32,6 +32,7 @@ namespace IssueManagementSystem.Controllers
 
         }
 
+        [HttpGet]
         public JsonResult GetIssues()
         {
             return Json(IssueService.GetIssue(), JsonRequestBehavior.AllowGet);
