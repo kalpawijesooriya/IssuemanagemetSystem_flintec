@@ -309,7 +309,7 @@ namespace IssueManagementSystem.Controllers
                          //if any status is there under selected issueid and line id cout will up
                         if (item.issue_satus=="1")
                             {
-                                count++;
+                               count++;
                             }
                     }
                 }
