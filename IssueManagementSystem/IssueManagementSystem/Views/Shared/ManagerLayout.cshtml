@@ -131,10 +131,10 @@
                             <i class="zmdi zmdi-notifications"></i>
                             <span class="badge" style="color:white;font-size:initial;font-family:'Bodoni MT'" id="ntCnt"></span>
                             <div class="notifi-dropdown notifi-dropdown--no-bor js-dropdown" id="divNotificaion">
-                               
-                              
-                               
-                                
+
+
+
+
                             </div>
                         </div>
                         <div class="header-button-item js-item-menu">
@@ -352,7 +352,7 @@
 
 
 
-                      
+
                     </div>
                 </div>
                 <div class="header-button-item js-item-menu">
@@ -456,7 +456,7 @@
                     <div class="col-md-12">
                         <div class="copyright">
                             <p>Copyright © @DateTime.Now.Year - Flintec-ISM Application All rights reserved.</p>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -470,7 +470,7 @@
     <script src="~/Scripts/Manager/popper.min.js"></script>
     <script src="~/Scripts/Manager/bootstrap.min.js"></script>
     <script src="~/Scripts/slick.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.0/moment.min.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
     <script src="~/Scripts/wow.min.js"></script>
     <script src="~/Scripts/animsition.min.js"></script>
     <script src="~/Scripts/bootstrap-progressbar.min.js"></script>
@@ -514,7 +514,7 @@
                     type: 'GET',
                     datatype: 'json',
                     success: function (data) {
-                        debugger
+
                         data = $.parseJSON(data);
                         if (data.length > 0) {
                             divNotificaion.empty();
@@ -539,20 +539,20 @@
                                             + data[i].Message +
                                             '</p> <span class="date">' + day + ' ' + date[1] + ' ' + date[2] + '</span></div></div>'
                                     }
-                                    
-                                    
+
+
 
 
                                     divNotificaion.append(notification);
                                     divNotificaionmobile.append(notification);
                                     notiCount++
-                                    
-                                    
+
+
                                 }
                                 $('#ntCnt').text(notiCount);
                                 $('#cntmobile').text(notiCount);
 
-                               
+
                             }
 
                         }

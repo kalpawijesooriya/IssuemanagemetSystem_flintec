@@ -59,28 +59,11 @@
 
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @foreach (var item in ViewBag.issueoccourInfo)
-                                        {
-                                            if (item.issue_issue_ID == 1)
-                                            {
-                                                brake_count++;
-                                                <tr>
-                                                    <td>@item.date_time</td>
-                                                    <td>@item.machine_machine_id</td>
-                                                    <td>@item.description</td>
-                                                    <td>@item.responsible_person_emp_id</td>
-                                                </tr>
-                                            }
+                                    <tbody id="breake_body">
 
-                                        }
-                                        @if (brake_count == 0)
-                                        {//when no issues hide the div and line
-                                            <script type="text/javascript">
-                                                $("#brakediv").hide();
-                                                $("#brake_list").hide();
-                                            </script>
-                                        }
+                                       
+
+
                                     </tbody>
                                 </table>
                             </div>
@@ -100,29 +83,10 @@
 
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @foreach (var item in ViewBag.issueoccourInfo)
-                                        {
-                                            if (item.issue_issue_ID == 2)
-                                            {
-                                                maririal_count++;
-                                                <tr>
-                                                    <td>@item.date_time</td>
-                                                    <td>@item.material_id</td>
-                                                    <td>@item.description</td>
-                                                    <td>@item.responsible_person_emp_id</td>
-                                                </tr>
-                                            }
+                                    <tbody id="matirial_body">
 
-                                        }
-                                        @if (maririal_count == 0)
-                                        {//when no issues hide the div and line
-                                            <script type="text/javascript">
-                                                $("#maririaldiv").hide();
-                                                $("# maririal_list").hide();
+                                      
 
-                                            </script>
-                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -142,28 +106,10 @@
 
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @foreach (var item in ViewBag.issueoccourInfo)
-                                        {
-                                            if (item.issue_issue_ID == 3)
-                                            {
-                                                tecnical_count++;
-                                                <tr>
-                                                    <td>@item.date_time</td>
-                                                    <td>@item.machine_machine_id</td>
-                                                    <td>@item.description</td>
-                                                    <td>@item.responsible_person_emp_id</td>
-                                                </tr>
-                                            }
+                                    <tbody id="technical_body">
 
-                                        }
-                                        @if (tecnical_count == 0)
-                                        {//when no issues hide the div and line
-                                            <script type="text/javascript">
-                                                $("#tecnicaldiv").hide();
-                                                $("#tecnical_list").hide();
-                                            </script>
-                                        }
+                                       
+
                                     </tbody>
                                 </table>
                             </div>
@@ -177,36 +123,16 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">Date</th>
-                                            <th scope="col">Machine</th>
+                                            
                                             <th scope="col">Description</th>
                                             <th scope="col">Responsible person</th>
 
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @foreach (var item in ViewBag.issueoccourInfo)
-                                        {
-                                            if (item.issue_issue_ID == 5)
-                                            {
-                                                IT_count++;
-                                                <tr>
-                                                    <td>@item.date_time</td>
-                                                    <td>@item.machine_machine_id</td>
-                                                    <td>@item.description</td>
-                                                    <td>@item.responsible_person_emp_id</td>
-                                                </tr>
-                                            }
+                                    <tbody id="it_body">
 
-                                        }
+                                       
 
-                                        @if (IT_count == 0)
-                                        {//when no issues hide the div and line
-                                            <script type="text/javascript">
-                                                $("#Softwarediv").hide();
-                                                $("#IT_list").hide();
-                                                // stop();
-                                            </script>
-                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -219,27 +145,140 @@
 
 
         <script src="~/Scripts/Display/showmapdisplay.js"></script>
-
-        <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
         <script src="~/Scripts/3.30bootstrap.min.js"></script>
-        <script src="~/signalr/js"></script>
+     
+        <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
+        <script src="~/Scripts/moment.min.js"></script>
+        <script src="~/signalr/Hubs"></script>
+
+
+
         <script>
+    $(document).ready(function () {
 
-            $.connection.hub.start()
-                .done(function () {
-                    console.log("Worked")
+        // Proxy created on the fly
+        var hub = $.connection.issueHub;
+        var issueCount = 0;
 
-                })
-                .fail(function () { alert("ERROR!") });
+        // Declare a function on the hub hub so the server can invoke it
+        hub.client.displayStatus = function () {
+            debugger
+            getData();
+        };
+
+        // Start the connection
+        $.connection.hub.start();
+        getData();
+
+        function getData()
+        {
 
 
-            $.connection.iSMHUB.client.announce = function () {
-                //refresh the page when hub call to its chient after 2 seconds
-                setTimeout(function () {
-                    location.reload();
-                }, 2000);
-               
-            }
+
+            $.ajax({
+                url: '/Supervisor/GetIssues',
+                    type: 'GET',
+                    datatype: 'json',
+                success: function (issuedata) {
+                    $('#breake_body').empty();
+                    $('#matirial_body').empty();
+                    $('#technical_body').empty();
+                    $('#it_body').empty();
+                    $('#brakediv').hide();
+                    $('#maririaldiv').hide();
+                    $('#Softwarediv').hide();
+                    $('#tecnicaldiv').hide();
+                   
+                    
+                   
+                    
+
+                    issuedata = $.parseJSON(issuedata);
+                    if (issuedata.length > 0) {
+
+
+
+
+
+                        for (var i = 0; i < issuedata.length; i++) {
+
+
+
+                            if ((issuedata[i].line_line_id==@ViewBag.Id) && (issuedata[i].issue_satus=="1" )) {
+                                var responcibleperson_ststus= issuedata[i].responsible_person_confirm_status
+                                var issueid = issuedata[i].issue_issue_ID
+
+                                var date = issuedata[i].issueDate.split(' ');
+                                var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
+                                var issue_occurrence_id = issuedata[i].issue_occurrence_id
+
+                                if (issueid == 1)//breakedown
+                                {
+                                    $('#brakediv').show()
+                                    var divissue = $('#breake_body');
+                                    var issue = '<tr><td>' + day + '</td><td>' + issuedata[i].machine_machine_id+'</td><td>' + issuedata[i].description+'</td><td>' + issuedata[i].responciblepersonName+'</td></tr>'
+                                    divissue.append(issue)
+                                    divissue.show('slow');
+                                }
+                                if (issueid == 2)//Material Delay
+                                {
+                                    $('#maririaldiv').show()
+                                    var divissue = $('#matirial_body');
+                                    var issue = '<tr><td>' + day + '</td><td>' + issuedata[i].material_id + '</td><td>' + issuedata[i].description + '</td><td>' + issuedata[i].responciblepersonName + '</td></tr>'
+                                    divissue.append(issue)
+                                    divissue.show('slow');
+                                }
+                                if (issueid == 3)//Technical Issue
+                                {
+                                    $('#tecnicaldiv').show();
+                                  var divissue = $('#technical_body');
+                                    var issue = '<tr><td>' + day + '</td><td>' + issuedata[i].machine_machine_id + '</td><td>' + issuedata[i].description + '</td><td>' + issuedata[i].responciblepersonName + '</td></tr>'
+
+                                    divissue.append(issue)
+                                   divissue.show('slow');
+                                }
+                                //if (issueid == 4)//Quility
+                                //{
+                                //    var divissue = $('#qu');
+                                //    issue = '<div class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--blue"><span class="desc" style="color:white">Qulity Issue</span><div class="icon" ><i class="zmdi zmdi-brightness-auto"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><p class="card-text"><strong>IssueDate : </strong>' + day + '</br><strong>Time : </strong>' + date[1] + " " + date[2] + '</p><div class="text-right"> <button  class="btn btn-success"  data-id="' + issue_occurrence_id + '" data-issue_id="' + issueid +'" onclick="myfunction(this)">Solved</button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
+                                //    divissue.append(issue)
+                                //    divissue.show('slow');
+                                //}
+                                if (issueid == 5)//IT/Software
+                                {
+                                    $('#Softwarediv').show();
+                                    var divissue = $('#it_body');
+                                    var issue = '<tr><td>' + day + '</td><td>' + issuedata[i].description + '</td><td>' + issuedata[i].responciblepersonName + '</td></tr>'
+
+                                    divissue.append(issue)
+                                    divissue.show('slow');
+                                }
+
+
+
+
+
+
+
+
+
+                            }
+
+
+
+                        }
+
+
+                    }
+                }, error: function (r, e, w) {
+                }
+            });
+        }
+
+    })
+
+
+
 
         </script>
         <script type="text/javascript">

@@ -35,7 +35,7 @@ namespace IssueManagementSystem.Controllers
             }
                 return View();
         }
-
+        [HttpGet]
         public JsonResult GetNotification()
         {
             return Json(NotificaionService.GetNotification(), JsonRequestBehavior.AllowGet);

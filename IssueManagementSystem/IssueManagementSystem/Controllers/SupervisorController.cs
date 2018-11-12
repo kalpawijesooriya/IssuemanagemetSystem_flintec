@@ -23,14 +23,22 @@ namespace IssueManagementSystem.Controllers
         // GET: Supervisor
         public ActionResult selectIssue()// select issue view
         {
-            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+            int userID = (int)Session["userID"];// get current supervisorID
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
             {
-                int userID = (int)Session["userID"];
                 var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
-                ViewBag.lineID = lineInfo.line_line_id;
-                List<issue_occurrence> issue = db.issue_occurrence.ToList();     
-               return View(issue);
-            }    
+                var mapInfo = db.line_map.Where(y => y.line_id == lineInfo.line_line_id).FirstOrDefault();
+                ViewBag.LineId = mapInfo.line_id;
+                return View();
+            }
+
+        }
+
+        [HttpGet]
+        public JsonResult GetIssues()
+        {
+            return Json(IssueService.GetIssue(), JsonRequestBehavior.AllowGet);
+
         }
 
         public ActionResult MachinBreakdown()//machine breakedown view
@@ -112,13 +120,13 @@ namespace IssueManagementSystem.Controllers
                 {
                     int userID = (int)Session["userID"];
                     var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
-                   
+                    issueModel.responsible_person_confirm_status = 1;
                     issueModel.line_line_id = lineInfo.line_line_id;
                     issueModel.issue_satus = "1";
                     issueModel.issue_issue_ID = 1;//Issue id is 1 for Machine Brakedown
-                    issueModel.responsible_person_emp_id = 5;//get specific employee 
+                    issueModel.responsible_person_emp_id = 44;//get specific employee 
                     var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-                    issueModel.date_time = date;
+                    issueModel.issue_date = date;
                     issueModel.location = (string)Session["location"];
                     db.issue_occurrence.Add(issueModel);
                     db.SaveChanges();
@@ -149,12 +157,14 @@ namespace IssueManagementSystem.Controllers
                     int userID = (int)Session["userID"];
                     var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
 
+                    issueModel.responsible_person_confirm_status = 1;
+
                     issueModel.line_line_id = lineInfo.line_line_id;
                     issueModel.issue_satus = "1";
                     issueModel.issue_issue_ID = 3;//Issue id is 2 for Machine Brakedown
                     issueModel.responsible_person_emp_id = 5;//get specific employee 
                     var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-                    issueModel.date_time = date;
+                    issueModel.issue_date = date;
                     issueModel.location = (string)Session["location"];
                     db.issue_occurrence.Add(issueModel);
                     db.SaveChanges();
@@ -184,14 +194,14 @@ namespace IssueManagementSystem.Controllers
                 {
                     int userID = (int)Session["userID"];
                     var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
-
+                    issueModel.responsible_person_confirm_status = 1;
                     issueModel.line_line_id = lineInfo.line_line_id;
                     issueModel.issue_satus = "1";
                     issueModel.issue_issue_ID = 5;//Issue id is 5 for IT Issue
                     issueModel.responsible_person_emp_id = 5;//get specific employee 
                     issueModel.location = (string)Session["location"];
                     var date=DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture); 
-                    issueModel.date_time = date;
+                    issueModel.issue_date = date;
 
                     db.issue_occurrence.Add(issueModel);
                     db.SaveChanges();
@@ -282,9 +292,10 @@ namespace IssueManagementSystem.Controllers
             t.Start();
         }
 
-        [HttpPost]//solovedIssueMethod
+        //solovedIssueMethod
         public JsonResult SolvedIssue(int? issueId,int? issueOccourId)
             {
+            System.Diagnostics.Debug.WriteLine("issueOccourId : " + issueOccourId);
                var time = DateTime.Now;
                string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
                var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
@@ -301,6 +312,7 @@ namespace IssueManagementSystem.Controllers
                 var line_id = lineInfo.line_line_id;
 
                 //get the list of Issuueoccurrence table
+
                 List<issue_occurrence> issue = db.issue_occurrence.ToList();
                 int count = 0;
                 foreach(var item in issue )
@@ -314,8 +326,15 @@ namespace IssueManagementSystem.Controllers
                     }
                 }
                 if (count == 0) {// if cout ==0 light will off
+
+                
+                var issueCount = db.issue_occurrence.Where(x => x.issue_issue_ID == issueId && x.line_line_id == line_id && x.issue_satus=="1").ToList().Count();
+                
+                
+                if (issueCount == 0) {// if cout ==0 light will off
+
                     var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
-                    //com.lightOFF(issueId.ToString(), displayInfo.raspberry_ip_address);
+                    com.lightOFF(issueId.ToString(), displayInfo.raspberry_ip_address);
                 }
                 return Json(true);
             }
