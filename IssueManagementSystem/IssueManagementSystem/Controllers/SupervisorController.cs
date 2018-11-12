@@ -11,6 +11,8 @@ using System.Net.Mail;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
+using System.Net.Mime;
+using Newtonsoft.Json.Linq;
 
 namespace IssueManagementSystem.Controllers
 {
@@ -61,8 +63,7 @@ namespace IssueManagementSystem.Controllers
                 ViewBag.lineID = lineInfo.line_line_id;
                 var mapInfo = db.line_map.Where(y => y.line_id == lineInfo.line_line_id).FirstOrDefault();
                 ViewData["map"] = mapInfo.map.ToString().Trim(); //get the map arry to ViewData
-                return View(); 
-
+                return View();
             }
 
         }
@@ -70,18 +71,26 @@ namespace IssueManagementSystem.Controllers
         public ActionResult MaterialDelay()//MaterialDelay View
         {
             int userID = (int)Session["userID"];// get current supervisorID
+            dynamic mat_List = new System.Dynamic.ExpandoObject();
+
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
             {
-
+                mat_List.issue_occurrence = db.issue_occurrence;
                 var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
                 ViewBag.lineID = lineInfo.line_line_id;
-                var mapInfo = db.line_map.Where(y => y.line_id == lineInfo.line_line_id).FirstOrDefault();
-                ViewData["map"] = mapInfo.map.ToString().Trim(); //get the map arry to ViewData
-                return View();
-
             }
 
+
+            FLINTEC_Item_dbContext materialContext = new FLINTEC_Item_dbContext();
+            List<FLINTEC_Item>  mList = materialContext.FLINTEC_Items.ToList();
+
+          
+            mat_List.materialList = mList;
+
+            return View(mat_List);
         }
+
+
 
         public ActionResult ITIssue()//IT ISSUE View
         {
@@ -147,7 +156,9 @@ namespace IssueManagementSystem.Controllers
                 {
                     int userID = (int)Session["userID"];
                     var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
+
                     issueModel.responsible_person_confirm_status = 1;
+
                     issueModel.line_line_id = lineInfo.line_line_id;
                     issueModel.issue_satus = "1";
                     issueModel.issue_issue_ID = 3;//Issue id is 2 for Machine Brakedown
@@ -176,7 +187,7 @@ namespace IssueManagementSystem.Controllers
         {
             var time = DateTime.Now;
             string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
-          
+
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
                 if (ModelState.IsValid)
@@ -201,7 +212,6 @@ namespace IssueManagementSystem.Controllers
                         var displayInfo = db.displays.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
                         com.lightON("5", displayInfo.raspberry_ip_address);//turn on the Light
                         sendCD(lineInfo.line_line_id, 5,msg,"IT/Software Issue has been occered");
-                       
                     }
                     ModelState.Clear();
                 }
@@ -209,13 +219,51 @@ namespace IssueManagementSystem.Controllers
             return RedirectToAction("selectIssue", "Supervisor");
         }
 
-        [HttpPost]//add IT Issues to database
-        public ActionResult AddMaterialDelay(issue_occurrence issueModel) {
+        [HttpPost]//add Material Delay to database
+        public ActionResult AddMaterialDelay(string issueJson)
+        {
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
+            {
+                JArray issueData = JArray.Parse(issueJson) as JArray;
+                System.Diagnostics.Debug.WriteLine(issueData);
+                
+                foreach (JObject item in issueData)
+                {
+                    int line_id =   Int32.Parse(item["line_line_id"].ToString());
+                    var resp_person = db.issue_line_person.Where(x =>( x.levelOfResponsibility == 1) && (x.line_id == line_id)).FirstOrDefault();
+                    try
+                    {
+                        var responsible_person_emp_id = resp_person.EmployeeNumber;
 
-            return Json("");
+                        string query_1 = @"INSERT INTO [dbo].[issue_occurrence]
+                                                      (  [issue_date]
+                                                        ,[material_id]
+                                                        ,[description]
+                                                        ,[line_line_id]
+                                                        ,[issue_issue_ID]
+                                                        ,[responsible_person_emp_id]
+                                                        ,[issue_satus]
+                                                        ,[location]
+                                                        ,[responsible_person_confirm_status])
+                                                    VALUES
+                                                        ('"+item["issue_date"]+"','"
+                                                           +item["material_id"]+"','"
+                                                           +item["description"]+"',"
+                                                           +line_id+","
+                                                           +item["issue_issue_ID"] +","
+                                                           +resp_person.EmployeeNumber+ ","
+                                                           +item["issue_satus"]+",'"
+                                                           +item["location"]+"',"
+                                                           +item["responsible_person_confirm_status"]+")";
+                                    db.Database.ExecuteSqlCommand(query_1);
+                    }
+                    catch (Exception ex){
+                        return Content("Error Occured"+ex.ToString(),MediaTypeNames.Text.Plain);
+                    }
+                }
+              return Content("Material Delay Recorded", MediaTypeNames.Text.Plain);
+            }
         }
-
-
 
         private void sendCD(int? line_line_id, int issueId, string msg, string subject)
         {
@@ -225,7 +273,6 @@ namespace IssueManagementSystem.Controllers
             Thread t = new Thread(() => {
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
-                
                     var userDetails = db.User_tbl.Where(x => x.Role == "manager").ToList();
                     foreach (var item in userDetails)
                     {
@@ -240,9 +287,6 @@ namespace IssueManagementSystem.Controllers
                         CommunicationData cd = new CommunicationData(personInfo.Phone, msg, personInfo.EMail, item.email, item.call, item.message, personInfo.EmployeeNumber, subject);
                         com.setCD(cd);
                     }
-              
-                
-               
             }
             });
             t.Start();
@@ -268,11 +312,27 @@ namespace IssueManagementSystem.Controllers
                 var line_id = lineInfo.line_line_id;
 
                 //get the list of Issuueoccurrence table
+
+                List<issue_occurrence> issue = db.issue_occurrence.ToList();
+                int count = 0;
+                foreach(var item in issue )
+                {    //check issue id == to clicked issueid
+                    if (item.issue_issue_ID== issueId && item.line_line_id==line_id) { 
+                         //if any status is there under selected issueid and line id cout will up
+                        if (item.issue_satus=="1")
+                            {
+                               count++;
+                            }
+                    }
+                }
+                if (count == 0) {// if cout ==0 light will off
+
                 
                 var issueCount = db.issue_occurrence.Where(x => x.issue_issue_ID == issueId && x.line_line_id == line_id && x.issue_satus=="1").ToList().Count();
                 
                 
                 if (issueCount == 0) {// if cout ==0 light will off
+
                     var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
                     com.lightOFF(issueId.ToString(), displayInfo.raspberry_ip_address);
                 }
