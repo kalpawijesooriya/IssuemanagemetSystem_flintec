@@ -186,10 +186,10 @@ if (Session["userID"] == null)
         function get_line(line_id, issueid, divissue, issuedata, issueStstus, comment, index) {
             issueCount=0
             var line = new Object();
-
+            var url = '@Url.Action("getlineInfo", "ResponsiblePerson")?list_id=' + line_id ;
             $.ajax({
                 type: "POST",
-                url: "/ResponsiblePerson/getlineInfo?list_id=" + line_id,
+                url: url,
                 data: JSON.stringify(line),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -334,11 +334,11 @@ if (Session["userID"] == null)
                 var data = {};
                 data.id = $("#id").text().trim();
                
-               
+                var url = '@Url.Action("savecommen", "ResponsiblePerson")?idd=' + data.id + '&comment=' + $('#comment').val();
 
                 $.ajax({
                     type: "POST",
-                    url: "/ResponsiblePerson/savecomment?id=" + data.id + "&comment=" + $('#comment').val(),
+                    url: url,
                     data: JSON.stringify(data),
                     contentType: "application/json",
                     dataType: "json"
