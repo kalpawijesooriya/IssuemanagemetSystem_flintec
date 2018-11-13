@@ -1,40 +1,58 @@
 ﻿@{
     ViewBag.Title = "MaterialDelay";
     Layout = "~/Views/Shared/supervisorsLayout.cshtml";
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+    int lineId = ViewBag.lineID;
 }
-@model IssueManagementSystem.Models.FLINTEC_Item
 
+@using IssueManagementSystem.Models
 
 
 <link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
-
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
+<link href="~/Content/adminstyles/Settings.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
 
-<div class="container">
+<h2>Material Delay</h2>
+<hr />
+<div class="container" style="margin-top:30px;">
     <div class="row">
-        <div class="col-sm-3 machine">
-            @using (Html.BeginForm("AddMaterialDelay", "Supervisor", FormMethod.Post))
-            {
-                <div class="form-group">
-                    <label>Select material</label>
-                    @Html.DropDownListFor(model => model.No_, new SelectList(Enum.GetValues(typeof(string))))
-                </div>
+        <div class="" style="">
 
-                <div class="container-fluid row ">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-xs-12 button-holder">
-                                <div class="ajax-button">
-                                    <div class="fa fa-check done"></div>
-                                    <div class="fa fa-close failed"></div>
-                                    <input id="submit" class="submit" type="submit" value="Submit" />
-                                </div>
-                            </div>
-                        </div>
+            <div class="form-group" style="width:50%;margin:auto">
+                <label>Select material</label>
+
+                <span id="lineID" style="display:none">@lineId</span>
+
+                <select class="js-example-placeholder-single js-states form-control" id="Material" name="Material" style="width:100%" onchange="">
+                    <option></option>
+                    @foreach (var m in Model.materialList)
+                    {
+                        <option value="@m.No_">@m.Search_Description</option>
+                    }
+                </select>
+
+                <div style="padding-top:20px;">
+                    <label for="exampleFormControlTextarea1">Description</label>
+                    <textarea class="form-control" rows="5" id="description" style="resize: both;max-width:inherit;"></textarea>
+                </div>
+                <div class="button-holder" style="display:block">
+                    <div class="ajax-button">
+                        <div class="fa fa-check done"></div>
+                        <div class="fa fa-close failed"></div>
+                        <input id="submit" class="submit" type="button" value="Submit" onclick="SubmitMaterialDelay()" />
                     </div>
                 </div>
-            }
-
+            </div>
         </div>
     </div>
 </div>
+
+<script src="~/Scripts/AdminScripts/jscolar.js"></script>
+<script src="~/Scripts/AdminScripts/select2-min.js"></script>
+<script src="~/Scripts/SupervisorScripts/materialDelay.js"></script>
+<script src="~/Scripts/AdminScripts/bootstrap.min.js"></script>
