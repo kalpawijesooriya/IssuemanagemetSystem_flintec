@@ -141,7 +141,8 @@ namespace IssueManagementSystem.Controllers
                     string postData = "p=" + number + "&m="+ message;
                     byte[] data = encoding.GetBytes(postData);
 
-                    WebRequest request = WebRequest.Create("http://192.168.137.238/sms_call.php");
+                    WebRequest request = WebRequest.Create("http://192.168.40.86/sms_call.php");
+
                     request.Method = "POST";
                     request.ContentType = "application/x-www-form-urlencoded";
                     request.ContentLength = data.Length;
@@ -175,7 +176,7 @@ namespace IssueManagementSystem.Controllers
             string postData = "p=" + number + "&c=" + message;
             byte[] data = encoding.GetBytes(postData);
 
-            WebRequest request = WebRequest.Create("http://192.168.137.238/sms_call.php");
+            WebRequest request = WebRequest.Create("http://192.168.40.86/sms_call.php");
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = data.Length;

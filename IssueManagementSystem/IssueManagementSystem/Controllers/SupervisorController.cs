@@ -147,6 +147,7 @@ namespace IssueManagementSystem.Controllers
         [HttpPost]//add Tecnical Issues to database
         public ActionResult AddIssueTechnical(issue_occurrence issueModel)
         {
+            
             var time = DateTime.Now;
             string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
 
@@ -162,7 +163,7 @@ namespace IssueManagementSystem.Controllers
                     issueModel.line_line_id = lineInfo.line_line_id;
                     issueModel.issue_satus = "1";
                     issueModel.issue_issue_ID = 3;//Issue id is 2 for Machine Brakedown
-                    issueModel.responsible_person_emp_id = 5;//get specific employee 
+                    issueModel.responsible_person_emp_id = 44;//get specific employee 
                     var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                     issueModel.issue_date = date;
                     issueModel.location = (string)Session["location"];
@@ -287,6 +288,7 @@ namespace IssueManagementSystem.Controllers
                         CommunicationData cd = new CommunicationData(personInfo.Phone, msg, personInfo.EMail, item.email, item.call, item.message, personInfo.EmployeeNumber, subject);
                         com.setCD(cd);
                     }
+
             }
             });
             t.Start();
