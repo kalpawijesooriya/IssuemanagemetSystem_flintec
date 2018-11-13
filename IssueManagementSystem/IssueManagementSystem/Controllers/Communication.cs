@@ -158,7 +158,7 @@ namespace IssueManagementSystem.Controllers
 
 
                     var cs = sr.ReadToEnd().Trim();
-                    Debug.WriteLine("SMS Respond: "+ cs);
+            System.Diagnostics.Debug.WriteLine("SMS Respond: " + cs);
 
                     sr.Close();
                     stream.Close();
@@ -192,7 +192,7 @@ namespace IssueManagementSystem.Controllers
 
 
             var cs = sr.ReadToEnd().Trim();
-            Debug.WriteLine("Call Respond: " + cs);
+            System.Diagnostics.Debug.WriteLine("Call Respond: " + cs);
             sr.Close();
             stream.Close();
 

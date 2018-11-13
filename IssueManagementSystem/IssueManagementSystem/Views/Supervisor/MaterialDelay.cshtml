@@ -10,7 +10,6 @@
 
 @using IssueManagementSystem.Models
 
-
 <link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
@@ -21,9 +20,9 @@
 <hr />
 <div class="container" style="margin-top:30px;">
     <div class="row">
-        <div class="" style="">
+        <div class="" style="width:50%;margin:auto;">
 
-            <div class="form-group" style="width:50%;margin:auto">
+            <div class="form-group" style="width:100%;margin:auto">
                 <label>Select material</label>
 
                 <span id="lineID" style="display:none">@lineId</span>
@@ -38,7 +37,7 @@
 
                 <div style="padding-top:20px;">
                     <label for="exampleFormControlTextarea1">Description</label>
-                    <textarea class="form-control" rows="5" id="description" style="resize: both;max-width:inherit;"></textarea>
+                    <textarea class="form-control" rows="5" id="description" style="resize: both;width:100%;"></textarea>
                 </div>
                 <div class="button-holder" style="display:block">
                     <div class="ajax-button">
@@ -52,6 +51,7 @@
     </div>
 </div>
 
+<script src="~/Scripts/AdminScripts/jquery.min.js"></script>
 <script src="~/Scripts/AdminScripts/jscolar.js"></script>
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
 <script src="~/Scripts/SupervisorScripts/materialDelay.js"></script>

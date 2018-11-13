@@ -1,4 +1,4 @@
-﻿using IssueManagementSystem.Models;
+using IssueManagementSystem.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -82,9 +82,9 @@ namespace IssueManagementSystem.Controllers
 
 
             FLINTEC_Item_dbContext materialContext = new FLINTEC_Item_dbContext();
-            List<FLINTEC_Item>  mList = materialContext.FLINTEC_Items.ToList();
+            List<FLINTEC_Item> mList = materialContext.FLINTEC_Items.ToList();
 
-          
+
             mat_List.materialList = mList;
 
             return View(mat_List);
@@ -163,7 +163,9 @@ namespace IssueManagementSystem.Controllers
                     issueModel.line_line_id = lineInfo.line_line_id;
                     issueModel.issue_satus = "1";
                     issueModel.issue_issue_ID = 3;//Issue id is 2 for Machine Brakedown
+
                     issueModel.responsible_person_emp_id = 44;//get specific employee 
+
                     var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                     issueModel.issue_date = date;
                     issueModel.location = (string)Session["location"];
@@ -199,20 +201,20 @@ namespace IssueManagementSystem.Controllers
                     issueModel.line_line_id = lineInfo.line_line_id;
                     issueModel.issue_satus = "1";
                     issueModel.issue_issue_ID = 5;//Issue id is 5 for IT Issue
-                    issueModel.responsible_person_emp_id = 5;//get specific employee 
+                    issueModel.responsible_person_emp_id = 44;//get specific employee 
                     issueModel.location = (string)Session["location"];
-                    var date=DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture); 
+                    var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                     issueModel.issue_date = date;
 
                     db.issue_occurrence.Add(issueModel);
                     db.SaveChanges();
                     if (issueModel.issue_occurrence_id > 0)
                     {
-                        var line = db.lines.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault(); 
-                        string msg = line.line_name + " line IT/SoftWare issue has been occurred at "+date+". Special Note of Line supervisor - "+ issueModel.description;
+                        var line = db.lines.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
+                        string msg = line.line_name + " line IT/SoftWare issue has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
                         var displayInfo = db.displays.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
                         com.lightON("5", displayInfo.raspberry_ip_address);//turn on the Light
-                        sendCD(lineInfo.line_line_id, 5,msg,"IT/Software Issue has been occered");
+                        sendCD(lineInfo.line_line_id, 5, msg, "IT/Software Issue has been occered");
                     }
                     ModelState.Clear();
                 }
@@ -227,11 +229,11 @@ namespace IssueManagementSystem.Controllers
             {
                 JArray issueData = JArray.Parse(issueJson) as JArray;
                 System.Diagnostics.Debug.WriteLine(issueData);
-                
+
                 foreach (JObject item in issueData)
                 {
-                    int line_id =   Int32.Parse(item["line_line_id"].ToString());
-                    var resp_person = db.issue_line_person.Where(x =>( x.levelOfResponsibility == 1) && (x.line_id == line_id)).FirstOrDefault();
+                    int line_id = Int32.Parse(item["line_line_id"].ToString());
+                    var resp_person = db.issue_line_person.Where(x => (x.levelOfResponsibility == 1) && (x.line_id == line_id)).FirstOrDefault();
                     try
                     {
                         var responsible_person_emp_id = resp_person.EmployeeNumber;
@@ -247,22 +249,30 @@ namespace IssueManagementSystem.Controllers
                                                         ,[location]
                                                         ,[responsible_person_confirm_status])
                                                     VALUES
-                                                        ('"+item["issue_date"]+"','"
-                                                           +item["material_id"]+"','"
-                                                           +item["description"]+"',"
-                                                           +line_id+","
-                                                           +item["issue_issue_ID"] +","
-                                                           +resp_person.EmployeeNumber+ ","
-                                                           +item["issue_satus"]+",'"
-                                                           +item["location"]+"',"
-                                                           +item["responsible_person_confirm_status"]+")";
-                                    db.Database.ExecuteSqlCommand(query_1);
+                                                        ('" + item["issue_date"] + "','"
+                                                           + item["material_id"] + "','"
+                                                           + item["description"] + "',"
+                                                           + line_id + ","
+                                                           + item["issue_issue_ID"] + ","
+                                                           + resp_person.EmployeeNumber + ","
+                                                           + '1' + ",'"
+                                                           + item["location"] + "',"
+                                                           + item["responsible_person_confirm_status"] + ")";
+                        db.Database.ExecuteSqlCommand(query_1);
+                        var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
+                        var line = db.lines.Where(x => x.line_id == line_id).FirstOrDefault();
+                        string msg = line.line_name + " line MaterialDelay has been occurred at " + item["issue_date"] + ". Special Note of Line supervisor - " + item["description"];
+
+                        com.lightON("2", displayInfo.raspberry_ip_address);//turn on the Light
+                        sendCD(line_id, 2, msg, "MaterialDelay has been occered");
+
                     }
-                    catch (Exception ex){
-                        return Content("Error Occured"+ex.ToString(),MediaTypeNames.Text.Plain);
+                    catch (Exception ex)
+                    {
+                        return Content("Error Occured" + ex.ToString(), MediaTypeNames.Text.Plain);
                     }
                 }
-              return Content("Material Delay Recorded", MediaTypeNames.Text.Plain);
+                return Content("Material Delay Recorded", MediaTypeNames.Text.Plain);
             }
         }
 
@@ -271,9 +281,10 @@ namespace IssueManagementSystem.Controllers
             var time = DateTime.Now;
             string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
             var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-            Thread t = new Thread(() => {
-            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+            Thread t = new Thread(() =>
             {
+                using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+                {
                     var userDetails = db.User_tbl.Where(x => x.Role == "manager").ToList();
                     foreach (var item in userDetails)
                     {
@@ -289,56 +300,64 @@ namespace IssueManagementSystem.Controllers
                         com.setCD(cd);
                     }
 
+                }
+
+
             }
+
             });
             t.Start();
         }
 
         //solovedIssueMethod
-        public JsonResult SolvedIssue(int? issueId,int? issueOccourId)
-            {
+        public JsonResult SolvedIssue(int? issueId, int? issueOccourId)
+        {
             System.Diagnostics.Debug.WriteLine("issueOccourId : " + issueOccourId);
-               var time = DateTime.Now;
-               string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
-               var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+            var time = DateTime.Now;
+            string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
+            var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
             //update Issueststus as 0
             issue_management_systemEntities1 db = new issue_management_systemEntities1();
-                var issueoccourInfo= db.issue_occurrence.Where(x => x.issue_occurrence_id == issueOccourId).FirstOrDefault();
-                issueoccourInfo.issue_satus = "0";
-                issueoccourInfo.solved_date = date;
-                db.SaveChanges();
+            var issueoccourInfo = db.issue_occurrence.Where(x => x.issue_occurrence_id == issueOccourId).FirstOrDefault();
+            issueoccourInfo.issue_satus = "0";
+            issueoccourInfo.solved_date = date;
+            db.SaveChanges();
 
-                int userID = (int)Session["userID"];
-                var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
+            int userID = (int)Session["userID"];
+            var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
 
-                var line_id = lineInfo.line_line_id;
+            var line_id = lineInfo.line_line_id;
 
-                //get the list of Issuueoccurrence table
+            //get the list of Issuueoccurrence table
 
-                List<issue_occurrence> issue = db.issue_occurrence.ToList();
-                int count = 0;
-                foreach(var item in issue )
-                {    //check issue id == to clicked issueid
-                    if (item.issue_issue_ID== issueId && item.line_line_id==line_id) { 
-                         //if any status is there under selected issueid and line id cout will up
-                        if (item.issue_satus=="1")
-                            {
-                               count++;
-                            }
+            List<issue_occurrence> issue = db.issue_occurrence.ToList();
+            int count = 0;
+            foreach (var item in issue)
+            {    //check issue id == to clicked issueid
+                if (item.issue_issue_ID == issueId && item.line_line_id == line_id)
+                {
+                    //if any status is there under selected issueid and line id cout will up
+                    if (item.issue_satus == "1")
+                    {
+                        count++;
                     }
                 }
-                if (count == 0) {// if cout ==0 light will off
 
-                
-                var issueCount = db.issue_occurrence.Where(x => x.issue_issue_ID == issueId && x.line_line_id == line_id && x.issue_satus=="1").ToList().Count();
-                
-                
-                if (issueCount == 0) {// if cout ==0 light will off
+            }
+            if (count == 0)
+            {// if cout ==0 light will off
+                var issueCount = db.issue_occurrence.Where(x => x.issue_issue_ID == issueId && x.line_line_id == line_id && x.issue_satus == "1").ToList().Count();
+
+                if (issueCount == 0)
+                {// if cout ==0 light will off
 
                     var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
                     com.lightOFF(issueId.ToString(), displayInfo.raspberry_ip_address);
                 }
                 return Json(true);
             }
+
+           return Json(true);
+        }
     }
 }
