@@ -507,10 +507,11 @@
 
             function getData()
             {
+                  var url = '@Url.Action("GetNotification", "Manager")';
                 var divNotificaion = $('#divNotificaion');
                 var divNotificaionmobile = $('#divNotificaionmobile');
                 $.ajax({
-                    url: '/Manager/GetNotification',
+                    url: url,
                     type: 'GET',
                     datatype: 'json',
                     success: function (data) {
