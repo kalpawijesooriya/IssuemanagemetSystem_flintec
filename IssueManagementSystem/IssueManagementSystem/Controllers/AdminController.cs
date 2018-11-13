@@ -129,17 +129,13 @@ namespace IssueManagementSystem.Controllers
         [HttpPost]
         public ActionResult getUserDetails(string userID)
         {
-           
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
             {
                 String query_1 = "SELECT Name,Department,Position,Phone,EMail,EmployeeNumber FROM User_tbl WHERE User_tbl.EmployeeNumber ='"+userID+"'";
                 var c = db.Database.SqlQuery<user_temp>(query_1).ToList();
                 return Json(c, JsonRequestBehavior.AllowGet);
             }
-
         }
-
-
 
         class issue_line_person_temp
         {

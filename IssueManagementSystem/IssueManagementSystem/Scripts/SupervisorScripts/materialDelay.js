@@ -15,8 +15,7 @@ function SubmitMaterialDelay() {
     obj.responsible_person_emp_id ="";
     obj.issue_satus ="0";
     obj.location ="KTY";
-    obj.responsible_person_confirm_status ="0";
-
+    obj.responsible_person_confirm_status = "0";
 
     var obj_array = new Array();
     obj_array.push(obj);
@@ -34,6 +33,5 @@ function SubmitMaterialDelay() {
         error: function () {
             alert("Error occurred");
         }
-
     });
 }
