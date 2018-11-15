@@ -100,6 +100,9 @@ function CanvasState(canvas) {
 
         for (var i = 0; i < myState.shapes.length; i++) {
 
+            myState.selection = null;
+            myState.valid = false; //clear the old selection
+
             var mySelx = myState.shapes[i];
 
             for (var k = 0; k < blinking_machines.length; k++) {
@@ -200,10 +203,22 @@ function init() {
         else { globalvariable = 0; }
     }, 100);
 
-    
-     
 
-    
+    $.ajax({
+        type: "POST",
+        dataType: 'text',
+        url: "/Display/getBlinkingMachinesList",
+        data: { line:'5'},
+        success: function (line_data) {
+            var obj = JSON.parse(line_data);
+            console.log(obj);
+            set_blinking_machines(obj);
+        },
+        error: function () {
+            alert("Error occurred");
+        }
+    });
+
 }
 
 
