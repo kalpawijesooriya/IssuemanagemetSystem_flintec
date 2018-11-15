@@ -79,30 +79,24 @@ namespace IssueManagementSystem.Controllers
                 ViewBag.lineID = lineInfo.line_line_id;
             }
 
-
             FLINTEC_Item_dbContext materialContext = new FLINTEC_Item_dbContext();
             List<FLINTEC_Item> mList = materialContext.FLINTEC_Items.ToList();
-
 
             mat_List.materialList = mList;
 
             return View(mat_List);
         }
 
-
-
-        public ActionResult ITIssue()//IT ISSUE View
+        public ActionResult ITIssue()//IT Issue view
         {
             int userID = (int)Session["userID"];// get current supervisorID
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
             {
-
                 var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
                 ViewBag.lineID = lineInfo.line_line_id;
                 var mapInfo = db.line_map.Where(y => y.line_id == lineInfo.line_line_id).FirstOrDefault();
                 ViewData["map"] = mapInfo.map.ToString().Trim(); //get the map arry to ViewData
                 return View();
-
             }
 
         }
@@ -149,7 +143,7 @@ namespace IssueManagementSystem.Controllers
         [HttpPost]//add Tecnical Issues to database
         public ActionResult AddIssueTechnical(issue_occurrence issueModel)
         {
-            
+
             var time = DateTime.Now;
             string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
 
@@ -157,37 +151,45 @@ namespace IssueManagementSystem.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    int userID = (int)Session["userID"];
-                    var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
-
-                    issueModel.responsible_person_confirm_status = 1;
-
-                    issueModel.line_line_id = lineInfo.line_line_id;
-                    issueModel.issue_satus = "1";
-                    issueModel.issue_issue_ID = 3;//Issue id is 2 for Machine Brakedown
-
-                    var respPersonID = db.issue_line_person.Where(x => x.line_id == lineInfo.line_line_id && x.levelOfResponsibility == 1 && x.issue_id == 3).FirstOrDefault();
-                    issueModel.responsible_person_emp_id = Int32.Parse(respPersonID.EmployeeNumber.ToString());
-
-                    var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-                    issueModel.issue_date = date;
-                    issueModel.location = (string)Session["location"];
-                    db.issue_occurrence.Add(issueModel);
-                    db.SaveChanges();
-                    if (issueModel.issue_occurrence_id > 0)
+                    try
                     {
-                        var line = db.lines.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
-                        var displayInfo = db.displays.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
-                        string msg = line.line_name + " line IT/SoftWare issue has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
-                        com.lightON("3", displayInfo.raspberry_ip_address);//turn on the Light
-                        sendCD(lineInfo.line_line_id, 3, msg, "Tecnical Issue has been occered");
-                    }
-                    ModelState.Clear();
-                }
-            }
-            return RedirectToAction("selectIssue", "Supervisor");
-        }
+                        int userID = (int)Session["userID"];
+                        var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
 
+                        issueModel.responsible_person_confirm_status = 1;
+
+                        issueModel.line_line_id = lineInfo.line_line_id;
+                        issueModel.issue_satus = "1";
+                        issueModel.issue_issue_ID = 3;//Issue id is 2 for Machine Brakedown
+
+                        var respPersonID = db.issue_line_person.Where(x => x.line_id == lineInfo.line_line_id && x.levelOfResponsibility == 1 && x.issue_id == 3).FirstOrDefault();
+                        issueModel.responsible_person_emp_id = Int32.Parse(respPersonID.EmployeeNumber.ToString());
+
+                        var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                        issueModel.issue_date = date;
+                        issueModel.location = (string)Session["location"];
+                        db.issue_occurrence.Add(issueModel);
+                        db.SaveChanges();
+                        if (issueModel.issue_occurrence_id > 0)
+                        {
+
+                            var line = db.lines.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
+                            var displayInfo = db.displays.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
+                            string msg = line.line_name + " line IT/SoftWare issue has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
+                            com.lightON("3", displayInfo.raspberry_ip_address);//turn on the Light
+                            sendCD(lineInfo.line_line_id, 3, msg, "Tecnical Issue has been occered");
+
+                        ModelState.Clear();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Debug.WriteLine("Error occured ############00000000###############" + ex.ToString());
+                    }
+                }
+                return RedirectToAction("selectIssue", "Supervisor");
+            }
+        }
         [HttpPost]//add IT Issues to database
         public ActionResult AddIssueIT(issue_occurrence issueModel)
         {
