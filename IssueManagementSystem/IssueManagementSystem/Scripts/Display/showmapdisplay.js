@@ -200,10 +200,22 @@ function init() {
         else { globalvariable = 0; }
     }, 100);
 
-    
-     
 
-    
+    $.ajax({
+        type: "POST",
+        dataType: 'text',
+        url: "/Display/getBlinkingMachinesList",
+        data: { line:'5'},
+        success: function (line_data) {
+            var obj = JSON.parse(line_data);
+            console.log(obj);
+            set_blinking_machines(obj);
+        },
+        error: function () {
+            alert("Error occurred");
+        }
+    });
+
 }
 
 

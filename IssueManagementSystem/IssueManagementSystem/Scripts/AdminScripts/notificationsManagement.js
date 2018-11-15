@@ -228,13 +228,14 @@ function saveList() {
         obj.assigned_date = new Date();
 
         var state1 = items[i].childNodes[0].childNodes[1].childNodes[0].checked;
-        if (state1 == "true") { obj.email = 1; } else { obj.email = 0; }
+        console.log(state1);
+        if (state1.toString() == "true") { obj.email = 1; } if (state1.toString() == "false") { obj.email = 0; }
 
         var state2 = items[i].childNodes[0].childNodes[3].childNodes[0].checked;
-        if (state2 == "true") { obj.call = 1; } else { obj.call = 0;}
+        if (state2.toString() == "true") { obj.call = 1; } if (state2.toString() == "false") { obj.call = 0;}
 
         var state3 = items[i].childNodes[0].childNodes[2].childNodes[0].checked;
-        if (state3 == "true") { obj.message = 1; } else { obj.message = 0;}
+        if (state3.toString() == "true") { obj.message = 1; } if (state3.toString() == "false") { obj.message = 0;}
 
         obj.callRepetitionTime = items[i].childNodes[0].childNodes[5].childNodes[0].value;
         obj.sendAlertAfter = items[i].childNodes[0].childNodes[4].childNodes[0].value;
@@ -253,10 +254,11 @@ function saveList() {
         url: "/admin/saveList",
         data: { userList_json: userList_json },
         success: function (response) {
-            alert(response);
+           alert(response);
         },
-        error: function (response) {
-            alert("Error occurred");
+        error: function (response)
+        {
+           alert("Error occurred");
         }
     });
 }
