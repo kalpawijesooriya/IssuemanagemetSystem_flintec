@@ -8,5 +8,195 @@
     }
 }
 
-<h2>DashBord</h2>
+
+
+@using IssueManagementSystem.Models;
+@model List<IssueManagementSystem.Models.issue_occurrence>
+<div class="page-content--bgf7">
+    <section class="au-breadcrumb2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="au-breadcrumb-content">
+                        <div class="au-breadcrumb-left">
+                            <span class="au-breadcrumb-span">You are here:</span>
+                            <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                <li class="list-inline-item active">
+                                    <a href="#">Home</a>
+                                </li>
+                                <li class="list-inline-item seprate">
+                                    <span>/</span>
+                                </li>
+                                <li class="list-inline-item">Dashboard</li>
+                            </ul>
+                        </div>
+                        <form class="au-form-icon--sm" action="" method="post">
+                            <input class="au-input--w300 au-input--style2" type="text" placeholder="Search for datas &amp; reports...">
+                            <button class="au-btn--submit2" type="submit">
+                                <i class="zmdi zmdi-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="welcome p-t-10">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="title-4">
+                        Welcome back @Session["name"]
+                    </h1>
+                    <hr class="line-seprate">
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="welcome p-t-10" style="padding-top:50px;padding-bottom:50px">
+        <div class="container-fluid">
+            <div class="row" id="divIssue" style="margin: auto;">
+
+
+            </div>
+
+        </div>
+    </section>
+
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/signalr/Hubs"></script>
+
+
+
+<script>
+    $(document).ready(function () {
+
+        // Proxy created on the fly
+        var hub = $.connection.issueHub;
+        var issueCount = 0;
+
+        // Declare a function on the hub hub so the server can invoke it
+        hub.client.displayStatus = function () {
+            debugger
+            getData();
+        };
+
+        // Start the connection
+        $.connection.hub.start();
+        getData();
+
+        function getData()
+        {
+
+            var divissue = $('#divIssue');
+             var url = '@Url.Action("GetIssues", "Supervisor")';
+            $.ajax({
+                url: url,
+                    type: 'GET',
+                    datatype: 'json',
+                    success: function (issuedata) {
+
+                    issuedata = $.parseJSON(issuedata);
+                    if (issuedata.length > 0) {
+                        divissue.empty();
+
+
+
+
+                        for (var i = 0; i < issuedata.length; i++) {
+
+
+
+                            if ((issuedata[i].line_line_id==@ViewBag.LineId) && (issuedata[i].issue_satus=="1" )) {
+                                var responcibleperson_ststus= issuedata[i].responsible_person_confirm_status
+                                var issueid = issuedata[i].issue_issue_ID
+
+                                var date = issuedata[i].issueDate.split(' ');
+                                var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
+                                var issue_occurrence_id = issuedata[i].issue_occurrence_id
+                                var issue
+                                if (issueid == 1)//breakedown
+                                {
+                                    issue = '<div class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--red"><span class="desc" style="color:white">Machine Brakedown</span><div class="icon" ><i class="zmdi zmdi-settings zmdi-hc-spin"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><p class="card-text"><strong>Issue Date : </strong>' + day + '</br><strong>Time : </strong> ' + date[1] + " " + date[2] + '</br><strong>Responsible Person :</strong> ' + issuedata[i].responciblepersonName + '</br><strong>Machine : </strong>' + issuedata[i].machine_machine_id+'</p> <div class="text-right"> <button  class="btn btn-success"   data-id="' + issue_occurrence_id + '"  data-issue_id="' + issueid +'" onclick="myfunction(this)">Solved </button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
+
+                                }
+                                if (issueid == 2)//Material Delay
+                                {
+
+                                    issue = '<div class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--orange"><span class="desc" style="color:white">Material Delay</span><div class="icon" ><i class="zmdi animated infinite wobble zmdi-shopping-cart"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><p class="card-text"><strong>Issue Date : </strong>' + day + '</br><strong>Time : </strong> ' + date[1] + " " + date[2] + '</br><strong>Responsible Person :</strong> ' + issuedata[i].responciblepersonName + '</br><strong>Matirial : </strong>' + issuedata[i].matirial+'</p> <div class="text-right"><button  class="btn btn-success"  data-id="' + issue_occurrence_id + '" data-issue_id="' + issueid +'" onclick="myfunction(this)">Solved</button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
+
+
+                                }
+                                if (issueid == 3)//Technical Issue
+                                {
+
+
+                                    issue = '<div class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--green"><span class="desc" style="color:white">Technical Issue</span><div class="icon" ><i class="fas fa-wrench"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><p class="card-text"><strong>Issue Date : </strong>' + day + '</br><strong>Time : </strong>' + date[1] + " " + date[2] + '</br><strong>Responsible Person :</strong> ' + issuedata[i].responciblepersonName + '</p> <div class="text-right"> <button  class="btn btn-success"  data-id="' + issue_occurrence_id + '" data-issue_id="' + issueid +'" onclick="myfunction(this)">Solved</button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
+
+
+                                }
+                                if (issueid == 4)//Quility
+                                {
+
+
+                                    issue = '<div class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--blue"><span class="desc" style="color:white">Qulity Issue</span><div class="icon" ><i class="zmdi zmdi-brightness-auto"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><p class="card-text"><strong>IssueDate : </strong>' + day + '</br><strong>Time : </strong>' + date[1] + " " + date[2] + '</br><strong>Responsible Person :</strong> ' + issuedata[i].responciblepersonName + '</p><div class="text-right"> <button  class="btn btn-success"  data-id="' + issue_occurrence_id + '" data-issue_id="' + issueid +'" onclick="myfunction(this)">Solved</button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
+
+
+                                }
+                                if (issueid == 5)//IT/Software
+                                {
+
+                                    issue = '<div class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--blue"><span class="desc" style="color:white">IT/Software Issue</span><div class="icon" ><i class="zmdi zmdi-windows"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><p class="card-text"><strong>Issue Date : </strong>' + day + '</br><strong>Time : </strong>' + date[1] + " " + date[2] + '</br><strong>Responcible Person :</strong> ' + issuedata[i].responciblepersonName + '</p> <div class="text-right"> <button  class="btn btn-success"  data-id="' + issue_occurrence_id + '" data-issue_id="' + issueid +'"onclick="myfunction(this)">Solved</button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
+
+
+
+                                }
+
+
+
+
+                                divissue.append(issue)
+                                divissue.show('slow');
+
+
+
+
+                            }
+
+
+
+                        }
+
+
+                    }
+                }, error: function (r, e, w) {
+                }
+            });
+        }
+
+    })
+        function myfunction(param) {
+            var id = $(param).data('id');
+            var issue_id = $(param).data('issue_id');
+            var url = '@Url.Action("SolvedIssue", "Supervisor")?issueId=' + issue_id + '&issueOccourId=' + id ;
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+
+                success: function (issuedata) {
+
+                }
+            });
+
+        }
+
+
+
+
+</script>
 

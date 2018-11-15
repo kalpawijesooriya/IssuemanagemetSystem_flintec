@@ -43,10 +43,12 @@ namespace IssueManagementSystem.Controllers
 
         public ActionResult MachinBreakdown()//machine breakedown view
         {
+            ViewBag.rol = Session["Role"];
             int userID = (int)Session["userID"];// get current supervisorID
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
             {
                 var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
+                ViewBag.lineID = lineInfo.line_line_id;
                 var mapInfo = db.line_map.Where(y => y.line_id == lineInfo.line_line_id).FirstOrDefault();
                 ViewData["map"] = mapInfo.map.ToString().Trim();//get the map arry to ViewData
                 return View();
@@ -55,6 +57,7 @@ namespace IssueManagementSystem.Controllers
 
         public ActionResult TechnicalIssue()//Technical Issue View
         {
+            ViewBag.rol = Session["Role"];
             int userID = (int)Session["userID"];// get current supervisorID
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
             {
@@ -70,6 +73,7 @@ namespace IssueManagementSystem.Controllers
 
         public ActionResult MaterialDelay()//MaterialDelay View
         {
+            ViewBag.rol = Session["Role"];
             int userID = (int)Session["userID"];// get current supervisorID
             dynamic mat_List = new System.Dynamic.ExpandoObject();
 
@@ -94,6 +98,7 @@ namespace IssueManagementSystem.Controllers
 
         public ActionResult ITIssue()//IT ISSUE View
         {
+            ViewBag.rol = Session["Role"];
             int userID = (int)Session["userID"];// get current supervisorID
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
             {
@@ -119,9 +124,9 @@ namespace IssueManagementSystem.Controllers
                 if (ModelState.IsValid)
                 {
                     int userID = (int)Session["userID"];
-                    var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
+                    int lineId = Int32.Parse(issueModel.lineid);
                     issueModel.responsible_person_confirm_status = 1;
-                    issueModel.line_line_id = lineInfo.line_line_id;
+                    issueModel.line_line_id = lineId;
                     issueModel.issue_satus = "1";
                     issueModel.issue_issue_ID = 1;//Issue id is 1 for Machine Brakedown
                     issueModel.responsible_person_emp_id = 44;//get specific employee 
@@ -132,16 +137,17 @@ namespace IssueManagementSystem.Controllers
                     db.SaveChanges();
                     if (issueModel.issue_occurrence_id > 0)
                     {
-                        var line = db.lines.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
+                        var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
                         string msg = line.line_name + " line IT/SoftWare issue has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
-                        var displayInfo = db.displays.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
+                        var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
                         com.lightON("1", displayInfo.raspberry_ip_address);//turn on the Light
-                        sendCD(lineInfo.line_line_id, 1, msg, "Machine Brakedown has been occurred");
+                        sendCD(lineId, 1, msg, "Machine Brakedown has been occurred");
                     }
                     ModelState.Clear();
                 }
             }
-            return RedirectToAction("selectIssue", "Supervisor");
+            if (issueModel.Role == "supervisor") { return RedirectToAction("selectIssue", "Supervisor"); }
+            else { return RedirectToAction("DashBord", "CellEngineer"); }
         }
 
         [HttpPost]//add Tecnical Issues to database
@@ -156,11 +162,11 @@ namespace IssueManagementSystem.Controllers
                 if (ModelState.IsValid)
                 {
                     int userID = (int)Session["userID"];
-                    var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
+                   
 
                     issueModel.responsible_person_confirm_status = 1;
-
-                    issueModel.line_line_id = lineInfo.line_line_id;
+                    int lineId = Int32.Parse(issueModel.lineid);
+                    issueModel.line_line_id = lineId;
                     issueModel.issue_satus = "1";
                     issueModel.issue_issue_ID = 3;//Issue id is 2 for Machine Brakedown
 
@@ -173,16 +179,19 @@ namespace IssueManagementSystem.Controllers
                     db.SaveChanges();
                     if (issueModel.issue_occurrence_id > 0)
                     {
-                        var line = db.lines.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
-                        var displayInfo = db.displays.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
+                        var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
+                        var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
                         string msg = line.line_name + " line IT/SoftWare issue has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
                         com.lightON("3", displayInfo.raspberry_ip_address);//turn on the Light
-                        sendCD(lineInfo.line_line_id, 3, msg, "Tecnical Issue has been occered");
+                        sendCD(lineId, 3, msg, "Tecnical Issue has been occered");
                     }
                     ModelState.Clear();
                 }
             }
-            return RedirectToAction("selectIssue", "Supervisor");
+            if (issueModel.Role == "supervisor") { return RedirectToAction("selectIssue", "Supervisor"); }
+           else { return RedirectToAction("DashBord", "CellEngineer"); }
+
+
         }
 
         [HttpPost]//add IT Issues to database
@@ -195,10 +204,11 @@ namespace IssueManagementSystem.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    int lineId = Int32.Parse(issueModel.lineid);
                     int userID = (int)Session["userID"];
-                    var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
+                   
                     issueModel.responsible_person_confirm_status = 1;
-                    issueModel.line_line_id = lineInfo.line_line_id;
+                    issueModel.line_line_id = lineId;
                     issueModel.issue_satus = "1";
                     issueModel.issue_issue_ID = 5;//Issue id is 5 for IT Issue
                     issueModel.responsible_person_emp_id = 44;//get specific employee 
@@ -210,16 +220,17 @@ namespace IssueManagementSystem.Controllers
                     db.SaveChanges();
                     if (issueModel.issue_occurrence_id > 0)
                     {
-                        var line = db.lines.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
+                        var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
                         string msg = line.line_name + " line IT/SoftWare issue has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
-                        var displayInfo = db.displays.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
+                        var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
                         com.lightON("5", displayInfo.raspberry_ip_address);//turn on the Light
-                        sendCD(lineInfo.line_line_id, 5, msg, "IT/Software Issue has been occered");
+                        sendCD(lineId, 5, msg, "IT/Software Issue has been occered");
                     }
                     ModelState.Clear();
                 }
             }
-            return RedirectToAction("selectIssue", "Supervisor");
+            if (issueModel.Role == "supervisor") { return RedirectToAction("selectIssue", "Supervisor"); }
+            else { return RedirectToAction("DashBord", "CellEngineer"); }
         }
 
         [HttpPost]//add Material Delay to database

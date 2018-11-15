@@ -45,6 +45,14 @@
                     <label for="exampleFormControlTextarea1">Extra Information</label>
                     @Html.TextAreaFor(model => model.description, new { @class = "form-control" })
                 </div>
+                string Role = ViewBag.rol.ToString();
+                string lineID = ViewBag.lineID.ToString();
+                @Html.TextAreaFor(mo => mo.Role, new { @class = "form-control", @id = "role", style = "display: none;" })
+                @Html.TextAreaFor(mod => mod.lineid, new { @class = "form-control", @id = "lineid", style = "display: none;" })
+                <script>
+                    document.getElementById("lineid").value=@lineID;
+                    document.getElementById("role").value = "@Role";
+                </script>
                 <div class="container-fluid row ">
                     <div class="container">
                         <div class="row">

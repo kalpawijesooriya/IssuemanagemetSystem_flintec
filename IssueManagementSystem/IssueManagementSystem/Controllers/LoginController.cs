@@ -20,10 +20,10 @@ namespace IssueManagementSystem.Controllers
         {
             using (issue_management_systemEntities1 db =new issue_management_systemEntities1())
             {
-                var userDetails =db.User_tbl.Where(x => x.UserName == userModel.UserName && x.Password== userModel.Password).FirstOrDefault();
+                var userDetails =db.User_tbl.Where(x => x.EmployeeNumber == userModel.EmployeeNumber && x.Password== userModel.Password).FirstOrDefault();
                 if (userDetails == null)
                 {
-                    userModel.LoginErrorMessage = "Wrong UserName or Password.";//show login erroe message
+                    userModel.LoginErrorMessage = "Wrong Employee Number or Password.";//show login erroe message
                     return View("Index", userModel);
                 }
                 else {
@@ -33,6 +33,7 @@ namespace IssueManagementSystem.Controllers
                     Session["email"] = userDetails.EMail.Trim();
                     Session["location"] = userDetails.Location.Trim();
                     Session["department"] = userDetails.Department.Trim();
+                    Session["Role"] = userDetails.Role.Trim();
 
                     string username = Session["userName"].ToString();
                     string role = userDetails.Role.ToString().Trim();//retrive the user role

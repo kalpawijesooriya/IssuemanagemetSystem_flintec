@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Technical Issue";
-    Layout = "~/Views/Shared/supervisorsLayout.cshtml";
+    Layout = "~/Views/Shared/CellEngineerLayout.cshtml";
     if (Session["userID"] == null)
     {
         Response.Redirect("~/Login/Index");
@@ -18,22 +18,22 @@
 <div class="container margin ">
     <h2>Tecnical Issue</h2>
     <hr />
-   
+
 
     <div class="row">
-        
+
         <div class="col-sm-3 machine">
             @using (Html.BeginForm("AddIssueTechnical", "Supervisor", FormMethod.Post))
             {
 
-                <label id="map" style="display: none;">@ViewData["map"]</label>
+
                 <div class="form-group machine">
                     <label for="exampleFormControlTextarea1">Extra Information</label>
                     @Html.TextAreaFor(model => model.description, new { @class = "form-control" })
                 </div>
                 string Role = ViewBag.rol.ToString();
                 string lineID = ViewBag.lineID.ToString();
-                @Html.TextAreaFor(mo => mo.Role, new { @class = "form-control", @id = "role", style = "display: none;" })
+                @Html.TextAreaFor(mo => mo.Role, new { @class = "form-control", @id = "role" ,style = "display: none;" })
                 @Html.TextAreaFor(mod => mod.lineid, new { @class = "form-control", @id = "lineid", style = "display: none;" })
                 <script>
                     document.getElementById("lineid").value=@lineID;

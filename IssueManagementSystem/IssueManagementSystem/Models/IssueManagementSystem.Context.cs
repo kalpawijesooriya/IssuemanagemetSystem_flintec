@@ -41,5 +41,6 @@ namespace IssueManagementSystem.Models
         public virtual DbSet<line> lines { get; set; }
         public virtual DbSet<machine> machines { get; set; }
         public virtual DbSet<material> materials { get; set; }
+        public virtual DbSet<line_cell_eng> line_cell_eng { get; set; }
     }
 }

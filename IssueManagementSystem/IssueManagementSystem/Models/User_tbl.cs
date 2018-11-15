@@ -9,7 +9,7 @@ namespace IssueManagementSystem.Models
         public int EmployeeNumber { get; set; }
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Plese Enter Your UserName")]
+        [Required(ErrorMessage = "Plese Enter Your EmployeeNumber")]
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "Plese Enter Your User PassWord")]

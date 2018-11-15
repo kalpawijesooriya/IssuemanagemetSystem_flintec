@@ -241,6 +241,10 @@
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LineIssue.cs" />
+    <Compile Include="Models\FLINTEC_Item_dbContext.cs" />
+    <Compile Include="Models\line_cell_eng.cs">
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\line_computer.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
@@ -259,7 +263,6 @@
     <Compile Include="Models\material.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\FLINTEC_Item_dbContext.cs" />
     <Compile Include="Models\SendIssues.cs" />
     <Compile Include="Models\SendNotifications.cs" />
     <Compile Include="Models\sysdiagram.cs">
@@ -585,6 +588,10 @@
     <Content Include="Views\CellEngineer\NotificationsManagement.cshtml" />
     <Content Include="Views\Shared\ResponsiblepersonLayout.cshtml" />
     <Content Include="Views\ResponsiblePerson\Index.cshtml" />
+    <Content Include="Views\CellEngineer\MachinBreakdown.cshtml" />
+    <Content Include="Views\CellEngineer\TechnicalIssue.cshtml" />
+    <Content Include="Views\CellEngineer\MaterialDelay.cshtml" />
+    <Content Include="Views\CellEngineer\ITIssue.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

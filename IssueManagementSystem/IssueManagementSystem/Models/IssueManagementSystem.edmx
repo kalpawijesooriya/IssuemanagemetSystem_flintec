@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="issue_management_systemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="issue_management_systemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="departments">
           <Key>
             <PropertyRef Name="department_id" />
@@ -73,6 +73,13 @@
           </Key>
           <Property Name="issue_id" Type="int" Nullable="false" />
           <Property Name="issue" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="line_cell_eng">
+          <Key>
+            <PropertyRef Name="cell_eng_emp_id" />
+          </Key>
+          <Property Name="cell_eng_emp_id" Type="int" Nullable="false" />
+          <Property Name="line_id" Type="int" />
         </EntityType>
         <EntityType Name="line_computer">
           <Key>
@@ -241,6 +248,7 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <EntitySet Name="issue_line_person" EntityType="Self.issue_line_person" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="issue_occurrence" EntityType="Self.issue_occurrence" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="issues" EntityType="Self.issues" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="line_cell_eng" EntityType="Self.line_cell_eng" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="line_computer" EntityType="Self.line_computer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="line_map" EntityType="Self.line_map" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="line_supervisor" EntityType="Self.line_supervisor" Schema="dbo" store:Type="Tables" />
@@ -294,8 +302,7 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
             <End Role="issue_occurrence" EntitySet="issue_occurrence" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="issue_management_systemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -549,7 +556,15 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
             <End Role="issues" EntitySet="issues" />
             <End Role="issue_occurrence" EntitySet="issue_occurrence" />
           </AssociationSet>
+          <EntitySet Name="line_cell_eng" EntityType="issue_management_systemModel.line_cell_eng" />
         </EntityContainer>
+        <EntityType Name="line_cell_eng">
+          <Key>
+            <PropertyRef Name="cell_eng_emp_id" />
+          </Key>
+          <Property Name="cell_eng_emp_id" Type="Int32" Nullable="false" />
+          <Property Name="line_id" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -758,6 +773,14 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
               <MappingFragment StoreEntitySet="material">
                 <ScalarProperty Name="material1" ColumnName="material" />
                 <ScalarProperty Name="material_id" ColumnName="material_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="line_cell_eng">
+            <EntityTypeMapping TypeName="issue_management_systemModel.line_cell_eng">
+              <MappingFragment StoreEntitySet="line_cell_eng">
+                <ScalarProperty Name="line_id" ColumnName="line_id" />
+                <ScalarProperty Name="cell_eng_emp_id" ColumnName="cell_eng_emp_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

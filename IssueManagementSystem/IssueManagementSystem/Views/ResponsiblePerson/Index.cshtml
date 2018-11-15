@@ -128,9 +128,9 @@ if (Session["userID"] == null)
         {
 
             var divissue = $('#divIssue');
-
+              var url = '@Url.Action("GetIssues", "ResponsiblePerson")'
             $.ajax({
-                    url: '/ResponsiblePerson/GetIssues',
+                url: url,
                     type: 'GET',
                     datatype: 'json',
                     success: function (issuedata) {

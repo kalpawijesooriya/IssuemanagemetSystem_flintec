@@ -12,7 +12,7 @@ namespace IssueManagementSystem.Models
 {
     using System;
     using System.Collections.Generic;
-
+    using System.ComponentModel.DataAnnotations;
     public partial class issue_occurrence
     {
         public int issue_occurrence_id { get; set; }
@@ -36,5 +36,7 @@ namespace IssueManagementSystem.Models
         public string responciblepersonName { get; set; }
         public virtual issue issue { get; set; }
         public string matirial { get; set; }
+        public string lineid { get; set; }
+        public string Role { get; set; }
     }
 }

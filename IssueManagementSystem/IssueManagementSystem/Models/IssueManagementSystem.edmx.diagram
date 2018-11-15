@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0a88f96f60434993bc41e2ca5afe4390" Name="Diagram1">
+      <Diagram DiagramId="7cf0bd52a1d64cc39697f2eb57b4926e" Name="Diagram1">
         <EntityTypeShape EntityType="issue_management_systemModel.department" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="issue_management_systemModel.display" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="issue_management_systemModel.employee" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
@@ -23,6 +23,7 @@
         <EntityTypeShape EntityType="issue_management_systemModel.material" Width="1.5" PointX="6.75" PointY="10.75" IsExpanded="true" />
         <AssociationConnector Association="issue_management_systemModel.FK_department_lines_departments" ManuallyRouted="false" />
         <AssociationConnector Association="issue_management_systemModel.FK_issue_occurrence_issues" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="issue_management_systemModel.line_cell_eng" Width="1.5" PointX="9.375" PointY="10.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
