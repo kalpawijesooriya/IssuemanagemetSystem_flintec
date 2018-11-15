@@ -31,7 +31,6 @@ namespace IssueManagementSystem.Controllers
                 ViewBag.LineId = mapInfo.line_id;
                 return View();
             }
-
         }
 
         [HttpGet]
@@ -124,7 +123,10 @@ namespace IssueManagementSystem.Controllers
                     issueModel.line_line_id = lineInfo.line_line_id;
                     issueModel.issue_satus = "1";
                     issueModel.issue_issue_ID = 1;//Issue id is 1 for Machine Brakedown
-                    issueModel.responsible_person_emp_id = 44;//get specific employee 
+
+                    var respPersonID = db.issue_line_person.Where(x => x.line_id == lineInfo.line_line_id && x.levelOfResponsibility == 1 && x.issue_id == 1).FirstOrDefault();
+                    issueModel.responsible_person_emp_id = Int32.Parse(respPersonID.EmployeeNumber.ToString());
+
                     var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                     issueModel.issue_date = date;
                     issueModel.location = (string)Session["location"];
@@ -164,7 +166,8 @@ namespace IssueManagementSystem.Controllers
                     issueModel.issue_satus = "1";
                     issueModel.issue_issue_ID = 3;//Issue id is 2 for Machine Brakedown
 
-                    issueModel.responsible_person_emp_id = 44;//get specific employee 
+                    var respPersonID = db.issue_line_person.Where(x => x.line_id == lineInfo.line_line_id && x.levelOfResponsibility == 1 && x.issue_id == 3).FirstOrDefault();
+                    issueModel.responsible_person_emp_id = Int32.Parse(respPersonID.EmployeeNumber.ToString());
 
                     var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                     issueModel.issue_date = date;
@@ -201,7 +204,11 @@ namespace IssueManagementSystem.Controllers
                     issueModel.line_line_id = lineInfo.line_line_id;
                     issueModel.issue_satus = "1";
                     issueModel.issue_issue_ID = 5;//Issue id is 5 for IT Issue
-                    issueModel.responsible_person_emp_id = 44;//get specific employee 
+
+                    //get certain employee assigned for a certain issue in a certain line and the level of resp. should be one
+                    var respPersonID = db.issue_line_person.Where(x => x.line_id == lineInfo.line_line_id && x.levelOfResponsibility == 1 && x.issue_id == 5).FirstOrDefault();
+                    issueModel.responsible_person_emp_id = Int32.Parse(respPersonID.EmployeeNumber.ToString());
+
                     issueModel.location = (string)Session["location"];
                     var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                     issueModel.issue_date = date;
@@ -300,12 +307,7 @@ namespace IssueManagementSystem.Controllers
                         CommunicationData cd = new CommunicationData(personInfo.Phone, msg, personInfo.EMail, item.email, item.call, item.message, personInfo.EmployeeNumber, subject);
                         com.setCD(cd);
                     }
-
                 }
-
-
-            
-
             });
             t.Start();
         }
@@ -337,7 +339,7 @@ namespace IssueManagementSystem.Controllers
             {    //check issue id == to clicked issueid
                 if (item.issue_issue_ID == issueId && item.line_line_id == line_id)
                 {
-                    //if any status is there under selected issueid and line id cout will up
+                    //if any status is there under selected issueid and line id count will up
                     if (item.issue_satus == "1")
                     {
                         count++;
@@ -351,7 +353,6 @@ namespace IssueManagementSystem.Controllers
 
                 if (issueCount == 0)
                 {// if cout ==0 light will off
-
                     var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
                     com.lightOFF(issueId.ToString(), displayInfo.raspberry_ip_address);
                 }

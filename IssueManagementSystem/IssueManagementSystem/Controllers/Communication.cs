@@ -122,9 +122,7 @@ namespace IssueManagementSystem.Controllers
                     smtp.Credentials = NetworkCred;
                     smtp.Port = 587;
                     smtp.Send(mm);
-                   
                    // Debug.WriteLine("This is count : " + count.ToString());
-
                 }
             }
 
