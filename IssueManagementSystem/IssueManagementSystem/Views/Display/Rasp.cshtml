@@ -180,7 +180,7 @@
 
         // Declare a function on the hub hub so the server can invoke it
         hub.client.displayStatus = function () {
-            debugger
+           
             getData();
         };
 
@@ -191,10 +191,10 @@
         function getData()
         {
 
-
+             var url = '@Url.Action("GetIssues", "Supervisor")'
 
             $.ajax({
-                url: '/Supervisor/GetIssues',
+                url: url,
                     type: 'GET',
                     datatype: 'json',
                 success: function (issuedata) {
@@ -218,8 +218,8 @@
 
 
 
+                        blinkMap();
                         for (var i = 0; i < issuedata.length; i++) {
-
 
 
                             if ((issuedata[i].line_line_id==@ViewBag.Id) && (issuedata[i].issue_satus=="1" )) {
@@ -242,7 +242,7 @@
                                 {
                                     $('#maririaldiv').show()
                                     var divissue = $('#matirial_body');
-                                    var issue = '<tr><td>' + day + '</td><td>' + issuedata[i].material_id + '</td><td>' + issuedata[i].description + '</td><td>' + issuedata[i].responciblepersonName + '</td></tr>'
+                                    var issue = '<tr><td>' + day + '</td><td>' + issuedata[i].matirial + '</td><td>' + issuedata[i].description + '</td><td>' + issuedata[i].responciblepersonName + '</td></tr>'
                                     divissue.append(issue)
                                     divissue.show('slow');
                                 }
@@ -300,6 +300,23 @@
 
         </script>
         <script type="text/javascript">
+            function blinkMap() {
+                 var url = '@Url.Action("getBlinkingMachinesList", "Display")'
+                $.ajax({
+                    type: "POST",
+                    dataType: 'text',
+                    url: url,
+                    data: { line: @ViewBag.id },
+                    success: function (line_data) {
+                        var obj = JSON.parse(line_data);
+                        console.log(obj);
+                        set_blinking_machines(obj);
+                    },
+                    error: function () {
+                        alert("Error occurred");
+                    }
+                });
+            }
             $(function () {
                 $('#vertical-ticker').totemticker({
                     row_height: '100px',

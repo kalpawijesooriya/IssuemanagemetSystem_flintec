@@ -6,7 +6,7 @@
 function SubmitMaterialDelay() {
 
     obj = new Object();
-
+    
     obj.issue_date = new Date();
     obj.material_id = document.getElementById("Material").value;
     obj.description = document.getElementById("description").value;

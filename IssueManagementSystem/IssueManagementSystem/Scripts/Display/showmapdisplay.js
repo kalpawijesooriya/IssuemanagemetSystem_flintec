@@ -203,20 +203,7 @@ function init() {
     
      
 
-    $.ajax({
-        type: "POST",
-        dataType: 'text',
-        url: "/Display/getBlinkingMachinesList",
-        data: { line:'5'},
-        success: function (line_data) {
-            var obj = JSON.parse(line_data);
-            console.log(obj);
-            set_blinking_machines(obj);
-        },
-        error: function () {
-            alert("Error occurred");
-        }
-    });
+    
 }
 
 
@@ -238,7 +225,9 @@ window.onload = init;
 blinking_machines = new Array();
 
 function set_blinking_machines(blinking_machines_A) {
-    for (var i = 0; i < blinking_machines_A.length;i++) {
+    blinking_machines = [];
+    for (
+        var i = 0; i < blinking_machines_A.length; i++) {
         blinking_machines.push(blinking_machines_A[i].machine_machine_id) ;
     }
 }

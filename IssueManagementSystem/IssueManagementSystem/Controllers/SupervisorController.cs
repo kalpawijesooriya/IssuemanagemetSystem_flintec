@@ -233,7 +233,8 @@ namespace IssueManagementSystem.Controllers
                 foreach (JObject item in issueData)
                 {
                     int line_id = Int32.Parse(item["line_line_id"].ToString());
-                    var resp_person = db.issue_line_person.Where(x => (x.levelOfResponsibility == 1) && (x.line_id == line_id)).FirstOrDefault();
+                    int issue_id = Int32.Parse(item["issue_issue_ID"].ToString());
+                    var resp_person = db.issue_line_person.Where(x => x.levelOfResponsibility == 1 && x.line_id == line_id && x.issue_id== issue_id).FirstOrDefault();
                     try
                     {
                         var responsible_person_emp_id = resp_person.EmployeeNumber;
@@ -257,7 +258,7 @@ namespace IssueManagementSystem.Controllers
                                                            + resp_person.EmployeeNumber + ","
                                                            + '1' + ",'"
                                                            + item["location"] + "',"
-                                                           + item["responsible_person_confirm_status"] + ")";
+                                                           + 1 + ")";
                         db.Database.ExecuteSqlCommand(query_1);
                         var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
                         var line = db.lines.Where(x => x.line_id == line_id).FirstOrDefault();
@@ -303,7 +304,7 @@ namespace IssueManagementSystem.Controllers
                 }
 
 
-            }
+            
 
             });
             t.Start();

@@ -35,5 +35,6 @@ namespace IssueManagementSystem.Models
         public string commentedDate { get; set; }
         public string responciblepersonName { get; set; }
         public virtual issue issue { get; set; }
+        public string matirial { get; set; }
     }
 }
