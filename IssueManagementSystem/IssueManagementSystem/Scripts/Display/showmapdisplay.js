@@ -200,9 +200,6 @@ function init() {
         else { globalvariable = 0; }
     }, 100);
 
-    
-     
-
     $.ajax({
         type: "POST",
         dataType: 'text',

@@ -35,7 +35,14 @@ namespace IssueManagementSystem.Controllers
         {
             // issue_management_systemEntities db = new issue_management_systemEntities();
             // line line = db.line().Lines.SilgleOrdefault();
-            return View();
+
+            issue_management_systemEntities1 imsDbContext = new issue_management_systemEntities1();
+            List<machine> mList = imsDbContext.machines.ToList();
+
+            dynamic machine_list = new System.Dynamic.ExpandoObject();
+            machine_list.machine_list = mList;
+
+            return View(machine_list);
         }
 
         [HttpPost]
