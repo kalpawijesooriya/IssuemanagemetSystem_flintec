@@ -100,6 +100,9 @@ function CanvasState(canvas) {
 
         for (var i = 0; i < myState.shapes.length; i++) {
 
+            myState.selection = null;
+            myState.valid = false; //clear the old selection
+
             var mySelx = myState.shapes[i];
 
             for (var k = 0; k < blinking_machines.length; k++) {
