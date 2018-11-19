@@ -41,7 +41,7 @@
 <div class="container-fluid margin">
 
     <div class="row">
-       
+
         <div class="col-sm-5">
             <div class="text-center">
                 <h2> Line Map</h2>
@@ -77,12 +77,7 @@
 
                                         </tr>
                                     </thead>
-                                    <tbody id="breake_body">
-
-                                       
-
-
-                                    </tbody>
+                                    <tbody id="breake_body"></tbody>
                                 </table>
                             </div>
                         </div>
@@ -101,11 +96,7 @@
 
                                         </tr>
                                     </thead>
-                                    <tbody id="matirial_body">
-
-                                      
-
-                                    </tbody>
+                                    <tbody id="matirial_body"></tbody>
                                 </table>
                             </div>
                         </div>
@@ -124,11 +115,7 @@
 
                                         </tr>
                                     </thead>
-                                    <tbody id="technical_body">
-
-                                       
-
-                                    </tbody>
+                                    <tbody id="technical_body"></tbody>
                                 </table>
                             </div>
                         </div>
@@ -141,17 +128,13 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">Date</th>
-                                            
+
                                             <th scope="col">Description</th>
                                             <th scope="col">Responsible person</th>
 
                                         </tr>
                                     </thead>
-                                    <tbody id="it_body">
-
-                                       
-
-                                    </tbody>
+                                    <tbody id="it_body"></tbody>
                                 </table>
                             </div>
                         </div>
@@ -162,9 +145,8 @@
 
 
 
-        <script src="~/Scripts/Display/showmapdisplay.js"></script>
+
         <script src="~/Scripts/3.30bootstrap.min.js"></script>
-     
         <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
         <script src="~/Scripts/moment.min.js"></script>
         <script src="~/signalr/Hubs"></script>
@@ -180,7 +162,7 @@
 
         // Declare a function on the hub hub so the server can invoke it
         hub.client.displayStatus = function () {
-           
+
             getData();
         };
 
@@ -206,10 +188,10 @@
                     $('#maririaldiv').hide();
                     $('#Softwarediv').hide();
                     $('#tecnicaldiv').hide();
-                   
-                    
-                   
-                    
+
+
+
+
 
                     issuedata = $.parseJSON(issuedata);
                     if (issuedata.length > 0) {
@@ -294,12 +276,37 @@
         }
 
     })
-
-
-
-
         </script>
         <script type="text/javascript">
+
+
+            function init() {
+                var s = new CanvasState(document.getElementById('canvas1'));
+
+                setInterval(function () {
+                    //console.log(globalvariable);
+                    if (globalvariable == 0) { globalvariable = 1; }
+                    else { globalvariable = 0; }
+                }, 100);
+
+                  var url = '@Url.Action("getBlinkingMachinesList", "Display")'
+                $.ajax({
+                    type: "POST",
+                    dataType: 'text',
+                    url: url,
+                    data: { line: '5' },
+                    success: function (line_data) {
+                        var obj = JSON.parse(line_data);
+                        console.log(obj);
+                        set_blinking_machines(obj);
+                    },
+                    error: function () {
+                        alert("Error occurred");
+                    }
+                });
+
+            }
+
             function blinkMap() {
                  var url = '@Url.Action("getBlinkingMachinesList", "Display")'
                 $.ajax({
@@ -328,6 +335,7 @@
                 });
             });
         </script>
+        <script src="~/Scripts/Display/showmapdisplay.js"></script>
     </div>
 </div>
 

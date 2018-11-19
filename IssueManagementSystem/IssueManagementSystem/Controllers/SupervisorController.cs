@@ -123,7 +123,7 @@ namespace IssueManagementSystem.Controllers
                     issueModel.issue_satus = "1";
                     issueModel.issue_issue_ID = 1;//Issue id is 1 for Machine Brakedown
 
-                    var respPersonID = db.issue_line_person.Where(x => x.line_id == lineInfo.line_line_id && x.levelOfResponsibility == 1 && x.issue_id == 1).FirstOrDefault();
+                    var respPersonID = db.issue_line_person.Where(x => x.line_id == lineId && x.levelOfResponsibility == 1 && x.issue_id == 1).FirstOrDefault();
                     issueModel.responsible_person_emp_id = Int32.Parse(respPersonID.EmployeeNumber.ToString());
 
                     var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
@@ -156,44 +156,19 @@ namespace IssueManagementSystem.Controllers
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
                 if (ModelState.IsValid)
-                {
-
-                    int userID = (int)Session["userID"];
-                   
-
-                    issueModel.responsible_person_confirm_status = 1;
-                    int lineId = Int32.Parse(issueModel.lineid);
-                    issueModel.line_line_id = lineId;
-                    issueModel.issue_satus = "1";
-                    issueModel.issue_issue_ID = 3;//Issue id is 2 for Machine Brakedown
-
-                    issueModel.responsible_person_emp_id = 44;//get specific employee 
-
-                    var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-                    issueModel.issue_date = date;
-                    issueModel.location = (string)Session["location"];
-                    db.issue_occurrence.Add(issueModel);
-                    db.SaveChanges();
-                    if (issueModel.issue_occurrence_id > 0)
-                    {
-                        var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
-                        var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
-                        string msg = line.line_name + " line IT/SoftWare issue has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
-                        com.lightON("3", displayInfo.raspberry_ip_address);//turn on the Light
-                        sendCD(lineId, 3, msg, "Tecnical Issue has been occered");
-
+                { 
                     try
                     {
                         int userID = (int)Session["userID"];
-                        var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
+                        int lineId = Int32.Parse(issueModel.lineid);
 
                         issueModel.responsible_person_confirm_status = 1;
 
-                        issueModel.line_line_id = lineInfo.line_line_id;
+                        issueModel.line_line_id = lineId;
                         issueModel.issue_satus = "1";
                         issueModel.issue_issue_ID = 3;//Issue id is 2 for Machine Brakedown
 
-                        var respPersonID = db.issue_line_person.Where(x => x.line_id == lineInfo.line_line_id && x.levelOfResponsibility == 1 && x.issue_id == 3).FirstOrDefault();
+                        var respPersonID = db.issue_line_person.Where(x => x.line_id == lineId && x.levelOfResponsibility == 1 && x.issue_id == 3).FirstOrDefault();
                         issueModel.responsible_person_emp_id = Int32.Parse(respPersonID.EmployeeNumber.ToString());
 
                         var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
@@ -204,13 +179,13 @@ namespace IssueManagementSystem.Controllers
                         if (issueModel.issue_occurrence_id > 0)
                         {
 
-                            var line = db.lines.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
-                            var displayInfo = db.displays.Where(x => x.line_id == lineInfo.line_line_id).FirstOrDefault();
+                            var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
+                            var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
                             string msg = line.line_name + " line IT/SoftWare issue has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
                             com.lightON("3", displayInfo.raspberry_ip_address);//turn on the Light
-                            sendCD(lineInfo.line_line_id, 3, msg, "Tecnical Issue has been occered");
+                            sendCD(lineId, 3, msg, "Tecnical Issue has been occered");
 
-                        ModelState.Clear();
+                            ModelState.Clear();
                         }
                     }
                     catch (Exception ex)
@@ -218,15 +193,15 @@ namespace IssueManagementSystem.Controllers
                         System.Diagnostics.Debug.WriteLine("Error occured ############00000000###############" + ex.ToString());
 
                     }
+                    
+
                 }
-                return RedirectToAction("selectIssue", "Supervisor");
+
+
+                if (issueModel.Role == "supervisor") { return RedirectToAction("selectIssue", "Supervisor"); }
+                else { return RedirectToAction("DashBord", "CellEngineer"); }
+
             }
-
-            if (issueModel.Role == "supervisor") { return RedirectToAction("selectIssue", "Supervisor"); }
-           else { return RedirectToAction("DashBord", "CellEngineer"); }
-
-
-
         }
         [HttpPost]//add IT Issues to database
         public ActionResult AddIssueIT(issue_occurrence issueModel)
@@ -247,7 +222,7 @@ namespace IssueManagementSystem.Controllers
                     issueModel.issue_issue_ID = 5;//Issue id is 5 for IT Issue
 
                     //get certain employee assigned for a certain issue in a certain line and the level of resp. should be one
-                    var respPersonID = db.issue_line_person.Where(x => x.line_id == lineInfo.line_line_id && x.levelOfResponsibility == 1 && x.issue_id == 5).FirstOrDefault();
+                    var respPersonID = db.issue_line_person.Where(x => x.line_id == lineId && x.levelOfResponsibility == 1 && x.issue_id == 5).FirstOrDefault();
                     issueModel.responsible_person_emp_id = Int32.Parse(respPersonID.EmployeeNumber.ToString());
 
                     issueModel.location = (string)Session["location"];
@@ -355,7 +330,7 @@ namespace IssueManagementSystem.Controllers
         }
 
         //solovedIssueMethod
-        public JsonResult SolvedIssue(int? issueId, int? issueOccourId)
+        public JsonResult SolvedIssue(int? issueId, int? issueOccourId ,int? lineId)
         {
             System.Diagnostics.Debug.WriteLine("issueOccourId : " + issueOccourId);
             var time = DateTime.Now;
@@ -368,10 +343,7 @@ namespace IssueManagementSystem.Controllers
             issueoccourInfo.solved_date = date;
             db.SaveChanges();
 
-            int userID = (int)Session["userID"];
-            var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
-
-            var line_id = lineInfo.line_line_id;
+           
 
             //get the list of Issuueoccurrence table
 
@@ -379,7 +351,7 @@ namespace IssueManagementSystem.Controllers
             int count = 0;
             foreach (var item in issue)
             {    //check issue id == to clicked issueid
-                if (item.issue_issue_ID == issueId && item.line_line_id == line_id)
+                if (item.issue_issue_ID == issueId && item.line_line_id == lineId)
                 {
                     //if any status is there under selected issueid and line id count will up
                     if (item.issue_satus == "1")
@@ -391,11 +363,11 @@ namespace IssueManagementSystem.Controllers
             }
             if (count == 0)
             {// if cout ==0 light will off
-                var issueCount = db.issue_occurrence.Where(x => x.issue_issue_ID == issueId && x.line_line_id == line_id && x.issue_satus == "1").ToList().Count();
+                var issueCount = db.issue_occurrence.Where(x => x.issue_issue_ID == issueId && x.line_line_id == lineId && x.issue_satus == "1").ToList().Count();
 
                 if (issueCount == 0)
                 {// if cout ==0 light will off
-                    var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
+                    var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
                     com.lightOFF(issueId.ToString(), displayInfo.raspberry_ip_address);
                 }
                 return Json(true);

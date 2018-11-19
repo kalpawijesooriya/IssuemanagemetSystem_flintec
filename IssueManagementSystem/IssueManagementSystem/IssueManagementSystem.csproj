@@ -202,6 +202,21 @@
     <Compile Include="Hubs\IssueHub.cs" />
     <Compile Include="Hubs\MyHub.cs" />
     <Compile Include="ISMHub.cs" />
+    <Compile Include="Models\BigRed.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BigRed.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BigRed.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BigRed.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BigRed.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BigRed.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\CommunicationData.cs" />
     <Compile Include="Models\department.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
@@ -271,6 +286,9 @@
     <Compile Include="Models\tbl_Notifications.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tbl_PPA_User.cs">
+      <DependentUpon>BigRed.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User_tbl.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
@@ -332,6 +350,16 @@
     <Content Include="fonts\poppins\poppins-v5-latin-900italic.svg" />
     <Content Include="fonts\poppins\poppins-v5-latin-italic.svg" />
     <Content Include="fonts\poppins\poppins-v5-latin-regular.svg" />
+    <Content Include="Models\BigRed.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BigRed.edmx</DependentUpon>
+      <LastGenOutput>BigRed.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\BigRed.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BigRed.edmx</DependentUpon>
+      <LastGenOutput>BigRed.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\IssueManagementSystem.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>IssueManagementSystem.edmx</DependentUpon>
@@ -502,6 +530,13 @@
     <Content Include="Models\IssueManagementSystem.edmx.diagram">
       <DependentUpon>IssueManagementSystem.edmx</DependentUpon>
     </Content>
+    <EntityDeploy Include="Models\BigRed.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>BigRed.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\BigRed.edmx.diagram">
+      <DependentUpon>BigRed.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile2.pubxml" />
@@ -509,6 +544,7 @@
     <None Include="Properties\PublishProfiles\CustomProfile4.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile2.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\AdminScripts\metisMenu.js" />
     <Content Include="Scripts\AdminScripts\metisMenu.min.js" />
@@ -592,6 +628,7 @@
     <Content Include="Views\CellEngineer\TechnicalIssue.cshtml" />
     <Content Include="Views\CellEngineer\MaterialDelay.cshtml" />
     <Content Include="Views\CellEngineer\ITIssue.cshtml" />
+    <Content Include="Views\Admin\Katunayake.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

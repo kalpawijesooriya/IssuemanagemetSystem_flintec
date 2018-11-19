@@ -194,33 +194,6 @@ CanvasState.prototype.getMouse = function (e) {
 }
 globalvariable = 0;
 
-function init() {
-    var s = new CanvasState(document.getElementById('canvas1'));
-
-    setInterval(function (){
-        //console.log(globalvariable);
-        if (globalvariable == 0) { globalvariable = 1; }
-        else { globalvariable = 0; }
-    }, 100);
-
-
-    $.ajax({
-        type: "POST",
-        dataType: 'text',
-        url: "/Display/getBlinkingMachinesList",
-        data: { line:'5'},
-        success: function (line_data) {
-            var obj = JSON.parse(line_data);
-            console.log(obj);
-            set_blinking_machines(obj);
-        },
-        error: function () {
-            alert("Error occurred");
-        }
-    });
-
-}
-
 
 function createObjectArray(jsonText) {
 

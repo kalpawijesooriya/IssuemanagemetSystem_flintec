@@ -83,7 +83,7 @@
 
                     <select class="js-example-placeholder-single js-states form-control" id="selectLine" name="selectLine" style="width:100%">
                         <option>Potted</option>
-                        <option>Welder</option>
+                        <option>Welded</option>
                         <option>Guaging</option>
                         <option>SM</option>
                         <option>MD2</option>
@@ -144,118 +144,119 @@
 
 <!-- start draw map in the draw new map model-->
 <div class="container" style="">
-    <div class="modal lg fade " data-keyboard="false" id="modal1" style="color:black;background-color: transparent;">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header background">
-                    <h4 class="modal-title" style="margin:auto;">Add a person</h4>
-                    <button class="close" data-dismiss="modal" style="margin-top:-20px;">&times;</button>
-                </div>
-
-                <!-- draw new map modal body -->
-                <div class="modal-body" style="display:flex;">
-                    <div class="container">
-                        <div class="page-header row">
-                            <div class="col-lg-4">
-                                <label class="lableSet" style="float:left">Department</label>
-
-                                <select class="js-example-placeholder-single js-states form-control" id="Department" name="Department" style="width:100%" onchange="fillNameDropDown()">
-                                    <option></option>
-
-                                    @foreach (var department in Model.departments)
-                                    {
-                                        <option> @department.department_name</option>
-                                    }
-
-                                </select>
-                            </div>
-
-                            <div class="col-lg-8" style="">
-                                <label class="lableSet" style="float:left">Name</label>
-
-                                <select class="js-example-placeholder-single js-states form-control" id="Name" name="Name" style="width:100%" onchange="fillDepartmentDropDown(),fillUserDetails()">
-                                    <option></option>
-
-                                    @foreach (var user in Model.users)
-                                    {
-                                        <option> @user.EmployeeNumber - @user.Name   </option>
-                                    }
-
-                                </select>
-                            </div>
-
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modal1" data-keyboard="false" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            
+                    <div class="modal-content">
+                        <div class="modal-header background">
+                            <h4 class="modal-title" style="margin:auto;">Add a person</h4>
+                            <button class="close" data-dismiss="modal" style="margin-top:-20px;">&times;</button>
                         </div>
 
-                        <div class="row">
+                        <!-- draw new map modal body -->
+                        <div class="modal-body" style="display:flex;">
+                            <div class="container">
+                                <div class="page-header row">
+                                    <div class="col-lg-4">
+                                        <label class="lableSet" style="float:left">Department</label>
 
-                            <div class="col-lg-4">
-                                <img src="~/Content/images/profile.jpg" width="70%" height="70%" style="margin-top:10px;" />
-                            </div>
+                                        <select class="js-example-placeholder-single js-states form-control" id="Department" name="Department" style="width:100%" onchange="fillNameDropDown()">
+                                            <option></option>
 
-                            <div class="col-lg-8" style="margin-top:20px;">
-                                <div class="row">
-                                    <p class="col-lg-2" style="float:left">
-                                        Name:
-                                    </p>
-                                    <p class="col-lg-9" style="float:left" id="name">
-                                    </p>
+                                            @foreach (var department in Model.departments)
+                                            {
+                                                <option> @department.department_name</option>
+                                            }
+
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-8" style="">
+                                        <label class="lableSet" style="float:left">Name</label>
+
+                                        <select class="js-example-placeholder-single js-states form-control" id="Name" name="Name" style="width:100%" onchange="fillDepartmentDropDown(),fillUserDetails()">
+                                            <option></option>
+
+                                            @foreach (var user in Model.users)
+                                            {
+                                                <option> @user.EmployeeNumber - @user.Name   </option>
+                                            }
+
+                                        </select>
+                                    </div>
+
                                 </div>
+
                                 <div class="row">
-                                    <p class="col-lg-2" style="float:left">
-                                        Department:
-                                    </p>
-                                    <p class="col-lg-9" style="float:left" id="dept">
-                                    </p>
-                                </div>
-                                <div class="row">
-                                    <p class="col-lg-2" style="float:left">
-                                        Emp ID:
-                                    </p>
-                                    <p class="col-lg-9" style="float:left" id="empID">
-                                    </p>
-                                </div>
-                                <div class="row">
-                                    <p class="col-lg-2" style="float:left">
-                                        Position:
-                                    </p>
-                                    <p class="col-lg-9" style="float:left" id="position">
-                                    </p>
-                                </div>
-                                <div class="row">
-                                    <p class="col-lg-2" style="float:left">
-                                        Phone:
-                                    </p>
-                                    <p class="col-lg-9" style="float:left" id="phone">
-                                    </p>
-                                </div>
-                                <div class="row">
-                                    <p class="col-lg-2" style="float:left">
-                                        E-mail:
-                                    </p>
-                                    <p class="col-lg-9" style="float:left" id="email">
-                                    </p>
+
+                                    <div class="col-lg-4">
+                                        <img src="~/Content/images/profile.jpg" width="70%" height="70%" style="margin-top:10px;" />
+                                    </div>
+
+                                    <div class="col-lg-8" style="margin-top:20px;">
+                                        <div class="row">
+                                            <p class="col-lg-2" style="float:left">
+                                                Name:
+                                            </p>
+                                            <p class="col-lg-9" style="float:left" id="name">
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-lg-2" style="float:left">
+                                                Department:
+                                            </p>
+                                            <p class="col-lg-9" style="float:left" id="dept">
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-lg-2" style="float:left">
+                                                Emp ID:
+                                            </p>
+                                            <p class="col-lg-9" style="float:left" id="empID">
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-lg-2" style="float:left">
+                                                Position:
+                                            </p>
+                                            <p class="col-lg-9" style="float:left" id="position">
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-lg-2" style="float:left">
+                                                Phone:
+                                            </p>
+                                            <p class="col-lg-9" style="float:left" id="phone">
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p class="col-lg-2" style="float:left">
+                                                E-mail:
+                                            </p>
+                                            <p class="col-lg-9" style="float:left" id="email">
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="modal-footer">
+                            <Button type="button" id="saveMap" class="btn btn-primary" onclick="addPerson()">Add</Button>
+                            <Button type="button" class="btn btn-success" data-dismiss="modal">Close</Button>
+                        </div>
+
                     </div>
                 </div>
-
-                <div class="modal-footer">
-                    <Button type="button" id="saveMap" class="btn btn-primary" onclick="addPerson()">Add</Button>
-                    <Button type="button" class="btn btn-success" data-dismiss="modal">Close</Button>
-                </div>
-
             </div>
         </div>
-    </div>
-</div>
-<!-- ends draw new map model-->
+        <!-- ends draw new map model-->
 
-<script src="~/Scripts/jquery-ui.js"></script>
-<script src="~/Scripts/AdminScripts/jscolar.js"></script>
-<script src="~/Scripts/AdminScripts/select2-min.js"></script>
-<script src="~/Scripts/AdminScripts/notificationsManagement.js"></script>
-<script>
+        <script src="~/Scripts/jquery-ui.js"></script>
+        <script src="~/Scripts/AdminScripts/jscolar.js"></script>
+        <script src="~/Scripts/AdminScripts/select2-min.js"></script>
+        <script src="~/Scripts/AdminScripts/notificationsManagement.js"></script>
+        <script>
 function fillDepartmentDropDown() {
 
     var name = document.getElementById("Name").value;
@@ -352,52 +353,55 @@ function fillDepartmentDropDown() {
     }
     }
 
-    function saveList() {
+
+function saveList() {
 
     var obj_array = new Array();
 
     var ul = document.getElementById("sortable");
     var items = ul.getElementsByTagName("li");
     for (var i = 1; i < items.length; ++i)
-    {
-    obj = new Object();
+         {
+        obj = new Object();
 
-    obj.issue_id = document.getElementById("selectIssue").value;
-    obj.line_id = document.getElementById("selectLine").value;
-    obj.EmployeeNumber = Number(items[i].childNodes[0].childNodes[0].childNodes[0].innerHTML.split('-')[0].trim());
-    obj.assigned_date = new Date();
+        obj.issue_id = document.getElementById("selectIssue").value;
+        obj.line_id = document.getElementById("selectLine").value;
+        obj.EmployeeNumber = Number(items[i].childNodes[0].childNodes[0].childNodes[0].innerHTML.split('-')[0].trim());
+        obj.assigned_date = new Date();
 
-    var state1 = items[i].childNodes[0].childNodes[1].childNodes[0].checked;
-    if (state1 == "true") { obj.email = 1; } else { obj.email = 0; }
+        var state1 = items[i].childNodes[0].childNodes[1].childNodes[0].checked;
+        console.log(state1);
+        if (state1.toString() == "true") { obj.email = 1; } if (state1.toString() == "false") { obj.email = 0; }
 
-    var state2 = items[i].childNodes[0].childNodes[3].childNodes[0].checked;
-    if (state2 == "true") { obj.call = 1; } else { obj.call = 0;}
+        var state2 = items[i].childNodes[0].childNodes[3].childNodes[0].checked;
+        if (state2.toString() == "true") { obj.call = 1; } if (state2.toString() == "false") { obj.call = 0;}
 
-    var state3 = items[i].childNodes[0].childNodes[2].childNodes[0].checked;
-    if (state3 == "true") { obj.message = 1; } else { obj.message = 0;}
+        var state3 = items[i].childNodes[0].childNodes[2].childNodes[0].checked;
+        if (state3.toString() == "true") { obj.message = 1; } if (state3.toString() == "false") { obj.message = 0;}
 
-    obj.callRepetitionTime = items[i].childNodes[0].childNodes[5].childNodes[0].value;
-    obj.sendAlertAfter = items[i].childNodes[0].childNodes[4].childNodes[0].value;
-    obj.levelOfResponsibility = i;
-    obj.issue_line_person_id = items[i].childNodes[0].childNodes[0].childNodes[0].innerHTML.split('-')[0].trim();
+        obj.callRepetitionTime = items[i].childNodes[0].childNodes[5].childNodes[0].value;
+        obj.sendAlertAfter = items[i].childNodes[0].childNodes[4].childNodes[0].value;
+        obj.levelOfResponsibility = i;
+        obj.issue_line_person_id = items[i].childNodes[0].childNodes[0].childNodes[0].innerHTML.split('-')[0].trim();
 
-    obj_array.push(obj);
+        obj_array.push(obj);
     }
     console.log(obj_array);
 
     var userList_json = JSON.stringify(obj_array);
-    var url = '@Url.Action("saveList", "CellEngineer")';
+     var url = '@Url.Action("saveList", "CellEngineer")';
     $.ajax({
-    type: "POST",
-    dataType: 'text',
+        type: "POST",
+        dataType: 'text',
         url: url,
-    data: { userList_json: userList_json },
-    success: function (response) {
-    alert(response);
-    },
-    error: function (response) {
-    alert("Error occurred");
-    }
+        data: { userList_json: userList_json },
+        success: function (response) {
+           alert(response);
+        },
+        error: function (response)
+        {
+           alert("Error occurred");
+        }
     });
-    }
-</script>
+}
+        </script>

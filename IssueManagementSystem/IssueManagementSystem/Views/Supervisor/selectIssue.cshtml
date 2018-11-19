@@ -176,10 +176,18 @@
         }
 
     })
+    @{
+        issue_management_systemEntities1 db = new issue_management_systemEntities1();
+
+        int userID = (int)Session["userID"];
+        var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
+
+        var lineId = lineInfo.line_line_id;
+     }
         function myfunction(param) {
             var id = $(param).data('id');
             var issue_id = $(param).data('issue_id');
-            var url = '@Url.Action("SolvedIssue", "Supervisor")?issueId=' + issue_id + '&issueOccourId=' + id ;
+            var url = '@Url.Action("SolvedIssue", "Supervisor")?issueId=' + issue_id + '&issueOccourId=' + id+'lineId='+'@lineId' ;
         
             $.ajax({
                 url: url, 

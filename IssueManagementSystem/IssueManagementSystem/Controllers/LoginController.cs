@@ -34,7 +34,7 @@ namespace IssueManagementSystem.Controllers
                     Session["location"] = userDetails.Location.Trim();
                     Session["department"] = userDetails.Department.Trim();
                     Session["Role"] = userDetails.Role.Trim();
-
+                  
                     string username = Session["userName"].ToString();
                     string role = userDetails.Role.ToString().Trim();//retrive the user role
                     if (role.Equals("supervisor"))//if user is supervisor goto the supervisor page
@@ -52,6 +52,7 @@ namespace IssueManagementSystem.Controllers
                         return RedirectToAction("Index", "Manager");
 
                     else if (role.Equals("CellEngineer"))
+
                         return RedirectToAction("DashBord", "CellEngineer");
 
                     else if (role.Equals("responsiblePerson"))

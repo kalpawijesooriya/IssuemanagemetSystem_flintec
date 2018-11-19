@@ -64,7 +64,7 @@ namespace IssueManagementSystem.Controllers
 
             //get last added line id
             String added_lineID=null;
-            String query3 = "SELECT TOP 1 lines.line_id FROM lines ORDER BY line_id DESC";
+            String query3 = "SELECT  lines.line_id FROM lines WHERE lines.line_name='"+line+"'";
             SqlDataReader reader = db.runQuery_select(query3);
             if (reader.HasRows)
             {
