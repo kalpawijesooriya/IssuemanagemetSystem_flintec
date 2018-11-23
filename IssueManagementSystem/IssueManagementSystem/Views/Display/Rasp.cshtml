@@ -7,7 +7,7 @@
 @using System.Web.UI.WebControls;
 @using System.Web.UI;
 @model List<IssueManagementSystem.Models.issue_occurrence>
-@{int IT_count = 0; int brake_count = 0; int maririal_count = 0; int tecnical_count = 0; string lineName=null; string map = null; }
+@{ string lineName=null; string map = null; }
 <script src="~/Scripts/jquery.min.js"></script>
 <script src="~/Scripts/Display/jquery.totemticker.js"></script>
 <link href="~/Content/Display/style.css" rel="stylesheet" />
@@ -50,8 +50,8 @@
 
                 <div style="display:inline-grid;grid-template-columns: 90%  50%">
                     <div id="container">
-                        <canvas id="canvas1" style="border: 1px solid black;" width="500" height="600">
-                            <br> This text is displayed if your browser does not support HTML5 Canvas. <br>
+                        <canvas id="canvas1" style="border: 1px solid black;" width="500" height="580">
+                            <br> This text is displayed if your browser does not support HTML5 Canvas. </br>
                         </canvas>
                     </div>
 

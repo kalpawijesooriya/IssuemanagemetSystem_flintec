@@ -21,7 +21,7 @@ namespace IssueManagementSystem
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            SqlDependency.Start(@"data source=192.168.1.110;initial catalog=issue_management_system;user id=admin;password=1234;");
+            SqlDependency.Start(@"data source=flintecdata;initial catalog=issue_management_system;Integrated Security=True;");
         }
     }
 }
