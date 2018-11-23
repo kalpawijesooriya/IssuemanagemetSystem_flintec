@@ -46,7 +46,7 @@ namespace IssueManagementSystem.Controllers
                         return RedirectToAction("Rasp", "Display");
                     }
                     else if (role.Equals("admin"))
-                        return RedirectToAction("SelectBranch", "Admin");
+                        return RedirectToAction("Index", "Admin");
 
                     else if (role.Equals("manager"))
                         return RedirectToAction("Index", "Manager");

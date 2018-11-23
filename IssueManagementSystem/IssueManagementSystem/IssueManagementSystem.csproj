@@ -353,20 +353,13 @@
     <Content Include="Content\SupervisorStyles\jquery-ui.css" />
     <Content Include="Scripts\Display\showmapdisplay.js" />
     <Content Include="Content\SupervisorStyles\jquery-ui.css" />
-    <Content Include="Scripts\AdminScripts\bootstrap.min.js" />
     <Content Include="Content\adminstyles\metisMenu.css" />
     <Content Include="Content\adminstyles\metisMenu.min.css" />
     <Content Include="Content\adminstyles\morris.css" />
     <Content Include="Content\adminstyles\sb-admin-2.css" />
     <Content Include="Content\SupervisorStyles\metisMenu.min.css" />
     <Content Include="Content\adminstyles\bootstrap.min.css" />
-    <Content Include="Scripts\AdminScripts\jquery.js" />
-    <Content Include="Scripts\AdminScripts\jquery.min.js" />
     <Content Include="Scripts\AdminScripts\jscolar.js" />
-    <Content Include="Scripts\AdminScripts\morris-data.js" />
-    <Content Include="Scripts\AdminScripts\morris.min.js" />
-    <Content Include="Scripts\AdminScripts\raphael.js" />
-    <Content Include="Scripts\AdminScripts\raphael.min.js" />
     <Content Include="Content\adminstyles\selectBranch.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -514,12 +507,8 @@
     <None Include="Properties\PublishProfiles\FolderProfile5.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile6.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Scripts\AdminScripts\metisMenu.js" />
-    <Content Include="Scripts\AdminScripts\metisMenu.min.js" />
-    <Content Include="Scripts\AdminScripts\sb-admin-2.js" />
     <Content Include="Scripts\AdminScripts\select2-min.js" />
     <Content Include="Scripts\AdminScripts\notificationsManagement.js" />
-    <Content Include="Scripts\AdminScripts\settings.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.counterup.min.js" />
@@ -574,18 +563,14 @@
     <Content Include="Views\Shared\supervisorsLayout.cshtml" />
     <Content Include="Views\Supervisor\selectIssue.cshtml" />
     <Content Include="Views\Supervisor\MachinBreakdown.cshtml" />
-    <Content Include="Views\Admin\SelectBranch.cshtml" />
     <Content Include="Views\Shared\BranchSideNav.cshtml" />
-    <Content Include="Views\Admin\SelectSection.cshtml" />
     <Content Include="Views\Admin\Settings.cshtml" />
     <Content Include="Views\Supervisor\MaterialDelay.cshtml" />
-    <Content Include="Views\Admin\NotificationsManagement.cshtml" />
     <Content Include="Views\Supervisor\TechnicalIssue.cshtml" />
     <Content Include="Views\Display\Rasp.cshtml" />
     <Content Include="Views\Supervisor\ITIssue.cshtml" />
     <Content Include="Views\Manager\Index.cshtml" />
     <Content Include="Views\Shared\ManagerLayout.cshtml" />
-    <Content Include="Views\Admin\sss.cshtml" />
     <Content Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Shared\CellEngineerLayout.cshtml" />
     <Content Include="Views\CellEngineer\DashBord.cshtml" />
@@ -596,11 +581,10 @@
     <Content Include="Views\CellEngineer\TechnicalIssue.cshtml" />
     <Content Include="Views\CellEngineer\MaterialDelay.cshtml" />
     <Content Include="Views\CellEngineer\ITIssue.cshtml" />
-    <Content Include="Views\Admin\Katunayake.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\Responsibleperson\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css.map" />

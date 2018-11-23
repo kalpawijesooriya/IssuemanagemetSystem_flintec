@@ -19,18 +19,23 @@ namespace IssueManagementSystem.Controllers
     public class AdminController : Controller
     {
         // GET: Admin
-        public ActionResult SelectBranch()
+     
+        public ActionResult Index()
         {
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+            {
+
+            string location = Session["location"].ToString();
+            ViewBag.BrakedownCount = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 1 && location == x.location).Count();
+            ViewBag.MaterialDelayCount = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 2 && x.location == location).Count();
+            ViewBag.TechnicalIssue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 3 && x.location == location).Count();
+            ViewBag.QualityIsuue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 4 && x.location == location).Count();
+            ViewBag.ITIsuue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 5 && x.location == location).Count();
+              
+            }
             return View();
         }
-        public ActionResult Katunayake()
-        {
-            return View();
-        }
-        public ActionResult SelectSection()
-        {
-            return View();
-        }
+      
         public ActionResult Settings()
         {
             // issue_management_systemEntities db = new issue_management_systemEntities();

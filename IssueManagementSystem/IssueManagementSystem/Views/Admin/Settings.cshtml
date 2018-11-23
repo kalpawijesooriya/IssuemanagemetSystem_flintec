@@ -12,15 +12,60 @@
 <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
 <link href="~/Content/adminstyles/Settings.css" rel="stylesheet" />
 
-<div id="page-wrapper" class="container" style="padding-top:50px;position:absolute">
+<!-- PAGE CONTENT-->
+<div class="page-content--bgf7">
+    <!-- BREADCRUMB-->
+    <section class="au-breadcrumb2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="au-breadcrumb-content">
+                        <div class="au-breadcrumb-left">
+                            <span class="au-breadcrumb-span">You are here:</span>
+                            <ul class="list-unstyled list-inline au-breadcrumb__list">
+                                <li class="list-inline-item active">
+                                    <a href="#">Admin</a>
+                                </li>
+                                <li class="list-inline-item seprate">
+                                    <span>/</span>
+                                </li>
+                                <li class="list-inline-item">New Line</li>
+                            </ul>
+                        </div>
+                        <form class="au-form-icon--sm" action="" method="post">
+                            <input class="au-input--w300 au-input--style2" type="text" placeholder="Search for datas &amp; reports...">
+                            <button class="au-btn--submit2" type="submit">
+                                <i class="zmdi zmdi-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- END BREADCRUMB-->
+    <!-- WELCOME-->
+    <section class="welcome p-t-10">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="title-4">
+                        Welcome back
+                        <span>@Session["name"]!</span>
+                    </h1>
+                    <hr class="line-seprate">
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<section class="statistic statistic2">
+    <div class="container">
 
-    <div class="row select-margins">
-        <div class="col-lg-4">
-            <h1 class="page-header">Settings</h1>
-            <h3 style="margin-top:-10px;" class="page-header textalline-center">Create New Line</h3>
-            <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-4">
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-4">
                         <label for="selectdepartment"> Department</label>
                     </div>
                     <div class="col-lg-8">
@@ -66,154 +111,95 @@
                         </select>
                     </div>
                 </div>
-            </div>
-            <div class="row" style="margin-top:200px;width:70%;margin-left:10%">
-                <label for="raspberrypi_ip">Raspberry-Pi Module IP Address</label>
-                <input type="text" id="raspberrypi_ip" name="raspberrypi_ip" class="form-control" />
-            </div>
-            <div class="row" style="margin-top:30px;margin-left:25%">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center" style="color:#e30612">Set-up Line Map</h5>
+                        <div class="row">
 
-            <button class='btn btn-success' id="saveMap" style="margin:auto">Save Created Line</button>
-            </div>
-        </div>
-        <div class="col-lg-8">
-            <div class="row">
-                <!--    <button class='btn btn-success' data-target='#modal1' data-toggle='modal'>Draw New Map</button> -->
-            </div>
-            <div class="row">
-                <div class="container">
-                    <div class="row" style="margin-top:40px;">
-                        <div class="col-lg-4">
-                            <label>Floor Map</label>
-                            <canvas id="canvas1" style="border: 1px solid black;" width="400" height="600">
-                                <br>
-                                This text is displayed if your browser does not support HTML5 Canvas.<br>
-                            </canvas>
+                            <div class="col-lg-4">
+                                <label for="h">Machine</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <select class="js-example-placeholder-single js-states form-control" id="machineSelectBox" name="machineSelectBox">
+                                    <option></option>
+                                    @foreach (var m in Model.machine_list)
+                                    {
+                                        <option value="@m.Machine_ID">@m.Machine_ID</option>
+                                    }
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-lg-3">
-                            <div class="container" style="margin-left:10px">
-                                <div class="row">
-                                    <div class="col-lg-2">
-                                        <label for="h">Machine</label>
-                                        <select class="js-example-placeholder-single js-states form-control" id="machineSelectBox" name="machineSelectBox" style="width:100%" onchange="">
-                                            <option></option>
-                                            @foreach (var m in Model.machine_list)
-                                            {
-                                                <option  value="@m.Machine_ID" >@m.Machine_ID</option>
-                                            }
-                                        </select>
-                                    </div>
-                                </div>
 
-                                <div class="row">
-                                    <div class="col-lg-1">
-                                        <label for="w">Width</label>
-                                        <input id="w" anme="w" class="form-control" placeholder="width" value="50">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-1">
-                                        <label for="h">Height</label>
-                                        <input id="h" name="h" class="form-control" placeholder="height" value="50">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-1">
-                                        <label for="color">Color</label>
-                                        <input id="color" name="color" class="jscolor form-control " value="ab2567" style="">
-                                    </div>
-                                </div>
-                                <br />
-                                <div class="row">
-                                    <div class="col-lg-2">
-                                        <button id="addNewShapeButton" class="btn btn-primary">Add</button>
-                                        <button id="deleteBox" class="btn btn-danger">Delete</button>
-                                    </div>
-                                </div>
-                                <p>Selected MAchine: <span id="elementID"></span></p>
-                                <!--   <button id="colorButton">Color</button>  -->
+                        <div class="row" style="margin-top:20px;margin-bottom:20px;">
+                            <div class="col-lg-4">
+                                <label for="w">Width</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input id="w" anme="w" class="form-control" placeholder="width" value="50">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label for="h">Height</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input id="h" name="h" class="form-control" placeholder="height" value="50">
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:20px;margin-bottom:20px;">
+                            <div class="col-lg-4">
+                                <label for="color">Color</label>
+                            </div>
+                            <div class="col-lg-8">
+                                <input id="color" name="color" class="jscolor form-control " value="ab2567" style="">
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row" style="margin-top:20px;margin-bottom:20px;margin-left:150px">
+                            <div class="btn-group mr-2" role="group" aria-label="First group">
+                                <button id="addNewShapeButton" class="btn btn-primary">Add</button>
+                            </div>
+                            <div class="btn-group mr-2" role="group" aria-label="Second group">
+                                <button id="deleteBox" class="btn btn-danger">Delete</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+            <div class="col-lg-4" style="margin-top:-20px">
+                <label>Line Map</label>
+                <canvas id="canvas1" style="border: 1px solid black;" width="400" height="600">
+                    <br>
+                    This text is displayed if your browser does not support HTML5 Canvas.<br>
+                </canvas>
 
-    <!-- start dro map in the draw new map model-->
-    <!--
-               <div class="container">
-                   <div class="modal" data-keyboard="false" id="modal1" tabindex="-1" style="color:black; margin-top:10px;background-color: transparent;">
-                       <div class="modal-dialog">
-                           <div class="modal-content">
-                               <div class="modal-header background">
-                                   <h4 class="modal-title" style="margin:auto;">Draw New Map</h4>
-                                   <button class="close" data-dismiss="modal">&times;</button>
-                               </div>
-                               <!- - draw new map model body - ->
-            <div class="modal-body" style="display:flex;">
 
+            </div>
+            <div class="col-lg-4">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <canvas id="canvas1" style="border: 1px solid black;" width="400" height="600">
-                                <br>
-                                This text is displayed if your browser does not support HTML5 Canvas.<br>
-                            </canvas>
-                        </div>
-                        <div class="col-lg-3">
 
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-lg-1">
-                                        <label for="w">Width</label>
-                                        <input id="w" anme="w" class="form-control" placeholder="width" value="50">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-1">
-                                        <label for="h">Height</label>
-                                        <input id="h" name="h" class="form-control" placeholder="height" value="50">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-1">
-                                        <label for="color">Color</label>
-                                        <input id="color" name="color" class="jscolor form-control " value="ab2567" style="">
-                                    </div>
-                                </div>
-                                <br />
-                                <div class="row">
-                                    <div class="col-lg-2">
-                                        <button id="addNewShapeButton" class="btn btn-primary">Add</button>
-                                        <button id="deleteBox" class="btn btn-danger">Delete</button>
-                                    </div>
-                                </div>
-                                <p>Clicked Element: <span id="elementID"></span></p>
-                                <!- -   <button id="colorButton" >Color</button>  - ->
-                            </div>
-                        </div>
+                    <div class="row" style="margin-top:10px;">
+                        <p>Selected Machine: <span id="elementID" style="color:#e30612"></span></p>
 
                     </div>
+                    <div class="row" style="margin-top:20px;width:70%;">
+                        <label for="raspberrypi_ip">Raspberry-Pi Module IP Address</label>
+                        <input type="text" id="raspberrypi_ip" name="raspberrypi_ip" class="form-control" />
+                    </div>
+                    <div class="row" style="margin-top:20px;">
 
-    </div>
-            </div>
-            <div class="modal-footer">
-                <Button type="button" id="saveMap" class="btn btn-primary">Save changes</Button>
+                        <button class='btn btn-success' id="saveMap">Save Created Line</button>
+                    </div>
 
-                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                </div>
+
             </div>
         </div>
-                    </div>
-                </div>
-            </div>
-    -->
-    <!-- ends draw new map model-->
+    </div>
 
-
-</div>
+</section>
 <script src="~/Scripts/AdminScripts/jscolar.js"></script>
-<script src="~/Scripts/AdminScripts/jquery.js"></script>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
 <script>
     function matchStart(params, data) {
@@ -285,7 +271,7 @@ $('#selectlineIssues').select2({
 function Shape(x, y, w, h, fill,machine) {
     // This is a very simple and unsafe constructor. All we're doing is checking if the values exist.
     // "x || 0" just means "if there is a value for x, use that. Otherwise use 0."
-    // But we aren't checking anything else! We could put "Lalala" for the value of x 
+    // But we aren't checking anything else! We could put "Lalala" for the value of x
     this.x = x || 0;
     this.y = y || 0;
     this.w = w || 10;
@@ -423,7 +409,7 @@ function CanvasState(canvas) {
 
 
 
-    
+
 
     document.getElementById("saveMap").addEventListener("click", function () {
 
@@ -488,7 +474,7 @@ function CanvasState(canvas) {
 
     /*   document.getElementById("colorButton").addEventListener("click", function(){
          console.log( myState.shapes[1]);
-          myState.shapes[1].x =0; 
+          myState.shapes[1].x =0;
           myState.shapes[1].y =0;
           myState.shapes[1].fill = "rgba(12,12,34,1)";
           myState.shapes[1].draw(this.ctx);
@@ -587,7 +573,7 @@ CanvasState.prototype.getMouse = function (e) {
 
 function init() {
     var s = new CanvasState(document.getElementById('canvas1'));
-    
+
 
     //  s.addShape(new Shape(60,140,40,60, 'lightskyblue'));
 
@@ -603,4 +589,4 @@ window.onload = init;
 
 
 </script>
-<script src="~/Scripts/jquery-3.3.1.js"></script>
+

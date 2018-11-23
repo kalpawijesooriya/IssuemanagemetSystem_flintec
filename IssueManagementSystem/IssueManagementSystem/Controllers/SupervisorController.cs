@@ -127,6 +127,9 @@ namespace IssueManagementSystem.Controllers
                     issueModel.responsible_person_emp_id = Int32.Parse(respPersonID.EmployeeNumber.ToString());
 
                     var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                    var day = DateTime.ParseExact(current_time, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+                    var time1 = DateTime.ParseExact(current_time, "HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+
                     issueModel.issue_date = date;
                     issueModel.location = (string)Session["location"];
                     db.issue_occurrence.Add(issueModel);
@@ -134,10 +137,11 @@ namespace IssueManagementSystem.Controllers
                     if (issueModel.issue_occurrence_id > 0)
                     {
                         var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
-                        string msg = line.line_name + " line Breakedown has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
+                        string msg = line.line_name + " line Breakedown has been occurred on " + day +" at "+time1+".  Note- " + issueModel.description;
+                        string callNote = line.line_name + " line Breakedown has been occurred on" + day + " at "+time1;
                         var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
                         com.lightON("1", displayInfo.raspberry_ip_address);//turn on the Light
-                        sendCD(lineId, 1, msg, "Machine Brakedown has been occurred");
+                        sendCD(lineId, 1, msg, "Machine Brakedown has been occurred", callNote);
                     }
                     ModelState.Clear();
                 }
@@ -172,6 +176,8 @@ namespace IssueManagementSystem.Controllers
                         issueModel.responsible_person_emp_id = Int32.Parse(respPersonID.EmployeeNumber.ToString());
 
                         var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                        var day = DateTime.ParseExact(current_time, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+                        var time1 = DateTime.ParseExact(current_time, "HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                         issueModel.issue_date = date;
                         issueModel.location = (string)Session["location"];
                         db.issue_occurrence.Add(issueModel);
@@ -182,8 +188,9 @@ namespace IssueManagementSystem.Controllers
                             var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
                             var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
                             string msg = line.line_name + " line Technical issue has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
+                            string callNote = line.line_name + " line Breakedown has been occurred on" + day + " at " + time1;
                             com.lightON("3", displayInfo.raspberry_ip_address);//turn on the Light
-                            sendCD(lineId, 3, msg, "Tecnical Issue has been occered");
+                            sendCD(lineId, 3, msg, "Tecnical Issue has been occered", callNote);
 
                             ModelState.Clear();
                         }
@@ -227,6 +234,8 @@ namespace IssueManagementSystem.Controllers
 
                     issueModel.location = (string)Session["location"];
                     var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                    var day = DateTime.ParseExact(current_time, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+                    var time1 = DateTime.ParseExact(current_time, "HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                     issueModel.issue_date = date;
 
                     db.issue_occurrence.Add(issueModel);
@@ -235,9 +244,10 @@ namespace IssueManagementSystem.Controllers
                     {
                         var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
                         string msg = line.line_name + " line IT/SoftWare issue has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
+                        string callNote = line.line_name + " line Breakedown has been occurred on" + day + " at " + time1;
                         var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
                         com.lightON("5", displayInfo.raspberry_ip_address);//turn on the Light
-                        sendCD(lineId, 5, msg, "IT/Software Issue has been occered");
+                        sendCD(lineId, 5, msg, "IT/Software Issue has been occered", callNote);
                     }
                     ModelState.Clear();
                 }
@@ -253,7 +263,11 @@ namespace IssueManagementSystem.Controllers
             {
                 JArray issueData = JArray.Parse(issueJson) as JArray;
                 System.Diagnostics.Debug.WriteLine(issueData);
-
+                var time = DateTime.Now;
+                string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");//get today to string variable
+                var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                var day = DateTime.ParseExact(current_time, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+                var time1 = DateTime.ParseExact(current_time, "HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                 foreach (JObject item in issueData)
                 {
                     int line_id = Int32.Parse(item["line_line_id"].ToString());
@@ -287,9 +301,9 @@ namespace IssueManagementSystem.Controllers
                         var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
                         var line = db.lines.Where(x => x.line_id == line_id).FirstOrDefault();
                         string msg = line.line_name + " line MaterialDelay has been occurred at " + item["issue_date"] + ". Special Note of Line supervisor - " + item["description"];
-
+                        string callNote = line.line_name + " line Breakedown has been occurred on" + day + " at " + time1;
                         com.lightON("2", displayInfo.raspberry_ip_address);//turn on the Light
-                        sendCD(line_id, 2, msg, "MaterialDelay has been occered");
+                        sendCD(line_id, 2, msg, "MaterialDelay has been occered", callNote);
 
                     }
                     catch (Exception ex)
@@ -301,7 +315,7 @@ namespace IssueManagementSystem.Controllers
             }
         }
 
-        private void sendCD(int? line_line_id, int issueId, string msg, string subject)
+        private void sendCD(int? line_line_id, int issueId, string msg, string subject, string callNote)
         {
             var time = DateTime.Now;
             string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
@@ -321,7 +335,7 @@ namespace IssueManagementSystem.Controllers
                     foreach (var item in communicationInfo)
                     {
                         var personInfo = db.User_tbl.Where(y => y.EmployeeNumber == item.EmployeeNumber).FirstOrDefault();
-                        CommunicationData cd = new CommunicationData(personInfo.Phone, msg, personInfo.EMail, item.email, item.call, item.message, personInfo.EmployeeNumber, subject);
+                        CommunicationData cd = new CommunicationData(personInfo.Phone, msg, personInfo.EMail, item.email, item.call, item.message, personInfo.EmployeeNumber, subject, callNote);
                         com.setCD(cd);
                     }
                 }

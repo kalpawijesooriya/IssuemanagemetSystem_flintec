@@ -327,4 +327,3 @@ G:\projects\IMS - Copy\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueM
 G:\projects\IMS - Copy\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.csproj.CopyComplete
 G:\projects\IMS - Copy\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.dll
 G:\projects\IMS - Copy\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.pdb
-G:\projects\IMS - Copy\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.csprojAssemblyReference.cache

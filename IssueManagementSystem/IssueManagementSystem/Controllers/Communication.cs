@@ -53,16 +53,16 @@ namespace IssueManagementSystem.Controllers
                     var mobileNumber = communicateData.getNumber();
 
                     if (communicateData.getCall() == 1 && mobileNumber != null)
-                        take_Call(mobileNumber, msg);
+                        take_Call(mobileNumber, communicateData.getcallNote());
 
                     if (communicateData.getEmail() == 1 && emailAddress!= null)
                     {
                         sendMail(emailAddress, msg,communicateData.getsubject());
-                        using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
-                        {
-                            string query = "INSERT INTO tbl_Notifications ([Status],[Message],[Type],[EmployeeNumber],[Date]) VALUES( 1,'" + msg + "','email','" + communicateData.getEmployeeNumber() + "','" + date + "') ";
-                            db.Database.ExecuteSqlCommand(query);
-                        }                                                 
+                        //using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+                        //{
+                        //    string query = "INSERT INTO tbl_Notifications ([Status],[Message],[Type],[EmployeeNumber],[Date]) VALUES( 1,'" + msg + "','email','" + communicateData.getEmployeeNumber() + "','" + date + "') ";
+                        //    db.Database.ExecuteSqlCommand(query);
+                        //}                                                 
                     }
 
                     if (communicateData.getMessage() == 1 && mobileNumber != null)                    
@@ -139,7 +139,7 @@ namespace IssueManagementSystem.Controllers
                     string postData = "p=" + number + "&m="+ message;
                     byte[] data = encoding.GetBytes(postData);
 
-                    WebRequest request = WebRequest.Create("http://192.168.40.241/sms_call.php");
+                    WebRequest request = WebRequest.Create("http://192.168.137.151/sms_call.php");
 
                     request.Method = "POST";
                     request.ContentType = "application/x-www-form-urlencoded";
@@ -174,7 +174,7 @@ namespace IssueManagementSystem.Controllers
             string postData = "p=" + number + "&c=" + message;
             byte[] data = encoding.GetBytes(postData);
 
-            WebRequest request = WebRequest.Create("http://192.168.40.241/sms_call.php");
+            WebRequest request = WebRequest.Create("http://192.168.137.151/sms_call.php");
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             request.ContentLength = data.Length;
