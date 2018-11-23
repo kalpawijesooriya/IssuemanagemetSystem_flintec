@@ -187,12 +187,13 @@
         function myfunction(param) {
             var id = $(param).data('id');
             var issue_id = $(param).data('issue_id');
-            var url = '@Url.Action("SolvedIssue", "Supervisor")?issueId=' + issue_id + '&issueOccourId=' + id+'lineId='+'@lineId' ;
+           
+            var url = '@Url.Action("SolvedIssue", "Supervisor")?issueId=' + issue_id + '&issueOccourId=' + id+'&lineId='+'@lineId' ;
         
             $.ajax({
-                url: url, 
                 type: 'POST',
-              
+                url: url, 
+               
                 success: function (issuedata) {
 
                 }

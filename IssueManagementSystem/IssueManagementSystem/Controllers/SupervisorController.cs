@@ -134,7 +134,7 @@ namespace IssueManagementSystem.Controllers
                     if (issueModel.issue_occurrence_id > 0)
                     {
                         var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
-                        string msg = line.line_name + " line IT/SoftWare issue has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
+                        string msg = line.line_name + " line Breakedown has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
                         var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
                         com.lightON("1", displayInfo.raspberry_ip_address);//turn on the Light
                         sendCD(lineId, 1, msg, "Machine Brakedown has been occurred");
@@ -181,7 +181,7 @@ namespace IssueManagementSystem.Controllers
 
                             var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
                             var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
-                            string msg = line.line_name + " line IT/SoftWare issue has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
+                            string msg = line.line_name + " line Technical issue has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
                             com.lightON("3", displayInfo.raspberry_ip_address);//turn on the Light
                             sendCD(lineId, 3, msg, "Tecnical Issue has been occered");
 
