@@ -48,38 +48,23 @@ namespace IssueManagementSystem.Controllers
         [HttpPost]
         public ActionResult addMap(String mapJSON,String department_id, String line, String ipAddress,String issues)
         {
-
-            dbController db = dbController.getInstance();
-            System.Diagnostics.Debug.WriteLine("Map json string:" + mapJSON);
-            System.Diagnostics.Debug.WriteLine("ipAddress :" + ipAddress);
-
-
-            //get line id refered by selected line name
-            String query1 = "SELECT lines.line_id FROM lines WHERE lines.line_name LIKE '"+line+"'";
-            String lineID = db.get_1st_column_1st_row_data(query1);
-
-            //insert data in to line_map table
-            String query2 = "INSERT INTO [dbo].[line_map]([line_id],[map],[red],[green],[yellow],[blue],issues)VALUES('"+lineID+"','"+mapJSON+"','0','0','0','0','"+issues+"')";
-            db.runQuery_update_or_delete(query2);
-
-            //get last added line id
-            String added_lineID=null;
-            String query3 = "SELECT  lines.line_id FROM lines WHERE lines.line_name='"+line+"'";
-            SqlDataReader reader = db.runQuery_select(query3);
-            if (reader.HasRows)
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) 
             {
-                while (reader.Read())
-                {
-                    added_lineID = reader.GetValue(0).ToString();
-                }
-                reader.Close();
+                System.Diagnostics.Debug.WriteLine("Map json string:" + mapJSON);
+                System.Diagnostics.Debug.WriteLine("ipAddress :" + ipAddress);
+               
+                //get line id refered by selected line name
+                var lineInfo = db.lines.Where(x => x.line_name == line).FirstOrDefault();
+                int lineID = lineInfo.line_id;
+              
+                //insert data in to line_map table
+                string query = "INSERT INTO [dbo].[line_map]([line_id],[map],[red],[green],[yellow],[blue],issues)VALUES('" + lineID + "','" + mapJSON + "','0','0','0','0','" + issues + "')";
+                db.Database.ExecuteSqlCommand(query);
+
+                string query1 = "INSERT INTO display(line_id,raspberry_ip_address) VALUES('" + lineID + "','" + ipAddress + "') ";
+                db.Database.ExecuteSqlCommand(query1);
+
             }
-
-            reader.Close();
-
-            String query4 = "INSERT INTO display(line_id,raspberry_ip_address) VALUES('"+added_lineID+"','"+ipAddress+"') ";
-            db.runQuery_update_or_delete(query4);
-
 
             return Content("query executed", MediaTypeNames.Text.Plain);
         }
