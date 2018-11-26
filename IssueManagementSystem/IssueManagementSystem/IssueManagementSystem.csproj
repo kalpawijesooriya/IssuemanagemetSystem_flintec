@@ -285,6 +285,20 @@
     <Content Include="Content\animate.css" />
     <Content Include="Content\animsition.min.css" />
     <Content Include="Content\bootstrap-progressbar-3.3.4.min.css" />
+    <Content Include="Content\css\all.css" />
+    <Content Include="Content\css\all.min.css" />
+    <Content Include="Content\css\brands.css" />
+    <Content Include="Content\css\brands.min.css" />
+    <Content Include="Content\css\fontawesome.css" />
+    <Content Include="Content\css\fontawesome.min.css" />
+    <Content Include="Content\css\regular.css" />
+    <Content Include="Content\css\regular.min.css" />
+    <Content Include="Content\css\solid.css" />
+    <Content Include="Content\css\solid.min.css" />
+    <Content Include="Content\css\svg-with-js.css" />
+    <Content Include="Content\css\svg-with-js.min.css" />
+    <Content Include="Content\css\v4-shims.css" />
+    <Content Include="Content\css\v4-shims.min.css" />
     <Content Include="Content\Display\style.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -300,6 +314,7 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\font-face.css" />
     <Content Include="Content\fontawesome-all.min.css" />
+    <Content Include="Content\fontawesome.css" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\quality-logo.png" />
     <Content Include="Content\Manager\bootstrap.min.css" />
@@ -351,7 +366,6 @@
     <Content Include="Scripts\Display\jquery.totemticker.min.js" />
     <Content Include="Scripts\Display\showmapdisplay.js" />
     <Content Include="Content\SupervisorStyles\jquery-ui.css" />
-    <Content Include="Scripts\Display\showmapdisplay.js" />
     <Content Include="Content\SupervisorStyles\jquery-ui.css" />
     <Content Include="Content\adminstyles\metisMenu.css" />
     <Content Include="Content\adminstyles\metisMenu.min.css" />
@@ -392,18 +406,6 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <Content Include="Content\webfonts\fa-brands-400.eot" />
-    <Content Include="Content\webfonts\fa-brands-400.ttf" />
-    <Content Include="Content\webfonts\fa-brands-400.woff" />
-    <Content Include="Content\webfonts\fa-brands-400.woff2" />
-    <Content Include="Content\webfonts\fa-regular-400.eot" />
-    <Content Include="Content\webfonts\fa-regular-400.ttf" />
-    <Content Include="Content\webfonts\fa-regular-400.woff" />
-    <Content Include="Content\webfonts\fa-regular-400.woff2" />
-    <Content Include="Content\webfonts\fa-solid-900.eot" />
-    <Content Include="Content\webfonts\fa-solid-900.ttf" />
-    <Content Include="Content\webfonts\fa-solid-900.woff" />
-    <Content Include="Content\webfonts\fa-solid-900.woff2" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.woff" />
@@ -494,6 +496,18 @@
     <Content Include="Models\IssueManagementSystem.edmx.diagram">
       <DependentUpon>IssueManagementSystem.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\webfonts\fa-brands-400.eot" />
+    <Content Include="Content\webfonts\fa-brands-400.ttf" />
+    <Content Include="Content\webfonts\fa-brands-400.woff" />
+    <Content Include="Content\webfonts\fa-brands-400.woff2" />
+    <Content Include="Content\webfonts\fa-regular-400.eot" />
+    <Content Include="Content\webfonts\fa-regular-400.ttf" />
+    <Content Include="Content\webfonts\fa-regular-400.woff" />
+    <Content Include="Content\webfonts\fa-regular-400.woff2" />
+    <Content Include="Content\webfonts\fa-solid-900.eot" />
+    <Content Include="Content\webfonts\fa-solid-900.ttf" />
+    <Content Include="Content\webfonts\fa-solid-900.woff" />
+    <Content Include="Content\webfonts\fa-solid-900.woff2" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile2.pubxml" />
@@ -571,7 +585,6 @@
     <Content Include="Views\Supervisor\ITIssue.cshtml" />
     <Content Include="Views\Manager\Index.cshtml" />
     <Content Include="Views\Shared\ManagerLayout.cshtml" />
-    <Content Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Shared\CellEngineerLayout.cshtml" />
     <Content Include="Views\CellEngineer\DashBord.cshtml" />
     <Content Include="Views\CellEngineer\NotificationsManagement.cshtml" />

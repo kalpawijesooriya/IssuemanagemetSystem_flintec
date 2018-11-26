@@ -110,7 +110,7 @@ namespace IssueManagementSystem.Controllers
         public ActionResult AddIssueBreakedown(issue_occurrence issueModel)
         {
             var time = DateTime.Now;
-            string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");//get today to string variable
+            string current_time = time.ToString("yyyy-MM-dd HH:mm");//get today to string variable
 
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
@@ -126,10 +126,10 @@ namespace IssueManagementSystem.Controllers
                     var respPersonID = db.issue_line_person.Where(x => x.line_id == lineId && x.levelOfResponsibility == 1 && x.issue_id == 1).FirstOrDefault();
                     issueModel.responsible_person_emp_id = Int32.Parse(respPersonID.EmployeeNumber.ToString());
 
-                    var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-                    var day = DateTime.ParseExact(current_time, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-                    var time1 = DateTime.ParseExact(current_time, "HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-
+                    var dayitem = current_time.Split(' ');
+                    var day = dayitem[0];
+                    var time1 = dayitem[1];
+                    var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture);
                     issueModel.issue_date = date;
                     issueModel.location = (string)Session["location"];
                     db.issue_occurrence.Add(issueModel);
@@ -176,8 +176,9 @@ namespace IssueManagementSystem.Controllers
                         issueModel.responsible_person_emp_id = Int32.Parse(respPersonID.EmployeeNumber.ToString());
 
                         var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-                        var day = DateTime.ParseExact(current_time, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-                        var time1 = DateTime.ParseExact(current_time, "HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                        var dayitem = current_time.Split(' ');
+                        var day = dayitem[0];
+                        var time1 = dayitem[1];
                         issueModel.issue_date = date;
                         issueModel.location = (string)Session["location"];
                         db.issue_occurrence.Add(issueModel);
@@ -187,7 +188,7 @@ namespace IssueManagementSystem.Controllers
 
                             var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
                             var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
-                            string msg = line.line_name + " line Technical issue has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
+                            string msg = line.line_name + " line Technical issue has been occurred at " + date + " at " + time1 + ". Special Note of Line supervisor - " + issueModel.description;
                             string callNote = line.line_name + " line Breakedown has been occurred on" + day + " at " + time1;
                             com.lightON("3", displayInfo.raspberry_ip_address);//turn on the Light
                             sendCD(lineId, 3, msg, "Tecnical Issue has been occered", callNote);
@@ -214,7 +215,7 @@ namespace IssueManagementSystem.Controllers
         public ActionResult AddIssueIT(issue_occurrence issueModel)
         {
             var time = DateTime.Now;
-            string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
+            string current_time = time.ToString("yyyy-MM-dd HH:mm");
 
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
@@ -233,9 +234,10 @@ namespace IssueManagementSystem.Controllers
                     issueModel.responsible_person_emp_id = Int32.Parse(respPersonID.EmployeeNumber.ToString());
 
                     issueModel.location = (string)Session["location"];
-                    var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-                    var day = DateTime.ParseExact(current_time, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-                    var time1 = DateTime.ParseExact(current_time, "HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                    var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+                    var dayitem = current_time.Split(' ');
+                    var day = dayitem[0];
+                    var time1 = dayitem[1];
                     issueModel.issue_date = date;
 
                     db.issue_occurrence.Add(issueModel);
@@ -243,7 +245,7 @@ namespace IssueManagementSystem.Controllers
                     if (issueModel.issue_occurrence_id > 0)
                     {
                         var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
-                        string msg = line.line_name + " line IT/SoftWare issue has been occurred at " + date + ". Special Note of Line supervisor - " + issueModel.description;
+                        string msg = line.line_name + " line IT/SoftWare issue has been occurred on " + day + " at "+ time1 + ". Special Note of Line supervisor - " + issueModel.description;
                         string callNote = line.line_name + " line Breakedown has been occurred on" + day + " at " + time1;
                         var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
                         com.lightON("5", displayInfo.raspberry_ip_address);//turn on the Light
@@ -264,10 +266,11 @@ namespace IssueManagementSystem.Controllers
                 JArray issueData = JArray.Parse(issueJson) as JArray;
                 System.Diagnostics.Debug.WriteLine(issueData);
                 var time = DateTime.Now;
-                string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");//get today to string variable
-                var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-                var day = DateTime.ParseExact(current_time, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
-                var time1 = DateTime.ParseExact(current_time, "HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                string current_time = time.ToString("yyyy-MM-dd HH:mm");//get today to string variable
+                var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+                var dayitem = current_time.Split(' ');
+                var day = dayitem[0];
+                var time1 = dayitem[1];
                 foreach (JObject item in issueData)
                 {
                     int line_id = Int32.Parse(item["line_line_id"].ToString());
@@ -288,7 +291,7 @@ namespace IssueManagementSystem.Controllers
                                                         ,[location]
                                                         ,[responsible_person_confirm_status])
                                                     VALUES
-                                                        ('" + item["issue_date"] + "','"
+                                                        ('" + date + "','"
                                                            + item["material_id"] + "','"
                                                            + item["description"] + "',"
                                                            + line_id + ","
@@ -300,7 +303,7 @@ namespace IssueManagementSystem.Controllers
                         db.Database.ExecuteSqlCommand(query_1);
                         var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
                         var line = db.lines.Where(x => x.line_id == line_id).FirstOrDefault();
-                        string msg = line.line_name + " line MaterialDelay has been occurred at " + item["issue_date"] + ". Special Note of Line supervisor - " + item["description"];
+                        string msg = line.line_name + " line MaterialDelay has been occurred on " + day + " at "+ time1 + ". Special Note of Line supervisor - " + item["description"];
                         string callNote = line.line_name + " line Breakedown has been occurred on" + day + " at " + time1;
                         com.lightON("2", displayInfo.raspberry_ip_address);//turn on the Light
                         sendCD(line_id, 2, msg, "MaterialDelay has been occered", callNote);
@@ -318,8 +321,8 @@ namespace IssueManagementSystem.Controllers
         private void sendCD(int? line_line_id, int issueId, string msg, string subject, string callNote)
         {
             var time = DateTime.Now;
-            string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
-            var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+            string current_time = time.ToString("yyyy-MM-dd HH:mm");
+            var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture);
             Thread t = new Thread(() =>
             {
                 using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
@@ -331,12 +334,20 @@ namespace IssueManagementSystem.Controllers
                         db.Database.ExecuteSqlCommand(query);
                     }
 
-                    var communicationInfo = db.issue_line_person.Where(x => x.line_id == line_line_id && x.issue_id == issueId).ToList();
+                    //string query2 = "SELECT * FROM issue_line_person where line_id="+ line_line_id + " AND issue_id="+ issueId + " ORDER BY levelOfResponsibility";
+                    //db.Database.ExecuteSqlCommand(query2);
+                    // var communicationInfo = db.Database.SqlQuery<string>(query2).ToList();
+                    //  var communicationInfo = db.OrderByDescending(x => x.StatusId == 3 ? x.ReserveDate : x.LastUpdateDate)
+                    // var communicationInfo = db.issue_line_person.OrderBy(x => x.levelOfResponsibility).ToList();
+                    var communicationInfo = db.issue_line_person.Where(x => x.line_id == line_line_id && x.issue_id == issueId).OrderBy(x => x.levelOfResponsibility).ToList();
                     foreach (var item in communicationInfo)
                     {
-                        var personInfo = db.User_tbl.Where(y => y.EmployeeNumber == item.EmployeeNumber).FirstOrDefault();
-                        CommunicationData cd = new CommunicationData(personInfo.Phone, msg, personInfo.EMail, item.email, item.call, item.message, personInfo.EmployeeNumber, subject, callNote);
-                        com.setCD(cd);
+                       
+                            var personInfo = db.User_tbl.Where(y => y.EmployeeNumber == item.EmployeeNumber).FirstOrDefault();
+                            CommunicationData cd = new CommunicationData(personInfo.Phone, msg, personInfo.EMail, item.email, item.call, item.message, personInfo.EmployeeNumber, subject, callNote);
+                            com.setCD(cd);
+                       
+                       
                     }
                 }
             });
@@ -348,8 +359,8 @@ namespace IssueManagementSystem.Controllers
         {
             System.Diagnostics.Debug.WriteLine("issueOccourId : " + issueOccourId);
             var time = DateTime.Now;
-            string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
-            var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+            string current_time = time.ToString("yyyy-MM-dd HH:mm");
+            var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture);
             //update Issueststus as 0
             issue_management_systemEntities1 db = new issue_management_systemEntities1();
             var issueoccourInfo = db.issue_occurrence.Where(x => x.issue_occurrence_id == issueOccourId).FirstOrDefault();

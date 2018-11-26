@@ -39,15 +39,15 @@
                             <span class="au-breadcrumb-span">You are here:</span>
                             <ul class="list-unstyled list-inline au-breadcrumb__list">
                                 <li class="list-inline-item active">
-                                    <a href="#">Home</a>
+                                    <a href="#">CellEngineer</a>
                                 </li>
                                 <li class="list-inline-item seprate">
                                     <span>/</span>
                                 </li>
-                                <li class="list-inline-item">Dashboard</li>
+                                <li class="list-inline-item">Notification Management</li>
                             </ul>
                         </div>
-                        <form class="au-form-icon--sm" action="" method="post">
+                        <form class="au-form-icon--sm hidden" action="" method="post">
                             <input class="au-input--w300 au-input--style2" type="text" placeholder="Search for datas &amp; reports...">
                             <button class="au-btn--submit2" type="submit">
                                 <i class="zmdi zmdi-search"></i>
@@ -62,52 +62,23 @@
     </section>
 </div>
 <div id="page-wrapper" class="container" style="margin-top:40px;">
-
-    <div class="row">
-        <div style="display:grid; grid-template-columns:30% 30% 30%">
-            <div>
-                <div class="col-lg-12">
-                    <label class="lableSet" style="float:left"> Department</label>
-                    <select class="js-example-placeholder-single js-states form-control" id="selectdepartment" name="selectdepartment" style="width:100%">
-                        <option>Assembly</option>
-                        <option>Machining</option>
-                        <option>IT</option>
-                        <option>Engineering</option>
-                        <option>Maintenance</option>
-                    </select>
-                </div>
+    <div class="row justify-content-between">
+        <div class="col-4 row">
+            <strong><label class="col-sm-offset-1" for="selectIssue">Issue</label></strong>
+            <div class="col-sm-10">
+                <select class="js-example-placeholder-single js-states form-control" id="selectIssue" name="selectIssue" style="width:100%">
+                    <option>Machine Breakdown</option>
+                    <option>Material Delay</option>
+                    <option>Technical Issue</option>
+                    <option>IT Issue</option>
+                    <option>Quality Isuue</option>
+                </select>
             </div>
-            <div>
-                <div class="col-lg-12">
-                    <label class="lableSet" style="float:left"> Line</label>
-
-                    <select class="js-example-placeholder-single js-states form-control" id="selectLine" name="selectLine" style="width:100%">
-                        <option>Potted</option>
-                        <option>Welded</option>
-                        <option>Guaging</option>
-                        <option>SM</option>
-                        <option>MD2</option>
-                        <option>Rocker</option>
-                    </select>
-                </div>
-            </div>
-
-            <div>
-                <div class="col-lg-12" style="">
-                    <label class="lableSet" style="float:left">Issue</label>
-
-                    <select class="js-example-placeholder-single js-states form-control" id="selectIssue" name="selectIssue" style="width:100%">
-                        <option>Machine Breakdown</option>
-                        <option>Material Delay</option>
-                        <option>Technical Issue</option>
-                        <option>IT Issue</option>
-                        <option>Quality Isuue</option>
-                    </select>
-                </div>
-            </div>
-
         </div>
-    </div>
+            <div class="col-4">
+                <button class="btn btn-primary glyphicons-chevron-left" style="margin-top:10px;" data-toggle="modal" data-target="#modal1"><i class="fas fa-user-plus"></i> Add a person</button>
+            </div>
+        </div>
 
     <div class="row" style="margin-top:20px;">
 
@@ -138,8 +109,8 @@
             </ul>
         </div>
     </div>
-    <button class="btn btn-success glyphicons-chevron-left" style="margin-top:10px;" data-toggle="modal" data-target="#modal1">Add a person</button>
-    <button class="btn btn-primary glyphicons-chevron-left" style="margin-top:10px;margin-left:10px" onclick="saveList();">Save List</button>
+
+    <button class="btn btn-success glyphicons-chevron-left" style="margin-top:10px;margin-left:10px" onclick="saveList();">Save List</button>
 </div>
 
 <!-- start draw map in the draw new map model-->
@@ -365,7 +336,7 @@ function saveList() {
         obj = new Object();
 
         obj.issue_id = document.getElementById("selectIssue").value;
-        obj.line_id = document.getElementById("selectLine").value;
+        obj.user_id = @Session["userID"] ;
         obj.EmployeeNumber = Number(items[i].childNodes[0].childNodes[0].childNodes[0].innerHTML.split('-')[0].trim());
         obj.assigned_date = new Date();
 

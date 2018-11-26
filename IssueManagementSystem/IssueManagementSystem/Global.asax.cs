@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
@@ -15,14 +16,16 @@ namespace IssueManagementSystem
         protected void Application_Start()
 
         {
-            Database.SetInitializer<IssueManagementSystem.Models.FLINTEC_Item_dbContext>(null);
+            Database.SetInitializer<Models.FLINTEC_Item_dbContext>(null);
 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            SqlDependency.Start(@"data source = 192.168.1.110.; initial catalog = issue_management_system; user id = admin; password = 1234");
-           // SqlDependency.Start(@"data source=flintecdata;initial catalog=issue_management_system;Integrated Security=True;");
+            var connectionString = ConfigurationManager.ConnectionStrings["issue_management_systemEntities2"];
+        
+            SqlDependency.Start(@connectionString.ToString());
+            
         }
     }
 }

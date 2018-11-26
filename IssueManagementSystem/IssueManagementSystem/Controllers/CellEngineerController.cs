@@ -128,7 +128,7 @@ namespace IssueManagementSystem.Controllers
         {
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
             {
-                String query_1 = "SELECT CONCAT(User_tbl.EmployeeNumber,' - ',User_tbl.Name) AS Users FROM User_tbl WHERE User_tbl.Department='" + department + "'";
+                string query_1 = "SELECT CONCAT(User_tbl.EmployeeNumber,' - ',User_tbl.Name) AS Users FROM User_tbl WHERE User_tbl.Department='" + department + "'";
                 var c = db.Database.SqlQuery<string>(query_1).ToList();
                 return Json(c, JsonRequestBehavior.AllowGet);
             }
@@ -188,9 +188,9 @@ namespace IssueManagementSystem.Controllers
 
                 foreach (JObject user in list_user)
                 {
-                    //get line id of particular line name
-                    String line_name = user["line_id"].ToString();
-                    var line = db.lines.Where(x => x.line_name == line_name).FirstOrDefault();
+                    //get line id of particular cell_eng
+                    int user_id = Int32.Parse(user["user_id"].ToString());
+                    var Cell_Eng_info = db.line_cell_eng.Where(x => x.cell_eng_emp_id == user_id).FirstOrDefault();
 
                     //get issue id of particular issue
                     String issue_name = user["issue_id"].ToString();
@@ -199,7 +199,7 @@ namespace IssueManagementSystem.Controllers
                     string query_1 = @"INSERT INTO [dbo].[issue_line_person]
                                      ([issue_id],[line_id],[EmployeeNumber],[assigned_date],[email],[call],
                                      [message],[callRepetitionTime],[sendAlertAfter],[levelOfResponsibility],[issue_line_person_id])
-                                     VALUES(" + issue.issue_id + "," + line.line_id + "," + user["EmployeeNumber"] + ",'" + user["assigned_date"] + "',"
+                                     VALUES(" + issue.issue_id + "," + Cell_Eng_info.line_id + "," + user["EmployeeNumber"] + ",'" + user["assigned_date"] + "',"
                                      + user["email"] + "," + user["call"] + "," + user["message"] + ",'" + user["callRepetitionTime"] + "','"
                                      + user["sendAlertAfter"] + "'," + user["levelOfResponsibility"] + "," + user["issue_line_person_id"] + ")";
 

@@ -13,8 +13,7 @@ namespace IssueManagementSystem.Models
 {
     public static class NotificaionService
     {
-        static readonly string connString = @"data source = 192.168.1.110.; initial catalog = issue_management_system; user id = admin; password = 1234;";
-        //static readonly string connString = @"data source=flintecdata;initial catalog=issue_management_system;Integrated Security=True;";
+        static readonly string connString = ConfigurationManager.ConnectionStrings["issue_management_systemEntities2"].ToString();
 
         internal static SqlCommand command = null;
         internal static SqlDependency dependency = null;
