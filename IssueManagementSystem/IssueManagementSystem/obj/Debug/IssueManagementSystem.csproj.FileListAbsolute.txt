@@ -436,3 +436,4 @@ F:\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\
 F:\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.csproj.CopyComplete
 F:\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.dll
 F:\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.pdb
+F:\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\IssueManagementSystem.dll.config
