@@ -167,34 +167,37 @@
                 </div>
             </div>
             <div class="col-lg-4" style="margin-top:-20px">
-                <label>Line Map</label>
-                <canvas id="canvas1" style="border: 1px solid black;" width="400" height="600">
+                <div>
+                    <label style="margin-left:5em">Line Map</label>
+                </div>
+                <canvas id="canvas1" style="border: 1px solid black;margin-left:5em" width="250" height="750" >
                     <br>
-                    This text is displayed if your browser does not support HTML5 Canvas.<br>
+                    This text is displayed if your browser does not support HTML5 Canvas.
+                    <br>
                 </canvas>
 
 
             </div>
-            <div class="col-lg-4">
-                <div class="container">
+                <div class="col-lg-4">
+                    <div class="container">
 
-                    <div class="row" style="margin-top:10px;">
-                        <p>Selected Machine: <span id="elementID" style="color:#e30612"></span></p>
+                        <div class="row" style="margin-top:10px;">
+                            <p>Selected Machine: <span id="elementID" style="color:#e30612"></span></p>
 
-                    </div>
-                    <div class="row" style="margin-top:20px;width:70%;">
-                        <label for="raspberrypi_ip">Raspberry-Pi Module IP Address</label>
-                        <input type="text" id="raspberrypi_ip" name="raspberrypi_ip" class="form-control" />
-                    </div>
-                    <div class="row" style="margin-top:20px;">
+                        </div>
+                        <div class="row" style="margin-top:20px;width:70%;">
+                            <label for="raspberrypi_ip">Raspberry-Pi Module IP Address</label>
+                            <input type="text" id="raspberrypi_ip" name="raspberrypi_ip" class="form-control" />
+                        </div>
+                        <div class="row" style="margin-top:20px;">
 
-                        <button class='btn btn-success' id="saveMap">Save Created Line</button>
+                            <button class='btn btn-success' id="saveMap">Save Created Line</button>
+                        </div>
+
                     </div>
 
                 </div>
-
             </div>
-        </div>
     </div>
 
 </section>
