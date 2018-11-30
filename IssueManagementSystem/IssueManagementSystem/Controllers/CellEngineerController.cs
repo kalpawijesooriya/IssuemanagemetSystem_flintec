@@ -102,9 +102,14 @@ namespace IssueManagementSystem.Controllers
 
         public ActionResult NotificationsManagement()
         {
+            List<tbl_PPA_User> userList;
+            using (BigRedEntities bigRed = new BigRedEntities())
+            {
+                userList = bigRed.tbl_PPA_User.ToList();
+            }
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
             {
-                List<User_tbl> userList = db.User_tbl.ToList();
+
                 List<department> departments = db.departments.ToList();
 
                 dynamic mymodel = new ExpandoObject();
@@ -126,9 +131,9 @@ namespace IssueManagementSystem.Controllers
         [HttpPost]
         public ActionResult fillNameDropDown(string department)
         {
-            using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
+            using (BigRedEntities db = new BigRedEntities()) //method for load the map acordinto the surevisor line
             {
-                string query_1 = "SELECT CONCAT(User_tbl.EmployeeNumber,' - ',User_tbl.Name) AS Users FROM User_tbl WHERE User_tbl.Department='" + department + "'";
+                string query_1 = "SELECT CONCAT(tbl_PPA_User.EmployeeNumber,' - ',tbl_PPA_User.Name) AS Users FROM tbl_PPA_User WHERE tbl_PPA_User.Department='" + department + "'";
                 var c = db.Database.SqlQuery<string>(query_1).ToList();
                 return Json(c, JsonRequestBehavior.AllowGet);
             }
@@ -139,7 +144,7 @@ namespace IssueManagementSystem.Controllers
 
             public string Name { get; set; }
             public string Department { get; set; }
-            public string Position { get; set; }
+            public string Role { get; set; }
             public string Phone { get; set; }
             public string EMail { get; set; }
             public int EmployeeNumber { get; set; }
@@ -150,9 +155,9 @@ namespace IssueManagementSystem.Controllers
         public ActionResult getUserDetails(string userID)
         {
 
-            using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
+            using (BigRedEntities db = new BigRedEntities()) //method for load the map acordinto the surevisor line
             {
-                String query_1 = "SELECT Name,Department,Position,Phone,EMail,EmployeeNumber FROM User_tbl WHERE User_tbl.EmployeeNumber ='" + userID + "'";
+                string query_1 = "SELECT Name,Department,Role,Phone,EMail,EmployeeNumber FROM tbl_PPA_User WHERE tbl_PPA_User.EmployeeNumber ='" + userID + "'";
                 var c = db.Database.SqlQuery<user_temp>(query_1).ToList();
                 return Json(c, JsonRequestBehavior.AllowGet);
             }

@@ -16,11 +16,11 @@ namespace IssueManagementSystem.Controllers
         }
 
         [HttpPost]
-        public ActionResult Autherize(IssueManagementSystem.Models.User_tbl userModel)
+        public ActionResult Autherize(IssueManagementSystem.Models.tbl_PPA_User userModel)
         {
-            using (issue_management_systemEntities1 db =new issue_management_systemEntities1())
+            using (BigRedEntities db =new BigRedEntities())
             {
-                var userDetails =db.User_tbl.Where(x => x.EmployeeNumber == userModel.EmployeeNumber && x.Password== userModel.Password).FirstOrDefault();
+                var userDetails =db.tbl_PPA_User.Where(x => x.EmployeeNumber == userModel.EmployeeNumber && x.Password== userModel.Password).FirstOrDefault();
                 if (userDetails == null)
                 {
                     userModel.LoginErrorMessage = "Wrong Employee Number or Password.";//show login erroe message

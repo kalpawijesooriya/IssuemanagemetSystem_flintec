@@ -41,10 +41,10 @@ namespace IssueManagementSystem.Controllers
             // issue_management_systemEntities db = new issue_management_systemEntities();
             // line line = db.line().Lines.SilgleOrdefault();
 
-            issue_management_systemEntities1 imsDbContext = new issue_management_systemEntities1();
-            List<machine> mList = imsDbContext.machines.ToList();
+            BigRedEntities imsDbContext = new BigRedEntities();
+            List<tblWorkstation_Config> mList = imsDbContext.tblWorkstation_Config.ToList();
 
-            dynamic machine_list = new System.Dynamic.ExpandoObject();
+            dynamic machine_list = new ExpandoObject();
             machine_list.machine_list = mList;
 
             return View(machine_list);
@@ -55,8 +55,8 @@ namespace IssueManagementSystem.Controllers
         {
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) 
             {
-                System.Diagnostics.Debug.WriteLine("Map json string:" + mapJSON);
-                System.Diagnostics.Debug.WriteLine("ipAddress :" + ipAddress);
+                Debug.WriteLine("Map json string:" + mapJSON);
+                Debug.WriteLine("ipAddress :" + ipAddress);
                
                 //get line id refered by selected line name
                 var lineInfo = db.lines.Where(x => x.line_name == line).FirstOrDefault();

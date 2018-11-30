@@ -325,29 +325,27 @@ namespace IssueManagementSystem.Controllers
             var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture);
             Thread t = new Thread(() =>
             {
-                using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+                using (BigRedEntities db = new BigRedEntities())
                 {
-                    var userDetails = db.User_tbl.Where(x => x.Role == "manager").ToList();
+                    var userDetails = db.tbl_PPA_User.Where(x => x.Role == "manager").ToList();
                     foreach (var item in userDetails)
                     {
                         string query = "INSERT INTO tbl_Notifications ([Status],[Message],[Type],[EmployeeNumber],[Date]) VALUES( 1,'" + msg + "','issue','" + item.EmployeeNumber + "','" + date + "') ";
                         db.Database.ExecuteSqlCommand(query);
                     }
-
-                    //string query2 = "SELECT * FROM issue_line_person where line_id="+ line_line_id + " AND issue_id="+ issueId + " ORDER BY levelOfResponsibility";
-                    //db.Database.ExecuteSqlCommand(query2);
-                    // var communicationInfo = db.Database.SqlQuery<string>(query2).ToList();
-                    //  var communicationInfo = db.OrderByDescending(x => x.StatusId == 3 ? x.ReserveDate : x.LastUpdateDate)
-                    // var communicationInfo = db.issue_line_person.OrderBy(x => x.levelOfResponsibility).ToList();
+                }
+                using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+                {
                     var communicationInfo = db.issue_line_person.Where(x => x.line_id == line_line_id && x.issue_id == issueId).OrderBy(x => x.levelOfResponsibility).ToList();
                     foreach (var item in communicationInfo)
                     {
-                       
-                            var personInfo = db.User_tbl.Where(y => y.EmployeeNumber == item.EmployeeNumber).FirstOrDefault();
+                        using (BigRedEntities BR = new BigRedEntities())
+                        {
+                            var personInfo = BR.tbl_PPA_User.Where(y => y.EmployeeNumber == item.EmployeeNumber).FirstOrDefault();
                             CommunicationData cd = new CommunicationData(personInfo.Phone, msg, personInfo.EMail, item.email, item.call, item.message, personInfo.EmployeeNumber, subject, callNote);
                             com.setCD(cd);
-                       
-                       
+                        }
+
                     }
                 }
             });
