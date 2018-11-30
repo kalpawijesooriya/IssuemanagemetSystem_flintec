@@ -201,6 +201,21 @@
     <Compile Include="Hubs\IssueHub.cs" />
     <Compile Include="Hubs\MyHub.cs" />
     <Compile Include="ISMHub.cs" />
+    <Compile Include="Models\BigRed.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BigRed.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BigRed.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BigRed.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BigRed.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BigRed.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\CommunicationData.cs" />
     <Compile Include="Models\department.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
@@ -267,8 +282,14 @@
     <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblWorkstation_Config.cs">
+      <DependentUpon>BigRed.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tbl_Notifications.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_PPA_User.cs">
+      <DependentUpon>BigRed.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User_tbl.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
@@ -346,6 +367,16 @@
     <Content Include="fonts\poppins\poppins-v5-latin-900italic.svg" />
     <Content Include="fonts\poppins\poppins-v5-latin-italic.svg" />
     <Content Include="fonts\poppins\poppins-v5-latin-regular.svg" />
+    <Content Include="Models\BigRed.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BigRed.edmx</DependentUpon>
+      <LastGenOutput>BigRed.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\BigRed.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BigRed.edmx</DependentUpon>
+      <LastGenOutput>BigRed.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\IssueManagementSystem.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>IssueManagementSystem.edmx</DependentUpon>
@@ -508,6 +539,13 @@
     <Content Include="Content\webfonts\fa-solid-900.ttf" />
     <Content Include="Content\webfonts\fa-solid-900.woff" />
     <Content Include="Content\webfonts\fa-solid-900.woff2" />
+    <EntityDeploy Include="Models\BigRed.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>BigRed.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\BigRed.edmx.diagram">
+      <DependentUpon>BigRed.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile2.pubxml" />
