@@ -437,6 +437,7 @@ F:\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\
 F:\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.dll
 F:\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.pdb
 F:\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\IssueManagementSystem.dll.config
+C:\Users\Kalpa_W\Desktop\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.csproj.CoreCompileInputs.cache
 C:\Users\Kalpa_W\Desktop\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\ApplicationInsights.config
 C:\Users\Kalpa_W\Desktop\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\IssueManagementSystem.dll.config
 C:\Users\Kalpa_W\Desktop\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\IssueManagementSystem.dll
@@ -542,8 +543,7 @@ C:\Users\Kalpa_W\Desktop\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\
 C:\Users\Kalpa_W\Desktop\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\Kalpa_W\Desktop\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\Microsoft.AI.Web.xml
 C:\Users\Kalpa_W\Desktop\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\Kalpa_W\Desktop\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.csprojAssemblyReference.cache
-C:\Users\Kalpa_W\Desktop\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.csproj.CoreCompileInputs.cache
 C:\Users\Kalpa_W\Desktop\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.csproj.CopyComplete
 C:\Users\Kalpa_W\Desktop\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.dll
 C:\Users\Kalpa_W\Desktop\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.pdb
+C:\Users\Kalpa_W\Desktop\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.csprojAssemblyReference.cache

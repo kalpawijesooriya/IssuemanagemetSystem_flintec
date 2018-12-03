@@ -328,10 +328,13 @@ namespace IssueManagementSystem.Controllers
                 using (BigRedEntities db = new BigRedEntities())
                 {
                     var userDetails = db.tbl_PPA_User.Where(x => x.Role == "manager").ToList();
-                    foreach (var item in userDetails)
+                    using (issue_management_systemEntities1 ismdb = new issue_management_systemEntities1())
                     {
-                        string query = "INSERT INTO tbl_Notifications ([Status],[Message],[Type],[EmployeeNumber],[Date]) VALUES( 1,'" + msg + "','issue','" + item.EmployeeNumber + "','" + date + "') ";
-                        db.Database.ExecuteSqlCommand(query);
+                        foreach (var item in userDetails)
+                        {
+                            string query = "INSERT INTO tbl_Notifications ([Status],[Message],[Type],[EmployeeNumber],[Date]) VALUES( 1,'" + msg + "','issue','" + item.EmployeeNumber + "','" + date + "') ";
+                            ismdb.Database.ExecuteSqlCommand(query);
+                        }
                     }
                 }
                 using (issue_management_systemEntities1 db = new issue_management_systemEntities1())

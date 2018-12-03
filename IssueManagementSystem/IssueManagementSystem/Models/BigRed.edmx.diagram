@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="bea0306820b645659d188908d737d1b8" Name="Diagram1">
         <EntityTypeShape EntityType="BigRedModel.tbl_PPA_User" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BigRedModel.tblWorkstation_Config" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BigRedModel.tblWorkstation_Config" Width="2.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
