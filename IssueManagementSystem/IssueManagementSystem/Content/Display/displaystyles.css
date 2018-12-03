@@ -2,9 +2,10 @@
     margin-top:2%;
 }
 .displayhedding {
-   
     width: 100%;
     padding: 10px;
-    color:white;
+    color: white;
     background: #222;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
 }
