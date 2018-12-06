@@ -8,12 +8,13 @@
 }
 
 @using IssueManagementSystem.Models;
+<script src="~/Scripts/jquery-3.3.1.js"></script>
 
 <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
 <link href="~/Content/adminstyles/Settings.css" rel="stylesheet" />
 <link href="~/Content/adminstyles/notificationManagement.css" rel="stylesheet" />
 <link href="~/Content/SupervisorStyles/jquery-ui.css" rel="stylesheet" />
-<script src="~/Scripts/jquery-3.3.1.js"></script>
+
 
 <style>
     .lableSet {
@@ -25,7 +26,7 @@
     }
 
     .modal-content {
-        width: 100%;   
+        width: 100%;
     }
 </style>
 <div class="page-content--bgf7">
@@ -75,13 +76,12 @@
                 </select>
             </div>
         </div>
-            <div class="col-4">
-                <button class="btn btn-primary glyphicons-chevron-left" style="margin-top:10px;" data-toggle="modal" data-target="#modal1"><i class="fas fa-user-plus"></i> Add a person</button>
-            </div>
+        <div class="col-4">
+            <button class="btn btn-primary glyphicons-chevron-left" style="margin-top:10px;" data-toggle="modal" data-target="#modal1"><i class="fas fa-user-plus"></i> Add a person</button>
         </div>
+    </div>
 
     <div class="row" style="margin-top:20px;">
-
         <script>
             window.onload = $(function () {
 
@@ -117,117 +117,116 @@
 <div class="container" style="">
     <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modal1" data-keyboard="false" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
-            
-                    <div class="modal-content">
-                        <div class="modal-header background">
-                            <h4 class="modal-title" style="margin:auto;">Add a person</h4>
-                            <button class="close" data-dismiss="modal" style="margin-top:-20px;">&times;</button>
+
+            <div class="modal-content">
+                <div class="modal-header background">
+                    <h4 class="modal-title" style="margin:auto;">Add a person</h4>
+                    <button class="close" data-dismiss="modal" style="margin-top:-20px;">&times;</button>
+                </div>
+
+                <!-- draw new map modal body -->
+                <div class="modal-body" style="display:flex;">
+                    <div class="container">
+                        <div class="page-header row">
+                            <div class="col-lg-4">
+                                <label class="lableSet" style="float:left">Department</label>
+
+                                <select class="js-example-placeholder-single js-states form-control" id="Department" name="Department" style="width:100%" onchange="fillNameDropDown()">
+                                    <option></option>
+
+                                    @foreach (var department in Model.departments)
+                                    {
+                                        <option> @department.department_name</option>
+                                    }
+
+                                </select>
+                            </div>
+
+                            <div class="col-lg-8" style="">
+                                <label class="lableSet" style="float:left">Name</label>
+
+                                <select class="js-example-placeholder-single js-states form-control" id="Name" name="Name" style="width:100%" onchange="fillDepartmentDropDown(),fillUserDetails()">
+                                    <option></option>
+
+                                    @foreach (var user in Model.users)
+                                    {
+                                        <option> @user.EmployeeNumber - @user.Name   </option>
+                                    }
+
+                                </select>
+                            </div>
+
                         </div>
 
-                        <!-- draw new map modal body -->
-                        <div class="modal-body" style="display:flex;">
-                            <div class="container">
-                                <div class="page-header row">
-                                    <div class="col-lg-4">
-                                        <label class="lableSet" style="float:left">Department</label>
+                        <div class="row">
 
-                                        <select class="js-example-placeholder-single js-states form-control" id="Department" name="Department" style="width:100%" onchange="fillNameDropDown()">
-                                            <option></option>
+                            <div class="col-lg-4">
+                                <img src="~/Content/images/profile.jpg" width="70%" height="70%" style="margin-top:10px;" />
+                            </div>
 
-                                            @foreach (var department in Model.departments)
-                                            {
-                                                <option> @department.department_name</option>
-                                            }
-
-                                        </select>
-                                    </div>
-
-                                    <div class="col-lg-8" style="">
-                                        <label class="lableSet" style="float:left">Name</label>
-
-                                        <select class="js-example-placeholder-single js-states form-control" id="Name" name="Name" style="width:100%" onchange="fillDepartmentDropDown(),fillUserDetails()">
-                                            <option></option>
-
-                                            @foreach (var user in Model.users)
-                                            {
-                                                <option> @user.EmployeeNumber - @user.Name   </option>
-                                            }
-
-                                        </select>
-                                    </div>
-
-                                </div>
-
+                            <div class="col-lg-8" style="margin-top:20px;">
                                 <div class="row">
-
-                                    <div class="col-lg-4">
-                                        <img src="~/Content/images/profile.jpg" width="70%" height="70%" style="margin-top:10px;" />
-                                    </div>
-
-                                    <div class="col-lg-8" style="margin-top:20px;">
-                                        <div class="row">
-                                            <p class="col-lg-3" style="float:left">
-                                                Name :
-                                            </p>
-                                            <p class="col-lg-9" style="float:left" id="name">
-                                            </p>
-                                        </div>
-                                        <div class="row">
-                                            <p class="col-lg-3" style="float:left">
-                                                Department :
-                                            </p>
-                                            <p class="col-lg-9" style="float:left" id="dept">
-                                            </p>
-                                        </div>
-                                        <div class="row">
-                                            <p class="col-lg-3" style="float:left">
-                                                Emp ID :
-                                            </p>
-                                            <p class="col-lg-9" style="float:left" id="empID">
-                                            </p>
-                                        </div>
-                                        <div class="row">
-                                            <p class="col-lg-3" style="float:left">
-                                                Position :
-                                            </p>
-                                            <p class="col-lg-9" style="float:left" id="position">
-                                            </p>
-                                        </div>
-                                        <div class="row">
-                                            <p class="col-lg-3" style="float:left">
-                                                Phone :
-                                            </p>
-                                            <p class="col-lg-9" style="float:left" id="phone">
-                                            </p>
-                                        </div>
-                                        <div class="row">
-                                            <p class="col-lg-3" style="float:left">
-                                                E-mail :
-                                            </p>
-                                            <p class="col-lg-9" style="float:left" id="email">
-                                            </p>
-                                        </div>
-                                    </div>
+                                    <p class="col-lg-3" style="float:left">
+                                        Name :
+                                    </p>
+                                    <p class="col-lg-9" style="float:left" id="name">
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-lg-3" style="float:left">
+                                        Department :
+                                    </p>
+                                    <p class="col-lg-9" style="float:left" id="dept">
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-lg-3" style="float:left">
+                                        Emp ID :
+                                    </p>
+                                    <p class="col-lg-9" style="float:left" id="empID">
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-lg-3" style="float:left">
+                                        Position :
+                                    </p>
+                                    <p class="col-lg-9" style="float:left" id="position">
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-lg-3" style="float:left">
+                                        Phone :
+                                    </p>
+                                    <p class="col-lg-9" style="float:left" id="phone">
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <p class="col-lg-3" style="float:left">
+                                        E-mail :
+                                    </p>
+                                    <p class="col-lg-9" style="float:left" id="email">
+                                    </p>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="modal-footer">
-                            <Button type="button" id="saveMap" class="btn btn-primary" onclick="addPerson()">Add</Button>
-                            <Button type="button" class="btn btn-success" data-dismiss="modal">Close</Button>
-                        </div>
-
                     </div>
                 </div>
+
+                <div class="modal-footer">
+                    <Button type="button" id="saveMap" class="btn btn-primary" onclick="addPerson()">Add</Button>
+                    <Button type="button" class="btn btn-success" data-dismiss="modal">Close</Button>
+                </div>
+
             </div>
         </div>
-        <!-- ends draw new map model-->
+    </div>
+</div>
+<!-- ends draw new map model-->
 
-        <script src="~/Scripts/jquery-ui.js"></script>
-        <script src="~/Scripts/AdminScripts/jscolar.js"></script>
-        <script src="~/Scripts/AdminScripts/select2-min.js"></script>
-        <script src="~/Scripts/AdminScripts/notificationsManagement.js"></script>
-        <script>
+<script src="~/Scripts/AdminScripts/jscolar.js"></script>
+<script src="~/Scripts/AdminScripts/select2-min.js"></script>
+<script src="~/Scripts/AdminScripts/notificationsManagement.js"></script>
+<script>
 function fillDepartmentDropDown() {
 
     var name = document.getElementById("Name").value;
@@ -375,4 +374,4 @@ function saveList() {
         }
     });
 }
-        </script>
+</script>
