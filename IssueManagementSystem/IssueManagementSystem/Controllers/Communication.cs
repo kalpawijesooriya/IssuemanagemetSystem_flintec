@@ -20,15 +20,16 @@ namespace IssueManagementSystem.Controllers
     {
         static Queue numberList = new Queue();
         static bool gsm_status = true;
-      
+        int callCount = 0;
         public Communication()
         {
           
         }
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void setCD(CommunicationData cd) {
+        public void setCD(Queue CommunicationList)
+        {
 
-            numberList.Enqueue(cd);          
+            numberList=CommunicationList;          
             doCommunicate();
         }
 
@@ -52,8 +53,7 @@ namespace IssueManagementSystem.Controllers
                     var emailAddress = communicateData.getEmailAddress();
                     var mobileNumber = communicateData.getNumber();
 
-                    if (communicateData.getCall() == 1 && mobileNumber != null)
-                        take_Call(mobileNumber, communicateData.getcallNote());
+                   
 
                     if (communicateData.getEmail() == 1 && emailAddress!= null)
                     {
@@ -68,11 +68,12 @@ namespace IssueManagementSystem.Controllers
                     if (communicateData.getMessage() == 1 && mobileNumber != null)                    
                         send_SMS(mobileNumber, msg);
 
-                    
+                    if (communicateData.getCall() == 1 && mobileNumber != null)
+                        take_Call(mobileNumber, communicateData.getcallNote(), communicateData.getrepetCount(),communicateData.getdelay());
 
-                   
 
-                       gsm_status = true;
+
+                    gsm_status = true;
                 }
                 catch (Exception ex)
                 {
@@ -156,18 +157,17 @@ namespace IssueManagementSystem.Controllers
 
 
                     var cs = sr.ReadToEnd().Trim();
-            System.Diagnostics.Debug.WriteLine("SMS Respond: " + cs);
+                    Debug.WriteLine("SMS Respond: " + cs);
 
                     sr.Close();
                     stream.Close();
 
         }
 
-        public void take_Call(string number, string message)
+        public void take_Call(string number, string message ,string repetCount,string delay)
         {
 
-
-
+            callCount++;
             ASCIIEncoding encoding = new ASCIIEncoding();
 
 
@@ -187,10 +187,27 @@ namespace IssueManagementSystem.Controllers
             stream = response.GetResponseStream();
 
             StreamReader sr = new StreamReader(stream);
-
-
             var cs = sr.ReadToEnd().Trim();
-            System.Diagnostics.Debug.WriteLine("Call Respond: " + cs);
+            
+            var cr=cs.Split(',');
+            Debug.WriteLine("Call Respond: " + cr[0]);
+            Debug.WriteLine("Call Respond: " + cr[1]);
+
+            if (cr[0] == "false") {
+                if (Int32.Parse(repetCount) > callCount)
+                {
+                    int waitingTime = Int32.Parse(delay) * 60 * 1000 - 23000;
+                    Thread.Sleep(waitingTime);
+                    take_Call(number, message, repetCount, delay);
+                }
+                if (Int32.Parse(repetCount) <= callCount)
+                {
+                    gsm_status = true;
+                    callCount = 0;
+                    doCommunicate();
+                }
+
+            }
             sr.Close();
             stream.Close();
 

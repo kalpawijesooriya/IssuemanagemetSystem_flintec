@@ -4,7 +4,39 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BigRedModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BigRedModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'BigRed.dbo.tbl_Maintenance_MachineBreakdown' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tbl_Maintenance_MachineBreakdown">
+          <Key>
+            <PropertyRef Name="BId" />
+            <PropertyRef Name="MachineID" />
+          </Key>
+          <Property Name="BId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Area" Type="nvarchar" MaxLength="100" />
+          <Property Name="MachineID" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Urgency" Type="nvarchar(max)" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="State" Type="nchar" MaxLength="10" />
+          <Property Name="Com.Date" Type="datetime" />
+          <Property Name="St.Date" Type="datetime" />
+          <Property Name="Department" Type="nvarchar(max)" />
+          <Property Name="SpareParts" Type="nvarchar(max)" />
+          <Property Name="Technicians" Type="nvarchar(max)" />
+          <Property Name="JobValidation" Type="nvarchar" MaxLength="50" />
+          <Property Name="T.Minutes" Type="int" />
+          <Property Name="Feedback" Type="nvarchar(max)" />
+          <Property Name="From" Type="nvarchar(max)" />
+          <Property Name="Factory" Type="nvarchar" MaxLength="50" />
+          <Property Name="Recorded" Type="nvarchar(max)" />
+          <Property Name="other" Type="nvarchar(max)" />
+          <Property Name="To" Type="nvarchar" MaxLength="50" />
+          <Property Name="Attachment" Type="nvarchar(max)" />
+          <Property Name="RequiredDate" Type="datetime" />
+          <Property Name="RecordedDate" Type="datetime" />
+          <Property Name="Category" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="tbl_PPA_User">
           <Key>
             <PropertyRef Name="EmployeeNumber" />
@@ -58,6 +90,34 @@ warning 6002: The table/view 'BigRed.dbo.tblWorkstation_Config' does not have a 
         </EntityType>
         <EntityContainer Name="BigRedModelStoreContainer">
           <EntitySet Name="tbl_PPA_User" EntityType="Self.tbl_PPA_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Maintenance_MachineBreakdown" EntityType="Self.tbl_Maintenance_MachineBreakdown" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tbl_Maintenance_MachineBreakdown].[BId] AS [BId], 
+    [tbl_Maintenance_MachineBreakdown].[Area] AS [Area], 
+    [tbl_Maintenance_MachineBreakdown].[MachineID] AS [MachineID], 
+    [tbl_Maintenance_MachineBreakdown].[Description] AS [Description], 
+    [tbl_Maintenance_MachineBreakdown].[Urgency] AS [Urgency], 
+    [tbl_Maintenance_MachineBreakdown].[Date] AS [Date], 
+    [tbl_Maintenance_MachineBreakdown].[State] AS [State], 
+    [tbl_Maintenance_MachineBreakdown].[Com.Date] AS [Com.Date], 
+    [tbl_Maintenance_MachineBreakdown].[St.Date] AS [St.Date], 
+    [tbl_Maintenance_MachineBreakdown].[Department] AS [Department], 
+    [tbl_Maintenance_MachineBreakdown].[SpareParts] AS [SpareParts], 
+    [tbl_Maintenance_MachineBreakdown].[Technicians] AS [Technicians], 
+    [tbl_Maintenance_MachineBreakdown].[JobValidation] AS [JobValidation], 
+    [tbl_Maintenance_MachineBreakdown].[T.Minutes] AS [T.Minutes], 
+    [tbl_Maintenance_MachineBreakdown].[Feedback] AS [Feedback], 
+    [tbl_Maintenance_MachineBreakdown].[From] AS [From], 
+    [tbl_Maintenance_MachineBreakdown].[Factory] AS [Factory], 
+    [tbl_Maintenance_MachineBreakdown].[Recorded] AS [Recorded], 
+    [tbl_Maintenance_MachineBreakdown].[other] AS [other], 
+    [tbl_Maintenance_MachineBreakdown].[To] AS [To], 
+    [tbl_Maintenance_MachineBreakdown].[Attachment] AS [Attachment], 
+    [tbl_Maintenance_MachineBreakdown].[RequiredDate] AS [RequiredDate], 
+    [tbl_Maintenance_MachineBreakdown].[RecordedDate] AS [RecordedDate], 
+    [tbl_Maintenance_MachineBreakdown].[Category] AS [Category]
+    FROM [dbo].[tbl_Maintenance_MachineBreakdown] AS [tbl_Maintenance_MachineBreakdown]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="tblWorkstation_Config" EntityType="Self.tblWorkstation_Config" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [tblWorkstation_Config].[Workstation_ID] AS [Workstation_ID], 
@@ -78,8 +138,7 @@ warning 6002: The table/view 'BigRed.dbo.tblWorkstation_Config' does not have a 
     FROM [dbo].[tblWorkstation_Config] AS [tblWorkstation_Config]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BigRedModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -135,7 +194,38 @@ warning 6002: The table/view 'BigRed.dbo.tblWorkstation_Config' does not have a 
         <EntityContainer Name="BigRedEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tbl_PPA_User" EntityType="Self.tbl_PPA_User" />
           <EntitySet Name="tblWorkstation_Config" EntityType="Self.tblWorkstation_Config" />
+          <EntitySet Name="tbl_Maintenance_MachineBreakdown" EntityType="BigRedModel.tbl_Maintenance_MachineBreakdown" />
         </EntityContainer>
+        <EntityType Name="tbl_Maintenance_MachineBreakdown">
+          <Key>
+            <PropertyRef Name="BId" />
+            <PropertyRef Name="MachineID" />
+          </Key>
+          <Property Name="BId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Area" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MachineID" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Urgency" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="State" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Com_Date" Type="DateTime" Precision="3" />
+          <Property Name="St_Date" Type="DateTime" Precision="3" />
+          <Property Name="Department" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SpareParts" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Technicians" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="JobValidation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="T_Minutes" Type="Int32" />
+          <Property Name="Feedback" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="From" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Factory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Recorded" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="other" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="To" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Attachment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RequiredDate" Type="DateTime" Precision="3" />
+          <Property Name="RecordedDate" Type="DateTime" Precision="3" />
+          <Property Name="Category" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -190,6 +280,36 @@ warning 6002: The table/view 'BigRed.dbo.tblWorkstation_Config' does not have a 
                 <ScalarProperty Name="Master_cell" ColumnName="Master_cell" />
                 <ScalarProperty Name="Machine_factor" ColumnName="Machine_factor" />
                 <ScalarProperty Name="USB_Port" ColumnName="USB_Port" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Maintenance_MachineBreakdown">
+            <EntityTypeMapping TypeName="BigRedModel.tbl_Maintenance_MachineBreakdown">
+              <MappingFragment StoreEntitySet="tbl_Maintenance_MachineBreakdown">
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="RecordedDate" ColumnName="RecordedDate" />
+                <ScalarProperty Name="RequiredDate" ColumnName="RequiredDate" />
+                <ScalarProperty Name="Attachment" ColumnName="Attachment" />
+                <ScalarProperty Name="To" ColumnName="To" />
+                <ScalarProperty Name="other" ColumnName="other" />
+                <ScalarProperty Name="Recorded" ColumnName="Recorded" />
+                <ScalarProperty Name="Factory" ColumnName="Factory" />
+                <ScalarProperty Name="From" ColumnName="From" />
+                <ScalarProperty Name="Feedback" ColumnName="Feedback" />
+                <ScalarProperty Name="T_Minutes" ColumnName="T.Minutes" />
+                <ScalarProperty Name="JobValidation" ColumnName="JobValidation" />
+                <ScalarProperty Name="Technicians" ColumnName="Technicians" />
+                <ScalarProperty Name="SpareParts" ColumnName="SpareParts" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="St_Date" ColumnName="St.Date" />
+                <ScalarProperty Name="Com_Date" ColumnName="Com.Date" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Urgency" ColumnName="Urgency" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="MachineID" ColumnName="MachineID" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="BId" ColumnName="BId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
