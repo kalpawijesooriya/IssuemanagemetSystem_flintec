@@ -50,18 +50,28 @@ namespace IssueManagementSystem.Controllers
             return View(machine_list);
         }
 
+        public ActionResult EditMap()
+        {
+
+            BigRedEntities imsDbContext = new BigRedEntities();
+            List<tblWorkstation_Config> mList = imsDbContext.tblWorkstation_Config.ToList();
+
+            dynamic machine_list = new ExpandoObject();
+            machine_list.machine_list = mList;
+
+            return View(machine_list);
+        }
+
         [HttpPost]
-        public ActionResult addMap(String mapJSON,String department_id, String line, String ipAddress,String issues)
+        public ActionResult addMap(String mapJSON,String department_id, String lineID, String ipAddress,String issues)
         {
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) 
             {
                 Debug.WriteLine("Map json string:" + mapJSON);
                 Debug.WriteLine("ipAddress :" + ipAddress);
-               
-                //get line id refered by selected line name
-                var lineInfo = db.lines.Where(x => x.line_name == line).FirstOrDefault();
-                int lineID = lineInfo.line_id;
-              
+                Debug.WriteLine("line :" + lineID);
+
+
                 //insert data in to line_map table
                 string query = "INSERT INTO [dbo].[line_map]([line_id],[map],[red],[green],[yellow],[blue],issues)VALUES('" + lineID + "','" + mapJSON + "','0','0','0','0','" + issues + "')";
                 db.Database.ExecuteSqlCommand(query);
@@ -72,6 +82,27 @@ namespace IssueManagementSystem.Controllers
             }
 
             return Content("query executed", MediaTypeNames.Text.Plain);
+        }
+
+        [HttpPost]
+        public ActionResult loadMap( String lineID)
+        {
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+            { 
+                //retrieve data in to line_map table
+                string query1 ="SELECT TOP (1) line_map.map FROM line_map WHERE line_id ="+lineID+" ORDER BY line_map_id DESC";
+                string query2 ="SELECT line_map.issues FROM line_map WHERE line_map.line_id="+lineID;
+
+                var c = db.Database.SqlQuery<string>(query1).ToList();
+                var issues = db.Database.SqlQuery<string>(query2).ToList();
+
+                c.Insert(1, issues[0].ToString());
+
+                Debug.WriteLine("line --------->>>>>>>>> " + c[0]);
+                Debug.WriteLine("line --------->>>>>>>>> " + c[1]);
+
+                return Json(c, JsonRequestBehavior.AllowGet);
+            }
         }
 
 

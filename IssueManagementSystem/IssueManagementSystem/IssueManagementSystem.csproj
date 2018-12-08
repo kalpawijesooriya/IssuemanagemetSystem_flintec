@@ -338,7 +338,7 @@
     <Content Include="Content\fontawesome.css" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\quality-logo.png" />
-    <Content Include="Content\images\RCPDF1.jpg" />
+    <Content Include="Content\images\rocker.jpg" />
     <Content Include="Content\Manager\bootstrap.min.css" />
     <Content Include="Content\material-design-iconic-font.min.css" />
     <Content Include="Content\hamburgers.min.css" />
@@ -634,6 +634,7 @@
     <Content Include="Views\CellEngineer\MaterialDelay.cshtml" />
     <Content Include="Views\CellEngineer\ITIssue.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\EditMap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
