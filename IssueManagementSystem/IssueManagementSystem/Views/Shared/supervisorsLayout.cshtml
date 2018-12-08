@@ -270,6 +270,7 @@
            
             // Proxy created on the fly
             var hub = $.connection.myHub;
+      
 
 
             // Declare a function on the hub hub so the server can invoke it
@@ -277,11 +278,15 @@
                
                 getData();
             };
-
+    
+           
+            
             // Start the connection
             $.connection.hub.start();
+          
+           
             getData();
-
+           
             function getData()
             {   var url = '@Url.Action("GetNotification", "Manager")';
                 var divNotificaion = $('#divNotificaion');
@@ -343,7 +348,18 @@
                 });
             }
         })
-
+        function getData2() {
+             var url = '@Url.Action("GetBreakedown", "Supervisor")';
+               
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    datatype: 'json',
+                    success: function (data) {
+                    }, error: function (r, e, w) {
+                    }
+                });
+        }
         function deleteFunction(div)
         {
             var data = { Issueoccour_Id: $(this).data('issue-occorid'), Issue_Id: $(this).data('issueid') };

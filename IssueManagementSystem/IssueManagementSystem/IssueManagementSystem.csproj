@@ -198,6 +198,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\BreakeHub.cs" />
     <Compile Include="Hubs\IssueHub.cs" />
     <Compile Include="Hubs\MyHub.cs" />
     <Compile Include="ISMHub.cs" />
@@ -216,6 +217,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BigRed.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\BreakeDownListener.cs" />
     <Compile Include="Models\CommunicationData.cs" />
     <Compile Include="Models\department.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
@@ -283,6 +285,9 @@
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblWorkstation_Config.cs">
+      <DependentUpon>BigRed.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tbl_Maintenance_MachineBreakdown.cs">
       <DependentUpon>BigRed.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_Notifications.cs">

@@ -1,0 +1,3 @@
+﻿The model was generated with warnings or errors.BigRed.edmxPlease see the Error List for more details. These issues must be fixed before running your application.
+Loading metadata from the database took 00:00:04.3503336.
+Generating the model took 00:00:08.4113593.

@@ -13,10 +13,12 @@ namespace IssueManagementSystem.Models
         private int call, email, message;
         private int EmployeeNumber;
         private string callNote;
+        private string repetCount;
+        private string delay;
 
 
 
-        public CommunicationData(string number, string msg, string emailAddress, int email, int call, int message,int EmployeeNumber,string subject, string callNote)
+        public CommunicationData(string number, string msg, string emailAddress, int email, int call, int message,int EmployeeNumber,string subject, string callNote,string repetCount,string delay)
         {
             this.number = number;
             this.msg = msg;
@@ -27,6 +29,8 @@ namespace IssueManagementSystem.Models
             this.EmployeeNumber = EmployeeNumber;
             this.subject = subject;
             this.callNote = callNote;
+            this.repetCount = repetCount;
+            this.delay = delay;
         }
 
 
@@ -63,6 +67,8 @@ namespace IssueManagementSystem.Models
         }
 
         public string getcallNote(){ return callNote; }
+        public string getrepetCount() { return repetCount; }
+        public string getdelay() { return delay; }
 
     }
 }

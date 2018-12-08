@@ -1,21 +1,19 @@
 ﻿using Microsoft.AspNet.SignalR;
-using Microsoft.AspNet.SignalR.Hubs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+
 namespace IssueManagementSystem.Hubs
 {
-    
-    public class MyHub : Hub
+    public class BreakeHub : Hub
     {
-        public static void Send()
+        public static void SendBreakeDown()
         {
 
-            IHubContext context = GlobalHost.ConnectionManager.GetHubContext<MyHub>();
+            IHubContext context = GlobalHost.ConnectionManager.GetHubContext<BreakeHub>();
             context.Clients.All.displayStatus();
         }
-       
     }
 }

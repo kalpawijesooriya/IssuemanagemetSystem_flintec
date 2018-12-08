@@ -27,5 +27,6 @@ namespace IssueManagementSystem.Models
     
         public virtual DbSet<tbl_PPA_User> tbl_PPA_User { get; set; }
         public virtual DbSet<tblWorkstation_Config> tblWorkstation_Config { get; set; }
+        public virtual DbSet<tbl_Maintenance_MachineBreakdown> tbl_Maintenance_MachineBreakdown { get; set; }
     }
 }

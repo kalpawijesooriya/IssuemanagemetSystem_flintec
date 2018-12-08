@@ -112,18 +112,19 @@ if (Session["userID"] == null)
    
         // Proxy created on the fly
         var hub = $.connection.issueHub;
+       
         var issueCount = 0;
 
         // Declare a function on the hub hub so the server can invoke it
         hub.client.displayStatus = function () {
-            debugger
+           
             getData();
         };
-
+    
         // Start the connection
         $.connection.hub.start();
         getData();
-
+     
         function getData()
         {
 

@@ -13,6 +13,8 @@ using System.Text;
 using System.Threading;
 using System.Net.Mime;
 using Newtonsoft.Json.Linq;
+using System.Collections;
+using IssueManagementSystem.Models.IssueManagementSystem.Models;
 
 namespace IssueManagementSystem.Controllers
 {
@@ -23,6 +25,10 @@ namespace IssueManagementSystem.Controllers
         // GET: Supervisor
         public ActionResult selectIssue()// select issue view
         {
+            if (Session["userID"] == null)
+            {
+                Response.Redirect("~/Login/Index");
+            }
             int userID = (int)Session["userID"];// get current supervisorID
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
             {
@@ -37,6 +43,12 @@ namespace IssueManagementSystem.Controllers
         public JsonResult GetIssues()
         {
             return Json(IssueService.GetIssue(), JsonRequestBehavior.AllowGet);
+
+        }
+        [HttpGet]
+        public JsonResult GetBreakedown()
+        {
+            return Json(BreakeDownService.GetBreakedown(), JsonRequestBehavior.AllowGet);
 
         }
 
@@ -189,7 +201,7 @@ namespace IssueManagementSystem.Controllers
                             var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
                             var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
                             string msg = line.line_name + " line Technical issue has been occurred at " + date + " at " + time1 + ". Special Note of Line supervisor - " + issueModel.description;
-                            string callNote = line.line_name + " line Breakedown has been occurred on" + day + " at " + time1;
+                            string callNote = line.line_name + " line Technical issue has been occurred on" + day + " at " + time1;
                             com.lightON("3", displayInfo.raspberry_ip_address);//turn on the Light
                             sendCD(lineId, 3, msg, "Tecnical Issue has been occered", callNote);
 
@@ -246,7 +258,7 @@ namespace IssueManagementSystem.Controllers
                     {
                         var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
                         string msg = line.line_name + " line IT/SoftWare issue has been occurred on " + day + " at "+ time1 + ". Special Note of Line supervisor - " + issueModel.description;
-                        string callNote = line.line_name + " line Breakedown has been occurred on" + day + " at " + time1;
+                        string callNote = line.line_name + " line IT SoftWare issue has been occurred on" + day + " at " + time1;
                         var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
                         com.lightON("5", displayInfo.raspberry_ip_address);//turn on the Light
                         sendCD(lineId, 5, msg, "IT/Software Issue has been occered", callNote);
@@ -304,7 +316,7 @@ namespace IssueManagementSystem.Controllers
                         var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
                         var line = db.lines.Where(x => x.line_id == line_id).FirstOrDefault();
                         string msg = line.line_name + " line MaterialDelay has been occurred on " + day + " at "+ time1 + ". Special Note of Line supervisor - " + item["description"];
-                        string callNote = line.line_name + " line Breakedown has been occurred on" + day + " at " + time1;
+                        string callNote = line.line_name + " line MaterialDelay has been occurred on" + day + " at " + time1;
                         com.lightON("2", displayInfo.raspberry_ip_address);//turn on the Light
                         sendCD(line_id, 2, msg, "MaterialDelay has been occered", callNote);
 
@@ -328,25 +340,32 @@ namespace IssueManagementSystem.Controllers
                 using (BigRedEntities db = new BigRedEntities())
                 {
                     var userDetails = db.tbl_PPA_User.Where(x => x.Role == "manager").ToList();
-                    foreach (var item in userDetails)
+                    using (issue_management_systemEntities1 ismdb = new issue_management_systemEntities1())
                     {
-                        string query = "INSERT INTO tbl_Notifications ([Status],[Message],[Type],[EmployeeNumber],[Date]) VALUES( 1,'" + msg + "','issue','" + item.EmployeeNumber + "','" + date + "') ";
-                        db.Database.ExecuteSqlCommand(query);
+                        foreach (var item in userDetails)
+                        {
+                            string query = "INSERT INTO tbl_Notifications ([Status],[Message],[Type],[EmployeeNumber],[Date]) VALUES( 1,'" + msg + "','issue','" + item.EmployeeNumber + "','" + date + "') ";
+                            ismdb.Database.ExecuteSqlCommand(query);
+                        }
                     }
                 }
                 using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
                 {
                     var communicationInfo = db.issue_line_person.Where(x => x.line_id == line_line_id && x.issue_id == issueId).OrderBy(x => x.levelOfResponsibility).ToList();
+                    Queue numberList = new Queue();
                     foreach (var item in communicationInfo)
                     {
                         using (BigRedEntities BR = new BigRedEntities())
                         {
+                           
                             var personInfo = BR.tbl_PPA_User.Where(y => y.EmployeeNumber == item.EmployeeNumber).FirstOrDefault();
-                            CommunicationData cd = new CommunicationData(personInfo.Phone, msg, personInfo.EMail, item.email, item.call, item.message, personInfo.EmployeeNumber, subject, callNote);
-                            com.setCD(cd);
+                            CommunicationData cd = new CommunicationData(personInfo.Phone, msg, personInfo.EMail, item.email, item.call, item.message, personInfo.EmployeeNumber, subject, callNote,item.callRepetitionTime,item.sendAlertAfter);
+                            numberList.Enqueue(cd);
+                          
                         }
 
                     }
+                    com.setCD(numberList);
                 }
             });
             t.Start();
