@@ -139,6 +139,18 @@ namespace IssueManagementSystem.Controllers
             }
 
         }
+
+        //[HttpPost]
+        //public ActionResult fillmanagerNameDropDown(string department)
+        //{
+        //    using (BigRedEntities db = new BigRedEntities()) //method for load the map acordinto the surevisor line
+        //    {
+        //        string query_1 = "SELECT CONCAT(tbl_PPA_User.EmployeeNumber,' - ',tbl_PPA_User.Name) AS Users FROM tbl_PPA_User WHERE tbl_PPA_User.Department='" + department + "'AND tbl_PPA_User.Role='manager'";
+        //        var c = db.Database.SqlQuery<string>(query_1).ToList();
+        //        return Json(c, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //}
         class user_temp
         {
 
@@ -203,10 +215,10 @@ namespace IssueManagementSystem.Controllers
 
                     string query_1 = @"INSERT INTO [dbo].[issue_line_person]
                                      ([issue_id],[line_id],[EmployeeNumber],[assigned_date],[email],[call],
-                                     [message],[callRepetitionTime],[sendAlertAfter],[levelOfResponsibility],[issue_line_person_id])
+                                     [message],[callRepetitionTime],[sendAlertAfter],[levelOfResponsibility],[issue_line_person_id],[person_level])
                                      VALUES(" + issue.issue_id + "," + Cell_Eng_info.line_id + "," + user["EmployeeNumber"] + ",'" + user["assigned_date"] + "',"
                                      + user["email"] + "," + user["call"] + "," + user["message"] + ",'" + user["callRepetitionTime"] + "','"
-                                     + user["sendAlertAfter"] + "'," + user["levelOfResponsibility"] + "," + user["issue_line_person_id"] + ")";
+                                     + user["sendAlertAfter"] + "'," + user["levelOfResponsibility"] + "," + user["issue_line_person_id"] +","+ user["person_level"] + ")";
 
                     System.Diagnostics.Debug.WriteLine(query_1);
 

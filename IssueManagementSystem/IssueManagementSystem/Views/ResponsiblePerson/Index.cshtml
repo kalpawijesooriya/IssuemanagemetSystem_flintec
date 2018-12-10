@@ -127,7 +127,6 @@ if (Session["userID"] == null)
      
         function getData()
         {
-
             var divissue = $('#divIssue');
               var url = '@Url.Action("GetIssues", "ResponsiblePerson")'
             $.ajax({
@@ -140,44 +139,31 @@ if (Session["userID"] == null)
                     if (issuedata.length > 0) {
                         divissue.empty();
 
-
-
-
                         for (var i = 0; i < issuedata.length; i++) {
-
-
 
                             if ((issuedata[i].responsible_person_emp_id ==@Session["userID"]) && (issuedata[i].issue_satus=="1" || issuedata[i].responsible_person_confirm_status==1)) {
 
-                                var line_id = issuedata[i].line_line_id
-                                var issueid = issuedata[i].issue_issue_ID
+                                var line_id = issuedata[i].line_line_id;
+                                var issueid = issuedata[i].issue_issue_ID;
                                 var comment=null
                                 var issueStstus = 2;//issue not soled and not comment
                                 if (issuedata[i].responsible_person_confirm_status == 0 && issuedata[i].issue_satus == "1")
                                 {
                                     issueStstus = 1;// if issue is not soled but commented
-                                    comment = issuedata[i].responsible_person_confirm_feedback
+                                    comment = issuedata[i].responsible_person_confirm_feedback;
                                 }
 
                                 if (issuedata[i].responsible_person_confirm_status == 1 && issuedata[i].issue_satus == "0")
                                 {
                                     issueStstus = 0;//issue is soled bt not comment
                                 }
-                                var index=i
+                                var index = i;
 
                             
-                                    get_line(line_id, issueid, divissue, issuedata[i], issueStstus, comment, index, issuedata[i].matirial)
+                                get_line(line_id, issueid, divissue, issuedata[i], issueStstus, comment, index, issuedata[i].matirial)
 
-
-
-
-                                    }
-
-
-
+                            }
                         }
-
-
                     }
                 }, error: function (r, e, w) {
                 }
@@ -345,9 +331,9 @@ if (Session["userID"] == null)
                     $("#text").hide();
                     body.empty();
                     if (response==1)
-                        body.append('<P style="color:red" class="text-center">We saved your comment for this Issue.But Issue is not solved yet.Plese Check That.</br>Thank You.</p>')
+                        body.append('<P style="color:red" class="text-center">Your comment is saved. Waiting for production line supervisors confirmation.</br>Thank You.</p>')
                     else
-                        body.append('<P style="color:green" class="text-center">Issue is Solved. Grate work!</br>Thank You.</p>')
+                        body.append('<P style="color:green" class="text-center">Issue is Solved. Great work!</br>Thank You.</p>')
                 }).fail(function (response) {
                     console.log('Error: ' + response);
                 });

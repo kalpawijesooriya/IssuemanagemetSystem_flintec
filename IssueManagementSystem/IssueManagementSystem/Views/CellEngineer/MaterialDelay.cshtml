@@ -63,7 +63,7 @@
     function SubmitMaterialDelay() {
 
         obj = new Object();
-
+        
         obj.issue_date = new Date();
         obj.material_id = document.getElementById("Material").value;
         obj.description = document.getElementById("description").value;
@@ -73,7 +73,7 @@
         obj.issue_satus = "0";
         obj.location = "KTY";
         obj.responsible_person_confirm_status = "0";
-
+        obj.material = $('#Material').find(":selected").text();
         var obj_array = new Array();
         obj_array.push(obj);
 
