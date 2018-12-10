@@ -170,8 +170,8 @@ function addLinemanager(name, empID) {
     var main_div = document.createElement("div");
 
     list_element.className = "ui-state-default";
-    list_element.style.cssText = 'overflow:hidden;display:flex;';
-    main_div.style.cssText = 'display:grid;grid-template-columns:3fr 1fr 1fr 1fr 1fr;';
+    list_element.style.cssText = 'overflow:hidden;display:flex;;width:80%';
+    main_div.style.cssText = 'display:grid;grid-template-columns:3fr 1fr 1fr 1fr 1fr';
 
     var inner_div = list_element.appendChild(main_div);
 
@@ -184,21 +184,21 @@ function addLinemanager(name, empID) {
 
     var divEmail = document.createElement("div");
     var divEmail_inner = document.createElement("input");
-    divEmail.style.cssText = 'margin-left:-95%';
+   divEmail.style.cssText = 'margin-left:-45%';
     divEmail_inner.type = "checkbox";
     divEmail.appendChild(divEmail_inner);
     inner_div.appendChild(divEmail);
 
     var divSMS = document.createElement("div");
     var divSMS_inner = document.createElement("input");
-    divSMS.style.cssText = 'margin-left:-130%';
+    divSMS.style.cssText = 'margin-left:-65%';
     divSMS_inner.type = "checkbox";
     divSMS.appendChild(divSMS_inner);
     inner_div.appendChild(divSMS);
 
     var divCall = document.createElement("div");
     var divCall_inner = document.createElement("input");
-    divCall.style.cssText = 'margin-left:-160%';
+   divCall.style.cssText = 'margin-left:-75%';
     divCall_inner.type = "checkbox";
     divCall.appendChild(divCall_inner);
     inner_div.appendChild(divCall);
@@ -207,7 +207,7 @@ function addLinemanager(name, empID) {
     var div2_inner = document.createElement("input");
     div2_inner.style.cssText = 'width:80% !important;';
     div2.setAttribute("class", "text-center");
-    div2.style.cssText = 'margin-left:-200%;width:60%';
+    div2.style.cssText = 'width:60%;margin-left:-95%';
     div2_inner.type = "text";
     div2.appendChild(div2_inner);
     inner_div.appendChild(div2);
