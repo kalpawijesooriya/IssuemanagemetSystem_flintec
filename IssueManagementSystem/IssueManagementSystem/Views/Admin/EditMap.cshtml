@@ -1,5 +1,6 @@
 ﻿
 @{
+    /**/
     ViewBag.Title = "Settings";
     Layout = "~/Views/Shared/BranchSideNav.cshtml";
     if (Session["userID"] == null)
@@ -7,6 +8,7 @@
         Response.Redirect("~/Login/Index");
     }
 }
+
 @using IssueManagementSystem.Models
 
 <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
@@ -65,21 +67,7 @@
 
         <div class="row">
             <div class="col-lg-4">
-                <div class="row">
-                    <div class="col-4">
-                        <label for="selectdepartment"> Department</label>
-                    </div>
-                    <div class="col-lg-8">
-                        <select class="js-example-placeholder-single js-states form-control" id="selectdepartment" name="selectdepartment">
-                            <option></option>
-                            <option>Assembly</option>
-                            <option>Machining</option>
-                            <option>IT</option>
-                            <option>Engineering</option>
-                            <option>Maintenance</option>
-                        </select>
-                    </div>
-                </div>
+
                 <div class="row" style="margin-top:20px;">
                     <div class="col-lg-4">
                         <label for="selectline"> Line</label>
@@ -87,18 +75,19 @@
                     <div class="col-lg-8">
                         <select class="js-example-placeholder-single js-states form-control" id="selectline" name="selectline">
                             <option></option>
-                            <option>Potted</option>
-                            <option>Welded</option>
-                            <option>SM</option>
-                            <option>Guaging</option>
-                            <option>Rocker</option>
-                            <option>MD2</option>
+                            <option value="1">Potted</option>
+                            <option value="2">Welded</option>
+                            <option value="5">SM</option>
+                            <option value="3">Guaging</option>
+                            <option value="6">Rocker</option>
+                            <option value="4">MD2</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="row" style="margin-top:20px;margin-bottom:20px;">
                     <div class="col-lg-4">
+                        <label for="selectlineIssues" style="margin-top:5px;">Issues</label>
                         <label for="selectlineIssues" style="margin-top:5px;">Issues</label>
                     </div>
                     <div class="col-lg-8">
@@ -113,9 +102,11 @@
                     </div>
                 </div>
 
+
+
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title text-center" style="color:#e30612">Set-up Line Map</h5>
+
                         <div class="row">
                             <div class="col-lg-4">
                                 <label for="h">Machine</label>
@@ -158,7 +149,6 @@
                             </div>
                         </div>
 
-                        <br />
                         <div class="row" style="margin-top:20px;margin-bottom:20px;margin-left:150px">
                             <div class="btn-group mr-2" role="group" aria-label="First group">
                                 <button id="addNewShapeButton" class="btn btn-primary">Add</button>
@@ -167,41 +157,41 @@
                                 <button id="deleteBox" class="btn btn-danger">Delete</button>
                             </div>
                         </div>
+
                     </div>
                 </div>
+                <p style="font-size:small"> background image should be placed in "~\Content\images\" and image name should be same as line name(.jpg)</p>
+                <br />
             </div>
             <div class="col-lg-4" style="margin-top:-20px">
                 <div>
                     <label style="margin-left:5em">Line Map</label>
                 </div>
-                <canvas id="canvas1" style="border: 1px solid black;margin-left:5em;background:url('../../Content/images/RCPDF1.jpg');background-size: 100% 100%;" width="250" height="750" >
+                <canvas id="canvas1" style="border: 1px solid black;margin-left:5em;" width="250" height="750">
                     <br>
-                    This text is displayed if your browser does not support HTML5 Canvas.
-                    <br>
+                         This text is displayed if your browser does not support HTML5 Canvas.
+                    </br>
                 </canvas>
 
-
             </div>
-                <div class="col-lg-4">
-                    <div class="container">
+            <div class="col-lg-4">
+                <div class="container">
 
-                        <div class="row" style="margin-top:10px;">
-                            <p>Selected Machine: <span id="elementID" style="color:#e30612"></span></p>
-
-                        </div>
-                        <div class="row" style="margin-top:20px;width:70%;">
-                            <label for="raspberrypi_ip">Raspberry-Pi Module IP Address</label>
-                            <input type="text" id="raspberrypi_ip" name="raspberrypi_ip" class="form-control" />
-                        </div>
-                        <div class="row" style="margin-top:20px;">
-
-                            <button class='btn btn-success' id="saveMap">Save Created Line</button>
-                        </div>
+                    <div class="row" style="margin-top:10px;">
+                        <p>Selected Machine: <span id="elementID" style="color:#e30612"></span></p>
 
                     </div>
+                    <div class="row" style="margin-top:20px;width:70%;">
+                        <label for="raspberrypi_ip">Raspberry-Pi Module IP Address</label>
+                        <input type="text" id="raspberrypi_ip" name="raspberrypi_ip" class="form-control" />
+                    </div>
+                    <div class="row" style="margin-top:20px;">
 
+                        <button class='btn btn-success' id="saveMap">Save Created Line</button>
+                    </div>
                 </div>
             </div>
+        </div>
     </div>
 
 </section>
@@ -209,6 +199,7 @@
 <script src="~/Scripts/jquery-3.3.1.js"></script>
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
 <script>
+
     function matchStart(params, data) {
     // If there are no search terms, return all of the data
     if ($.trim(params.term) === '') {
@@ -260,9 +251,6 @@ $('#selectlineIssues').select2({
     allowClear: false
 });
 
-
-
-
 //Draw a map js
 // By Simon Sarris
 // www.simonsarris.com
@@ -291,7 +279,7 @@ function Shape(x, y, w, h, fill,machine) {
 Shape.prototype.draw = function (ctx1) {
     ctx1.fillStyle = this.fill;
     ctx1.fillRect(this.x, this.y, this.w, this.h);
-    /*  ctx1.fillStyle = "Red";
+    /*ctx1.fillStyle = "Red";
       ctx1.font="15px Arial";
       var midx=this.x+(this.w/4);
       var midy=this.y+(this.h/3);
@@ -308,11 +296,11 @@ Shape.prototype.contains = function (mx, my) {
 
 function CanvasState(canvas) {
     // **** First some setup! ****
-
     this.canvas = canvas;
     this.width = canvas.width;
     this.height = canvas.height;
     this.ctx = canvas.getContext('2d');
+    this.ctx.clearRect(0, 0, this.width, this.height);
     // This complicates things a little but but fixes mouse co-ordinate problems
     // when there's a border or padding. See getMouse for more detail
     var stylePaddingLeft, stylePaddingTop, styleBorderLeft, styleBorderTop;
@@ -332,6 +320,7 @@ function CanvasState(canvas) {
 
     this.valid = false; // when set to false, the canvas will redraw everything
     this.shapes = [];  // the collection of things to be drawn
+    this.valid = false; // when set to false, the canvas will redraw everything
     this.dragging = false; // Keep track of when we are dragging
     // the current selected object. In the future we could turn this into an array for multiple selection
     this.selection = null;
@@ -411,28 +400,19 @@ function CanvasState(canvas) {
         var color = document.getElementById("color").value;
         var machine_id = document.getElementById("machineSelectBox").value;
         myState.addShape(new Shape(0, 0, w, h, "#" + color, machine_id));
-
     });
-
-
-
-
 
     document.getElementById("saveMap").addEventListener("click", function () {
 
-
-
         if (myState.shapes.length != 0) {
             var map = JSON.stringify(myState.shapes);
-            var department = (document.getElementById("selectdepartment").value).toString();
             var line = (document.getElementById("selectline").value).toString();
             var ipAddress = document.getElementById("raspberrypi_ip").value;
-
+            var department = "Assembly";
             var issues = $("#selectlineIssues").val();
             var issues_str = issues.toString();
             var issues_array = issues_str.split(",");
             var issues_JSON = JSON.stringify(issues_array);
-
 
             //console.log(JSON.parse(JSON.stringify(myState.shapes)));
               var url = '@Url.Action("addMap", "Admin")'
@@ -440,7 +420,7 @@ function CanvasState(canvas) {
                 type: "POST",
                 dataType: 'text',
                 url: url,
-                data: { mapJSON: map, department: department, line: line, ipAddress: ipAddress, issues: issues_JSON },
+                data: { mapJSON: map, department: department, lineID: line, ipAddress: ipAddress, issues: issues_JSON },
                 success: function (itemNameArray) {
                     alert("Done");
                 },
@@ -478,24 +458,51 @@ function CanvasState(canvas) {
     });
 
 
+    $(document.body).on("change", "#selectline", function () {
+        var lineID = (document.getElementById("selectline").value).toString();
+        var url = '@Url.Action("loadMap", "Admin")';
 
-    /*   document.getElementById("colorButton").addEventListener("click", function(){
-         console.log( myState.shapes[1]);
-          myState.shapes[1].x =0;
-          myState.shapes[1].y =0;
-          myState.shapes[1].fill = "rgba(12,12,34,1)";
-          myState.shapes[1].draw(this.ctx);
-          this.valid = false;
-         }, true);
-                         */
-    // **** Options! ****
+
+        document.getElementById('canvas1').style.background = "url('../../Content/images/" + $('#selectline').find(':selected')[0].text+ ".jpg')";
+        console.log($('#selectline').find(':selected')[0].text);
+        document.getElementById('canvas1').style.backgroundSize = "250px 750px";
+
+        $.ajax({
+            type: "POST",
+            dataType: 'text',
+            url: url,
+            data: { lineID:lineID},
+            success: function (itemNameArray) {
+                myState.loadMap(itemNameArray);
+                myState.draw();
+                myState.ctx.clearRect(0, 0, myState.width, myState.height);
+                myState.valid = false;
+
+            },
+            error: function () {
+                alert("Error");
+            }
+            });
+    });
 
     this.selectionColor = '#f4dc42';
 
     this.selectionWidth = 5;
     this.interval = 30;
-    setInterval(function () { myState.draw(); }, myState.interval);
-}
+    setInterval(function () { myState.draw(); myState.valid = false;  }, myState.interval);
+    }
+
+    CanvasState.prototype.loadMap = function (jsonT) {
+
+        var arr = JSON.parse(jsonT);
+        var issueList = JSON.parse(arr[1]);
+        var machineList = JSON.parse(arr[0]);
+        this.shapes = createObjectArray(machineList);
+        $("#selectlineIssues").val(issueList).trigger('change');
+
+    }
+
+
 
 CanvasState.prototype.addShape = function (shape) {
     this.shapes.push(shape);
@@ -532,10 +539,12 @@ CanvasState.prototype.draw = function () {
         // draw selection
         // right now this is just a stroke along the edge of the selected Shape
         if (this.selection !== null) {
+
             ctx.strokeStyle = this.selectionColor;
             ctx.lineWidth = this.selectionWidth;
             var mySel = this.selection;
             ctx.strokeRect(mySel.x, mySel.y, mySel.w, mySel.h);
+
         }
 
         // ** Add stuff you want drawn on top all the time here **
@@ -568,32 +577,28 @@ CanvasState.prototype.getMouse = function (e) {
 
     // We return a simple javascript object (a hash) with x and y defined
     return { x: mx, y: my };
-}
+    }
 
-// If you dont want to use <body onLoad='init()'>
-// You could uncomment this init() reference and place the script reference inside the body tag
-//init();
+    // If you dont want to use <body onLoad='init()'>
+    // You could uncomment this init() reference and place the script reference inside the body tag
+    //init();
 
+function createObjectArray(jsonText1)
+    {
+        var machineMap = jsonText1;
+        var newArray = new Array();
+        console.log(machineMap);
 
+        for (var i = 0; i < machineMap.length; i++) {
+            newArray.push(new Shape(machineMap[i].x, machineMap[i].y, machineMap[i].w, machineMap[i].h, machineMap[i].fill));
+        }
+        return newArray;
+    }
 
+    function init() {
+        s = new CanvasState(document.getElementById('canvas1'));
+    }
 
-
-function init() {
-    var s = new CanvasState(document.getElementById('canvas1'));
-
-
-    //  s.addShape(new Shape(60,140,40,60, 'lightskyblue'));
-
-
-}
-
-window.onload = init;
-
-
+    window.onload = init();
 // end of draw map js
-
-
-
-
 </script>
-
