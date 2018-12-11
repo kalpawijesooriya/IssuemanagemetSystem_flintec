@@ -87,12 +87,12 @@
                     <div class="col-lg-8">
                         <select class="js-example-placeholder-single js-states form-control" id="selectline" name="selectline">
                             <option></option>
-                            <option>Potted</option>
-                            <option>Welded</option>
-                            <option>SM</option>
-                            <option>Guaging</option>
-                            <option>Rocker</option>
-                            <option>MD2</option>
+                            <option value="1">Potted</option>
+                            <option value="2">Welded</option>
+                            <option value="5">SM</option>
+                            <option value="3">Guaging</option>
+                            <option value="6">Rocker</option>
+                            <option value="4">MD2</option>
                         </select>
                     </div>
                 </div>
@@ -115,7 +115,13 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title text-center" style="color:#e30612">Set-up Line Map</h5>
+                        <h5 class="card-title text-center" style="color:#484848">Set-up Line Map</h5>
+                        <div class="row" style="margin-bottom:30px;margin-top:30px;margin-left:5px;margin-right:5px;">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="customFile" onchange="readURL(this);">
+                                <label class="custom-file-label" for="customFile">Choose background image</label>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-lg-4">
                                 <label for="h">Machine</label>
@@ -174,7 +180,7 @@
                 <div>
                     <label style="margin-left:5em">Line Map</label>
                 </div>
-                <canvas id="canvas1" style="border: 1px solid black;margin-left:5em;background:url('../../Content/images/RCPDF1.jpg');background-size: 100% 100%;" width="250" height="750" >
+                <canvas id="canvas1" style="border: 1px solid black;margin-left:5em;" width="250" height="750" >
                     <br>
                     This text is displayed if your browser does not support HTML5 Canvas.
                     <br>
@@ -209,6 +215,23 @@
 <script src="~/Scripts/jquery-3.3.1.js"></script>
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
 <script>
+
+    function readURL(input) {
+        alert(input.files[0]);
+        
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            console.log(input.files[0]);
+            reader.onload = function (e) {
+                console.log(e.target.result);
+                $('#canvas1')
+                    .attr('style', "background:url(" + e.target.result+");background-size:250px 750px")
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
     function matchStart(params, data) {
     // If there are no search terms, return all of the data
     if ($.trim(params.term) === '') {
@@ -366,7 +389,7 @@ function CanvasState(canvas) {
                 myState.dragging = true;
                 myState.selection = mySel;
                 myState.valid = false;
-                document.getElementById("elementID").innerHTML = shapes[i].machine;
+                document.getElementById("elementID").innerHTML = shapes[i].machine + " (" + shapes[i].w + "x" + shapes[i].h + " Px &nbsp;&nbsp; " + shapes[i].fill+")";
                 return;
             }
         }
@@ -421,7 +444,6 @@ function CanvasState(canvas) {
     document.getElementById("saveMap").addEventListener("click", function () {
 
 
-
         if (myState.shapes.length != 0) {
             var map = JSON.stringify(myState.shapes);
             var department = (document.getElementById("selectdepartment").value).toString();
@@ -432,6 +454,8 @@ function CanvasState(canvas) {
             var issues_str = issues.toString();
             var issues_array = issues_str.split(",");
             var issues_JSON = JSON.stringify(issues_array);
+            var mapImage = document.getElementById('canvas1').style.background.substring(28);
+            mapImage = mapImage.substring(0, mapImage.indexOf('"'));
 
 
             //console.log(JSON.parse(JSON.stringify(myState.shapes)));
@@ -440,7 +464,7 @@ function CanvasState(canvas) {
                 type: "POST",
                 dataType: 'text',
                 url: url,
-                data: { mapJSON: map, department: department, line: line, ipAddress: ipAddress, issues: issues_JSON },
+                data: { mapJSON: map, department: department, lineID: line, ipAddress: ipAddress, issues: issues_JSON, mapImage: mapImage },
                 success: function (itemNameArray) {
                     alert("Done");
                 },

@@ -64,10 +64,25 @@
 </div>
 <section class="statistic statistic2">
     <div class="container">
-
+        <!--
+            <div class="row">
+                <div class="col-4">
+                    <label for="selectdepartment"> Department</label>
+                </div>
+                <div class="col-lg-8">
+                    <select class="js-example-placeholder-single js-states form-control" id="selectdepartment" name="selectdepartment">
+                        <option></option>
+                        <option>Assembly</option>
+                        <option>Machining</option>
+                        <option>IT</option>
+                        <option>Engineering</option>
+                        <option>Maintenance</option>
+                    </select>
+                </div>
+            </div>
+    -->
         <div class="row">
             <div class="col-lg-4">
-
                 <div class="row" style="margin-top:20px;">
                     <div class="col-lg-4">
                         <label for="selectline"> Line</label>
@@ -106,7 +121,12 @@
 
                 <div class="card">
                     <div class="card-body">
-
+                        <div class="row" style="margin-bottom:30px;margin-top:30px;margin-left:5px;margin-right:5px;">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="customFile" onchange="readURL(this);">
+                                <label class="custom-file-label" for="customFile">Choose background image</label>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-lg-4">
                                 <label for="h">Machine</label>
@@ -160,7 +180,7 @@
 
                     </div>
                 </div>
-                <p style="font-size:small"> background image should be placed in "~\Content\images\" and image name should be same as line name(.jpg)</p>
+                <p style="font-size:small"> background image size should be 250 x 750 Px</p>
                 <br />
             </div>
             <div class="col-lg-4" style="margin-top:-20px">
@@ -169,7 +189,7 @@
                 </div>
                 <canvas id="canvas1" style="border: 1px solid black;margin-left:5em;" width="250" height="750">
                     <br>
-                         This text is displayed if your browser does not support HTML5 Canvas.
+                    This text is displayed if your browser does not support HTML5 Canvas.
                     </br>
                 </canvas>
 
@@ -199,6 +219,21 @@
 <script src="~/Scripts/jquery-3.3.1.js"></script>
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
 <script>
+
+    function readURL(input) {
+        alert(input.files[0]);
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            console.log(input.files[0]);
+            reader.onload = function (e) {
+                console.log(e.target.result);
+                $('#canvas1')
+                    .attr('style', "background:url(" + e.target.result + ");background-size:250px 750px")
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 
     function matchStart(params, data) {
     // If there are no search terms, return all of the data
@@ -347,6 +382,7 @@ function CanvasState(canvas) {
         var l = shapes.length;
         for (var i = l - 1; i >= 0; i--) {
             if (shapes[i].contains(mx, my)) {
+                document.getElementById("deleteBox").disabled = false;
                 // Keep track of where in the object we clicked
                 // so we can move it smoothly (see mousemove)
                 var mySel = shapes[i];
@@ -355,9 +391,12 @@ function CanvasState(canvas) {
                 myState.dragging = true;
                 myState.selection = mySel;
                 myState.valid = false;
-                document.getElementById("elementID").innerHTML = shapes[i].machine;
+                document.getElementById("elementID").innerHTML = shapes[i].machine + " (" + shapes[i].w + "x" + shapes[i].h + " Px &nbsp;&nbsp; " + shapes[i].fill + ")";
+
                 return;
             }
+            else
+                document.getElementById("deleteBox").disabled = true;
         }
         // havent returned means we have failed to select anything.
         // If there was an object selected, we deselect it
@@ -404,15 +443,20 @@ function CanvasState(canvas) {
 
     document.getElementById("saveMap").addEventListener("click", function () {
 
+
         if (myState.shapes.length != 0) {
             var map = JSON.stringify(myState.shapes);
+            var department = "Assembly";
             var line = (document.getElementById("selectline").value).toString();
             var ipAddress = document.getElementById("raspberrypi_ip").value;
-            var department = "Assembly";
+
             var issues = $("#selectlineIssues").val();
             var issues_str = issues.toString();
             var issues_array = issues_str.split(",");
             var issues_JSON = JSON.stringify(issues_array);
+            var mapImage = document.getElementById('canvas1').style.background.substring(28);
+            mapImage = mapImage.substring(0, mapImage.indexOf('"'));
+
 
             //console.log(JSON.parse(JSON.stringify(myState.shapes)));
               var url = '@Url.Action("addMap", "Admin")'
@@ -420,19 +464,18 @@ function CanvasState(canvas) {
                 type: "POST",
                 dataType: 'text',
                 url: url,
-                data: { mapJSON: map, department: department, lineID: line, ipAddress: ipAddress, issues: issues_JSON },
+                data: { mapJSON: map, department: department, lineID: line, ipAddress: ipAddress, issues: issues_JSON, mapImage: mapImage },
                 success: function (itemNameArray) {
                     alert("Done");
+                    location.reload();
                 },
                 error: function () {
                     alert("Error");
                 }
-
             });
         }
         else {
             alert("Please create the map !");
-
         }
 
     });
@@ -440,6 +483,7 @@ function CanvasState(canvas) {
 
     //myState.selection.x
     document.getElementById("deleteBox").addEventListener("click", function () {
+        document.getElementById("deleteBox").disabled = true;
         var getX = myState.selection.x;
         var getY = myState.selection.y;
         var shapes = myState.shapes;
@@ -454,26 +498,25 @@ function CanvasState(canvas) {
                 return;
             }
         }
-
+       
     });
 
 
     $(document.body).on("change", "#selectline", function () {
         var lineID = (document.getElementById("selectline").value).toString();
+
         var url = '@Url.Action("loadMap", "Admin")';
-
-
-        document.getElementById('canvas1').style.background = "url('../../Content/images/" + $('#selectline').find(':selected')[0].text+ ".jpg')";
-        console.log($('#selectline').find(':selected')[0].text);
-        document.getElementById('canvas1').style.backgroundSize = "250px 750px";
-
         $.ajax({
             type: "POST",
             dataType: 'text',
             url: url,
             data: { lineID:lineID},
-            success: function (itemNameArray) {
-                myState.loadMap(itemNameArray);
+            success: function (mapData) {
+
+                document.getElementById('raspberrypi_ip').value = "";
+                document.getElementById('selectlineIssues').value = "";
+
+                myState.loadMap(mapData);
                 myState.draw();
                 myState.ctx.clearRect(0, 0, myState.width, myState.height);
                 myState.valid = false;
@@ -495,19 +538,50 @@ function CanvasState(canvas) {
     CanvasState.prototype.loadMap = function (jsonT) {
 
         var arr = JSON.parse(jsonT);
-        var issueList = JSON.parse(arr[1]);
-        var machineList = JSON.parse(arr[0]);
+
+        var machineList;
+        var issueList;
+        var raspPi_addr;
+
+        console.log(arr);
+
+        if (arr[0].length > 0) {
+            machineList = JSON.parse(arr[0]);
+            issueList = JSON.parse(arr[1]);
+        }
+        else {
+            machineList = "";
+            issueList = "";
+        }
+
+        if (arr[1].length > 0) {
+            raspPi_addr = arr[2];
+        }
+        else {
+            raspPi_addr = "";
+        }
+
+        document.getElementById('raspberrypi_ip').value = raspPi_addr;
+
         this.shapes = createObjectArray(machineList);
         $("#selectlineIssues").val(issueList).trigger('change');
 
+        var imageBase64 = arr[3];
+
+        if (imageBase64.length > 0) {
+            document.getElementById('canvas1').style.background = "url(data:image/jpeg;base64," + imageBase64 + ")";
+        }
+        else {
+            document.getElementById('canvas1').style.background = "";
+        }
+
+        document.getElementById('canvas1').style.backgroundSize = "250px 750px";
     }
-
-
 
 CanvasState.prototype.addShape = function (shape) {
     this.shapes.push(shape);
     this.valid = false;
-}
+    }
 
 CanvasState.prototype.clear = function () {
     this.ctx.clearRect(0, 0, this.width, this.height);
@@ -515,7 +589,6 @@ CanvasState.prototype.clear = function () {
 
 // While draw is called as often as the INTERVAL variable demands,
 // It only ever does something if the canvas gets invalidated by our code
-
 
 CanvasState.prototype.draw = function () {
     // if our state is invalid, redraw and validate!
@@ -596,6 +669,7 @@ function createObjectArray(jsonText1)
     }
 
     function init() {
+        document.getElementById("deleteBox").disabled = true;
         s = new CanvasState(document.getElementById('canvas1'));
     }
 
