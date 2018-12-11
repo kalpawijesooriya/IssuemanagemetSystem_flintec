@@ -443,3 +443,9 @@ G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManageme
 G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\Common.Logging.xml
 G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\Quartz.pdb
 G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\Quartz.xml
+F:\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\Common.Logging.dll
+F:\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\Quartz.dll
+F:\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\Common.Logging.pdb
+F:\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\Common.Logging.xml
+F:\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\Quartz.pdb
+F:\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\Quartz.xml
