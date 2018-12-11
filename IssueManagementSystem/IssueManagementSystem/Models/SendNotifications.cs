@@ -33,8 +33,8 @@ namespace IssueManagementSystem.Models
                 {
 
                     connection.Open();
-                    //// Sanjay : Alwasys use "dbo" prefix of database to trigger change event
-                    using (command = new SqlCommand(@"SELECT [NotificationId],[Status],[Message],[Type],[EmployeeNumber],[Date] FROM [dbo].[tbl_Notifications]", connection))
+                    //// Sanjay : Alwasys use "dbo" prefix of database to trigger change event SELECT TOP 200 * FROM [dbo].[tbl_Maintenance_MachineBreakdown] ORDER BY [Date] DESC
+                    using (command = new SqlCommand(@"SELECT TOP 200 * FROM [dbo].[tbl_Notifications] ORDER BY [Date] DESC", connection))
                     {
                         command.Notification = null;
 
