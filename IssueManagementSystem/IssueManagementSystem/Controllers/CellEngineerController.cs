@@ -54,7 +54,7 @@ namespace IssueManagementSystem.Controllers
                 var lineInfo = db.line_cell_eng.Where(x => x.cell_eng_emp_id == userID).FirstOrDefault();
                 ViewBag.lineID = lineInfo.line_id;
                 var mapInfo = db.line_map.Where(y => y.line_id == lineInfo.line_id).FirstOrDefault();
-                ViewData["map"] = mapInfo.map.ToString().Trim(); //get the map arry to ViewData
+               // ViewData["map"] = mapInfo.map.ToString().Trim(); //get the map arry to ViewData
                 return View();
             }
 
