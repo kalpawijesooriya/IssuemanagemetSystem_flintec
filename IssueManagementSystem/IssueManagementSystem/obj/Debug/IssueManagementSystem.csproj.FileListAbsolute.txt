@@ -437,3 +437,9 @@ G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManageme
 G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.dll
 G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.pdb
 G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\obj\Debug\IssueManagementSystem.csprojAssemblyReference.cache
+G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\Common.Logging.dll
+G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\Quartz.dll
+G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\Common.Logging.pdb
+G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\Common.Logging.xml
+G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\Quartz.pdb
+G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\Quartz.xml

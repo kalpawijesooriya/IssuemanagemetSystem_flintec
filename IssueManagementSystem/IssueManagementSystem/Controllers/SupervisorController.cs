@@ -134,7 +134,7 @@ namespace IssueManagementSystem.Controllers
                     issueModel.line_line_id = lineId;
                     issueModel.issue_satus = "1";
                     issueModel.issue_issue_ID = 1;//Issue id is 1 for Machine Brakedown
-
+                    string machine = issueModel.machine_machine_id;
                     var respPersonID = db.issue_line_person.Where(x => x.line_id == lineId && x.levelOfResponsibility == 1 && x.issue_id == 1).FirstOrDefault();
                     issueModel.responsible_person_emp_id = Int32.Parse(respPersonID.EmployeeNumber.ToString());
 
@@ -149,7 +149,7 @@ namespace IssueManagementSystem.Controllers
                     if (issueModel.issue_occurrence_id > 0)
                     {
                         var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
-                        string msg = line.line_name + " line Breakedown has been occurred on " + day +" at "+time1+".  Note- " + issueModel.description;
+                        string msg = line.line_name + " line Breakedown has been occurred on " + day +" at "+time1+". Machine : "+ machine + "Note- " + issueModel.description;
                         string callNote = line.line_name + " line Breakedown has been occurred on" + day + " at "+time1;
                         var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
                         com.lightON("1", displayInfo.raspberry_ip_address);//turn on the Light
@@ -200,7 +200,7 @@ namespace IssueManagementSystem.Controllers
 
                             var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
                             var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
-                            string msg = line.line_name + " line Technical issue has been occurred at " + date + " at " + time1 + ". Special Note of Line supervisor - " + issueModel.description;
+                            string msg = line.line_name + " line Technical issue has been occurred at " + day + " at " + time1 + ". Special Note of Line supervisor - " + issueModel.description;
                             string callNote = line.line_name + " line Technical issue has been occurred on" + day + " at " + time1;
                             com.lightON("3", displayInfo.raspberry_ip_address);//turn on the Light
                             sendCD(lineId, 3, msg, "Tecnical Issue has been occered", callNote);
@@ -315,7 +315,7 @@ namespace IssueManagementSystem.Controllers
                         db.Database.ExecuteSqlCommand(query_1);
                         var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
                         var line = db.lines.Where(x => x.line_id == line_id).FirstOrDefault();
-                        string msg = line.line_name + " line MaterialDelay has been occurred on " + day + " at "+ time1 + ". Special Note of Line supervisor - " + item["description"];
+                        string msg = line.line_name + " line MaterialDelay has been occurred on" + day + " at "+ time1 + ". Material:"+ item["material"]+" Special Note of Line supervisor - " + item["description"];
                         string callNote = line.line_name + " line MaterialDelay has been occurred on" + day + " at " + time1;
                         com.lightON("2", displayInfo.raspberry_ip_address);//turn on the Light
                         sendCD(line_id, 2, msg, "MaterialDelay has been occered", callNote);

@@ -25,5 +25,7 @@ namespace IssueManagementSystem.Models
         public string sendAlertAfter { get; set; }
         public Nullable<int> levelOfResponsibility { get; set; }
         public int issue_line_person_id { get; set; }
+        public Nullable<int> level { get; set; }
+        public Nullable<int> person_level { get; set; }
     }
 }

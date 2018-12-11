@@ -74,6 +74,10 @@ namespace IssueManagementSystem.Controllers
 
 
                     gsm_status = true;
+                    if (numberList != null)
+                    {
+                        doCommunicate();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -87,8 +91,8 @@ namespace IssueManagementSystem.Controllers
                 Thread.Sleep(milliseconds);
                 doCommunicate();
             }
-
-            }
+           
+        }
 
         public void lightON(string light, string ip)
         {

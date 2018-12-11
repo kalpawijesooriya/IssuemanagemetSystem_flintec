@@ -47,6 +47,8 @@
           <Property Name="sendAlertAfter" Type="varchar" MaxLength="50" />
           <Property Name="levelOfResponsibility" Type="int" />
           <Property Name="issue_line_person_id" Type="int" Nullable="false" />
+          <Property Name="level" Type="int" />
+          <Property Name="person_level" Type="int" />
         </EntityType>
         <EntityType Name="issue_occurrence">
           <Key>
@@ -349,6 +351,8 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <Property Name="sendAlertAfter" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="levelOfResponsibility" Type="Int32" />
           <Property Name="issue_line_person_id" Type="Int32" Nullable="false" />
+          <Property Name="level" Type="Int32" />
+          <Property Name="person_level" Type="Int32" />
         </EntityType>
         <EntityType Name="issue_occurrence">
           <Key>
@@ -603,6 +607,8 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <EntitySetMapping Name="issue_line_person">
             <EntityTypeMapping TypeName="issue_management_systemModel.issue_line_person">
               <MappingFragment StoreEntitySet="issue_line_person">
+                <ScalarProperty Name="person_level" ColumnName="person_level" />
+                <ScalarProperty Name="level" ColumnName="level" />
                 <ScalarProperty Name="issue_id" ColumnName="issue_id" />
                 <ScalarProperty Name="line_id" ColumnName="line_id" />
                 <ScalarProperty Name="EmployeeNumber" ColumnName="EmployeeNumber" />
