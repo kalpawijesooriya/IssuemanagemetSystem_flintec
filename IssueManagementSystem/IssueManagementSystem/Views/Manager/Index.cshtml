@@ -1,14 +1,14 @@
-﻿
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/ManagerLayout.cshtml";
-   
+
     if (Session["userID"] == null)
     {
         Response.Redirect("~/Login/Index");
     }
 }
-
+<link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
+<link href="~/Content/adminstyles/Settings.css" rel="stylesheet" />
 
 <!-- PAGE CONTENT-->
 <div class="page-content--bgf7">
@@ -60,6 +60,11 @@
     <!-- STATISTIC-->
     <section class="statistic statistic2">
         <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="title-5 m-b-35">Current Issues</h3>
+                </div>
+            </div>
             <div class="row">
                 <div class="col">
                     <div class="statistic__item statistic__item--red">
@@ -124,56 +129,79 @@
                     <!-- CHART-->
                     <div class="statistic-chart-1">
 
-                        <h3 class="title-3 m-b-30">chart</h3>
+                        <h3 class="title-3 m-b-30">Top Issues</h3>
+                        <p style="margin-top:-30px" class="title-7 m-xs-r-5">In month of December</p>
 
                         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
                         <script type="text/javascript">
 
-                            google.charts.load('current', { 'packages': ['bar'] });
+                            google.charts.load("current", { packages: ['corechart'] });
                             google.charts.setOnLoadCallback(drawChart);
-
                             function drawChart() {
+
                                 var data = google.visualization.arrayToDataTable([
-                                    ['Year', 'Sales'],
-                                    ['2014', 1000],
-                                    ['2015', 1170],
-                                    ['2016', 660],
-                                    ['2017', 1030],
-                                    ['2018', 1000],
-                                    ['2019', 1170],
-                                    ['2020', 660],
-                                    ['2021', 1030],
-                                    ['2022', 1000],
-                                    ['2023', 1170],
-                                    ['2024', 660],
-                                    ['2025', 1030],
-                                    ['2026', 1000],
-                                    ['2027', 1170],
-                                    ['2028', 660],
-                                    ['2029', 1030]
+                                    ["Element", "Density", { role: "style" }],
+                                    ["Coprrrrrrper", 8.94, "#001f3f"],
+                                    ["Silvrrrrrrrer", 10.49, "#0074D9"],
+                                    ["yr5hrrrrruy", 19.30, "#7FDBFF"],
+                                    ["pl4trrrrrm", 21.45, "color: #39CCCC"],
+                                    ["c6perrrrrrr", 8.94, "#3D9970"],
+                                    ["p5thjwewehjit5", 21.45, "#2ECC40"],
+                                    ["ctghjhjhjper", 8.94, "#01FF70"],
+                                    ["S5ykkklklkjr", 10.49, "#FFDC00"],
+                                    ["kh.kjkhjtfd", 19.30, "#FF851B"],
+                                    ["rttytytytylhy", 21.45, "color: #FF4136"]
                                 ]);
 
+                                var view = new google.visualization.DataView(data);
+                                view.setColumns([0, 1,
+                                    {
+                                        calc: "stringify",
+                                        sourceColumn: 1,
+                                        type: "string",
+                                        role: "annotation"
+                                    },
+                                    2]);
+
                                 var options = {
-                                    animation: { "startup": true },
-                                    chart: {
-                                        title: 'Company Performance',
-                                        subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+
+                                    bar: { groupWidth: "95%" },
+                                    legend: { position: "none" },
+                                    chartArea: { 'width': '100%', 'height': '60%', 'top': '0' },
+                                    hAxis: {
+                                        textStyle: {
+                                            fontSize: 9 // or the number you want
+                                        }
                                     }
                                 };
-                                var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
-                                chart.draw(data, google.charts.Bar.convertOptions(options));
+                                var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+                                chart.draw(view, options);
                             }
+
                         </script>
 
-                        <div id="columnchart_material" style="width: 100%; height: 100%;"></div>
+                        <div id="columnchart_values" style="width: 100%; height: 100%; " data-toggle="tooltip" title="This chart shows Top 10 Material delays and Machine breakdowns">
+
+
+                        </div>
+                        <div class="row" style="margin:10px;">
+                            <div class="col-lg-12">
+                                <select class="js-example-placeholder-single js-states form-control" id="issueSelectBox" name="issueSelectBox">
+                                    <option></option>
+                                    <option>Machine Breakdown</option>
+                                    <option>Material Delay</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <!-- END CHART-->
                 </div>
                 <div class="col-md-6 col-lg-4">
                     <!-- TOP CAMPAIGN-->
                     <div class="top-campaign">
-                        <h3 class="title-3 m-b-30">top campaigns</h3>
+                        <h3 class="title-3 m-b-30">Top 10 Issues took longets time to fix</h3>
+                        <p style="margin-top:-30px" class="title-7 m-xs-r-5">In month of December</p>
                         <div class="table-responsive">
                             <table class="table table-top-campaign">
                                 <tbody>
@@ -206,23 +234,38 @@
                 <div class="col-md-6 col-lg-4">
                     <!-- CHART PERCENT-->
                     <div class="chart-percent-2">
-                        <h3 class="title-3 m-b-30">chart by %</h3>
-                        <div class="chart-wrap">
-                            <canvas id="percent-chart2"></canvas>
-                            <div id="chartjs-tooltip">
-                                <table></table>
-                            </div>
-                        </div>
-                        <div class="chart-info">
-                            <div class="chart-note">
-                                <span class="dot dot--blue"></span>
-                                <span>products</span>
-                            </div>
-                            <div class="chart-note">
-                                <span class="dot dot--red"></span>
-                                <span>Services</span>
-                            </div>
-                        </div>
+                        <h3 class="title-3 m-b-30">Number of Issues by Type</h3>
+                        <p style="margin-top:-30px" class="title-7 m-xs-r-5">In month of December</p>
+
+                        <script type="text/javascript">
+                            google.charts.load("current", { packages: ["corechart"] });
+                            google.charts.setOnLoadCallback(drawChart);
+                            function drawChart() {
+                                var data = google.visualization.arrayToDataTable([
+                                    ['Issue', 'Number of Occurrence'],
+                                    ['Material Delay', 11],
+                                    ['Quality Issue', 2],
+                                    ['IT Issue', 2],
+                                    ['Technical Issue', 2],
+                                    ['MAchine Breakdown', 7]
+                                ]);
+
+                                var options = {
+                                    title: 'My Daily Activities',
+                                    is3D: true,
+                                    chartArea: { 'width': '100%', 'height': '80%', 'top': '0' },
+                                    legend: { position: "bottom" }
+                                };
+
+                                var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+                                chart.draw(data, options);
+                            }
+                        </script>
+
+                        <div id="piechart_3d" style="width: 100%; height: 100%;"></div>
+
+
+                    </div>
                     </div>
                     <!-- END CHART PERCENT-->
                 </div>
@@ -233,6 +276,7 @@
     <!-- DATA TABLE-->
     <section class="p-t-20">
         <div class="container">
+
             <div class="row">
                 <div class="col-md-12">
                     <h3 class="title-5 m-b-35">data table</h3>
@@ -439,5 +483,14 @@
         </div>
     </section>
     <!-- END DATA TABLE-->
-    
+    <script src="~/Scripts/AdminScripts/jscolar.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/AdminScripts/select2-min.js"></script>
+    <script>
+        $('#issueSelectBox').select2({
+            minimumResultsForSearch: -1,
+            placeholder: "Select issue.....",
+            allowClear: false
+        });
+    </script>
 </div>

@@ -614,6 +614,7 @@
     <Content Include="Scripts\SupervisorScripts\materialDelay.js" />
     <Content Include="Scripts\SupervisorScripts\showmap.js" />
     <Content Include="Scripts\wow.min.js" />
+    <Content Include="Views\Manager\Index.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -636,7 +637,6 @@
     <Content Include="Views\Supervisor\TechnicalIssue.cshtml" />
     <Content Include="Views\Display\Rasp.cshtml" />
     <Content Include="Views\Supervisor\ITIssue.cshtml" />
-    <Content Include="Views\Manager\Index.cshtml" />
     <Content Include="Views\Shared\ManagerLayout.cshtml" />
     <Content Include="Views\Shared\CellEngineerLayout.cshtml" />
     <Content Include="Views\CellEngineer\DashBord.cshtml" />
