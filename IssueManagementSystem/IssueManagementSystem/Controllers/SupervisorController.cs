@@ -14,7 +14,7 @@ using System.Threading;
 using System.Net.Mime;
 using Newtonsoft.Json.Linq;
 using System.Collections;
-using IssueManagementSystem.Models.IssueManagementSystem.Models;
+
 
 namespace IssueManagementSystem.Controllers
 {
@@ -45,12 +45,12 @@ namespace IssueManagementSystem.Controllers
             return Json(IssueService.GetIssue(), JsonRequestBehavior.AllowGet);
 
         }
-        [HttpGet]
-        public JsonResult GetBreakedown()
-        {
-            return Json(BreakeDownService.GetBreakedown(), JsonRequestBehavior.AllowGet);
+        //[HttpGet]
+        //public JsonResult GetBreakedown()
+        //{
+        //    return Json(BreakeDownService.GetBreakedown(), JsonRequestBehavior.AllowGet);
 
-        }
+        //}
 
         public ActionResult MachinBreakdown()//machine breakedown view
         {
@@ -135,7 +135,7 @@ namespace IssueManagementSystem.Controllers
                     issueModel.issue_satus = "1";
                     issueModel.issue_issue_ID = 1;//Issue id is 1 for Machine Brakedown
                     string machine = issueModel.machine_machine_id;
-                    var respPersonID = db.issue_line_person.Where(x => x.line_id == lineId && x.levelOfResponsibility == 1 && x.issue_id == 1).FirstOrDefault();
+                    var respPersonID = db.issue_line_person.Where(x => x.line_id == lineId && x.levelOfResponsibility == 1 && x.issue_id == 1 && x.person_level==1).FirstOrDefault();
                     issueModel.responsible_person_emp_id = Int32.Parse(respPersonID.EmployeeNumber.ToString());
 
                     var dayitem = current_time.Split(' ');
@@ -184,13 +184,14 @@ namespace IssueManagementSystem.Controllers
                         issueModel.issue_satus = "1";
                         issueModel.issue_issue_ID = 3;//Issue id is 2 for Machine Brakedown
 
-                        var respPersonID = db.issue_line_person.Where(x => x.line_id == lineId && x.levelOfResponsibility == 1 && x.issue_id == 3).FirstOrDefault();
+                        var respPersonID = db.issue_line_person.Where(x => x.line_id == lineId && x.levelOfResponsibility == 1 && x.issue_id == 3 && x.person_level == 1).FirstOrDefault();
                         issueModel.responsible_person_emp_id = Int32.Parse(respPersonID.EmployeeNumber.ToString());
 
                         var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                         var dayitem = current_time.Split(' ');
                         var day = dayitem[0];
                         var time1 = dayitem[1];
+                        var HHMM=time1.Split(':');
                         issueModel.issue_date = date;
                         issueModel.location = (string)Session["location"];
                         db.issue_occurrence.Add(issueModel);
@@ -200,8 +201,8 @@ namespace IssueManagementSystem.Controllers
 
                             var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
                             var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
-                            string msg = line.line_name + " line Technical issue has been occurred at " + day + " at " + time1 + ". Special Note of Line supervisor - " + issueModel.description;
-                            string callNote = line.line_name + " line Technical issue has been occurred on" + day + " at " + time1;
+                            string msg = line.line_name + " line Technical issue has been occurred at " + day + " at " + HHMM[0]+":"+HHMM[1] + ". Special Note of Line supervisor - " + issueModel.description;
+                            string callNote = line.line_name + " line Technical issue has been occurred on" + day + " at " + HHMM[0] + ":" + HHMM[1];
                             com.lightON("3", displayInfo.raspberry_ip_address);//turn on the Light
                             sendCD(lineId, 3, msg, "Tecnical Issue has been occered", callNote);
 
@@ -242,7 +243,7 @@ namespace IssueManagementSystem.Controllers
                     issueModel.issue_issue_ID = 5;//Issue id is 5 for IT Issue
 
                     //get certain employee assigned for a certain issue in a certain line and the level of resp. should be one
-                    var respPersonID = db.issue_line_person.Where(x => x.line_id == lineId && x.levelOfResponsibility == 1 && x.issue_id == 5).FirstOrDefault();
+                    var respPersonID = db.issue_line_person.Where(x => x.line_id == lineId && x.levelOfResponsibility == 1 && x.issue_id == 5 && x.person_level == 1).FirstOrDefault();
                     issueModel.responsible_person_emp_id = Int32.Parse(respPersonID.EmployeeNumber.ToString());
 
                     issueModel.location = (string)Session["location"];
@@ -287,7 +288,7 @@ namespace IssueManagementSystem.Controllers
                 {
                     int line_id = Int32.Parse(item["line_line_id"].ToString());
                     int issue_id = Int32.Parse(item["issue_issue_ID"].ToString());
-                    var resp_person = db.issue_line_person.Where(x => x.levelOfResponsibility == 1 && x.line_id == line_id && x.issue_id== issue_id).FirstOrDefault();
+                    var resp_person = db.issue_line_person.Where(x => x.levelOfResponsibility == 1 && x.line_id == line_id && x.issue_id== issue_id && x.person_level == 1).FirstOrDefault();
                     try
                     {
                         var responsible_person_emp_id = resp_person.EmployeeNumber;
@@ -351,7 +352,7 @@ namespace IssueManagementSystem.Controllers
                 }
                 using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
                 {
-                    var communicationInfo = db.issue_line_person.Where(x => x.line_id == line_line_id && x.issue_id == issueId).OrderBy(x => x.levelOfResponsibility).ToList();
+                    var communicationInfo = db.issue_line_person.Where(x => x.line_id == line_line_id && x.issue_id == issueId &&x.person_level==1).OrderBy(x => x.levelOfResponsibility).ToList();
                     Queue numberList = new Queue();
                     foreach (var item in communicationInfo)
                     {

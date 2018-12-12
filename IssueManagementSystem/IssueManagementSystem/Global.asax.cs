@@ -23,9 +23,10 @@ namespace IssueManagementSystem
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             var connectionString = ConfigurationManager.ConnectionStrings["issue_management_systemEntities2"];
-            var connectionString2 = ConfigurationManager.ConnectionStrings["BigRedEntities2"];
-            SqlDependency.Start(@connectionString2.ToString());
+            // var connectionString2 = ConfigurationManager.ConnectionStrings["BigRedEntities2"];
+            SqlDependency.Start(@connectionString.ToString());
             JobScheduler.Start();
         }
     }
 }
+
