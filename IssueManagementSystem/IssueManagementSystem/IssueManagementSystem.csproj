@@ -206,7 +206,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Hubs\BreakeHub.cs" />
     <Compile Include="Hubs\IssueHub.cs" />
     <Compile Include="Hubs\MyHub.cs" />
     <Compile Include="ISMHub.cs" />
@@ -226,7 +225,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BigRed.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\BreakeDownListener.cs" />
     <Compile Include="Models\CommunicationData.cs" />
     <Compile Include="Models\department.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
@@ -352,7 +350,6 @@
     <Content Include="Content\fontawesome.css" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\quality-logo.png" />
-    <Content Include="Content\images\rocker.jpg" />
     <Content Include="Content\Manager\bootstrap.min.css" />
     <Content Include="Content\material-design-iconic-font.min.css" />
     <Content Include="Content\hamburgers.min.css" />

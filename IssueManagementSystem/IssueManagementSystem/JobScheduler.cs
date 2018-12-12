@@ -15,7 +15,7 @@ namespace IssueManagementSystem
 
             ITrigger trigger = TriggerBuilder.Create()
                 .WithDailyTimeIntervalSchedule
-                  (s => s.WithIntervalInMinutes(30).OnEveryDay()
+                  (s => s.WithIntervalInHours(23).OnEveryDay()
                    
                   )
                 .Build();

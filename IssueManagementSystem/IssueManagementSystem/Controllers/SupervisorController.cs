@@ -14,7 +14,7 @@ using System.Threading;
 using System.Net.Mime;
 using Newtonsoft.Json.Linq;
 using System.Collections;
-using IssueManagementSystem.Models.IssueManagementSystem.Models;
+
 
 namespace IssueManagementSystem.Controllers
 {
@@ -45,12 +45,12 @@ namespace IssueManagementSystem.Controllers
             return Json(IssueService.GetIssue(), JsonRequestBehavior.AllowGet);
 
         }
-        [HttpGet]
-        public JsonResult GetBreakedown()
-        {
-            return Json(BreakeDownService.GetBreakedown(), JsonRequestBehavior.AllowGet);
+        //[HttpGet]
+        //public JsonResult GetBreakedown()
+        //{
+        //    return Json(BreakeDownService.GetBreakedown(), JsonRequestBehavior.AllowGet);
 
-        }
+        //}
 
         public ActionResult MachinBreakdown()//machine breakedown view
         {
