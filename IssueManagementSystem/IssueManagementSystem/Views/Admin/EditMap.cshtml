@@ -117,8 +117,6 @@
                     </div>
                 </div>
 
-
-
                 <div class="card">
                     <div class="card-body">
                         <div class="row" style="margin-bottom:30px;margin-top:30px;margin-left:5px;margin-right:5px;">
@@ -207,7 +205,7 @@
                     </div>
                     <div class="row" style="margin-top:20px;">
 
-                        <button class='btn btn-success' id="saveMap">Save Created Line</button>
+                        <button class='btn btn-success' id="saveMap">Save Line</button>
                     </div>
                 </div>
             </div>
@@ -221,7 +219,6 @@
 <script>
 
     function readURL(input) {
-        alert(input.files[0]);
 
         if (input.files && input.files[0]) {
             var reader = new FileReader();
@@ -392,7 +389,6 @@ function CanvasState(canvas) {
                 myState.selection = mySel;
                 myState.valid = false;
                 document.getElementById("elementID").innerHTML = shapes[i].machine + " (" + shapes[i].w + "x" + shapes[i].h + " Px &nbsp;&nbsp; " + shapes[i].fill + ")";
-
                 return;
             }
             else
@@ -459,7 +455,7 @@ function CanvasState(canvas) {
 
 
             //console.log(JSON.parse(JSON.stringify(myState.shapes)));
-              var url = '@Url.Action("addMap", "Admin")'
+            var url = '@Url.Action("addMap", "Admin")';
             $.ajax({
                 type: "POST",
                 dataType: 'text',
@@ -474,10 +470,10 @@ function CanvasState(canvas) {
                 }
             });
         }
-        else {
+        else
+        {
             alert("Please create the map !");
         }
-
     });
 
 
@@ -554,7 +550,7 @@ function CanvasState(canvas) {
             issueList = "";
         }
 
-        if (arr[1].length > 0) {
+        if (arr[1].length > 1) {
             raspPi_addr = arr[2];
         }
         else {

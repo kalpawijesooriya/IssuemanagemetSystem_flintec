@@ -178,7 +178,7 @@ function addLinemanager(name, empID) {
     var divName = document.createElement("div");
     var divName_inner = document.createElement("p");
     divName .style.cssText = 'margin-left:20px';
-    divName_inner.setAttribute("id", name);
+    divName_inner.setAttribute("id", name+"manager");
     divName.appendChild(divName_inner);
     inner_div.appendChild(divName);
 
@@ -215,7 +215,7 @@ function addLinemanager(name, empID) {
 
     document.getElementById("managersortable").appendChild(list_element);
 
-    document.getElementById(name).innerHTML = empID + " - " + name;
+    document.getElementById(name + "manager").innerHTML = empID + " - " + name;
 
 }
 
