@@ -606,6 +606,7 @@
     <Content Include="Scripts\Manager\popper.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\particles.min.js" />
     <Content Include="Scripts\perfect-scrollbar.min.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
@@ -617,6 +618,7 @@
     <Content Include="Scripts\SupervisorScripts\materialDelay.js" />
     <Content Include="Scripts\SupervisorScripts\showmap.js" />
     <Content Include="Scripts\wow.min.js" />
+    <Content Include="Views\Manager\Index.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -639,7 +641,6 @@
     <Content Include="Views\Supervisor\TechnicalIssue.cshtml" />
     <Content Include="Views\Display\Rasp.cshtml" />
     <Content Include="Views\Supervisor\ITIssue.cshtml" />
-    <Content Include="Views\Manager\Index.cshtml" />
     <Content Include="Views\Shared\ManagerLayout.cshtml" />
     <Content Include="Views\Shared\CellEngineerLayout.cshtml" />
     <Content Include="Views\CellEngineer\DashBord.cshtml" />
