@@ -123,14 +123,50 @@
                 <div class="col-md-6 col-lg-4">
                     <!-- CHART-->
                     <div class="statistic-chart-1">
+
                         <h3 class="title-3 m-b-30">chart</h3>
-                        <div class="chart-wrap">
-                            <canvas id="widgetChart5"></canvas>
-                        </div>
-                        <div class="statistic-chart-1-note">
-                            <span class="big">10,368</span>
-                            <span>/ 16220 items sold</span>
-                        </div>
+
+                        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+                        <script type="text/javascript">
+
+                            google.charts.load('current', { 'packages': ['bar'] });
+                            google.charts.setOnLoadCallback(drawChart);
+
+                            function drawChart() {
+                                var data = google.visualization.arrayToDataTable([
+                                    ['Year', 'Sales'],
+                                    ['2014', 1000],
+                                    ['2015', 1170],
+                                    ['2016', 660],
+                                    ['2017', 1030],
+                                    ['2018', 1000],
+                                    ['2019', 1170],
+                                    ['2020', 660],
+                                    ['2021', 1030],
+                                    ['2022', 1000],
+                                    ['2023', 1170],
+                                    ['2024', 660],
+                                    ['2025', 1030],
+                                    ['2026', 1000],
+                                    ['2027', 1170],
+                                    ['2028', 660],
+                                    ['2029', 1030]
+                                ]);
+
+                                var options = {
+                                    animation: { "startup": true },
+                                    chart: {
+                                        title: 'Company Performance',
+                                        subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+                                    }
+                                };
+                                var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+                                chart.draw(data, google.charts.Bar.convertOptions(options));
+                            }
+                        </script>
+
+                        <div id="columnchart_material" style="width: 100%; height: 100%;"></div>
                     </div>
                     <!-- END CHART-->
                 </div>

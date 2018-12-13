@@ -54,5 +54,16 @@ namespace IssueManagementSystem.Controllers
             return Json(true);
         }
 
+        /*
+        -->  Managers should be able to see how many machine have been broken in a certain time period
+        -->  Machines with highest breakdown rate / Materials coursed for most issues
+        -->  Current issues
+        -->  History of solved issues (All)
+                    ....How much of time has been taken to solve a issue
+                    ....responsible person
+                    ....sort by time
+         --> 
+         */
+
     }
 }

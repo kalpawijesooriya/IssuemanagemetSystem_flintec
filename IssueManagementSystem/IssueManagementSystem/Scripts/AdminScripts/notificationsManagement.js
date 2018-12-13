@@ -85,10 +85,10 @@ function addmanager()
             //if UL has more than one list element
 
             var ul = document.getElementById("managersortable");
-            var items = ul.getElementsByTagName("li");
-            for (var i = 1; i < items.length; ++i) {
+            var item = ul.getElementsByTagName("li");
+            for (var i = 1; i < item.length; ++i) {
                 console.log(i);
-                var EmployeeNumber = Number(items[i].childNodes[0].childNodes[0].childNodes[0].innerHTML.split('-')[0].trim());
+                var EmployeeNumber = Number(item[i].childNodes[0].childNodes[0].childNodes[0].innerHTML.split('-')[0].trim());
 
                 if (EmployeeNumber == empID) {
                     alert("User already added");
@@ -120,7 +120,7 @@ function addLine(name, empID) {
 
     var divName = document.createElement("div");
     var divName_inner = document.createElement("p");
-    divName_inner.setAttribute("id",name);
+    divName_inner.setAttribute("id",name+"manager");
     divName.appendChild(divName_inner);
     inner_div.appendChild(divName); 
 
@@ -160,7 +160,7 @@ function addLine(name, empID) {
 
     document.getElementById("sortable").appendChild(list_element);
 
-    document.getElementById(name).innerHTML = empID+" - "+name;
+    document.getElementById(name+"manager").innerHTML = empID+" - "+name;
 
 }
 

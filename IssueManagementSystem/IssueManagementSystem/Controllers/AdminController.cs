@@ -84,18 +84,22 @@ namespace IssueManagementSystem.Controllers
 
         private void saveBase64Image(string outputPath, string base64String)
         {
-            byte[] bytes = Convert.FromBase64String(base64String);
-            Image image;
-            using (MemoryStream ms = new MemoryStream(bytes))
-            {
-                image = Image.FromStream(ms);
+            try {
+                byte[] bytes = Convert.FromBase64String(base64String);
+                Image image;
+                using (MemoryStream ms = new MemoryStream(bytes))
+                {
+                    image = Image.FromStream(ms);
+                }
+
+                var path = System.Web.HttpContext.Current.Server.MapPath(outputPath);
+
+                var i = new Bitmap(image);
+                i.Save(path, System.Drawing.Imaging.ImageFormat.Jpeg);
             }
+            catch (Exception ex) {
 
-            var path = System.Web.HttpContext.Current.Server.MapPath(outputPath);
-
-            var i = new Bitmap(image);
-            i.Save(path, System.Drawing.Imaging.ImageFormat.Jpeg);
-
+            }
             // image.Save(fullOutputPath, System.Drawing.Imaging.ImageFormat.Jpeg);
         }
 
@@ -132,35 +136,45 @@ namespace IssueManagementSystem.Controllers
         [HttpPost]
         public ActionResult loadMap(String lineID)
         {
-            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
-            {
-                //retrieve data in to line_map table
-                string query1 = "SELECT TOP (1) line_map.map,line_map.issues FROM line_map WHERE line_id =" + lineID + " ORDER BY line_map_id DESC";
+            List<string> c = new List<string>();
 
-                var map_issueList = db.Database.SqlQuery<tempClass>(query1).ToList();
-                var image = loadBase64Image("~/Content/images/" + lineID + ".jpg");
-
-                List<string> c = new List<string>();
-
-                if (map_issueList.Count > 0)
+            try {
+                using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
                 {
-                    c.Insert(c.Count, map_issueList[0].map);//map
-                    c.Insert(c.Count, map_issueList[0].issues);//issues list
+                    //retrieve data in to line_map table
+                    string query1 = "SELECT TOP (1) line_map.map,line_map.issues FROM line_map WHERE line_id =" + lineID + " ORDER BY line_map_id DESC";
 
-                    string query2 = "SELECT TOP(1) display.raspberry_ip_address FROM display WHERE display.line_id=" + lineID + " ORDER BY display_id DESC";
-                    var query2Results = db.Database.SqlQuery<string>(query2).ToList();
+                    var map_issueList = db.Database.SqlQuery<tempClass>(query1).ToList();
 
-                    c.Insert(c.Count, query2Results[0]); //IP
-                    c.Insert(c.Count, image);//image
+                    var image = loadBase64Image("~/Content/images/" + lineID + ".jpg");
+
+                    if (map_issueList.Count > 0)
+                    {
+                        c.Insert(c.Count, map_issueList[0].map);//map
+                        c.Insert(c.Count, map_issueList[0].issues);//issues list
+
+                        string query2 = "SELECT TOP(1) display.raspberry_ip_address FROM display WHERE display.line_id=" + lineID + " ORDER BY display_id DESC";
+                        var query2Results = db.Database.SqlQuery<string>(query2).ToList();
+
+                        c.Insert(c.Count, query2Results[0]); //IP
+                        c.Insert(c.Count, image);//image
+                    }
+
+                    else
+                    {
+                        c.Insert(c.Count, "");//map 
+                        c.Insert(c.Count, "");// issues list
+                        c.Insert(c.Count, ""); //IP
+                        c.Insert(c.Count, image);//image
+                    }
+                    return Json(c, JsonRequestBehavior.AllowGet);
                 }
-
-                else
-                {
-                    c.Insert(c.Count,"");//map 
-                    c.Insert(c.Count,"");// issues list
-                    c.Insert(c.Count,""); //IP
-                    c.Insert(c.Count,image);//image
-                }
+            }
+            catch (Exception ex) {
+                c.Insert(c.Count, "");//map 
+                c.Insert(c.Count, "");// issues list
+                c.Insert(c.Count, ""); //IP
+                c.Insert(c.Count, "");//image
                 return Json(c, JsonRequestBehavior.AllowGet);
             }
         }
