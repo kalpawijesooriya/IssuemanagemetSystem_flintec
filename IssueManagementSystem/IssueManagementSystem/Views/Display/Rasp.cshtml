@@ -27,7 +27,7 @@
 <div style="display:flex">
     <div style="display:inline-grid;grid-template-columns: 50%  50%">
         <div id="container">
-            <canvas id="canvas1" style="border: 1px solid black;margin-left:2em;background:url('../../Content/images/6.jpg');background-size: 100% 100%;" width="250" height="750">
+            <canvas id="canvas1" style="border: 1px solid black;margin-left:2em;" width="250" height="750">
                 <br> This text is displayed if your browser does not support HTML5 Canvas. </br>
             </canvas>
         </div>
@@ -253,7 +253,8 @@
 
             function init() {
                 var s = new CanvasState(document.getElementById('canvas1'));
-
+                document.getElementById('canvas1').style.background = "url(../../Content/images/" +@ViewBag.id+".jpg)";
+                document.getElementById('canvas1').style.backgroundSize = "250px 750px";
                 setInterval(function () {
                     //console.log(globalvariable);
                     if (globalvariable == 0) { globalvariable = 1; }
@@ -275,11 +276,13 @@
                         alert("Error occurred");
                     }
                 });
-
+              
             }
 
             function blinkMap() {
-                 var url = '@Url.Action("getBlinkingMachinesList", "Display")'
+                var url = '@Url.Action("getBlinkingMachinesList", "Display")'
+                document.getElementById('canvas1').style.background = "url(../../Content/images/" +@ViewBag.id+".jpg)";
+                document.getElementById('canvas1').style.backgroundSize = "250px 750px";
                 $.ajax({
                     type: "POST",
                     dataType: 'text',
