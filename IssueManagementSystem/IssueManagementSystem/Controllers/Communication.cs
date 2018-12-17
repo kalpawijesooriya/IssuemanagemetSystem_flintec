@@ -214,7 +214,7 @@ namespace IssueManagementSystem.Controllers
             }
             sr.Close();
             stream.Close();
-
+            callCount = 0;
 
         }
 

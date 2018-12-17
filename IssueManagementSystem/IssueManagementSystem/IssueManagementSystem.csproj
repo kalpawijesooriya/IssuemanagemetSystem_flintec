@@ -356,9 +356,12 @@
     <Content Include="Content\Manager\bootstrap.min.css" />
     <Content Include="Content\material-design-iconic-font.min.css" />
     <Content Include="Content\hamburgers.min.css" />
+    <Content Include="Content\Nunito.css" />
     <Content Include="Content\perfect-scrollbar.css" />
+    <Content Include="Content\Poiret.css" />
     <Content Include="Content\slick.css" />
     <Content Include="Content\theme.css" />
+    <Content Include="Content\UqyVK80NJXN4zfRgbdfbo5pcV_cx.woff2" />
     <Content Include="Content\webfonts\fa-brands-400.svg" />
     <Content Include="Content\webfonts\fa-regular-400.svg" />
     <Content Include="Content\webfonts\fa-solid-900.svg" />

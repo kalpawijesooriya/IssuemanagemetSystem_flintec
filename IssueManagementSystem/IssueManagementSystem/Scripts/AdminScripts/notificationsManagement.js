@@ -120,7 +120,7 @@ function addLine(name, empID) {
 
     var divName = document.createElement("div");
     var divName_inner = document.createElement("p");
-    divName_inner.setAttribute("id",name+"manager");
+    divName_inner.setAttribute("id",name);
     divName.appendChild(divName_inner);
     inner_div.appendChild(divName); 
 
@@ -160,7 +160,7 @@ function addLine(name, empID) {
 
     document.getElementById("sortable").appendChild(list_element);
 
-    document.getElementById(name+"manager").innerHTML = empID+" - "+name;
+    document.getElementById(name).innerHTML = empID+" - "+name;
 
 }
 

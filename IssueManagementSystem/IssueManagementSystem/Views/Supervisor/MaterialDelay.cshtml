@@ -11,7 +11,7 @@
 @using IssueManagementSystem.Models
 
 <link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
-<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href="~/Content/googlegrafics.css" rel="stylesheet" />
 <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
 <link href="~/Content/adminstyles/Settings.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
@@ -31,7 +31,7 @@
                     <option></option>
                     @foreach (var m in Model.materialList)
                     {
-                        <option value="@m.No_">@m.Search_Description</option>
+                    <option value="@m.No_">@m.No_ - @m.Search_Description</option>
                     }
                 </select>
 
