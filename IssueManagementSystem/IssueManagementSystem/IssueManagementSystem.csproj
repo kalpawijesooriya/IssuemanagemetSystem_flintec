@@ -202,6 +202,8 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\SupervisorController.cs" />
+    <Compile Include="Hubs\BreakeHub.cs" />
+    <Compile Include="Models\BreakeDownListener.cs" />
     <Compile Include="SendNotificationToLevel2.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -348,14 +350,18 @@
     <Content Include="Content\font-face.css" />
     <Content Include="Content\fontawesome-all.min.css" />
     <Content Include="Content\fontawesome.css" />
+    <Content Include="Content\googlegrafics.css" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\quality-logo.png" />
     <Content Include="Content\Manager\bootstrap.min.css" />
     <Content Include="Content\material-design-iconic-font.min.css" />
     <Content Include="Content\hamburgers.min.css" />
+    <Content Include="Content\Nunito.css" />
     <Content Include="Content\perfect-scrollbar.css" />
+    <Content Include="Content\Poiret.css" />
     <Content Include="Content\slick.css" />
     <Content Include="Content\theme.css" />
+    <Content Include="Content\UqyVK80NJXN4zfRgbdfbo5pcV_cx.woff2" />
     <Content Include="Content\webfonts\fa-brands-400.svg" />
     <Content Include="Content\webfonts\fa-regular-400.svg" />
     <Content Include="Content\webfonts\fa-solid-900.svg" />
@@ -603,6 +609,7 @@
     <Content Include="Scripts\Manager\popper.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\particles.min.js" />
     <Content Include="Scripts\perfect-scrollbar.min.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />

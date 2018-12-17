@@ -1,5 +1,5 @@
-﻿@import url('https://fonts.googleapis.com/css?family=Nunito');
-@import url('https://fonts.googleapis.com/css?family=Poiret+One');
+﻿@import url('Poiret.css');
+@import url('Nunito.css');
 
 body, html {
     height: 100%;

@@ -29,7 +29,7 @@ namespace IssueManagementSystem.Controllers
         public void setCD(Queue CommunicationList)
         {
 
-            numberList=CommunicationList;          
+            numberList= new Queue (CommunicationList.ToArray());          
             doCommunicate();
         }
 
@@ -74,7 +74,7 @@ namespace IssueManagementSystem.Controllers
 
 
                     gsm_status = true;
-                    if (numberList != null)
+                    if (numberList.Count!= 0)
                     {
                         doCommunicate();
                     }
@@ -214,7 +214,7 @@ namespace IssueManagementSystem.Controllers
             }
             sr.Close();
             stream.Close();
-
+            callCount = 0;
 
         }
 
