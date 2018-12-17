@@ -462,6 +462,7 @@ function CanvasState(canvas) {
                 url: url,
                 data: { mapJSON: map, department: department, lineID: line, ipAddress: ipAddress, issues: issues_JSON, mapImage: mapImage },
                 success: function (itemNameArray) {
+                    console.log(itemNameArray);
                     alert("Done");
                     location.reload();
                 },

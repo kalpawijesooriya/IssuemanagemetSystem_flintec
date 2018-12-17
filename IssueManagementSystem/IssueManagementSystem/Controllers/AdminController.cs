@@ -167,6 +167,7 @@ namespace IssueManagementSystem.Controllers
                         c.Insert(c.Count, ""); //IP
                         c.Insert(c.Count, image);//image
                     }
+                    Debug.Print(c.ToString());
                     return Json(c, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -179,12 +180,11 @@ namespace IssueManagementSystem.Controllers
             }
         }
 
-
         [HttpPost]
         public ActionResult retrieveData() {
 
             return View();
-            // return Json(persons, JsonRequestBehavior.AllowGet);
+          //return Json(persons, JsonRequestBehavior.AllowGet);
         }
 
 
