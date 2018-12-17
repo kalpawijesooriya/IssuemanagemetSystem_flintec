@@ -79,10 +79,13 @@ namespace IssueManagementSystem.Controllers
              ]
          );
          */
+           // List<String> mList = imsDbContext.tblWorkstation_Config.ToList();
 
-            var c = "{'['['Jan', 37.8, 80.8, 41.8, 37.8, 80.8, 20]','['Feb', 30.9, 69.5, 32.4, 37.8, 80.8, 20]','['Mar', 25.4, 57, 25.7, 37.8, 80.8, 20]']'}";
 
-            return Json(c, JsonRequestBehavior.AllowGet);
+
+            //       var c = "{'['['Jan', 37.8, 80.8, 41.8, 37.8, 80.8, 20]','['Feb', 30.9, 69.5, 32.4, 37.8, 80.8, 20]','['Mar', 25.4, 57, 25.7, 37.8, 80.8, 20]']'}";
+
+            return Json("", JsonRequestBehavior.AllowGet);
         }
 
         /*

@@ -27,14 +27,13 @@
 <div style="display:flex">
     <div style="display:inline-grid;grid-template-columns: 50%  50%">
         <div id="container">
-            <canvas id="canvas1" style="border: 1px solid black;margin-left:2em;background:url('../../Content/images/RCPDF1.jpg');background-size: 100% 100%;" width="250" height="750">
+            <canvas id="canvas1" style="border: 1px solid black;margin-left:2em;background:url('../../Content/images/6.jpg');background-size: 100% 100%;" width="250" height="750">
                 <br> This text is displayed if your browser does not support HTML5 Canvas. </br>
             </canvas>
         </div>
 
         <label id="map" style="display: none;"> @map</label>
     </div>
-
 
     <div class="container-fluid margin">
         <div class="displayhedding" style="margin-top:-20pt">
@@ -183,16 +182,8 @@
                     $('#Softwarediv').hide();
                     $('#tecnicaldiv').hide();
 
-
-
-
-
                     issuedata = $.parseJSON(issuedata);
                     if (issuedata.length > 0) {
-
-
-
-
 
                         blinkMap();
                         for (var i = 0; i < issuedata.length; i++) {
@@ -247,22 +238,8 @@
                                     divissue.append(issue)
                                     divissue.show('slow');
                                 }
-
-
-
-
-
-
-
-
-
                             }
-
-
-
                         }
-
-
                     }
                 }, error: function (r, e, w) {
                 }
