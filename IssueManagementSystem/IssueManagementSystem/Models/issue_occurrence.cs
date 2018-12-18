@@ -38,7 +38,6 @@ namespace IssueManagementSystem.Models
         public string lineid { get; set; }
         public string Role { get; set; }
         public Nullable<int> manager_notifi_status { get; set; }
-     
-    
+
     }
 }
