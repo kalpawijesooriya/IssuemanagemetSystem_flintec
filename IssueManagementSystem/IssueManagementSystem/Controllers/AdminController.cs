@@ -179,12 +179,11 @@ namespace IssueManagementSystem.Controllers
             }
         }
 
-
         [HttpPost]
         public ActionResult retrieveData() {
 
             return View();
-            // return Json(persons, JsonRequestBehavior.AllowGet);
+            //return Json(persons, JsonRequestBehavior.AllowGet);
         }
 
 

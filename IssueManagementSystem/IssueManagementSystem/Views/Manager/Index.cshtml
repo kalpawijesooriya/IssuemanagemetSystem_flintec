@@ -9,6 +9,8 @@
 }
 <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
 <link href="~/Content/adminstyles/Settings.css" rel="stylesheet" />
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 
 <!-- PAGE CONTENT-->
 <div class="page-content--bgf7">
@@ -58,6 +60,7 @@
     </section>
     <!-- END WELCOME-->
     <!-- STATISTIC-->
+
     <section class="statistic statistic2">
         <div class="container">
             <div class="row">
@@ -117,13 +120,19 @@
     </section>
     <!-- END STATISTIC-->
     <!-- STATISTIC CHART-->
-    <section class="statistic-chart">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h3 class="title-5 m-b-35">statistics</h3>
+            <section class="p-t-20">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12" style="margin-bottom:50px;background-color:white;padding:20px;">
+
+                            <h3 class="title-3 m-b-30">Total issue Occurences by month</h3>
+                            <p style="margin-top:-30px" class="title-7 m-xs-r-5">In 2019</p>
+                            <div id="linechart_material" width=100% height=100% style="margin-top:20px;"></div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </section>
+
             <div class="row">
                 <div class="col-md-6 col-lg-4">
                     <!-- CHART-->
@@ -131,55 +140,6 @@
 
                         <h3 class="title-3 m-b-30">Top Issues</h3>
                         <p style="margin-top:-30px" class="title-7 m-xs-r-5">In month of December</p>
-
-                        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
-                        <script type="text/javascript">
-
-                            google.charts.load("current", { packages: ['corechart'] });
-                            google.charts.setOnLoadCallback(drawChart);
-                            function drawChart() {
-
-                                var data = google.visualization.arrayToDataTable([
-                                    ["Element", "Density", { role: "style" }],
-                                    ["Coprrrrrrper", 8.94, "#001f3f"],
-                                    ["Silvrrrrrrrer", 10.49, "#0074D9"],
-                                    ["yr5hrrrrruy", 19.30, "#7FDBFF"],
-                                    ["pl4trrrrrm", 21.45, "color: #39CCCC"],
-                                    ["c6perrrrrrr", 8.94, "#3D9970"],
-                                    ["p5thjwewehjit5", 21.45, "#2ECC40"],
-                                    ["ctghjhjhjper", 8.94, "#01FF70"],
-                                    ["S5ykkklklkjr", 10.49, "#FFDC00"],
-                                    ["kh.kjkhjtfd", 19.30, "#FF851B"],
-                                    ["rttytytytylhy", 21.45, "color: #FF4136"]
-                                ]);
-
-                                var view = new google.visualization.DataView(data);
-                                view.setColumns([0, 1,
-                                    {
-                                        calc: "stringify",
-                                        sourceColumn: 1,
-                                        type: "string",
-                                        role: "annotation"
-                                    },
-                                    2]);
-
-                                var options = {
-
-                                    bar: { groupWidth: "95%" },
-                                    legend: { position: "none" },
-                                    chartArea: { 'width': '100%', 'height': '60%', 'top': '0' },
-                                    hAxis: {
-                                        textStyle: {
-                                            fontSize: 9 // or the number you want
-                                        }
-                                    }
-                                };
-                                var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
-                                chart.draw(view, options);
-                            }
-
-                        </script>
 
                         <div id="columnchart_values" style="width: 100%; height: 100%; " data-toggle="tooltip" title="This chart shows Top 10 Material delays and Machine breakdowns">
 
@@ -236,261 +196,355 @@
                     <div class="chart-percent-2">
                         <h3 class="title-3 m-b-30">Number of Issues by Type</h3>
                         <p style="margin-top:-30px" class="title-7 m-xs-r-5">In month of December</p>
-
-                        <script type="text/javascript">
-                            google.charts.load("current", { packages: ["corechart"] });
-                            google.charts.setOnLoadCallback(drawChart);
-                            function drawChart() {
-                                var data = google.visualization.arrayToDataTable([
-                                    ['Issue', 'Number of Occurrence'],
-                                    ['Material Delay', 11],
-                                    ['Quality Issue', 2],
-                                    ['IT Issue', 2],
-                                    ['Technical Issue', 2],
-                                    ['MAchine Breakdown', 7]
-                                ]);
-
-                                var options = {
-                                    title: 'My Daily Activities',
-                                    is3D: true,
-                                    chartArea: { 'width': '100%', 'height': '80%', 'top': '0' },
-                                    legend: { position: "bottom" }
-                                };
-
-                                var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-                                chart.draw(data, options);
-                            }
-                        </script>
-
                         <div id="piechart_3d" style="width: 100%; height: 100%;"></div>
 
-
                     </div>
+                </div>
+                <!-- END CHART PERCENT-->
+            </div>
+        </div>
+</div>
+    </section>
+<!-- END STATISTIC CHART-->
+<!-- DATA TABLE-->
+<section class="p-t-20">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="title-5 m-b-35">data table</h3>
+                <div class="table-data__tool">
+                    <div class="table-data__tool-left">
+                        <div class="rs-select2--light rs-select2--md">
+                            <select class="js-select2" name="property">
+                                <option selected="selected">All Properties</option>
+                                <option value="">Option 1</option>
+                                <option value="">Option 2</option>
+                            </select>
+                            <div class="dropDownSelect2"></div>
+                        </div>
+                        <div class="rs-select2--light rs-select2--sm">
+                            <select class="js-select2" name="time">
+                                <option selected="selected">Today</option>
+                                <option value="">3 Days</option>
+                                <option value="">1 Week</option>
+                            </select>
+                            <div class="dropDownSelect2"></div>
+                        </div>
+                        <button class="au-btn-filter">
+                            <i class="zmdi zmdi-filter-list"></i>filters
+                        </button>
                     </div>
-                    <!-- END CHART PERCENT-->
+                    <div class="table-data__tool-right">
+                        <button class="au-btn au-btn-icon au-btn--green au-btn--small">
+                            <i class="zmdi zmdi-plus"></i>add item
+                        </button>
+                        <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
+                            <select class="js-select2" name="type">
+                                <option selected="selected">Export</option>
+                                <option value="">Option 1</option>
+                                <option value="">Option 2</option>
+                            </select>
+                            <div class="dropDownSelect2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive table-responsive-data2">
+                    <table class="table table-data2">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <label class="au-checkbox">
+                                        <input type="checkbox">
+                                        <span class="au-checkmark"></span>
+                                    </label>
+                                </th>
+                                <th>name</th>
+                                <th>email</th>
+                                <th>description</th>
+                                <th>date</th>
+                                <th>status</th>
+                                <th>price</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="tr-shadow">
+                                <td>
+                                    <label class="au-checkbox">
+                                        <input type="checkbox">
+                                        <span class="au-checkmark"></span>
+                                    </label>
+                                </td>
+                                <td>Lori Lynch</td>
+                                <td>
+                                    <span class="block-email">lori@example.com</span>
+                                </td>
+                                <td class="desc">Samsung S8 Black</td>
+                                <td>2018-09-27 02:12</td>
+                                <td>
+                                    <span class="status--process">Processed</span>
+                                </td>
+                                <td>$679.00</td>
+                                <td>
+                                    <div class="table-data-feature">
+                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
+                                            <i class="zmdi zmdi-mail-send"></i>
+                                        </button>
+                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                                            <i class="zmdi zmdi-edit"></i>
+                                        </button>
+                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                            <i class="zmdi zmdi-delete"></i>
+                                        </button>
+                                        <button class="item" data-toggle="tooltip" data-placement="top" title="More">
+                                            <i class="zmdi zmdi-more"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="spacer"></tr>
+                            <tr class="tr-shadow">
+                                <td>
+                                    <label class="au-checkbox">
+                                        <input type="checkbox">
+                                        <span class="au-checkmark"></span>
+                                    </label>
+                                </td>
+                                <td>Lori Lynch</td>
+                                <td>
+                                    <span class="block-email">john@example.com</span>
+                                </td>
+                                <td class="desc">iPhone X 64Gb Grey</td>
+                                <td>2018-09-29 05:57</td>
+                                <td>
+                                    <span class="status--process">Processed</span>
+                                </td>
+                                <td>$999.00</td>
+                                <td>
+                                    <div class="table-data-feature">
+                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
+                                            <i class="zmdi zmdi-mail-send"></i>
+                                        </button>
+                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                                            <i class="zmdi zmdi-edit"></i>
+                                        </button>
+                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                            <i class="zmdi zmdi-delete"></i>
+                                        </button>
+                                        <button class="item" data-toggle="tooltip" data-placement="top" title="More">
+                                            <i class="zmdi zmdi-more"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="spacer"></tr>
+                            <tr class="tr-shadow">
+                                <td>
+                                    <label class="au-checkbox">
+                                        <input type="checkbox">
+                                        <span class="au-checkmark"></span>
+                                    </label>
+                                </td>
+                                <td>Lori Lynch</td>
+                                <td>
+                                    <span class="block-email">lyn@example.com</span>
+                                </td>
+                                <td class="desc">iPhone X 256Gb Black</td>
+                                <td>2018-09-25 19:03</td>
+                                <td>
+                                    <span class="status--denied">Denied</span>
+                                </td>
+                                <td>$1199.00</td>
+                                <td>
+                                    <div class="table-data-feature">
+                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
+                                            <i class="zmdi zmdi-mail-send"></i>
+                                        </button>
+                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                                            <i class="zmdi zmdi-edit"></i>
+                                        </button>
+                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                            <i class="zmdi zmdi-delete"></i>
+                                        </button>
+                                        <button class="item" data-toggle="tooltip" data-placement="top" title="More">
+                                            <i class="zmdi zmdi-more"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="spacer"></tr>
+                            <tr class="tr-shadow">
+                                <td>
+                                    <label class="au-checkbox">
+                                        <input type="checkbox">
+                                        <span class="au-checkmark"></span>
+                                    </label>
+                                </td>
+                                <td>Lori Lynch</td>
+                                <td>
+                                    <span class="block-email">doe@example.com</span>
+                                </td>
+                                <td class="desc">Camera C430W 4k</td>
+                                <td>2018-09-24 19:10</td>
+                                <td>
+                                    <span class="status--process">Processed</span>
+                                </td>
+                                <td>$699.00</td>
+                                <td>
+                                    <div class="table-data-feature">
+                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
+                                            <i class="zmdi zmdi-mail-send"></i>
+                                        </button>
+                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                                            <i class="zmdi zmdi-edit"></i>
+                                        </button>
+                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                            <i class="zmdi zmdi-delete"></i>
+                                        </button>
+                                        <button class="item" data-toggle="tooltip" data-placement="top" title="More">
+                                            <i class="zmdi zmdi-more"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- END STATISTIC CHART-->
-    <!-- DATA TABLE-->
-    <section class="p-t-20">
-        <div class="container">
+    </div>
+</section>
+<!-- END DATA TABLE-->
+<script src="~/Scripts/AdminScripts/jscolar.js"></script>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/AdminScripts/select2-min.js"></script>
+<script>
+    $('#issueSelectBox').select2({
+        minimumResultsForSearch: -1,
+        placeholder: "Select issue.....",
+        allowClear: false
+    });
+</script>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <h3 class="title-5 m-b-35">data table</h3>
-                    <div class="table-data__tool">
-                        <div class="table-data__tool-left">
-                            <div class="rs-select2--light rs-select2--md">
-                                <select class="js-select2" name="property">
-                                    <option selected="selected">All Properties</option>
-                                    <option value="">Option 1</option>
-                                    <option value="">Option 2</option>
-                                </select>
-                                <div class="dropDownSelect2"></div>
-                            </div>
-                            <div class="rs-select2--light rs-select2--sm">
-                                <select class="js-select2" name="time">
-                                    <option selected="selected">Today</option>
-                                    <option value="">3 Days</option>
-                                    <option value="">1 Week</option>
-                                </select>
-                                <div class="dropDownSelect2"></div>
-                            </div>
-                            <button class="au-btn-filter">
-                                <i class="zmdi zmdi-filter-list"></i>filters
-                            </button>
-                        </div>
-                        <div class="table-data__tool-right">
-                            <button class="au-btn au-btn-icon au-btn--green au-btn--small">
-                                <i class="zmdi zmdi-plus"></i>add item
-                            </button>
-                            <div class="rs-select2--dark rs-select2--sm rs-select2--dark2">
-                                <select class="js-select2" name="type">
-                                    <option selected="selected">Export</option>
-                                    <option value="">Option 1</option>
-                                    <option value="">Option 2</option>
-                                </select>
-                                <div class="dropDownSelect2"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-responsive table-responsive-data2">
-                        <table class="table table-data2">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <label class="au-checkbox">
-                                            <input type="checkbox">
-                                            <span class="au-checkmark"></span>
-                                        </label>
-                                    </th>
-                                    <th>name</th>
-                                    <th>email</th>
-                                    <th>description</th>
-                                    <th>date</th>
-                                    <th>status</th>
-                                    <th>price</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="tr-shadow">
-                                    <td>
-                                        <label class="au-checkbox">
-                                            <input type="checkbox">
-                                            <span class="au-checkmark"></span>
-                                        </label>
-                                    </td>
-                                    <td>Lori Lynch</td>
-                                    <td>
-                                        <span class="block-email">lori@example.com</span>
-                                    </td>
-                                    <td class="desc">Samsung S8 Black</td>
-                                    <td>2018-09-27 02:12</td>
-                                    <td>
-                                        <span class="status--process">Processed</span>
-                                    </td>
-                                    <td>$679.00</td>
-                                    <td>
-                                        <div class="table-data-feature">
-                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
-                                                <i class="zmdi zmdi-mail-send"></i>
-                                            </button>
-                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                <i class="zmdi zmdi-edit"></i>
-                                            </button>
-                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                <i class="zmdi zmdi-delete"></i>
-                                            </button>
-                                            <button class="item" data-toggle="tooltip" data-placement="top" title="More">
-                                                <i class="zmdi zmdi-more"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="spacer"></tr>
-                                <tr class="tr-shadow">
-                                    <td>
-                                        <label class="au-checkbox">
-                                            <input type="checkbox">
-                                            <span class="au-checkmark"></span>
-                                        </label>
-                                    </td>
-                                    <td>Lori Lynch</td>
-                                    <td>
-                                        <span class="block-email">john@example.com</span>
-                                    </td>
-                                    <td class="desc">iPhone X 64Gb Grey</td>
-                                    <td>2018-09-29 05:57</td>
-                                    <td>
-                                        <span class="status--process">Processed</span>
-                                    </td>
-                                    <td>$999.00</td>
-                                    <td>
-                                        <div class="table-data-feature">
-                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
-                                                <i class="zmdi zmdi-mail-send"></i>
-                                            </button>
-                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                <i class="zmdi zmdi-edit"></i>
-                                            </button>
-                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                <i class="zmdi zmdi-delete"></i>
-                                            </button>
-                                            <button class="item" data-toggle="tooltip" data-placement="top" title="More">
-                                                <i class="zmdi zmdi-more"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="spacer"></tr>
-                                <tr class="tr-shadow">
-                                    <td>
-                                        <label class="au-checkbox">
-                                            <input type="checkbox">
-                                            <span class="au-checkmark"></span>
-                                        </label>
-                                    </td>
-                                    <td>Lori Lynch</td>
-                                    <td>
-                                        <span class="block-email">lyn@example.com</span>
-                                    </td>
-                                    <td class="desc">iPhone X 256Gb Black</td>
-                                    <td>2018-09-25 19:03</td>
-                                    <td>
-                                        <span class="status--denied">Denied</span>
-                                    </td>
-                                    <td>$1199.00</td>
-                                    <td>
-                                        <div class="table-data-feature">
-                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
-                                                <i class="zmdi zmdi-mail-send"></i>
-                                            </button>
-                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                <i class="zmdi zmdi-edit"></i>
-                                            </button>
-                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                <i class="zmdi zmdi-delete"></i>
-                                            </button>
-                                            <button class="item" data-toggle="tooltip" data-placement="top" title="More">
-                                                <i class="zmdi zmdi-more"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="spacer"></tr>
-                                <tr class="tr-shadow">
-                                    <td>
-                                        <label class="au-checkbox">
-                                            <input type="checkbox">
-                                            <span class="au-checkmark"></span>
-                                        </label>
-                                    </td>
-                                    <td>Lori Lynch</td>
-                                    <td>
-                                        <span class="block-email">doe@example.com</span>
-                                    </td>
-                                    <td class="desc">Camera C430W 4k</td>
-                                    <td>2018-09-24 19:10</td>
-                                    <td>
-                                        <span class="status--process">Processed</span>
-                                    </td>
-                                    <td>$699.00</td>
-                                    <td>
-                                        <div class="table-data-feature">
-                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
-                                                <i class="zmdi zmdi-mail-send"></i>
-                                            </button>
-                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                                                <i class="zmdi zmdi-edit"></i>
-                                            </button>
-                                            <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                                <i class="zmdi zmdi-delete"></i>
-                                            </button>
-                                            <button class="item" data-toggle="tooltip" data-placement="top" title="More">
-                                                <i class="zmdi zmdi-more"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- END DATA TABLE-->
-    <script src="~/Scripts/AdminScripts/jscolar.js"></script>
-    <script src="~/Scripts/jquery-3.3.1.js"></script>
-    <script src="~/Scripts/AdminScripts/select2-min.js"></script>
-    <script>
-        $('#issueSelectBox').select2({
-            minimumResultsForSearch: -1,
-            placeholder: "Select issue.....",
-            allowClear: false
+<script>
+    google.charts.load('current', { 'packages': ['line'] });
+    google.charts.setOnLoadCallback(drawChart_line);
+
+    function drawChart_line() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Month');
+        data.addColumn('number', 'Total');
+        data.addColumn('number', 'IT');
+        data.addColumn('number', 'Material');
+        data.addColumn('number', 'Machine');
+        data.addColumn('number', 'Quality');
+        data.addColumn('number', 'Technical');
+
+         var url = '@Url.Action("drawLineChart", "Manager")'
+            $.ajax({
+                type: "POST",
+                dataType: 'text',
+                url: url,
+                data: {},
+                success: function (itemNameArray) {
+                    console.log(JSON.parse(itemNameArray));
+                    data.addRows(JSON.parse(itemNameArray));
+
+                },
+                error: function () {
+                    alert("Error");
+                }
         });
-    </script>
+
+       
+        var options = {
+
+            width: '100%',
+            height: 300,
+            legend: {
+                position: 'right',
+                textStyle:
+                {
+                    fontSize: 9 // or the number you want
+                }
+            }
+        };
+
+        var chart = new google.charts.Line(document.getElementById('linechart_material'));
+        chart.draw(data, google.charts.Line.convertOptions(options));
+    }
+
+    google.charts.load("current", {packages: ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart_bar);
+
+    function drawChart_bar() {
+
+        var data = google.visualization.arrayToDataTable([
+            ["Element", "Density", {role: "style" }],
+                ["Coprrrrrrper", 8.94, "#001f3f"],
+                ["Silvrrrrrrrer", 10.49, "#0074D9"],
+                ["yr5hrrrrruy", 19.30, "#7FDBFF"],
+                ["pl4trrrrrm", 21.45, "color: #39CCCC"],
+                ["c6perrrrrrr", 8.94, "#3D9970"],
+                ["p5thjwewehjit5", 21.45, "#2ECC40"],
+                ["ctghjhjhjper", 8.94, "#01FF70"],
+                ["S5ykkklklkjr", 10.49, "#FFDC00"],
+                ["kh.kjkhjtfd", 19.30, "#FF851B"],
+                ["rttytytytylhy", 21.45, "color: #FF4136"]
+            ]);
+
+            var view = new google.visualization.DataView(data);
+            view.setColumns([0, 1,
+                                            {
+                    calc: "stringify",
+                sourceColumn: 1,
+                type: "string",
+                role: "annotation"
+            },
+            2]);
+
+            var options = {
+
+                        bar: {groupWidth: "95%" },
+                        legend: {position: "none" },
+                        chartArea: {'width': '100%', 'height': '60%', 'top': '0' },
+                        hAxis: {
+                                    textStyle: {
+                                    fontSize: 9 // or the number you want
+                            }
+                        }
+        };
+
+        var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+        chart.draw(view, options);
+
+
+    }
+
+    google.charts.load("current", { packages: ["corechart"] });
+    google.charts.setOnLoadCallback(drawChart_pie);
+
+    function drawChart_pie() {
+        var data = google.visualization.arrayToDataTable([
+            ['Issue', 'Number of Occurrence'],
+            ['Material Delay', 11],
+            ['Quality Issue', 2],
+            ['IT Issue', 2],
+            ['Technical Issue', 2],
+            ['MAchine Breakdown', 7]
+        ]);
+
+        var options = {
+            is3D: true,
+            chartArea: { 'width': '100%', 'height': '80%', 'top': '0' },
+            legend: { position: "bottom" }
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+        chart.draw(data, options);
+    }
+
+</script>
+
+</script>
 </div>

@@ -48,10 +48,44 @@ namespace IssueManagementSystem.Controllers
             {
                 string query = "UPDATE tbl_Notifications SET Status = 0 WHERE NotificationId = "+ notificationId ;
                 db.Database.ExecuteSqlCommand(query);
-               
-
             }
             return Json(true);
+        }
+
+        [HttpPost]
+        public JsonResult drawLineChart()
+        {
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+            {
+               // string query = "";
+               // db.Database.ExecuteSqlCommand(query);
+            }
+
+            /*
+              data.addRows(
+             [
+             ['Jan', 37.8, 80.8, 41.8, 37.8, 80.8, 20],
+             ['Feb', 30.9, 69.5, 32.4, 37.8, 80.8, 20],
+             ['Mar', 25.4, 57, 25.7, 37.8, 80.8, 20],
+             ['Apr', 11.7, 18.8, 10.5, 37.8, 80.8, 20],
+             ['May', 5.3, 7.9, 4.7, 37.8, 80.8, 20],
+             ['Jun', 11.9, 17.6, 10.4, 37.8, 80.8, 20],
+             ['Jul', 8.8, 13.6, 7.7, 37.8, 80.8, 20],
+             ['Aug', 7.6, 12.3, 9.6, 37.8, 80.8, 20],
+             ['Sep', 12.3, 29.2, 10.6, 37.8, 80.8, 20],
+             ['Oct', 16.9, 42.9, 14.8, 37.8, 80.8, 20],
+             ['Nov', 12.8, 30.9, 11.6, 37.8, 80.8, 20],
+             ['Dec', 6.6, 8.4, 5.2, 37.8, 80.8, 20]
+             ]
+         );
+         */
+           // List<String> mList = imsDbContext.tblWorkstation_Config.ToList();
+
+
+
+            //       var c = "{'['['Jan', 37.8, 80.8, 41.8, 37.8, 80.8, 20]','['Feb', 30.9, 69.5, 32.4, 37.8, 80.8, 20]','['Mar', 25.4, 57, 25.7, 37.8, 80.8, 20]']'}";
+
+            return Json("", JsonRequestBehavior.AllowGet);
         }
 
         /*

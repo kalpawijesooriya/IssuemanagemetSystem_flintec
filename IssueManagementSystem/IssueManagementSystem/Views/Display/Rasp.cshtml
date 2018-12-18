@@ -27,7 +27,7 @@
 <div style="display:flex">
     <div style="display:inline-grid;grid-template-columns: 50%  50%">
         <div id="container">
-            <canvas id="canvas1" style="border: 1px solid black;margin-left:2em;background:url('../../Content/images/RCPDF1.jpg');background-size: 100% 100%;" width="250" height="750">
+            <canvas id="canvas1" style="border: 1px solid black;margin-left:2em;" width="250" height="750">
                 <br> This text is displayed if your browser does not support HTML5 Canvas. </br>
             </canvas>
         </div>
@@ -35,18 +35,17 @@
         <label id="map" style="display: none;"> @map</label>
     </div>
 
-
     <div class="container-fluid margin">
         <div class="displayhedding" style="margin-top:-20pt">
             <div class="row">
-                <div class="col-lg-5">
+                <div class="col-lg-4">
                     <div class="header__logo">
                         <a href="#">
                             <img src="~/Content/images/logo.png" alt="CoolAdmin" />
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-7 text-left">
+                <div class="col-lg-8 text-left">
                     <h3>@lineName Manufacturing Cell</h3>
                 </div>
 
@@ -183,16 +182,8 @@
                     $('#Softwarediv').hide();
                     $('#tecnicaldiv').hide();
 
-
-
-
-
                     issuedata = $.parseJSON(issuedata);
                     if (issuedata.length > 0) {
-
-
-
-
 
                         blinkMap();
                         for (var i = 0; i < issuedata.length; i++) {
@@ -247,22 +238,8 @@
                                     divissue.append(issue)
                                     divissue.show('slow');
                                 }
-
-
-
-
-
-
-
-
-
                             }
-
-
-
                         }
-
-
                     }
                 }, error: function (r, e, w) {
                 }
@@ -276,7 +253,8 @@
 
             function init() {
                 var s = new CanvasState(document.getElementById('canvas1'));
-
+                document.getElementById('canvas1').style.background = "url(../../Content/images/" +@ViewBag.id+".jpg)";
+                document.getElementById('canvas1').style.backgroundSize = "250px 750px";
                 setInterval(function () {
                     //console.log(globalvariable);
                     if (globalvariable == 0) { globalvariable = 1; }
@@ -298,11 +276,13 @@
                         alert("Error occurred");
                     }
                 });
-
+              
             }
 
             function blinkMap() {
-                 var url = '@Url.Action("getBlinkingMachinesList", "Display")'
+                var url = '@Url.Action("getBlinkingMachinesList", "Display")'
+                document.getElementById('canvas1').style.background = "url(../../Content/images/" +@ViewBag.id+".jpg)";
+                document.getElementById('canvas1').style.backgroundSize = "250px 750px";
                 $.ajax({
                     type: "POST",
                     dataType: 'text',
