@@ -24,6 +24,7 @@
         <AssociationConnector Association="issue_management_systemModel.FK_department_lines_departments" ManuallyRouted="false" />
         <AssociationConnector Association="issue_management_systemModel.FK_issue_occurrence_issues" ManuallyRouted="false" />
         <EntityTypeShape EntityType="issue_management_systemModel.line_cell_eng" Width="1.5" PointX="9.375" PointY="10.75" />
+        <EntityTypeShape EntityType="issue_management_systemModel.tbl_issue_feedback" Width="1.5" PointX="0.75" PointY="11.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

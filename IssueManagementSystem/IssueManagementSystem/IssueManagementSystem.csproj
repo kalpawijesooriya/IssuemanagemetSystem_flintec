@@ -204,6 +204,9 @@
     <Compile Include="Controllers\SupervisorController.cs" />
     <Compile Include="Hubs\BreakeHub.cs" />
     <Compile Include="Models\BreakeDownListener.cs" />
+    <Compile Include="Models\tbl_issue_feedback.cs">
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
+    </Compile>
     <Compile Include="SendNotificationToLevel2.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -619,6 +622,7 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\SupervisorScripts\machineBrakedown.js" />
     <Content Include="Scripts\SupervisorScripts\materialDelay.js" />
+    <Content Include="Scripts\SupervisorScripts\moment.min.js" />
     <Content Include="Scripts\SupervisorScripts\showmap.js" />
     <Content Include="Scripts\wow.min.js" />
     <Content Include="Views\Manager\Index.cshtml" />
@@ -631,7 +635,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />

@@ -25,9 +25,11 @@ namespace IssueManagementSystem.Controllers
         // GET: Supervisor
         public ActionResult selectIssue()// select issue view
         {
-            if (Session["userID"] == null)
+
+            if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
             {
-                Response.Redirect("~/Login/Index");
+                return RedirectToAction("Index", "Login");
+
             }
             int userID = (int)Session["userID"];// get current supervisorID
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
@@ -54,6 +56,11 @@ namespace IssueManagementSystem.Controllers
 
         public ActionResult MachinBreakdown()//machine breakedown view
         {
+            if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
+            {
+                return RedirectToAction("Index", "Login");
+
+            }
             ViewBag.rol = Session["Role"];
             int userID = (int)Session["userID"];// get current supervisorID
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
@@ -68,6 +75,11 @@ namespace IssueManagementSystem.Controllers
 
         public ActionResult TechnicalIssue()//Technical Issue View
         {
+            if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
+            {
+                return RedirectToAction("Index", "Login");
+
+            }
             ViewBag.rol = Session["Role"];
             int userID = (int)Session["userID"];// get current supervisorID
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
@@ -84,6 +96,11 @@ namespace IssueManagementSystem.Controllers
 
         public ActionResult MaterialDelay()//MaterialDelay View
         {
+            if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
+            {
+                return RedirectToAction("Index", "Login");
+
+            }
             ViewBag.rol = Session["Role"];
             int userID = (int)Session["userID"];// get current supervisorID
             dynamic mat_List = new System.Dynamic.ExpandoObject();
@@ -105,6 +122,11 @@ namespace IssueManagementSystem.Controllers
 
         public ActionResult ITIssue()//IT Issue view
         {
+            if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
+            {
+                return RedirectToAction("Index", "Login");
+
+            }
             ViewBag.rol = Session["Role"];
             int userID = (int)Session["userID"];// get current supervisorID
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
@@ -149,8 +171,8 @@ namespace IssueManagementSystem.Controllers
                     if (issueModel.issue_occurrence_id > 0)
                     {
                         var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
-                        string msg = line.line_name + " line Breakedown has been occurred on " + day +" at "+time1+". Machine : "+ machine + "Note- " + issueModel.description;
-                        string callNote = line.line_name + " line Breakedown has been occurred on" + day + " at "+time1;
+                        string msg = "Breakedown has been occurred in " +line.line_name + " line on " + day +" at "+time1+". Machine : "+ machine + "Note- " + issueModel.description;
+                        string callNote = line.line_name + " line Breakedown has been occurred on " + day + " at "+time1;
                         var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
                         com.lightON("1", displayInfo.raspberry_ip_address);//turn on the Light
                         sendCD(lineId, 1, msg, "Machine Brakedown has been occurred", callNote);
@@ -201,8 +223,8 @@ namespace IssueManagementSystem.Controllers
 
                             var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
                             var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
-                            string msg = line.line_name + " line Technical issue has been occurred at " + day + " at " + HHMM[0]+":"+HHMM[1] + ". Special Note of Line supervisor - " + issueModel.description;
-                            string callNote = line.line_name + " line Technical issue has been occurred on" + day + " at " + HHMM[0] + ":" + HHMM[1];
+                            string msg = "Technical issue has been occurred "+ line.line_name + " line on"  + day + " at " + HHMM[0]+":"+HHMM[1] + ". Special Note of Line supervisor - " + issueModel.description;
+                            string callNote = "Technical issue has been occurred in " +line.line_name + " line on" + day + " at " + HHMM[0] + ":" + HHMM[1];
                             com.lightON("3", displayInfo.raspberry_ip_address);//turn on the Light
                             sendCD(lineId, 3, msg, "Tecnical Issue has been occered", callNote);
 
@@ -258,8 +280,8 @@ namespace IssueManagementSystem.Controllers
                     if (issueModel.issue_occurrence_id > 0)
                     {
                         var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
-                        string msg = line.line_name + " line IT/SoftWare issue has been occurred on " + day + " at "+ time1 + ". Special Note of Line supervisor - " + issueModel.description;
-                        string callNote = line.line_name + " line IT SoftWare issue has been occurred on" + day + " at " + time1;
+                        string msg = "IT/SoftWare issue has been occurred in "+ line.line_name + " line " + day + " at "+ time1 + ". Special Note of Line supervisor - " + issueModel.description;
+                        string callNote = "IT SoftWare issue has been occurred in "+line.line_name + " line on" + day + " at " + time1;
                         var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
                         com.lightON("5", displayInfo.raspberry_ip_address);//turn on the Light
                         sendCD(lineId, 5, msg, "IT/Software Issue has been occered", callNote);
@@ -316,8 +338,8 @@ namespace IssueManagementSystem.Controllers
                         db.Database.ExecuteSqlCommand(query_1);
                         var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
                         var line = db.lines.Where(x => x.line_id == line_id).FirstOrDefault();
-                        string msg = line.line_name + " line MaterialDelay has been occurred on" + day + " at "+ time1 + ". Material:"+ item["material"]+" Special Note of Line supervisor - " + item["description"];
-                        string callNote = line.line_name + " line MaterialDelay has been occurred on" + day + " at " + time1;
+                        string msg = "MaterialDelay has been occurred in "+line.line_name + " line on " + day + " at "+ time1 + ". Material:"+ item["material"]+" Special Note of Line supervisor - " + item["description"];
+                        string callNote = "MaterialDelay has been occurred in " +line.line_name + " line on"+ day + " at " + time1;
                         com.lightON("2", displayInfo.raspberry_ip_address);//turn on the Light
                         sendCD(line_id, 2, msg, "MaterialDelay has been occered", callNote);
 

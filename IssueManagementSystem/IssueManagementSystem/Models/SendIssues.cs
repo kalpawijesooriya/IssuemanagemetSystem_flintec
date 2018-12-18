@@ -78,7 +78,7 @@ namespace IssueManagementSystem.Models
                                         issue_occurrence_id = (int)reader["issue_occurrence_id"],
                                         issueDate = reader["issue_date"].ToString(),
                                         description = reader["description"] != DBNull.Value ? (string)reader["description"] : "",
-                                        matirial = matirialName,
+                                        matirial = material_id+" - "+ matirialName,
                                         machine_machine_id = reader["machine_machine_id"] != DBNull.Value ? (string)reader["machine_machine_id"] : "",
                                         line_line_id = (int)reader["line_line_id"],
                                         issue_issue_ID = (int)reader["issue_issue_ID"],

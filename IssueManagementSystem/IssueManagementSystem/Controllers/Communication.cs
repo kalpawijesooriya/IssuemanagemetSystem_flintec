@@ -35,7 +35,7 @@ namespace IssueManagementSystem.Controllers
 
 
 
-      
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private  void doCommunicate()
         {
       
