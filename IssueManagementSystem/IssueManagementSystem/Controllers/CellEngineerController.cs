@@ -19,11 +19,19 @@ namespace IssueManagementSystem.Controllers
 
     public class CellEngineerController : Controller
     {
+
         public static int lineId;
+
 
         // GET: CellEngineer
         public ActionResult DashBord()
         {
+      
+            if ((Session["userID"] == null )|| ((string)Session["Role"]!= "CellEngineer"))
+            {
+                return RedirectToAction("Index", "Login");
+
+            }
             int userID = (int)Session["userID"];
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
             {
@@ -39,6 +47,12 @@ namespace IssueManagementSystem.Controllers
         }
         public ActionResult MachinBreakdown()//machine breakedown view
         {
+
+            if ((Session["userID"] == null) || ((string)Session["Role"] != "CellEngineer"))
+            {
+                return RedirectToAction("Index", "Login");
+
+            }
             ViewBag.rol = Session["Role"];
             int userID = (int)Session["userID"];// get current supervisorID
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
@@ -53,6 +67,12 @@ namespace IssueManagementSystem.Controllers
 
         public ActionResult TechnicalIssue()//Technical Issue View
         {
+
+            if ((Session["userID"] == null) || ((string)Session["Role"] != "CellEngineer"))
+            {
+                return RedirectToAction("Index", "Login");
+
+            }
             ViewBag.rol = Session["Role"];
             int userID = (int)Session["userID"];// get current supervisorID
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
@@ -69,6 +89,12 @@ namespace IssueManagementSystem.Controllers
 
         public ActionResult MaterialDelay()//MaterialDelay View
         {
+
+            if ((Session["userID"] == null) || ((string)Session["Role"] != "CellEngineer"))
+            {
+                return RedirectToAction("Index", "Login");
+
+            }
             int userID = (int)Session["userID"];// get current supervisorID
             dynamic mat_List = new System.Dynamic.ExpandoObject();
             
@@ -93,6 +119,12 @@ namespace IssueManagementSystem.Controllers
 
         public ActionResult ITIssue()//IT ISSUE View
         {
+
+            if ((Session["userID"] == null) || ((string)Session["Role"] != "CellEngineer"))
+            {
+                return RedirectToAction("Index", "Login");
+
+            }
             ViewBag.rol = Session["Role"];
             int userID = (int)Session["userID"];// get current supervisorID
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
@@ -109,6 +141,12 @@ namespace IssueManagementSystem.Controllers
 
         public ActionResult NotificationsManagement()
         {
+
+            if ((Session["userID"] == null) || ((string)Session["Role"] != "CellEngineer"))
+            {
+                return RedirectToAction("Index", "Login");
+
+            }
             List<tbl_PPA_User> userList;
             using (BigRedEntities bigRed = new BigRedEntities())
             {

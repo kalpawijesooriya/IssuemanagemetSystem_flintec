@@ -35,7 +35,7 @@ namespace IssueManagementSystem.Controllers
 
 
 
-      
+        [MethodImpl(MethodImplOptions.Synchronized)]
         private  void doCommunicate()
         {
       
@@ -52,12 +52,12 @@ namespace IssueManagementSystem.Controllers
                     var msg = communicateData.getMsg();
                     var emailAddress = communicateData.getEmailAddress();
                     var mobileNumber = communicateData.getNumber();
-
-                   
+                    int empNo = communicateData.getEmployeeNumber();
+                    int issue_occor_id = communicateData.getissue_occour_id();
 
                     if (communicateData.getEmail() == 1 && emailAddress!= null)
                     {
-                        sendMail(emailAddress, msg,communicateData.getsubject());
+                        sendMail(emailAddress, msg,communicateData.getsubject(), empNo, issue_occor_id);
                         //using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
                         //{
                         //    string query = "INSERT INTO tbl_Notifications ([Status],[Message],[Type],[EmployeeNumber],[Date]) VALUES( 1,'" + msg + "','email','" + communicateData.getEmployeeNumber() + "','" + date + "') ";
@@ -66,10 +66,10 @@ namespace IssueManagementSystem.Controllers
                     }
 
                     if (communicateData.getMessage() == 1 && mobileNumber != null)                    
-                        send_SMS(mobileNumber, msg);
+                        send_SMS(mobileNumber, msg, empNo, issue_occor_id);
 
                     if (communicateData.getCall() == 1 && mobileNumber != null)
-                        take_Call(mobileNumber, communicateData.getcallNote(), communicateData.getrepetCount(),communicateData.getdelay());
+                        take_Call(mobileNumber, communicateData.getcallNote(), communicateData.getrepetCount(),communicateData.getdelay(), empNo, issue_occor_id);
 
 
 
@@ -110,7 +110,7 @@ namespace IssueManagementSystem.Controllers
             HttpWebResponse webResponse = (HttpWebResponse)webReq.GetResponse();
         }
 
-        public void sendMail(string emailAddress, string msg,string subject)
+        public void sendMail(string emailAddress, string msg,string subject,int empNo,int issue_occor_id)
         {
             using (MailMessage mm = new MailMessage("ppts@flintec.com", emailAddress))
             {
@@ -133,7 +133,7 @@ namespace IssueManagementSystem.Controllers
 
         }
 
-        public  void send_SMS(string number,string message)
+        public  void send_SMS(string number,string message,int empNo, int issue_occor_id)
         {
 
            
@@ -168,7 +168,7 @@ namespace IssueManagementSystem.Controllers
 
         }
 
-        public void take_Call(string number, string message ,string repetCount,string delay)
+        public void take_Call(string number, string message ,string repetCount,string delay,int empNo, int issue_occor_id)
         {
 
             callCount++;
@@ -202,7 +202,7 @@ namespace IssueManagementSystem.Controllers
                 {
                     int waitingTime = Int32.Parse(delay) * 60 * 1000 - 23000;
                     Thread.Sleep(waitingTime);
-                    take_Call(number, message, repetCount, delay);
+                    take_Call(number, message, repetCount, delay, empNo, issue_occor_id);
                 }
                 if (Int32.Parse(repetCount) <= callCount)
                 {

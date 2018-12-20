@@ -85,7 +85,7 @@
             url: url,
             data: { issueJson: issueJson },
             success: function (feedback) {
-                alert(feedback);
+                window.location.href = '@Url.Action("DashBord", "CellEngineer")';
             },
             error: function () {
                 alert("Error occurred");

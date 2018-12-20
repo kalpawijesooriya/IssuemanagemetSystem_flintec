@@ -15,10 +15,10 @@ namespace IssueManagementSystem.Models
         private string callNote;
         private string repetCount;
         private string delay;
+        private int issue_occour_id;
 
 
-
-        public CommunicationData(string number, string msg, string emailAddress, int email, int call, int message,int EmployeeNumber,string subject, string callNote,string repetCount,string delay)
+        public CommunicationData(string number, string msg, string emailAddress, int email, int call, int message,int EmployeeNumber,string subject, string callNote,string repetCount,string delay,int issue_occour_id)
         {
             this.number = number;
             this.msg = msg;
@@ -65,7 +65,7 @@ namespace IssueManagementSystem.Models
         {
             return EmployeeNumber;
         }
-
+        public int getissue_occour_id() { return issue_occour_id; }
         public string getcallNote(){ return callNote; }
         public string getrepetCount() { return repetCount; }
         public string getdelay() { return delay; }

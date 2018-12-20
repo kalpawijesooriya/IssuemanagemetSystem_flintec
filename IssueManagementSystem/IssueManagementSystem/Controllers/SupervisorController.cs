@@ -25,9 +25,11 @@ namespace IssueManagementSystem.Controllers
         // GET: Supervisor
         public ActionResult selectIssue()// select issue view
         {
-            if (Session["userID"] == null)
+
+            if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
             {
-                Response.Redirect("~/Login/Index");
+                return RedirectToAction("Index", "Login");
+
             }
             int userID = (int)Session["userID"];// get current supervisorID
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
@@ -54,6 +56,11 @@ namespace IssueManagementSystem.Controllers
 
         public ActionResult MachinBreakdown()//machine breakedown view
         {
+            if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
+            {
+                return RedirectToAction("Index", "Login");
+
+            }
             ViewBag.rol = Session["Role"];
             int userID = (int)Session["userID"];// get current supervisorID
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
@@ -68,6 +75,11 @@ namespace IssueManagementSystem.Controllers
 
         public ActionResult TechnicalIssue()//Technical Issue View
         {
+            if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
+            {
+                return RedirectToAction("Index", "Login");
+
+            }
             ViewBag.rol = Session["Role"];
             int userID = (int)Session["userID"];// get current supervisorID
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
@@ -84,6 +96,11 @@ namespace IssueManagementSystem.Controllers
 
         public ActionResult MaterialDelay()//MaterialDelay View
         {
+            if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
+            {
+                return RedirectToAction("Index", "Login");
+
+            }
             ViewBag.rol = Session["Role"];
             int userID = (int)Session["userID"];// get current supervisorID
             dynamic mat_List = new System.Dynamic.ExpandoObject();
@@ -105,6 +122,11 @@ namespace IssueManagementSystem.Controllers
 
         public ActionResult ITIssue()//IT Issue view
         {
+            if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
+            {
+                return RedirectToAction("Index", "Login");
+
+            }
             ViewBag.rol = Session["Role"];
             int userID = (int)Session["userID"];// get current supervisorID
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
@@ -137,7 +159,7 @@ namespace IssueManagementSystem.Controllers
                     string machine = issueModel.machine_machine_id;
                     var respPersonID = db.issue_line_person.Where(x => x.line_id == lineId && x.levelOfResponsibility == 1 && x.issue_id == 1 && x.person_level==1).FirstOrDefault();
                     issueModel.responsible_person_emp_id = Int32.Parse(respPersonID.EmployeeNumber.ToString());
-
+                   
                     var dayitem = current_time.Split(' ');
                     var day = dayitem[0];
                     var time1 = dayitem[1];
@@ -146,14 +168,16 @@ namespace IssueManagementSystem.Controllers
                     issueModel.location = (string)Session["location"];
                     db.issue_occurrence.Add(issueModel);
                     db.SaveChanges();
+                    var issue_occour_id= issueModel.issue_occurrence_id;
+                  
                     if (issueModel.issue_occurrence_id > 0)
                     {
                         var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
-                        string msg = line.line_name + " line Breakedown has been occurred on " + day +" at "+time1+". Machine : "+ machine + "Note- " + issueModel.description;
-                        string callNote = line.line_name + " line Breakedown has been occurred on" + day + " at "+time1;
+                        string msg = "Breakedown has been occurred in " +line.line_name + " line on " + day +" at "+time1+". Machine : "+ machine + "Note- " + issueModel.description;
+                        string callNote = line.line_name + " line Breakedown has been occurred on " + day + " at "+time1;
                         var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
                         com.lightON("1", displayInfo.raspberry_ip_address);//turn on the Light
-                        sendCD(lineId, 1, msg, "Machine Brakedown has been occurred", callNote);
+                        sendCD(lineId, 1, msg, "Machine Brakedown has been occurred", callNote, issue_occour_id);
                     }
                     ModelState.Clear();
                 }
@@ -196,15 +220,16 @@ namespace IssueManagementSystem.Controllers
                         issueModel.location = (string)Session["location"];
                         db.issue_occurrence.Add(issueModel);
                         db.SaveChanges();
+                        var issue_occour_id = issueModel.issue_occurrence_id;
                         if (issueModel.issue_occurrence_id > 0)
                         {
 
                             var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
                             var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
-                            string msg = line.line_name + " line Technical issue has been occurred at " + day + " at " + HHMM[0]+":"+HHMM[1] + ". Special Note of Line supervisor - " + issueModel.description;
-                            string callNote = line.line_name + " line Technical issue has been occurred on" + day + " at " + HHMM[0] + ":" + HHMM[1];
+                            string msg = "Technical issue has been occurred "+ line.line_name + " line on"  + day + " at " + HHMM[0]+":"+HHMM[1] + ". Special Note of Line supervisor - " + issueModel.description;
+                            string callNote = "Technical issue has been occurred in " +line.line_name + " line on" + day + " at " + HHMM[0] + ":" + HHMM[1];
                             com.lightON("3", displayInfo.raspberry_ip_address);//turn on the Light
-                            sendCD(lineId, 3, msg, "Tecnical Issue has been occered", callNote);
+                            sendCD(lineId, 3, msg, "Tecnical Issue has been occered", callNote, issue_occour_id);
 
                             ModelState.Clear();
                         }
@@ -255,14 +280,15 @@ namespace IssueManagementSystem.Controllers
 
                     db.issue_occurrence.Add(issueModel);
                     db.SaveChanges();
+                    var issue_occour_id = issueModel.issue_occurrence_id;
                     if (issueModel.issue_occurrence_id > 0)
                     {
                         var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
-                        string msg = line.line_name + " line IT/SoftWare issue has been occurred on " + day + " at "+ time1 + ". Special Note of Line supervisor - " + issueModel.description;
-                        string callNote = line.line_name + " line IT SoftWare issue has been occurred on" + day + " at " + time1;
+                        string msg = "IT/SoftWare issue has been occurred in "+ line.line_name + " line " + day + " at "+ time1 + ". Special Note of Line supervisor - " + issueModel.description;
+                        string callNote = "IT SoftWare issue has been occurred in "+line.line_name + " line on" + day + " at " + time1;
                         var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
                         com.lightON("5", displayInfo.raspberry_ip_address);//turn on the Light
-                        sendCD(lineId, 5, msg, "IT/Software Issue has been occered", callNote);
+                        sendCD(lineId, 5, msg, "IT/Software Issue has been occered", callNote, issue_occour_id);
                     }
                     ModelState.Clear();
                 }
@@ -272,7 +298,7 @@ namespace IssueManagementSystem.Controllers
         }
 
         [HttpPost]//add Material Delay to database
-        public ActionResult AddMaterialDelay(string issueJson)
+        public ActionResult AddMaterialDelay(string issueJson, issue_occurrence issueModel)
         {
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
             {
@@ -286,6 +312,7 @@ namespace IssueManagementSystem.Controllers
                 var time1 = dayitem[1];
                 foreach (JObject item in issueData)
                 {
+                    
                     int line_id = Int32.Parse(item["line_line_id"].ToString());
                     int issue_id = Int32.Parse(item["issue_issue_ID"].ToString());
                     var resp_person = db.issue_line_person.Where(x => x.levelOfResponsibility == 1 && x.line_id == line_id && x.issue_id== issue_id && x.person_level == 1).FirstOrDefault();
@@ -293,34 +320,37 @@ namespace IssueManagementSystem.Controllers
                     {
                         var responsible_person_emp_id = resp_person.EmployeeNumber;
 
-                        string query_1 = @"INSERT INTO [dbo].[issue_occurrence]
-                                                      (  [issue_date]
-                                                        ,[material_id]
-                                                        ,[description]
-                                                        ,[line_line_id]
-                                                        ,[issue_issue_ID]
-                                                        ,[responsible_person_emp_id]
-                                                        ,[issue_satus]
-                                                        ,[location]
-                                                        ,[responsible_person_confirm_status])
-                                                    VALUES
-                                                        ('" + date + "','"
-                                                           + item["material_id"] + "','"
-                                                           + item["description"] + "',"
-                                                           + line_id + ","
-                                                           + item["issue_issue_ID"] + ","
-                                                           + resp_person.EmployeeNumber + ","
-                                                           + '1' + ",'"
-                                                           + item["location"] + "',"
-                                                           + 1 + ")";
-                        db.Database.ExecuteSqlCommand(query_1);
-                        var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
-                        var line = db.lines.Where(x => x.line_id == line_id).FirstOrDefault();
-                        string msg = line.line_name + " line MaterialDelay has been occurred on" + day + " at "+ time1 + ". Material:"+ item["material"]+" Special Note of Line supervisor - " + item["description"];
-                        string callNote = line.line_name + " line MaterialDelay has been occurred on" + day + " at " + time1;
-                        com.lightON("2", displayInfo.raspberry_ip_address);//turn on the Light
-                        sendCD(line_id, 2, msg, "MaterialDelay has been occered", callNote);
+             
+                        if (ModelState.IsValid)
+                        {
 
+                            issueModel.responsible_person_confirm_status = 1;
+                            issueModel.line_line_id = line_id;
+                            issueModel.issue_satus = "1";
+                            issueModel.issue_issue_ID = 2;
+                            issueModel.issue_date = date;
+                            issueModel.material_id = item["material_id"].ToString();
+                            issueModel.responsible_person_emp_id = resp_person.EmployeeNumber;
+                            issueModel.location = item["location"].ToString();
+                            issueModel.description = item["description"].ToString();
+                            db.issue_occurrence.Add(issueModel);
+                            db.SaveChanges();
+                            var issue_occour_id = issueModel.issue_occurrence_id;
+                            System.Diagnostics.Debug.WriteLine("New Issue ID" + issue_occour_id);
+
+                            if (issueModel.issue_occurrence_id > 0)
+                            {
+                                var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
+                                var line = db.lines.Where(x => x.line_id == line_id).FirstOrDefault();
+                                string msg = "MaterialDelay has been occurred in " + line.line_name + " line on " + day + " at " + time1 + ". Material:" + item["material"] + " Special Note of Line supervisor - " + item["description"];
+                                string callNote = "MaterialDelay has been occurred in " + line.line_name + " line on" + day + " at " + time1;
+                                com.lightON("2", displayInfo.raspberry_ip_address);//turn on the Light
+                              
+                                sendCD(line_id, 2, msg, "MaterialDelay has been occered", callNote, issue_occour_id);
+                                ModelState.Clear();
+                            }
+                        }
+                       
                     }
                     catch (Exception ex)
                     {
@@ -331,7 +361,7 @@ namespace IssueManagementSystem.Controllers
             }
         }
 
-        private void sendCD(int? line_line_id, int issueId, string msg, string subject, string callNote)
+        private void sendCD(int? line_line_id, int issueId, string msg, string subject, string callNote,int  issue_occour_id)
         {
             var time = DateTime.Now;
             string current_time = time.ToString("yyyy-MM-dd HH:mm");
@@ -360,7 +390,7 @@ namespace IssueManagementSystem.Controllers
                         {
                            
                             var personInfo = BR.tbl_PPA_User.Where(y => y.EmployeeNumber == item.EmployeeNumber).FirstOrDefault();
-                            CommunicationData cd = new CommunicationData(personInfo.Phone, msg, personInfo.EMail, item.email, item.call, item.message, personInfo.EmployeeNumber, subject, callNote,item.callRepetitionTime,item.sendAlertAfter);
+                            CommunicationData cd = new CommunicationData(personInfo.Phone, msg, personInfo.EMail, item.email, item.call, item.message, personInfo.EmployeeNumber, subject, callNote,item.callRepetitionTime,item.sendAlertAfter, issue_occour_id);
                             numberList.Enqueue(cd);
                           
                         }

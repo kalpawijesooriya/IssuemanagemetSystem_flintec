@@ -68,6 +68,7 @@
           <Property Name="responsible_person_confirm_feedback" Type="varchar(max)" />
           <Property Name="solved_date" Type="datetime" />
           <Property Name="commented_date" Type="datetime" />
+          <Property Name="manager_notifi_status" Type="int" />
         </EntityType>
         <EntityType Name="issues">
           <Key>
@@ -174,6 +175,18 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="tbl_issue_feedback">
+          <Key>
+            <PropertyRef Name="issue_feedback_id" />
+          </Key>
+          <Property Name="issue_feedback_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="issue_occurrence_id" Type="int" />
+          <Property Name="EmployeeNumber" Type="int" />
+          <Property Name="call_send" Type="int" />
+          <Property Name="call_answered" Type="int" />
+          <Property Name="sms_send" Type="int" />
+          <Property Name="email_send" Type="int" />
+        </EntityType>
         <EntityType Name="tbl_Notifications">
           <Key>
             <PropertyRef Name="NotificationId" />
@@ -255,6 +268,7 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <EntitySet Name="line_map" EntityType="Self.line_map" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="line_supervisor" EntityType="Self.line_supervisor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_issue_feedback" EntityType="Self.tbl_issue_feedback" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Notifications" EntityType="Self.tbl_Notifications" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_tbl" EntityType="Self.User_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="line_machine" EntityType="Self.line_machine" store:Type="Tables" store:Schema="dbo">
@@ -373,6 +387,7 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <Property Name="solved_date" Type="DateTime" Precision="3" />
           <Property Name="commented_date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="issue" Relationship="Self.FK_issue_occurrence_issues" FromRole="issue_occurrence" ToRole="issues" />
+          <Property Name="manager_notifi_status" Type="Int32" />
         </EntityType>
         <EntityType Name="issue">
           <Key>
@@ -561,6 +576,7 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
             <End Role="issue_occurrence" EntitySet="issue_occurrence" />
           </AssociationSet>
           <EntitySet Name="line_cell_eng" EntityType="issue_management_systemModel.line_cell_eng" />
+          <EntitySet Name="tbl_issue_feedback" EntityType="issue_management_systemModel.tbl_issue_feedback" />
         </EntityContainer>
         <EntityType Name="line_cell_eng">
           <Key>
@@ -568,6 +584,18 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           </Key>
           <Property Name="cell_eng_emp_id" Type="Int32" Nullable="false" />
           <Property Name="line_id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tbl_issue_feedback">
+          <Key>
+            <PropertyRef Name="issue_feedback_id" />
+          </Key>
+          <Property Name="issue_feedback_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="issue_occurrence_id" Type="Int32" />
+          <Property Name="EmployeeNumber" Type="Int32" />
+          <Property Name="call_send" Type="Int32" />
+          <Property Name="call_answered" Type="Int32" />
+          <Property Name="sms_send" Type="Int32" />
+          <Property Name="email_send" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -626,6 +654,7 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <EntitySetMapping Name="issue_occurrence">
             <EntityTypeMapping TypeName="issue_management_systemModel.issue_occurrence">
               <MappingFragment StoreEntitySet="issue_occurrence">
+                <ScalarProperty Name="manager_notifi_status" ColumnName="manager_notifi_status" />
                 <ScalarProperty Name="issue_occurrence_id" ColumnName="issue_occurrence_id" />
                 <ScalarProperty Name="issue_date" ColumnName="issue_date" />
                 <ScalarProperty Name="material_id" ColumnName="material_id" />
@@ -787,6 +816,19 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
               <MappingFragment StoreEntitySet="line_cell_eng">
                 <ScalarProperty Name="line_id" ColumnName="line_id" />
                 <ScalarProperty Name="cell_eng_emp_id" ColumnName="cell_eng_emp_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_issue_feedback">
+            <EntityTypeMapping TypeName="issue_management_systemModel.tbl_issue_feedback">
+              <MappingFragment StoreEntitySet="tbl_issue_feedback">
+                <ScalarProperty Name="email_send" ColumnName="email_send" />
+                <ScalarProperty Name="sms_send" ColumnName="sms_send" />
+                <ScalarProperty Name="call_answered" ColumnName="call_answered" />
+                <ScalarProperty Name="call_send" ColumnName="call_send" />
+                <ScalarProperty Name="EmployeeNumber" ColumnName="EmployeeNumber" />
+                <ScalarProperty Name="issue_occurrence_id" ColumnName="issue_occurrence_id" />
+                <ScalarProperty Name="issue_feedback_id" ColumnName="issue_feedback_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

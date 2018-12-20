@@ -45,7 +45,7 @@ namespace IssueManagementSystem
                                 string msg = "The " + issueInfo.issue1 + " issue occurred on " + issueDate + " in " + lineInfo.line_name + " Line not solved yet. Responsible person is "+ responsiblePersonInfo.Name+" Thank You.";
                                 string callNote = lineInfo.line_name + " Line "+ issueInfo.issue1 + " not solved yet";
                                 var personInfo = BR.tbl_PPA_User.Where(y => y.EmployeeNumber == i.EmployeeNumber).FirstOrDefault();
-                                CommunicationData cd = new CommunicationData(personInfo.Phone, msg, personInfo.EMail, i.email, i.call, i.message, personInfo.EmployeeNumber, "Unsolved Issue", callNote, "0", "0");
+                                CommunicationData cd = new CommunicationData(personInfo.Phone, msg, personInfo.EMail, i.email, i.call, i.message, personInfo.EmployeeNumber, "Unsolved Issue", callNote, "0", "0", items.issue_occurrence_id);
                                 numberList.Enqueue(cd);
 
                             }

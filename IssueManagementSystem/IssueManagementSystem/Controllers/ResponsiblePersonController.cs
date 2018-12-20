@@ -12,9 +12,13 @@ namespace IssueManagementSystem.Controllers
         // GET: ResponsiblePerson
         public ActionResult Index()
         {
-          
-                
-                return View();
+            if (Session["userID"] == null || ((string)Session["Role"] != "responsiblePerson"))
+            {
+                return RedirectToAction("Index", "Login");
+
+            }
+
+            return View();
          
         }
         public JsonResult GetIssues()

@@ -85,10 +85,10 @@
             url: url,
             data: { issueJson: issueJson },
             success: function (feedback) {
-                alert(feedback);
+                  window.location.href = '@Url.Action("DashBord", "Supervisor")';
             },
-            error: function () {
-                alert("Error occurred");
+            error: function (feedback) {
+                alert(feedback);
             }
         });
     }
