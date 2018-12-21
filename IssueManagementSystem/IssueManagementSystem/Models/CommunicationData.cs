@@ -31,6 +31,7 @@ namespace IssueManagementSystem.Models
             this.callNote = callNote;
             this.repetCount = repetCount;
             this.delay = delay;
+            this.issue_occour_id = issue_occour_id;
         }
 
 

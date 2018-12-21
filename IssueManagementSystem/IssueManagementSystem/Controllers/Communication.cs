@@ -127,8 +127,16 @@ namespace IssueManagementSystem.Controllers
                     smtp.Credentials = NetworkCred;
                     smtp.Port = 587;
                     smtp.Send(mm);
-                   // Debug.WriteLine("This is count : " + count.ToString());
+                    // Debug.WriteLine("This is count : " + count.ToString());
+
+                    using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+                    {
+                        string query = "INSERT INTO tbl_issue_feedback (issue_occurrence_id,EmployeeNumber, call_send, call_answered, sms_send,email_send)VALUES("+issue_occor_id+","+ empNo + ",0, 0, 0, 1);";
+                        db.Database.ExecuteSqlCommand(query);
+                    }
                 }
+
+               
             }
 
         }
