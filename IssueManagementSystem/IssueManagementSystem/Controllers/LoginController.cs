@@ -39,24 +39,39 @@ namespace IssueManagementSystem.Controllers
                     string role = userDetails.Role.ToString().Trim();//retrive the user role
                     if (role.Equals("supervisor"))//if user is supervisor goto the supervisor page
                     {
+                        using (issue_management_systemEntities1 dbism = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
+                        {
+                            var lineInfo = dbism.line_supervisor.Where(x => x.supervisor_emp_id == userDetails.EmployeeNumber).FirstOrDefault();
+                            Session["lineId"] = lineInfo.line_line_id;
+                           
+                        }
                         return RedirectToAction("selectIssue", "Supervisor");
-                    }
-                    else if (role.Equals("display")) //if user is display goto the display page
+                    } 
+
+                    else if (role.Equals("CellEngineer"))
                     {
-                        return RedirectToAction("Rasp", "Display");
+                        using (issue_management_systemEntities1 dbism = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
+                        {
+                            var lineInfo = dbism.line_cell_eng.Where(x => x.cell_eng_emp_id == userDetails.EmployeeNumber).FirstOrDefault();
+                            Session["lineId"] = lineInfo.line_id;
+                          
+                        }
+                        return RedirectToAction("DashBord", "CellEngineer");
                     }
+                       
+
+                    else if (role.Equals("display")) //if user is display goto the display page
+                        return RedirectToAction("Rasp", "Display");
+                    
                     else if (role.Equals("admin"))
                         return RedirectToAction("Index", "Admin");
 
                     else if (role.Equals("manager"))
                         return RedirectToAction("Index", "Manager");
 
-                    else if (role.Equals("CellEngineer"))
-
-                        return RedirectToAction("DashBord", "CellEngineer");
+              
 
                     else if (role.Equals("responsiblePerson"))
-
                         return RedirectToAction("Index", "ResponsiblePerson");
 
 

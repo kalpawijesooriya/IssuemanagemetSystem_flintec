@@ -27,22 +27,10 @@ namespace IssueManagementSystem.Controllers
         public ActionResult DashBord()
         {
       
-            if ((Session["userID"] == null )|| ((string)Session["Role"]!= "CellEngineer"))
-            {
-                return RedirectToAction("Index", "Login");
-
-            }
-            int userID = (int)Session["userID"];
-            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
-            {
-                var lineInfo = db.line_cell_eng.Where(x => x.cell_eng_emp_id == userID).FirstOrDefault();
-                lineId = Convert.ToInt32(lineInfo.line_id) ;
-
-                Debug.Print(" 1.....    " + lineId.ToString());
-
-                ViewBag.LineId = lineInfo.line_id;
+          
+           
                 return View();
-            }
+        
            
         }
         public ActionResult MachinBreakdown()//machine breakedown view
@@ -120,22 +108,10 @@ namespace IssueManagementSystem.Controllers
         public ActionResult ITIssue()//IT ISSUE View
         {
 
-            if ((Session["userID"] == null) || ((string)Session["Role"] != "CellEngineer"))
-            {
-                return RedirectToAction("Index", "Login");
-
-            }
-            ViewBag.rol = Session["Role"];
-            int userID = (int)Session["userID"];// get current supervisorID
-            using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
-            {
-
-                var lineInfo = db.line_cell_eng.Where(x => x.cell_eng_emp_id == userID).FirstOrDefault();
-                ViewBag.lineID = lineInfo.line_id;
+         
                 
                 return View();
 
-            }
 
         }
 
@@ -273,7 +249,7 @@ namespace IssueManagementSystem.Controllers
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
             {
                 JArray list_user = JArray.Parse(userList_json) as JArray;
-
+                Boolean delete = true;
 
                 foreach (JObject user in list_user)
                 {
@@ -282,17 +258,28 @@ namespace IssueManagementSystem.Controllers
                     var Cell_Eng_info = db.line_cell_eng.Where(x => x.cell_eng_emp_id == user_id).FirstOrDefault();
 
                     //get issue id of particular issue
-                    String issue_name = user["issue_id"].ToString();
-                    var issue = db.issues.Where(x => x.issue1 == issue_name).FirstOrDefault();
-
+                    int issue_id = (Int32)user["issue_id"];
+                    
+                    var issuelist = db.issue_line_person.Where(x => x.issue_id == issue_id && x.line_id == Cell_Eng_info.line_id).ToList();
+                    
+                    if (issuelist != null && delete)
+                    {
+                        foreach (var item in issuelist)
+                        {
+                            db.issue_line_person.Remove(item);
+                            db.SaveChanges();
+                            
+                        }
+                        delete = false;
+                    }
                     string query_1 = @"INSERT INTO [dbo].[issue_line_person]
                                      ([issue_id],[line_id],[EmployeeNumber],[assigned_date],[email],[call],
                                      [message],[callRepetitionTime],[sendAlertAfter],[levelOfResponsibility],[issue_line_person_id],[person_level])
-                                     VALUES(" + issue.issue_id + "," + Cell_Eng_info.line_id + "," + user["EmployeeNumber"] + ",'" + user["assigned_date"] + "',"
+                                     VALUES(" + issue_id + "," + Cell_Eng_info.line_id + "," + user["EmployeeNumber"] + ",'" + user["assigned_date"] + "',"
                                      + user["email"] + "," + user["call"] + "," + user["message"] + ",'" + user["callRepetitionTime"] + "','"
                                      + user["sendAlertAfter"] + "'," + user["levelOfResponsibility"] + "," + user["issue_line_person_id"] +","+ user["person_level"] + ")";
 
-                    System.Diagnostics.Debug.WriteLine(query_1);
+                    Debug.WriteLine(query_1);
 
                     try
                         {

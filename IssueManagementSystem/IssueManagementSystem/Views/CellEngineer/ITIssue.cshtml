@@ -26,8 +26,8 @@
                         @Html.TextAreaFor(model => model.description, new { @class = "form-control", @style = "width: 100%", @rows = 5 })
 
                     </div>
-                    string Role = ViewBag.rol.ToString();
-                    string lineID = ViewBag.lineID.ToString();
+                    string Role = Session["Role"].ToString();
+                    string lineID = Session["lineId"].ToString();
                     @Html.TextAreaFor(mo => mo.Role, new { @class = "form-control", @id = "role", style = "display: none;" })
                     @Html.TextAreaFor(mod => mod.lineid, new { @class = "form-control", @id = "lineid", style = "display: none;" })
                     <script>
