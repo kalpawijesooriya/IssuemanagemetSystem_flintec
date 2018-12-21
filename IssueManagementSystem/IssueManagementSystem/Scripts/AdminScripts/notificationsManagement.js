@@ -116,7 +116,7 @@ function addLine(name, empID) {
 
     list_element.className = "ui-state-default";
     list_element.style.cssText = 'overflow:hidden;display:flex;';
-    main_div.style.cssText = 'display:grid;grid-template-columns:3fr 1fr 1fr 1fr 2fr 1fr;';
+    main_div.style.cssText = 'display:grid;grid-template-columns:3fr 1fr 1fr 1fr 2fr 1fr 1fr;';
 
     var inner_div = list_element.appendChild(main_div);
 
@@ -160,6 +160,21 @@ function addLine(name, empID) {
     div1.appendChild(div1_inner);
     inner_div.appendChild(div1);
 
+    var divDelete = document.createElement("div");
+    var divDelete_inner = document.createElement("button");
+    divDelete_inner.setAttribute("id",empID+"_delBtn");
+    divDelete_inner.style.float="right";
+    var divIcon =  document.createElement("i");
+    divIcon.setAttribute("class","fas fa-backspace fa-2x");
+    divIcon.style.color="#9b2b45";
+
+
+    divDelete_inner.addEventListener("click", function(){deleteListItem(empID+"_listItem");});
+
+    divDelete_inner.appendChild(divIcon);
+    divDelete.appendChild(divDelete_inner);
+    inner_div.appendChild(divDelete);
+
     document.getElementById("sortable").appendChild(list_element);
 
     document.getElementById(name).innerHTML = empID+" - "+name;
@@ -175,7 +190,7 @@ function addLinemanager(name, empID) {
 
     list_element.className = "ui-state-default";
     list_element.style.cssText = 'overflow:hidden;display:flex;;width:80%';
-    main_div.style.cssText = 'display:grid;grid-template-columns:3fr 1fr 1fr 1fr 1fr';
+    main_div.style.cssText = 'display:grid;grid-template-columns:3fr 1fr 1fr 1fr 1fr 1fr';
 
     var inner_div = list_element.appendChild(main_div);
 
@@ -216,16 +231,36 @@ function addLinemanager(name, empID) {
     div2.appendChild(div2_inner);
     inner_div.appendChild(div2);
 
+    var divDelete = document.createElement("div");
+    var divDelete_inner = document.createElement("button");
+    divDelete_inner.setAttribute("id",empID+"_delBtn");
+    divDelete_inner.style.float="right";
+    var divIcon =  document.createElement("i");
+    divIcon.setAttribute("class","fas fa-backspace fa-2x");
+    divIcon.style.color="#9b2b45";
+
+
+    divDelete_inner.addEventListener("click", function(){deleteListItem(empID+"_listItem");});
+
+    divDelete_inner.appendChild(divIcon);
+    divDelete.appendChild(divDelete_inner);
+    inner_div.appendChild(divDelete);
+
     document.getElementById("managersortable").appendChild(list_element);
     document.getElementById(name + "manager").innerHTML = empID + " - " + name;
+}
+
+function deleteListItem(divID){
+    var list_item = document.getElementById(divID);  
+    list_item.remove();
 }
 
 function loadPerson(name,empID,email,sms,call, send_alert_after,call_repeating_time)
 {
     addLine(name,empID);   
 
-    //get last element of "#sortable" list
-    //set chebox and input values
+    //Get last element of "#sortable" list
+    //Set chebox and input values
 
     var main_ul = document.getElementById("sortable");
     var li_items = main_ul.getElementsByTagName("li");
