@@ -366,15 +366,6 @@
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
 <script src="~/Scripts/AdminScripts/notificationsManagement.js"></script>
 <script>
-
-    /////////////////////////////////////////////////////////////////////////////////////////
-    /*
-
-    list is not in the 'order of respnsibility'
-    it should be corrected
-    */
-    /////////////////////////////////////////////////////////////////////////////////////////
-
     function clear_ul(ul_id) {
 
         var main_ul = document.getElementById(ul_id);
@@ -394,6 +385,7 @@
             });
         }
     }
+
     $(document.body).on("change", "#selectIssue", function () {
 
         clear_ul("sortable");
@@ -406,7 +398,7 @@
                 type: "POST",
                 dataType: 'text',
                 url: url,
-                data: { line: 1, issue: Issue }, //LineID
+                data: { line:1, issue:Issue }, //LineID
                 success: function (itemNameArray) {
 
                         var obj = JSON.parse(itemNameArray);
@@ -436,11 +428,11 @@
 
                             if (person_level == 1) {
 
-                                loadPerson(Name, EmployeeNumber, email, message, call, sendAlertAfter, callRepetitionTime);
+                                loadPerson(Name,EmployeeNumber,email,message,call,sendAlertAfter,callRepetitionTime);
                             }
                             if (person_level == 2) {
 
-                                loadManager(Name, EmployeeNumber, email, message, call, sendAlertAfter, callRepetitionTime);
+                                loadManager(Name,EmployeeNumber,email,message,call,sendAlertAfter,callRepetitionTime);
                             }
 
                         }

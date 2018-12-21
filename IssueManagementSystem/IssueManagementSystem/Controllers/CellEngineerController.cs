@@ -196,7 +196,7 @@ namespace IssueManagementSystem.Controllers
 
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) 
             {
-                string query_1 = "SELECT * FROM issue_line_person WHERE issue_line_person.issue_id = '"+ issue + "' AND issue_line_person.line_id = '"+ line + "' ";
+                string query_1 = "SELECT * FROM issue_line_person WHERE issue_line_person.issue_id = '"+ issue + "' AND issue_line_person.line_id = '"+ line + "' ORDER BY issue_line_person.levelOfResponsibility";
                 Debug.Print(query_1);
                  c= db.Database.SqlQuery<issue_line_person>(query_1).ToList();
             }
