@@ -131,14 +131,12 @@ namespace IssueManagementSystem.Controllers
 
                     using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
                     {
+                        
                         string query = "INSERT INTO tbl_issue_feedback (issue_occurrence_id,EmployeeNumber, call_send, call_answered, sms_send,email_send)VALUES("+issue_occor_id+","+ empNo + ",0, 0, 0, 1);";
                         db.Database.ExecuteSqlCommand(query);
                     }
                 }
-
-               
             }
-
         }
 
         public  void send_SMS(string number,string message,int empNo, int issue_occor_id)
