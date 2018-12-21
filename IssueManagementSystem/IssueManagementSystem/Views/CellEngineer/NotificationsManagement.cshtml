@@ -53,7 +53,7 @@
                             </button>
                         </form>
                     </div>
-                  
+
                 </div>
             </div>
         </div>
@@ -70,26 +70,31 @@
             </div>
         </div>
     </section>
-  
+
 </div>
 <div id="page-wrapper" class="container" style="margin-top:40px;">
     <div class="row justify-content-between">
+
         <div class="col-4 row">
             <strong><label class="col-sm-offset-1" for="selectIssue">Issue</label></strong>
             <div class="col-sm-10">
                 <select class="js-example-placeholder-single js-states form-control" id="selectIssue" name="selectIssue" style="width:100%">
-                    <option>Machine Breakdown</option>
-                    <option>Material Delay</option>
-                    <option>Technical Issue</option>
-                    <option>IT Issue</option>
-                    <option>Quality Isuue</option>
+                    <option value="1">Machine Breakdown</option>
+                    <option value="2">Material Delay</option>
+                    <option value="3">Technical Issue</option>
+                    <option value="5">IT Issue</option>
+                    <option value="4">Quality Isuue</option>
                 </select>
             </div>
         </div>
+
         <div class="col-4">
 
         </div>
     </div>
+
+    <br>
+    <br>
     <h4 class="page-header">Order of Notifying</h4>
     <div class="row" style="margin-top:20px;padding:10px;background-color:aliceblue;border-radius:5px">
         <div class="container">
@@ -102,76 +107,76 @@
                 </div>
             </div>
         </div>
-            <script>
-                window.onload = $(function () {
+        <script>
+            window.onload = $(function () {
 
-                    $("#sortable").sortable({
-                        items: "li:not(#unsortable)"
-                    });
+                $("#sortable").sortable({
+                    items: "li:not(#unsortable)"
+                });
 
-                    $("#sortable").disableSelection();
-                });</script>
+                $("#sortable").disableSelection();
+            });</script>
 
-            <div>
-                <ul id="sortable">
-                    <li id="unsortable" style="overflow:hidden; display:flex; height:50px;">
-                        <div style="display:grid;grid-template-columns:3fr 1fr 1fr 1fr 2fr 1fr">
-                            <div><p>Name </p></div>
-                            <div><p>Email</p></div>
-                            <div><p>SMS</p></div>
-                            <div><p>Call</p></div>
-                            <div class="text-center"><p>Send alert after<br />(minutes)</p></div>
-                            <div class="text-center"><p>Call repeating time(minutes)</p></div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+        <div>
+            <ul id="sortable">
+                <li id="unsortable" style="overflow:hidden; display:flex; height:50px;">
+                    <div style="display:grid;grid-template-columns:3fr 1fr 1fr 1fr 2fr 1fr">
+                        <div><p>Name </p></div>
+                        <div><p>Email</p></div>
+                        <div><p>SMS</p></div>
+                        <div><p>Call</p></div>
+                        <div class="text-center"><p>Send alert after<br />(minutes)</p></div>
+                        <div class="text-center"><p>Call repeating time(minutes)</p></div>
+                    </div>
+                </li>
+            </ul>
         </div>
+    </div>
 
 
-        <!-- start draw map in the draw new map model-->
+    <!-- start draw map in the draw new map model-->
 
 
 
 
-        <div class="row" style="margin-top:20px;padding:10px;background-color:aliceblue;border-radius:5px">
-            <div class="container">
-                <div class="row justify-content-between">
-                    <div class="col-4">
-                        <h4 style="color:brown">Level 2</h4>
-                    </div>
-                    <div class="col-2">
-                        <button class="btn btn-primary glyphicons-chevron-left" style="margin-top:10px;" data-toggle="modal" data-target="#modalmanager"><i class="fas fa-user-plus"></i> Add a person</button>
-                    </div>
+    <div class="row" style="margin-top:20px;padding:10px;background-color:aliceblue;border-radius:5px">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-4">
+                    <h4 style="color:brown">Level 2</h4>
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-primary glyphicons-chevron-left" style="margin-top:10px;" data-toggle="modal" data-target="#modalmanager"><i class="fas fa-user-plus"></i> Add a person</button>
                 </div>
             </div>
-            <script>
-                window.onload = $(function () {
-
-                    $("#managersortable").sortable({
-                        items: "li:not(#managerunsortable)"
-                    });
-
-                    $("#managersortable").disableSelection();
-                });</script>
-
-            <div>
-                <ul id="managersortable">
-                    <li id="managerunsortable" style="overflow:hidden; display:flex; height:50px;">
-                        <div style="display:grid;grid-template-columns:3fr 1fr 1fr 1fr 1fr">
-                            <div style="margin-left:20px"><p>Name </p></div>
-                            <div><p>Email</p></div>
-                            <div><p>SMS</p></div>
-                            <div ><p>Call</p></div>
-                            <div class="text-center"><p>Send alert after<br />(hours)</p></div>
-
-                        </div>
-                    </li>
-                </ul>
-            </div>
         </div>
-        <button class="btn btn-success glyphicons-chevron-left" style="margin-top:10px;" onclick="saveList();">Save List</button>
+        <script>
+            window.onload = $(function () {
+
+                $("#managersortable").sortable({
+                    items: "li:not(#managerunsortable)"
+                });
+
+                $("#managersortable").disableSelection();
+            });</script>
+
+        <div>
+            <ul id="managersortable">
+                <li id="managerunsortable" style="overflow:hidden; display:flex; height:50px;">
+                    <div style="display:grid;grid-template-columns:3fr 1fr 1fr 1fr 1fr">
+                        <div style="margin-left:20px"><p>Name </p></div>
+                        <div><p>Email</p></div>
+                        <div><p>SMS</p></div>
+                        <div><p>Call</p></div>
+                        <div class="text-center"><p>Send alert after<br />(hours)</p></div>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
+    <button class="btn btn-success glyphicons-chevron-left" style="margin-top:10px;" onclick="saveList();">Save List</button>
+</div>
 <div class="container" style="">
     <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modal1" data-keyboard="false" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -361,46 +366,126 @@
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
 <script src="~/Scripts/AdminScripts/notificationsManagement.js"></script>
 <script>
+    function clear_ul(ul_id) {
+
+        var main_ul = document.getElementById(ul_id);
+        var li_items = main_ul.getElementsByTagName("li");
+
+       // console.log("lenght 1--->  " + main_ul.childNodes.length);
+        var len = main_ul.childNodes.length;
+
+        for (i = 0; i < len; i++) {
+            main_ul.childNodes.forEach(function (i) {
+                if (i.nodeName == "LI") {
+                   // console.log(i.getAttribute("id"));
+                    if (i.getAttribute("class") == "ui-state-default") {
+                        i.remove();
+                    }
+                }
+            });
+        }
+    }
+
+    $(document.body).on("change", "#selectIssue", function () {
+
+        clear_ul("sortable");
+        clear_ul("managersortable");
+
+        var Issue = document.getElementById('selectIssue').value;
+        var LineID = @Model.lineID ;
+        var url = '@Url.Action("getRespList", "CellEngineer")';
+        $.ajax({
+                type: "POST",
+                dataType: 'text',
+                url: url,
+                data: { line:1, issue:Issue }, //LineID
+                success: function (itemNameArray) {
+
+                        var obj = JSON.parse(itemNameArray);
+
+                        var EmployeeNumber;
+                        var Name;
+                        var call;
+                        var email;
+                        var message;
+                        var callRepetitionTime;
+                        var sendAlertAfter;
+                        var person_level;
+                        var levelOfResponsibility;
+
+                        for (var i = 0; i < obj[0].Value.length; i++) {
+
+                            EmployeeNumber = obj[0].Value[i].EmployeeNumber;
+                            Name = obj[1].Value[i].Name;
+                            call = obj[0].Value[i].call;
+                            email = obj[0].Value[i].email;
+                            message = obj[0].Value[i].message;
+                            callRepetitionTime = obj[0].Value[i].callRepetitionTime;
+                            sendAlertAfter = obj[0].Value[i].sendAlertAfter;
+
+                            person_level = obj[0].Value[i].person_level;
+                            levelOfResponsibility = obj[0].Value[i].levelOfResponsibility;
+
+                            if (person_level == 1) {
+
+                                loadPerson(Name,EmployeeNumber,email,message,call,sendAlertAfter,callRepetitionTime);
+                            }
+                            if (person_level == 2) {
+
+                                loadManager(Name,EmployeeNumber,email,message,call,sendAlertAfter,callRepetitionTime);
+                            }
+
+                        }
+                },
+                error: function ()
+                {
+                    alert("Error occurred");
+                }
+          });
+    });
+
 function fillDepartmentDropDown() {
 
     var name = document.getElementById("Name").value;
     var url = '@Url.Action("fillDepartmentDropDown", "CellEngineer")';
     $.ajax({
-    type: "POST",
-    dataType: 'text',
-    url: url,
-    data: { person_name:name},
-    success: function (itemNameArray) {
-    console.log(itemNameArray);
-    var obj = JSON.parse(itemNameArray);
-    console.log(obj);
-    },
-    error: function () {
-    alert("Error occurred");
-    }
-
+            type: "POST",
+            dataType: 'text',
+            url: url,
+            data: { person_name:name},
+            success: function (itemNameArray) {
+                console.log(itemNameArray);
+                var obj = JSON.parse(itemNameArray);
+                console.log(obj);
+            },
+            error: function () {
+              alert("Error occurred");
+            }
     });
 
     }
+
     function fillDepartmentmanagerDropDown() {
 
-        var name = document.getElementById("managerName").value;
+    var name = document.getElementById("managerName").value;
     var url = '@Url.Action("fillDepartmentDropDown", "CellEngineer")';
-    $.ajax({
-    type: "POST",
-    dataType: 'text',
-    url: url,
-    data: { person_name:name},
-    success: function (itemNameArray) {
-    console.log(itemNameArray);
-    var obj = JSON.parse(itemNameArray);
-    console.log(obj);
-    },
-    error: function () {
-    alert("Error occurred");
-    }
 
-    });
+        $.ajax({
+                type: "POST",
+                dataType: 'text',
+                url: url,
+                data: { person_name:name},
+                success: function (itemNameArray) {
+                console.log(itemNameArray);
+                var obj = JSON.parse(itemNameArray);
+                console.log(obj);
+            },
+                error: function ()
+            {
+                alert("Error occurred");
+            }
+
+        });
 
     }
 
@@ -433,11 +518,11 @@ function fillDepartmentDropDown() {
     }
     },
     error: function () {
-    alert("Error occurred");
-    }
+         alert("Error occurred");
+        }
     });
     }
-    
+
     function fillNamemanagerDropDown() {
 
     var department = document.getElementById("managerDepartment").value;
@@ -587,7 +672,7 @@ function saveList() {
         obj_array.push(obj);
     }
 
-    
+
 
     var ulmanager = document.getElementById("managersortable");
     var itemsmanager = ulmanager.getElementsByTagName("li");

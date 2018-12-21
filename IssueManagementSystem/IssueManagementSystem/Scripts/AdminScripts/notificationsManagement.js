@@ -112,6 +112,8 @@ function addLine(name, empID) {
     var list_element = document.createElement("li");
     var main_div = document.createElement("div");
 
+    list_element.setAttribute("id", empID+"_listItem");
+
     list_element.className = "ui-state-default";
     list_element.style.cssText = 'overflow:hidden;display:flex;';
     main_div.style.cssText = 'display:grid;grid-template-columns:3fr 1fr 1fr 1fr 2fr 1fr;';
@@ -169,6 +171,8 @@ function addLinemanager(name, empID) {
     var list_element = document.createElement("li");
     var main_div = document.createElement("div");
 
+    list_element.setAttribute("id", empID+"_listItem");
+
     list_element.className = "ui-state-default";
     list_element.style.cssText = 'overflow:hidden;display:flex;;width:80%';
     main_div.style.cssText = 'display:grid;grid-template-columns:3fr 1fr 1fr 1fr 1fr';
@@ -184,7 +188,7 @@ function addLinemanager(name, empID) {
 
     var divEmail = document.createElement("div");
     var divEmail_inner = document.createElement("input");
-   divEmail.style.cssText = 'margin-left:-45%';
+    divEmail.style.cssText = 'margin-left:-45%';
     divEmail_inner.type = "checkbox";
     divEmail.appendChild(divEmail_inner);
     inner_div.appendChild(divEmail);
@@ -198,7 +202,7 @@ function addLinemanager(name, empID) {
 
     var divCall = document.createElement("div");
     var divCall_inner = document.createElement("input");
-   divCall.style.cssText = 'margin-left:-75%';
+    divCall.style.cssText = 'margin-left:-75%';
     divCall_inner.type = "checkbox";
     divCall.appendChild(divCall_inner);
     inner_div.appendChild(divCall);
@@ -212,10 +216,66 @@ function addLinemanager(name, empID) {
     div2.appendChild(div2_inner);
     inner_div.appendChild(div2);
 
-
     document.getElementById("managersortable").appendChild(list_element);
-
     document.getElementById(name + "manager").innerHTML = empID + " - " + name;
+}
+
+function loadPerson(name,empID,email,sms,call, send_alert_after,call_repeating_time)
+{
+    addLine(name,empID);   
+
+    //get last element of "#sortable" list
+    //set chebox and input values
+
+    var main_ul = document.getElementById("sortable");
+    var li_items = main_ul.getElementsByTagName("li");
+    var e = false;
+    var s = false;
+    var c = false;
+
+    if(email==1)
+    {e = true;}
+
+    if(sms==1)
+    {s = true;}
+
+    if(call==1)
+    {c = true;}
+
+    li_items[li_items.length-1].childNodes[0].childNodes[0].childNodes[0].innerHTML = empID + " - " +name ;  // Name
+    li_items[li_items.length-1].childNodes[0].childNodes[1].childNodes[0].checked   = e ;                    // Email
+    li_items[li_items.length-1].childNodes[0].childNodes[2].childNodes[0].checked   = s ;                    // SMS
+    li_items[li_items.length-1].childNodes[0].childNodes[3].childNodes[0].checked   = c ;                    // Call
+    li_items[li_items.length-1].childNodes[0].childNodes[4].childNodes[0].value     = send_alert_after    ;  // SAA
+    li_items[li_items.length-1].childNodes[0].childNodes[5].childNodes[0].value     = call_repeating_time ;  // Crt
+
+}
+
+function loadManager(name,empID,email,sms,call, send_alert_after,call_repeating_time)
+{
+    addLinemanager(name,empID);   
+
+    var main_ul = document.getElementById("managersortable");
+    var li_items = main_ul.getElementsByTagName("li");
+
+    var e = false;
+    var s = false;
+    var c = false;
+
+    if(email==1)
+    {e = true;}
+
+    if(sms==1)
+    {s = true;}
+
+    if(call==1)
+    {c = true;}
+
+    li_items[li_items.length-1].childNodes[0].childNodes[0].childNodes[0].innerHTML = empID+ " - " +name;     // Name
+    li_items[li_items.length-1].childNodes[0].childNodes[1].childNodes[0].checked   = e  ;                    // Email
+    li_items[li_items.length-1].childNodes[0].childNodes[2].childNodes[0].checked   = s  ;                    // SMS
+    li_items[li_items.length-1].childNodes[0].childNodes[3].childNodes[0].checked   = c  ;                    // Call
+    li_items[li_items.length-1].childNodes[0].childNodes[4].childNodes[0].value     = send_alert_after;       // SAA
 
 }
 

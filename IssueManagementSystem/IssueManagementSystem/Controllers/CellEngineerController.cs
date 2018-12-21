@@ -15,9 +15,13 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 namespace IssueManagementSystem.Controllers
 {
+ 
+
     public class CellEngineerController : Controller
     {
-    
+
+        public static int lineId;
+
 
         // GET: CellEngineer
         public ActionResult DashBord()
@@ -32,7 +36,10 @@ namespace IssueManagementSystem.Controllers
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
             {
                 var lineInfo = db.line_cell_eng.Where(x => x.cell_eng_emp_id == userID).FirstOrDefault();
-              
+                lineId = Convert.ToInt32(lineInfo.line_id) ;
+
+                Debug.Print(" 1.....    " + lineId.ToString());
+
                 ViewBag.LineId = lineInfo.line_id;
                 return View();
             }
@@ -150,7 +157,10 @@ namespace IssueManagementSystem.Controllers
 
                 List<department> departments = db.departments.ToList();
 
+                Debug.Print(" .....    "+ CellEngineerController.lineId.ToString());
+
                 dynamic mymodel = new ExpandoObject();
+                mymodel.lineID = CellEngineerController.lineId;
                 mymodel.users = userList;
                 mymodel.departments = departments;
 
@@ -178,17 +188,41 @@ namespace IssueManagementSystem.Controllers
 
         }
 
-        //[HttpPost]
-        //public ActionResult fillmanagerNameDropDown(string department)
-        //{
-        //    using (BigRedEntities db = new BigRedEntities()) //method for load the map acordinto the surevisor line
-        //    {
-        //        string query_1 = "SELECT CONCAT(tbl_PPA_User.EmployeeNumber,' - ',tbl_PPA_User.Name) AS Users FROM tbl_PPA_User WHERE tbl_PPA_User.Department='" + department + "'AND tbl_PPA_User.Role='manager'";
-        //        var c = db.Database.SqlQuery<string>(query_1).ToList();
-        //        return Json(c, JsonRequestBehavior.AllowGet);
-        //    }
+        [HttpPost]
+        public ActionResult getRespList(string line,string issue)
+        {
+            var c = new List<issue_line_person>(); 
+            var c1 = new List<tbl_PPA_User>();
 
-        //}
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) 
+            {
+                string query_1 = "SELECT * FROM issue_line_person WHERE issue_line_person.issue_id = '"+ issue + "' AND issue_line_person.line_id = '"+ line + "' ORDER BY issue_line_person.levelOfResponsibility";
+                Debug.Print(query_1);
+                 c= db.Database.SqlQuery<issue_line_person>(query_1).ToList();
+            }
+
+            using (BigRedEntities db = new BigRedEntities()) 
+            {
+                foreach(issue_line_person item in c){
+
+                    string query_1 = "SELECT * FROM tbl_PPA_User WHERE tbl_PPA_User.EmployeeNumber =" + item.EmployeeNumber;
+                    tbl_PPA_User tempItem = db.Database.SqlQuery<tbl_PPA_User>(query_1).FirstOrDefault();
+                    Debug.Print("######" + tempItem.ToString());
+                    Debug.Print("###" + tempItem.Name);
+                    c1.Add(tempItem);
+                }
+            }
+
+            dynamic obj = new ExpandoObject();
+            obj.issue_line_person = c;
+            obj.userData = c1;
+
+            return Json(obj, JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
         class user_temp
         {
 

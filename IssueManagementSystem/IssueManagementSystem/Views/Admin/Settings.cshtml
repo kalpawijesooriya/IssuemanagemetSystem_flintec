@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Settings";
     Layout = "~/Views/Shared/BranchSideNav.cshtml";
     if (Session["userID"] == null)
@@ -216,6 +215,8 @@
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
 <script>
 
+
+
     function readURL(input) {
         alert(input.files[0]);
         
@@ -225,7 +226,7 @@
             reader.onload = function (e) {
                 console.log(e.target.result);
                 $('#canvas1')
-                    .attr('style', "background:url(" + e.target.result+");background-size:250px 750px")
+                    .attr('style', "background:url("+e.target.result+");background-size:250px 750px")
             };
             reader.readAsDataURL(input.files[0]);
         }
@@ -540,8 +541,7 @@ CanvasState.prototype.draw = function () {
         var ctx = this.ctx;
         var shapes = this.shapes;
         this.clear();
-
-        // ** Add stuff you want drawn in the background all the time here **
+        //** Add stuff you want drawn in the background all the time here **
 
         // draw all shapes
         var l = shapes.length;
@@ -596,28 +596,19 @@ CanvasState.prototype.getMouse = function (e) {
 
 // If you dont want to use <body onLoad='init()'>
 // You could uncomment this init() reference and place the script reference inside the body tag
-//init();
-
-
-
+// init();
 
 
 function init() {
     var s = new CanvasState(document.getElementById('canvas1'));
 
-
     //  s.addShape(new Shape(60,140,40,60, 'lightskyblue'));
-
-
+    
 }
 
 window.onload = init;
 
-
 // end of draw map js
-
-
-
 
 </script>
 
