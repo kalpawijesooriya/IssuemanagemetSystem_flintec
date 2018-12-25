@@ -166,7 +166,7 @@ function addLine(name, empID) {
     divDelete_inner.style.float="right";
     var divIcon =  document.createElement("i");
     divIcon.setAttribute("class","fas fa-backspace fa-2x");
-    divIcon.style.color="#9b2b45";
+    divIcon.style.color="#848182";
 
 
     divDelete_inner.addEventListener("click", function(){deleteListItem(empID+"_listItem");});
@@ -237,7 +237,7 @@ function addLinemanager(name, empID) {
     divDelete_inner.style.float="right";
     var divIcon =  document.createElement("i");
     divIcon.setAttribute("class","fas fa-backspace fa-2x");
-    divIcon.style.color="#9b2b45";
+    divIcon.style.color="#848182";
 
 
     divDelete_inner.addEventListener("click", function(){deleteListItem(empID+"_listItem");});
