@@ -268,7 +268,6 @@ namespace IssueManagementSystem.Controllers
                         {
                             db.issue_line_person.Remove(item);
                             db.SaveChanges();
-                            
                         }
                         delete = false;
                     }
