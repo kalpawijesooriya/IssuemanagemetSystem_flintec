@@ -37,8 +37,9 @@ namespace IssueManagementSystem.Controllers
                 var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
                 var mapInfo = db.line_map.Where(y => y.line_id == lineInfo.line_line_id).FirstOrDefault();
                 ViewBag.LineId = mapInfo.line_id;
-                return View();
+                
             }
+            return View();
         }
 
         [HttpGet]
