@@ -107,7 +107,19 @@ namespace IssueManagementSystem.Controllers
         {
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
-                String query = "SELECT issue_occurrence.machine_machine_id,count(issue_occurrence.machine_machine_id) AS count FROM issue_occurrence WHERE issue_occurrence.issue_issue_ID = 1 GROUP BY issue_occurrence.machine_machine_id  ORDER BY count Desc";
+                String query = @"SELECT TOP 10
+                                issue_management_system.dbo.issue_occurrence.issue_date,
+                                issue_management_system.dbo.issues.issue,
+                                issue_management_system.dbo.issue_occurrence.machine_machine_id,
+                                issue_management_system.dbo.issue_occurrence.material_id,
+                                BigRed.dbo.tbl_PPA_User.Name,
+                                DATEDIFF(minute, issue_occurrence.issue_date, issue_occurrence.solved_date) AS DateDiff
+                                FROM
+                                issue_management_system.dbo.issue_occurrence,BigRed.dbo.tbl_PPA_User,issue_management_system.dbo.issues
+                                WHERE
+                                BigRed.dbo.tbl_PPA_User.UserName LIKE issue_management_system.dbo.issue_occurrence.responsible_person_emp_id AND
+                                issue_management_system.dbo.issue_occurrence.issue_issue_ID = issue_management_system.dbo.issues.issue_id
+                                ORDER BY DateDiff DESC";
 
                 var chart1Data = db.Database.SqlQuery<tempClass2>(query).ToList();
 
@@ -134,26 +146,6 @@ namespace IssueManagementSystem.Controllers
                 return Json(chart1Data, JsonRequestBehavior.AllowGet); 
             }
         }
-
-        //
-
-        /*
-         
-            SELECT TOP 10
-            issue_management_system.dbo.issue_occurrence.issue_date,
-            issue_management_system.dbo.issues.issue,
-            issue_management_system.dbo.issue_occurrence.machine_machine_id,
-            issue_management_system.dbo.issue_occurrence.material_id,
-            BigRed.dbo.tbl_PPA_User.Name,
-            DATEDIFF(minute,issue_occurrence.issue_date,issue_occurrence.solved_date) AS DateDiff
-            FROM
-            issue_management_system.dbo.issue_occurrence,BigRed.dbo.tbl_PPA_User,issue_management_system.dbo.issues
-            WHERE
-            BigRed.dbo.tbl_PPA_User.UserName LIKE issue_management_system.dbo.issue_occurrence.responsible_person_emp_id AND
-            issue_management_system.dbo.issue_occurrence.issue_issue_ID = issue_management_system.dbo.issues.issue_id
-            ORDER BY DateDiff DESC
-
-        */
 
     }
 }
