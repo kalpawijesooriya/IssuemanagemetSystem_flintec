@@ -24,12 +24,17 @@ namespace IssueManagementSystem.Controllers
 
 
                 ViewBag.id = id;
-                ViewBag.issueoccourInfo = db.issue_occurrence.Where(x => x.line_line_id == id && x.issue_satus=="1").ToList();
-               
-               
+                ViewBag.issueoccourInfo = db.issue_occurrence.Where(x => x.line_line_id == id && x.issue_satus=="1").Count();
+                if (ViewBag.issueoccourInfo == 0)
+                {
+                    return Redirect("http://192.168.1.30:84/Report/GagingD1/"+id);
+                }
+                else
+                    return View();
+
             }
 
-            return View();
+           
         }
         [HttpPost]//solvedIssueMethod
         public JsonResult updateScreen()

@@ -54,10 +54,20 @@ namespace IssueManagementSystem.Controllers
                     var mobileNumber = communicateData.getNumber();
                     int empNo = communicateData.getEmployeeNumber();
                     int issue_occor_id = communicateData.getissue_occour_id();
+                    int emailStatus = communicateData.getEmail();
+                    int callStatus = communicateData.getCall();
+                    int msgStatus = communicateData.getMessage();
 
-                    if (communicateData.getEmail() == 1 && emailAddress!= null)
+                    using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
                     {
-                        sendMail(emailAddress, msg,communicateData.getsubject(), empNo, issue_occor_id);
+
+                        string query = "INSERT INTO tbl_issue_feedback (issue_occurrence_id,EmployeeNumber, call_send, call_answered, sms_send,email_send)VALUES(" + issue_occor_id + "," + empNo + ","+ callStatus + ", 0, " + msgStatus + ", "+emailStatus+");";
+                        db.Database.ExecuteSqlCommand(query);
+                    }
+
+                    if (emailStatus == 1 && emailAddress!= null)
+                    {
+                        sendMail(emailAddress, msg,communicateData.getsubject());
                         //using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
                         //{
                         //    string query = "INSERT INTO tbl_Notifications ([Status],[Message],[Type],[EmployeeNumber],[Date]) VALUES( 1,'" + msg + "','email','" + communicateData.getEmployeeNumber() + "','" + date + "') ";
@@ -65,10 +75,10 @@ namespace IssueManagementSystem.Controllers
                         //}                                                 
                     }
 
-                    if (communicateData.getMessage() == 1 && mobileNumber != null)                    
-                        send_SMS(mobileNumber, msg, empNo, issue_occor_id);
+                    if (msgStatus == 1 && mobileNumber != null)                    
+                        send_SMS(mobileNumber, msg);
 
-                    if (communicateData.getCall() == 1 && mobileNumber != null)
+                    if (callStatus == 1 && mobileNumber != null)
                         take_Call(mobileNumber, communicateData.getcallNote(), communicateData.getrepetCount(),communicateData.getdelay(), empNo, issue_occor_id);
 
 
@@ -110,7 +120,7 @@ namespace IssueManagementSystem.Controllers
             HttpWebResponse webResponse = (HttpWebResponse)webReq.GetResponse();
         }
 
-        public void sendMail(string emailAddress, string msg,string subject,int empNo,int issue_occor_id)
+        public void sendMail(string emailAddress, string msg,string subject)
         {
             using (MailMessage mm = new MailMessage("ppts@flintec.com", emailAddress))
             {
@@ -129,17 +139,12 @@ namespace IssueManagementSystem.Controllers
                     smtp.Send(mm);
                     // Debug.WriteLine("This is count : " + count.ToString());
 
-                    using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
-                    {
-                        
-                        string query = "INSERT INTO tbl_issue_feedback (issue_occurrence_id,EmployeeNumber, call_send, call_answered, sms_send,email_send)VALUES("+issue_occor_id+","+ empNo + ",0, 0, 0, 1);";
-                        db.Database.ExecuteSqlCommand(query);
-                    }
+                    
                 }
             }
         }
 
-        public  void send_SMS(string number,string message,int empNo, int issue_occor_id)
+        public  void send_SMS(string number,string message)
         {
 
            
@@ -202,12 +207,26 @@ namespace IssueManagementSystem.Controllers
             var cr=cs.Split(',');
             Debug.WriteLine("Call Respond: " + cr[0]);
             Debug.WriteLine("Call Respond: " + cr[1]);
+            int call_answered = 0;
+            if (cr[0] == "true")
+            {
+                call_answered = 1;
+            }
+                using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+            {
 
+                string query = "UPDATE tbl_issue_feedback SET call_send=" + callCount + ",call_answered ="+ call_answered + "WHERE issue_occurrence_id=" + issue_occor_id + "AND EmployeeNumber=" + empNo;
+                db.Database.ExecuteSqlCommand(query);
+            }
             if (cr[0] == "false") {
                 if (Int32.Parse(repetCount) > callCount)
                 {
-                    int waitingTime = Int32.Parse(delay) * 60 * 1000 - 23000;
-                    Thread.Sleep(waitingTime);
+                    double delaycall = Int32.Parse(delay);
+                    if (Int32.Parse(delay) < 0.39) { delaycall = 0.39; }
+                  
+                        double waitingTime = delaycall* 60 * 1000 - 23000;
+                    Thread.Sleep(Convert.ToInt32(waitingTime));
+                   
                     take_Call(number, message, repetCount, delay, empNo, issue_occor_id);
                 }
                 if (Int32.Parse(repetCount) <= callCount)

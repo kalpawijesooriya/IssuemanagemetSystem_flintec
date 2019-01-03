@@ -24,7 +24,6 @@
                     <div style="padding-top:20px;">
                         <label for="exampleFormControlTextarea1">Description</label>
                         @Html.TextAreaFor(model => model.description, new { @class = "form-control", @style = "width: 100%", @rows = 5 })
-
                     </div>
                     string Role = Session["Role"].ToString();
                     string lineID = Session["lineId"].ToString();

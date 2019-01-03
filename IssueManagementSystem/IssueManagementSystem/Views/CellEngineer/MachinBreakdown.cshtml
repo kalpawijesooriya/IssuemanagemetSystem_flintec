@@ -6,8 +6,18 @@
     {
         Response.Redirect("~/Login/Index");
     }
+    ViewBag.rol = Session["Role"];
+    int userID = (int)Session["userID"];// get current supervisorID
+    using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
+    {
+        var lineInfo = db.line_cell_eng.Where(x => x.cell_eng_emp_id == userID).FirstOrDefault();
+        ViewBag.lineID = lineInfo.line_id;
+        var mapInfo = db.line_map.Where(y => y.line_id == lineInfo.line_id).FirstOrDefault();
+        ViewData["map"] = mapInfo.map.ToString().Trim();//get the map arry to ViewData
+    }
 }
 
+@using IssueManagementSystem.Models;
 @model IssueManagementSystem.Models.issue_occurrence
 
 <link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
@@ -23,7 +33,7 @@
             <div class="container-liquid">
                 <div style="display:inline-grid;grid-template-columns: 90%  50%">
                     <div id="container">
-                        <canvas id="canvas1" style="border: 1px solid black;margin-left:8.2em;background:url('../../Content/images/RCPDF1.jpg');background-size: 100% 100%;"width="250" height="750">
+                        <canvas id="canvas1" style="border: 1px solid black;margin-left:8.2em;background:url('../../Content/images/RCPDF1.jpg');background-size: 100% 100%;" width="250" height="750">
                             <br>This text is displayed if your browser does not support HTML5 Canvas.<br>
                         </canvas>
                     </div>

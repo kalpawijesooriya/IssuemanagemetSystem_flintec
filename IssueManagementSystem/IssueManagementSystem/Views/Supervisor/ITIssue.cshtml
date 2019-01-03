@@ -6,10 +6,20 @@
     {
         Response.Redirect("~/Login/Index");
     }
+    ViewBag.rol = Session["Role"];
+    int userID = (int)Session["userID"];// get current supervisorID
+    using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
+    {
+        var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
+        ViewBag.lineID = lineInfo.line_line_id;
+        var mapInfo = db.line_map.Where(y => y.line_id == lineInfo.line_line_id).FirstOrDefault();
+        ViewData["map"] = mapInfo.map.ToString().Trim(); //get the map arry to ViewData
+       
+    }
 
     int lineId = ViewBag.lineID;
 }
-
+@using IssueManagementSystem.Models
 @model IssueManagementSystem.Models.issue_occurrence
 <link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
 
@@ -30,7 +40,7 @@
                         @Html.TextAreaFor(model => model.description, new { @class = "form-control", @style = "width: 100%", @rows = 5 })
 
                     </div>
-                     string Role = ViewBag.rol.ToString();
+                    string Role = ViewBag.rol.ToString();
                     string lineID = ViewBag.lineID.ToString();
                     @Html.TextAreaFor(mo => mo.Role, new { @class = "form-control", @id = "role", style = "display: none;" })
                     @Html.TextAreaFor(mod => mod.lineid, new { @class = "form-control", @id = "lineid", style = "display: none;" })

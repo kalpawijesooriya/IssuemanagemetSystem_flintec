@@ -5,6 +5,19 @@
     if (Session["userID"] == null)
     {
         Response.Redirect("~/Login/Index");
+
+
+    }
+ }
+@{ 
+
+    int userID = (int)Session["userID"];// get current supervisorID
+    using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
+    {
+    var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
+    var mapInfo = db.line_map.Where(y => y.line_id == lineInfo.line_line_id).FirstOrDefault();
+    ViewBag.LineId = mapInfo.line_id;
+
     }
 }
 @using IssueManagementSystem.Models;
@@ -178,19 +191,12 @@
         }
 
     })
-    @{
-        issue_management_systemEntities1 db = new issue_management_systemEntities1();
-
-        int userID = (int)Session["userID"];
-        var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
-
-        var lineId = lineInfo.line_line_id;
-     }
+   
         function myfunction(param) {
             var id = $(param).data('id');
             var issue_id = $(param).data('issue_id');
            
-            var url = '@Url.Action("SolvedIssue", "Supervisor")?issueId=' + issue_id + '&issueOccourId=' + id+'&lineId='+'@lineId' ;
+            var url = '@Url.Action("SolvedIssue", "Supervisor")?issueId=' + issue_id + '&issueOccourId=' + id+'&lineId='+'@ViewBag.LineId' ;
         
             $.ajax({
                 type: 'POST',
