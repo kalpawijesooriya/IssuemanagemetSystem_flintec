@@ -135,37 +135,66 @@
                         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
                         <script type="text/javascript">
+                            function getRandomColor() 
+                                {
+                                  var letters = '0123456789ABCDEF';
+                                  var color = '#';
+                                  for (var i = 0; i < 6; i++) {
+                                    color += letters[Math.floor(Math.random() * 16)];
+                                  }
+                                  return color;
+                                }
+                            
+                            var chartData1;
 
                             google.charts.load("current", { packages: ['corechart'] });
                             google.charts.setOnLoadCallback(drawChart);
+                           
                             function drawChart() {
+                               var dataArray = new Array(); 
 
-                                var data = google.visualization.arrayToDataTable([
-                                    ["Element", "Density", { role: "style" }],
-                                    ["Coprrrrrrper", 8.94, "#001f3f"],
-                                    ["Silvrrrrrrrer", 10.49, "#0074D9"],
-                                    ["yr5hrrrrruy", 19.30, "#7FDBFF"],
-                                    ["pl4trrrrrm", 21.45, "color: #39CCCC"],
-                                    ["c6perrrrrrr", 8.94, "#3D9970"],
-                                    ["p5thjwewehjit5", 21.45, "#2ECC40"],
-                                    ["ctghjhjhjper", 8.94, "#01FF70"],
-                                    ["S5ykkklklkjr", 10.49, "#FFDC00"],
-                                    ["kh.kjkhjtfd", 19.30, "#FF851B"],
-                                    ["rttytytytylhy", 21.45, "color: #FF4136"]
-                                ]);
+                                $.ajax({
+                                    type: "POST",
+                                    async: false,
+                                    dataType: 'text',
+                                    url: "/Manager/fillChart1",
+                                    data: { issueJson: 'issueJson'},
+                                    success: function (feedback) {
+                                        chartData1 = JSON.parse(feedback);
+                                        var a1 = new Array(chartData1.length+1);
+                                        a1[0] = ["Element","Density", { role: "style" }]
+                                        var x = new Array();
+                                        count = 1;
 
+                                        chartData1.forEach(function(element) 
+                                            {
+                                                var ele1 = element.machine_machine_id;
+                                                var ele2 = element.count;
+                                                var ele3= getRandomColor();
+                                                x = [ele1,ele2,ele3];
+                                                a1[count] = x;
+                                                count++;
+                                            });
+
+                                   dataArray = a1;
+                                    },
+                                    error: function () {
+                                        alert("Error occurred");
+                                    }
+                                });
+                              
+                                var data = google.visualization.arrayToDataTable(dataArray);
                                 var view = new google.visualization.DataView(data);
+
                                 view.setColumns([0, 1,
                                     {
                                         calc: "stringify",
                                         sourceColumn: 1,
                                         type: "string",
                                         role: "annotation"
-                                    },
-                                    2]);
+                                    },2]);
 
                                 var options = {
-
                                     bar: { groupWidth: "95%" },
                                     legend: { position: "none" },
                                     chartArea: { 'width': '100%', 'height': '60%', 'top': '0' },
@@ -241,20 +270,47 @@
                             google.charts.load("current", { packages: ["corechart"] });
                             google.charts.setOnLoadCallback(drawChart);
                             function drawChart() {
-                                var data = google.visualization.arrayToDataTable([
-                                    ['Issue', 'Number of Occurrence'],
-                                    ['Material Delay', 11],
-                                    ['Quality Issue', 2],
-                                    ['IT Issue', 2],
-                                    ['Technical Issue', 2],
-                                    ['MAchine Breakdown', 7]
-                                ]);
+   
+                            var dataArray = new Array(); 
+
+                                $.ajax({
+                                    type: "POST",
+                                    async: false,
+                                    dataType: 'text',
+                                    url: "/Manager/fillChart3",
+                                    data: { issueJson: 'issueJson'},
+                                    success: function (feedback) {
+                                        chartData1 = JSON.parse(feedback);
+                                        var a1 = new Array(chartData1.length+1);
+                                        a1[0] = ["Issue","Number of Occurrence"]
+                                        var x = new Array();
+                                        count = 1;
+
+                                        chartData1.forEach(function(element) 
+                                            {
+                                                var ele1 = element.issue;
+                                                var ele2 = element.count;
+                                                x = [ele1,ele2];
+                                                a1[count] = x;
+                                                count++;
+                                            });
+
+                                   dataArray = a1;
+                                    },
+                                    error: function () {
+                                        alert("Error occurred");
+                                    }
+                                });
+
+                            console.log(dataArray);
+                                var data = google.visualization.arrayToDataTable(dataArray);
 
                                 var options = {
-                                    title: 'My Daily Activities',
+                                    title: 'Number of Issues by Type',
                                     is3D: true,
                                     chartArea: { 'width': '100%', 'height': '80%', 'top': '0' },
-                                    legend: { position: "bottom" }
+                                    legend: { position: "bottom" },
+                                    slices: {0: {color: '#f40000'}, 1:{color: '#ffcc00'}, 2:{color: '#1e63ce'}, 3: {color: '#31bc07'}, 4:{color: '#a80da3'}}
                                 };
 
                                 var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
