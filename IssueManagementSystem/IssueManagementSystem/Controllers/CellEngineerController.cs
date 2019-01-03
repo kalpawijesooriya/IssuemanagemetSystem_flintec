@@ -26,12 +26,7 @@ namespace IssueManagementSystem.Controllers
         // GET: CellEngineer
         public ActionResult DashBord()
         {
-      
-          
-           
-                return View();
-        
-           
+            return View(); 
         }
         public ActionResult MachinBreakdown()//machine breakedown view
         {
@@ -41,16 +36,8 @@ namespace IssueManagementSystem.Controllers
                 return RedirectToAction("Index", "Login");
 
             }
-            ViewBag.rol = Session["Role"];
-            int userID = (int)Session["userID"];// get current supervisorID
-            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
-            {
-                var lineInfo = db.line_cell_eng.Where(x => x.cell_eng_emp_id == userID).FirstOrDefault();
-                ViewBag.lineID = lineInfo.line_id;
-                var mapInfo = db.line_map.Where(y => y.line_id == lineInfo.line_id).FirstOrDefault();
-                ViewData["map"] = mapInfo.map.ToString().Trim();//get the map arry to ViewData
-                return View();
-            }
+         
+            return View();
         }
 
         public ActionResult TechnicalIssue()//Technical Issue View
@@ -61,18 +48,8 @@ namespace IssueManagementSystem.Controllers
                 return RedirectToAction("Index", "Login");
 
             }
-            ViewBag.rol = Session["Role"];
-            int userID = (int)Session["userID"];// get current supervisorID
-            using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
-            {
-
-                var lineInfo = db.line_cell_eng.Where(x => x.cell_eng_emp_id == userID).FirstOrDefault();
-                ViewBag.lineID = lineInfo.line_id;
-                var mapInfo = db.line_map.Where(y => y.line_id == lineInfo.line_id).FirstOrDefault();
-               // ViewData["map"] = mapInfo.map.ToString().Trim(); //get the map arry to ViewData
-                return View();
-            }
-
+          
+            return View();
         }
 
         public ActionResult MaterialDelay()//MaterialDelay View
@@ -83,14 +60,13 @@ namespace IssueManagementSystem.Controllers
                 return RedirectToAction("Index", "Login");
 
             }
-            int userID = (int)Session["userID"];// get current supervisorID
+      
             dynamic mat_List = new System.Dynamic.ExpandoObject();
             
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
             {
                 mat_List.issue_occurrence = db.issue_occurrence;
-                var lineInfo = db.line_cell_eng.Where(x => x.cell_eng_emp_id == userID).FirstOrDefault();
-                ViewBag.lineID = lineInfo.line_id;
+               
             }
 
 

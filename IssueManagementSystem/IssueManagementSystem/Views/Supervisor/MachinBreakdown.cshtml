@@ -1,4 +1,5 @@
-﻿
+﻿@using IssueManagementSystem.Models;
+@model IssueManagementSystem.Models.issue_occurrence
 @{
     ViewBag.Title = "MachinBreakdown";
     Layout = "~/Views/Shared/supervisorsLayout.cshtml";
@@ -6,11 +7,21 @@
     {
         Response.Redirect("~/Login/Index");
     }
+
+    ViewBag.rol = Session["Role"];
+    int userID = (int)Session["userID"];// get current supervisorID
+    using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
+    {
+        var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
+        ViewBag.lineID = lineInfo.line_line_id;
+        var mapInfo = db.line_map.Where(y => y.line_id == lineInfo.line_line_id).FirstOrDefault();
+        ViewData["map"] = mapInfo.map.ToString().Trim();//get the map arry to ViewData
+
+    }
 }
 
 
 
-@model IssueManagementSystem.Models.issue_occurrence
 
 <link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
 
@@ -70,7 +81,7 @@
 
         </div>
     </div>
- 
+
     <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
     <script src="~/Scripts/SupervisorScripts/showmap.js"></script>
     <script src="~/Scripts/jquery.min.js"></script>

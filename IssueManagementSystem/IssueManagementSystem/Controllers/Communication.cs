@@ -221,8 +221,11 @@ namespace IssueManagementSystem.Controllers
             if (cr[0] == "false") {
                 if (Int32.Parse(repetCount) > callCount)
                 {
-                    int waitingTime = Int32.Parse(delay) * 60 * 1000 - 23000;
-                    Thread.Sleep(waitingTime);
+                    double delaycall = Int32.Parse(delay);
+                    if (Int32.Parse(delay) < 0.39) { delaycall = 0.39; }
+                  
+                        double waitingTime = delaycall* 60 * 1000 - 23000;
+                    Thread.Sleep(Convert.ToInt32(waitingTime));
                    
                     take_Call(number, message, repetCount, delay, empNo, issue_occor_id);
                 }
