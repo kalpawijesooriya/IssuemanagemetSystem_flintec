@@ -69,14 +69,31 @@ namespace IssueManagementSystem.Controllers
         {
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
+                int lineid = Int32.Parse(lineID);
                 //insert data in to line_map table
-                string query = "INSERT INTO [dbo].[line_map]([line_id],[map],[red],[green],[yellow],[blue],issues)VALUES('" + lineID + "','" + mapJSON + "','0','0','0','0','" + issues + "')";
-                db.Database.ExecuteSqlCommand(query);
+                int exist = db.line_map.Where(x => x.line_id == lineid).Count();
+               //  = db.line_map.Where(x => x.line_id == int.Parse(lineID)).Count();
+                if (exist == 0)
+                {
+                    string query = "INSERT INTO [dbo].[line_map]([line_id],[map],[red],[green],[yellow],[blue],issues)VALUES('" + lineID + "','" + mapJSON + "','0','0','0','0','" + issues + "')";
+                    db.Database.ExecuteSqlCommand(query);
 
-                string query1 = "INSERT INTO display(line_id,raspberry_ip_address) VALUES('" + lineID + "','" + ipAddress + "') ";
-                db.Database.ExecuteSqlCommand(query1);
+                    string query1 = "INSERT INTO display(line_id,raspberry_ip_address) VALUES('" + lineID + "','" + ipAddress + "') ";
+                    db.Database.ExecuteSqlCommand(query1);
 
-                saveBase64Image("~/Content/images/" + lineID + ".jpg", mapImage);
+                    saveBase64Image("~/Content/images/" + lineID + ".jpg", mapImage);
+                }
+                else {
+                    string query = "UPDATE SET line_id='" + lineID + "',map='" + mapJSON + "'red=0,green=0,yellow=0,issues=" + issues+"'";
+                        //"INSERT INTO [dbo].[line_map]([line_id],[map],[red],[green],[yellow],[blue],issues)VALUES('" + lineID + "','" + mapJSON + "','0','0','0','0','" + issues + "')";
+                    db.Database.ExecuteSqlCommand(query);
+
+                    string query1 = "UPDATE SET line_id='"+ lineID+ "',raspberry_ip_address='"+ ipAddress+"'";
+                        //"INSERT INTO display(line_id,raspberry_ip_address) VALUES('" + lineID + "','" + ipAddress + "') ";
+                    db.Database.ExecuteSqlCommand(query1);
+
+                    saveBase64Image("~/Content/images/" + lineID + ".jpg", mapImage);
+                }
             }
 
             return Content("query executed", MediaTypeNames.Text.Plain);
