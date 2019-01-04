@@ -15,6 +15,7 @@
         var mapInfo = db.line_map.Where(y => y.line_id == lineInfo.line_id).FirstOrDefault();
         ViewData["map"] = mapInfo.map.ToString().Trim();//get the map arry to ViewData
     }
+    ViewBag.id = Session["lineId"];
 }
 
 @using IssueManagementSystem.Models;
@@ -33,7 +34,7 @@
             <div class="container-liquid">
                 <div style="display:inline-grid;grid-template-columns: 90%  50%">
                     <div id="container">
-                        <canvas id="canvas1" style="border: 1px solid black;margin-left:8.2em;background:url('../../Content/images/RCPDF1.jpg');background-size: 100% 100%;" width="250" height="750">
+                        <canvas id="canvas1" style="border: 1px solid black;margin-left:8.2em;background-size: 100% 100%;" width="250" height="750">
                             <br>This text is displayed if your browser does not support HTML5 Canvas.<br>
                         </canvas>
                     </div>
@@ -94,6 +95,31 @@
                 })
                 .fail(function () { alert("ERROR!") });
         });
+
+                var id=@ViewBag.id.ToString();
+                var inputPath="../Content/images/"+id+".jpg"
+              var url = '@Url.Action("loadBase64Image", "Admin")';
+        $.ajax({
+            type: "POST",
+            dataType: 'text',
+            url: url,
+            data: {inputPath},
+            success: function (mapData) {
+                
+            if (mapData.length > 0) {
+                document.getElementById('canvas1').style.background = "url(data:image/jpeg;base64," + mapData + ")";
+            }
+            else {
+                document.getElementById('canvas1').style.background = "";
+            }
+
+             document.getElementById('canvas1').style.backgroundSize = "250px 750px";  
+
+            },
+            error: function () {
+                alert("Error");
+            }
+            });
 
     </script>
 

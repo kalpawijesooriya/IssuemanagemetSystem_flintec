@@ -5,6 +5,7 @@
     {
         Response.Redirect("~/Login/Index");
     }
+    ViewBag.lineid = Session["lineId"];
 }
 @using IssueManagementSystem.Models;
 <script src="~/Scripts/jquery-3.3.1.js"></script>
@@ -391,13 +392,13 @@
         clear_ul("managersortable");
 
         var Issue = document.getElementById('selectIssue').value;
-        var LineID = @Model.lineID ;
+        var LineID = '@ViewBag.lineid' ;
         var url = '@Url.Action("getRespList", "CellEngineer")';
         $.ajax({
                 type: "POST",
                 dataType: 'text',
                 url: url,
-                data: { line:1, issue:Issue }, //LineID
+                data: { line: LineID, issue:Issue }, //LineID
                 success: function (itemNameArray) {
 
                         var obj = JSON.parse(itemNameArray);
