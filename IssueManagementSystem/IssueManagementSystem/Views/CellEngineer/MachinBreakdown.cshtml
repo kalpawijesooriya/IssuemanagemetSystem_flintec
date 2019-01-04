@@ -14,16 +14,13 @@
         ViewBag.lineID = lineInfo.line_id;
         var mapInfo = db.line_map.Where(y => y.line_id == lineInfo.line_id).FirstOrDefault();
         ViewData["map"] = mapInfo.map.ToString().Trim();//get the map arry to ViewData
-
     }
 }
 
 @using IssueManagementSystem.Models;
-
 @model IssueManagementSystem.Models.issue_occurrence
 
 <link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
-
 
 <div class="container margin ">
     <h2>Machine Breakdown</h2>
