@@ -102,8 +102,8 @@ namespace IssueManagementSystem.Controllers
             }
             // image.Save(fullOutputPath, System.Drawing.Imaging.ImageFormat.Jpeg);
         }
-
-        private string loadBase64Image(string inputPath)
+        [HttpPost]
+        public string loadBase64Image(string inputPath)
         {
             var path = System.Web.HttpContext.Current.Server.MapPath(inputPath);
 

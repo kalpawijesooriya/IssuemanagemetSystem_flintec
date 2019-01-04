@@ -27,11 +27,13 @@
 <div style="display:flex">
     <div style="display:inline-grid;grid-template-columns: 50%  50%">
         <div id="container">
-            <canvas id="canvas1" style="border: 1px solid black;margin-left:2em;background:url('../../Content/images/RCPDF1.jpg');background-size: 100% 100%;" width="250" height="750">
+            <canvas id="canvas1" style="border: 1px solid black;margin-left:2em;); background-size: 100% 100%;" width="250" height="750">
                 <br> This text is displayed if your browser does not support HTML5 Canvas. </br>
             </canvas>
         </div>
-
+       
+        
+       
         <label id="map" style="display: none;"> @map</label>
     </div>
 
@@ -276,7 +278,7 @@
 
             function init() {
                 var s = new CanvasState(document.getElementById('canvas1'));
-
+                
                 setInterval(function () {
                     //console.log(globalvariable);
                     if (globalvariable == 0) { globalvariable = 1; }
@@ -288,7 +290,7 @@
                     type: "POST",
                     dataType: 'text',
                     url: url,
-                    data: { line: '5' },
+                    data: { line: '@ViewBag.id' },
                     success: function (line_data) {
                         var obj = JSON.parse(line_data);
                         console.log(obj);
@@ -300,6 +302,7 @@
                 });
 
             }
+              
 
             function blinkMap() {
                  var url = '@Url.Action("getBlinkingMachinesList", "Display")'
@@ -329,12 +332,38 @@
                 });
             });
              
-           setTimeout(function(){
-           window.location.href = "http://192.168.1.30:84/Report/GagingD1/"+'@ViewBag.id'
-            },60000);
+          // setTimeout(function(){
+          // window.location.href = "http://192.168.1.30:84/Report/GagingD1/"+'@ViewBag.id'
+           // },60000);
            
             </script>
             <script src="~/Scripts/Display/showmapdisplay.js"></script>
+            <script>
+                var id=@ViewBag.id.ToString();
+                var inputPath="../Content/images/"+id+".jpg"
+              var url = '@Url.Action("loadBase64Image", "Admin")';
+        $.ajax({
+            type: "POST",
+            dataType: 'text',
+            url: url,
+            data: {inputPath},
+            success: function (mapData) {
+                
+            if (mapData.length > 0) {
+                document.getElementById('canvas1').style.background = "url(data:image/jpeg;base64," + mapData + ")";
+            }
+            else {
+                document.getElementById('canvas1').style.background = "";
+            }
+
+             document.getElementById('canvas1').style.backgroundSize = "250px 750px";  
+
+            },
+            error: function () {
+                alert("Error");
+            }
+            });
+            </script>
         </div>
     </div>
 </div>>
