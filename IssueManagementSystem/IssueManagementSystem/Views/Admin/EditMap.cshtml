@@ -659,7 +659,7 @@ function createObjectArray(jsonText1)
         console.log(machineMap);
 
         for (var i = 0; i < machineMap.length; i++) {
-            newArray.push(new Shape(machineMap[i].x, machineMap[i].y, machineMap[i].w, machineMap[i].h, machineMap[i].fill));
+            newArray.push(new Shape(machineMap[i].x, machineMap[i].y, machineMap[i].w, machineMap[i].h, machineMap[i].fill,machineMap[i].machine));
         }
         return newArray;
     }
