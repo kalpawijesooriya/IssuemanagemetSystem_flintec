@@ -322,6 +322,7 @@
     <Content Include="Content\adminstyles\Settings.css" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\animsition.min.css" />
+    <Content Include="Content\bootstrap-glyphicons.css" />
     <Content Include="Content\bootstrap-progressbar-3.3.4.min.css" />
     <Content Include="Content\css\all.css" />
     <Content Include="Content\css\all.min.css" />
@@ -356,6 +357,12 @@
     <Content Include="Content\googlegrafics.css" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\quality-logo.png" />
+    <Content Include="Content\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Content\Manager\bootstrap.min.css" />
     <Content Include="Content\material-design-iconic-font.min.css" />
     <Content Include="Content\hamburgers.min.css" />
@@ -363,12 +370,19 @@
     <Content Include="Content\perfect-scrollbar.css" />
     <Content Include="Content\Poiret.css" />
     <Content Include="Content\slick.css" />
+    <Content Include="Content\SupervisorStyles\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\SupervisorStyles\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\SupervisorStyles\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\SupervisorStyles\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\SupervisorStyles\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\SupervisorStyles\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Content\theme.css" />
     <Content Include="Content\UqyVK80NJXN4zfRgbdfbo5pcV_cx.woff2" />
     <Content Include="Content\webfonts\fa-brands-400.svg" />
     <Content Include="Content\webfonts\fa-regular-400.svg" />
     <Content Include="Content\webfonts\fa-solid-900.svg" />
     <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\Material-Design-Iconic-Font.svg" />
     <Content Include="fonts\poppins\poppins-v5-latin-100.svg" />
     <Content Include="fonts\poppins\poppins-v5-latin-100italic.svg" />
@@ -417,7 +431,6 @@
     <Content Include="Scripts\Display\jquery.totemticker.js" />
     <Content Include="Scripts\Display\jquery.totemticker.min.js" />
     <Content Include="Scripts\Display\showmapdisplay.js" />
-    <Content Include="Content\SupervisorStyles\jquery-ui.css" />
     <Content Include="Content\SupervisorStyles\jquery-ui.css" />
     <Content Include="Content\adminstyles\metisMenu.css" />
     <Content Include="Content\adminstyles\metisMenu.min.css" />
@@ -567,6 +580,10 @@
     <Content Include="Models\BigRed.edmx.diagram">
       <DependentUpon>BigRed.edmx</DependentUpon>
     </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>

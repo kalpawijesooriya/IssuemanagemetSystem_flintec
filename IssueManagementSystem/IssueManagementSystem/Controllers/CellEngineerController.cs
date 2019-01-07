@@ -82,13 +82,8 @@ namespace IssueManagementSystem.Controllers
 
 
         public ActionResult ITIssue()//IT ISSUE View
-        {
-
-         
-                
+        {    
                 return View();
-
-
         }
 
         public ActionResult NotificationsManagement()

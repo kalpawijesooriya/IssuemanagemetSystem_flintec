@@ -1,6 +1,7 @@
 ﻿using IssueManagementSystem.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading;
 using System.Web;
@@ -75,16 +76,41 @@ namespace IssueManagementSystem.Controllers
 
         }
 
-        [HttpPost]
-        public JsonResult fillChart1()
+        private class tempClass4  
         {
-            using (issue_management_systemEntities1 db = new issue_management_systemEntities1() )
+            public String Search_Description { get; set; }
+            public int count { get; set; }
+
+        }
+
+        [HttpPost]
+        public JsonResult fillChart1(string barChart)
+        {
+            var chart1Data = new List<tempClass>();
+            var chart2Data = new List<tempClass4>();
+
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
-                String query = "SELECT issue_occurrence.machine_machine_id,count(issue_occurrence.machine_machine_id) AS count FROM issue_occurrence WHERE issue_occurrence.issue_issue_ID = 1 GROUP BY issue_occurrence.machine_machine_id  ORDER BY count Desc";
+                if (barChart.Equals("1") ) {
+                    String query = "SELECT TOP 10 issue_occurrence.machine_machine_id,count(issue_occurrence.machine_machine_id) AS count FROM issue_occurrence WHERE issue_occurrence.issue_issue_ID = 1 GROUP BY issue_occurrence.machine_machine_id  ORDER BY count Desc";
 
-                var chart1Data = db.Database.SqlQuery<tempClass>(query).ToList();
+                    chart1Data = db.Database.SqlQuery<tempClass>(query).ToList();
+                    return Json(chart1Data, JsonRequestBehavior.AllowGet);
+                }
 
-                System.Diagnostics.Debug.Print("###############################################"+chart1Data[0]);
+                if (barChart.Equals("2")) {
+                    String query = @"SELECT TOP 10 FLINTEC.dbo.FLINTEC$Item.[Search Description] AS Search_Description,
+                                    count(issue_management_system.dbo.issue_occurrence.material_id) AS count 
+                                    FROM issue_management_system.dbo.issue_occurrence,FLINTEC.dbo.FLINTEC$Item
+                                    WHERE issue_occurrence.issue_issue_ID = 2
+                                    AND 
+                                    issue_management_system.dbo.issue_occurrence.material_id  COLLATE SQL_Latin1_General_CP1_CS_AS LIKE FLINTEC.dbo.FLINTEC$Item.No_ COLLATE SQL_Latin1_General_CP1_CS_AS
+                                    GROUP BY FLINTEC.dbo.FLINTEC$Item.[Search Description]
+                                    ORDER BY count Desc";
+
+                    chart2Data = db.Database.SqlQuery<tempClass4>(query).ToList();
+                    return Json(chart2Data, JsonRequestBehavior.AllowGet);
+                }
 
                 return Json(chart1Data, JsonRequestBehavior.AllowGet);
             }

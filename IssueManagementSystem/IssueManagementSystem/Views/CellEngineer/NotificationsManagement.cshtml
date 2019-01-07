@@ -1,10 +1,12 @@
 ﻿﻿@{
-    ViewBag.Title = "NotificationsManagement";
-    Layout = "~/Views/Shared/CellEngineerLayout.cshtml";
-    if (Session["userID"] == null)
-    {
-        Response.Redirect("~/Login/Index");
-    }
+                /**/
+
+                ViewBag.Title = "NotificationsManagement";
+                Layout = "~/Views/Shared/CellEngineerLayout.cshtml";
+                if (Session["userID"] == null)
+                {
+                    Response.Redirect("~/Login/Index");
+                }
 }
 @using IssueManagementSystem.Models;
 <script src="~/Scripts/jquery-3.3.1.js"></script>
@@ -79,7 +81,7 @@
             <strong><label class="col-sm-offset-1" for="selectIssue">Issue</label></strong>
             <div class="col-sm-10">
                 <select class="js-example-placeholder-single js-states form-control" id="selectIssue" name="selectIssue" style="width:100%">
-                    <option  selected="selected"></option>
+                    <option selected="selected"></option>
                     <option value="1">Machine Breakdown</option>
                     <option value="2">Material Delay</option>
                     <option value="3">Technical Issue</option>
@@ -128,7 +130,7 @@
                         <div><p>Call</p></div>
                         <div class="text-center"><p>Send alert after<br />(minutes)</p></div>
                         <div class="text-center"><p>Call repeating time(minutes)</p></div>
-                        <div ></div>
+                        <div></div>
                     </div>
                 </li>
             </ul>
@@ -443,7 +445,7 @@
           });
     });
 
-function fillDepartmentDropDown() {
+    function fillDepartmentDropDown() {
 
     var name = document.getElementById("Name").value;
     var url = '@Url.Action("fillDepartmentDropDown", "CellEngineer")';
@@ -500,21 +502,21 @@ function fillDepartmentDropDown() {
     url: url,
     data: { department:department },
     success: function (itemNameArray) {
-    var obj = JSON.parse(itemNameArray);
-    console.log(obj);
+        var obj = JSON.parse(itemNameArray);
+        console.log(obj);
 
-    nameBox.options.length = 0;
-    var opt1 = document.createElement('option');
-    opt1.innerHTML = '';
-    opt1.value = '';
-    nameBox.appendChild(opt1);
+        nameBox.options.length = 0;
+        var opt1 = document.createElement('option');
+        opt1.innerHTML = '';
+        opt1.value = '';
+        nameBox.appendChild(opt1);
 
-    for (var i = 0; i < obj.length; i++) {
-    var opt = document.createElement('option');
-    opt.innerHTML = obj[i];
-    opt.value = obj[i];
-    nameBox.appendChild(opt);
-    }
+        for (var i = 0; i < obj.length; i++) {
+            var opt = document.createElement('option');
+            opt.innerHTML = obj[i];
+            opt.value = obj[i];
+            nameBox.appendChild(opt);
+        }
     },
     error: function () {
          alert("Error occurred");
@@ -528,30 +530,30 @@ function fillDepartmentDropDown() {
     var nameBox = document.getElementById("managerName");
     var url = '@Url.Action("fillNameDropDown", "CellEngineer")';
     $.ajax({
-    type: "POST",
-    dataType: 'text',
-    url: url,
-    data: { department:department },
-    success: function (itemNameArray) {
-    var obj = JSON.parse(itemNameArray);
-    console.log(obj);
+        type: "POST",
+        dataType: 'text',
+        url: url,
+        data: { department:department },
+        success: function (itemNameArray) {
+            var obj = JSON.parse(itemNameArray);
+            console.log(obj);
 
-    nameBox.options.length = 0;
-    var opt1 = document.createElement('option');
-    opt1.innerHTML = '';
-    opt1.value = '';
-    nameBox.appendChild(opt1);
+            nameBox.options.length = 0;
+            var opt1 = document.createElement('option');
+            opt1.innerHTML = '';
+            opt1.value = '';
+            nameBox.appendChild(opt1);
 
-    for (var i = 0; i < obj.length; i++) {
-    var opt = document.createElement('option');
-    opt.innerHTML = obj[i];
-    opt.value = obj[i];
-    nameBox.appendChild(opt);
-    }
-    },
-    error: function () {
-    alert("Error occurred");
-    }
+            for (var i = 0; i < obj.length; i++) {
+                var opt = document.createElement('option');
+                opt.innerHTML = obj[i];
+                opt.value = obj[i];
+                nameBox.appendChild(opt);
+            }
+        },
+        error: function () {
+        alert("Error occurred");
+        }
     });
     }
 
@@ -567,33 +569,33 @@ function fillDepartmentDropDown() {
     var email_text = document.getElementById("email");
 
     if (nameBox.value != "")
-    {
-    var userID = nameBox.value.split('-')[0];
-    userID = userID.trim();
-    var url = '@Url.Action("getUserDetails", "CellEngineer")';
+        {
+            var userID = nameBox.value.split('-')[0];
+            userID = userID.trim();
+            var url = '@Url.Action("getUserDetails", "CellEngineer")';
 
-    $.ajax({
-    type: "POST",
-    dataType: 'text',
-        url: url,
-    data: { userID: userID },
-    success: function (itemNameArray) {
-    var obj = JSON.parse(itemNameArray);
-    console.log(obj);
+            $.ajax({
+                    type: "POST",
+                    dataType: 'text',
+                    url: url,
+                    data: { userID: userID },
+                    success: function (itemNameArray) {
+                        var obj = JSON.parse(itemNameArray);
+                        console.log(obj);
 
-    name_text.innerHTML = obj[0].Name;
-    dept_text.innerHTML = obj[0].Department;
-    empID_text.innerHTML = obj[0].EmployeeNumber;
-    position_text.innerHTML = obj[0].Role;
-    phone_text.innerHTML = obj[0].Phone;
-    email_text.innerHTML = obj[0].EMail;
+                        name_text.innerHTML = obj[0].Name;
+                        dept_text.innerHTML = obj[0].Department;
+                        empID_text.innerHTML = obj[0].EmployeeNumber;
+                        position_text.innerHTML = obj[0].Role;
+                        phone_text.innerHTML = obj[0].Phone;
+                        email_text.innerHTML = obj[0].EMail;
 
-    },
-    error: function () {
-    alert("Error occurred");
-    }
-    });
-    }
+                    },
+                    error: function () {
+                       alert("Error occurred");
+                    }
+                });
+        }
     }
 
     function fillmanagerDetails() {
@@ -608,33 +610,33 @@ function fillDepartmentDropDown() {
         var email_text = document.getElementById("manageremail");
 
     if (nameBox.value != "")
-    {
-    var userID = nameBox.value.split('-')[0];
-    userID = userID.trim();
-    var url = '@Url.Action("getUserDetails", "CellEngineer")';
+        {
+            var userID = nameBox.value.split('-')[0];
+            userID = userID.trim();
+            var url = '@Url.Action("getUserDetails", "CellEngineer")';
 
-    $.ajax({
-    type: "POST",
-    dataType: 'text',
-        url: url,
-    data: { userID: userID },
-    success: function (itemNameArray) {
-    var obj = JSON.parse(itemNameArray);
-    console.log(obj);
+            $.ajax({
+                type: "POST",
+                dataType: 'text',
+                    url: url,
+                data: { userID: userID },
+                success: function (itemNameArray) {
+                        var obj = JSON.parse(itemNameArray);
+                        console.log(obj);
 
-    name_text.innerHTML = obj[0].Name;
-    dept_text.innerHTML = obj[0].Department;
-    empID_text.innerHTML = obj[0].EmployeeNumber;
-    position_text.innerHTML = obj[0].Role;
-    phone_text.innerHTML = obj[0].Phone;
-    email_text.innerHTML = obj[0].EMail;
+                        name_text.innerHTML = obj[0].Name;
+                        dept_text.innerHTML = obj[0].Department;
+                        empID_text.innerHTML = obj[0].EmployeeNumber;
+                        position_text.innerHTML = obj[0].Role;
+                        phone_text.innerHTML = obj[0].Phone;
+                        email_text.innerHTML = obj[0].EMail;
 
-    },
-    error: function () {
-    alert("Error occurred");
-    }
-    });
-    }
+                },
+                error: function () {
+                    alert("Error occurred");
+                }
+             });
+        }
     }
 
 
