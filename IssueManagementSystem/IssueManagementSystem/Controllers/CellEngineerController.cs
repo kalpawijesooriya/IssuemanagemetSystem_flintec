@@ -82,9 +82,36 @@ namespace IssueManagementSystem.Controllers
 
 
         public ActionResult ITIssue()//IT ISSUE View
-        {    
-                return View();
+
+        {
+            if ((Session["userID"] == null) || ((string)Session["Role"] != "CellEngineer"))
+            {
+                return RedirectToAction("Index", "Login");
+
+            }
+
+
+            return View();
+
         }
+
+
+
+
+        public ActionResult QualtyIssue()// Qualty Issue View
+        {
+            if ((Session["userID"] == null) || ((string)Session["Role"] != "CellEngineer"))
+            {
+                return RedirectToAction("Index", "Login");
+
+            }
+
+
+            return View();
+
+
+        }
+
 
         public ActionResult NotificationsManagement()
         {
