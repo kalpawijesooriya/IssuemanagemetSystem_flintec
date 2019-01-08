@@ -303,7 +303,6 @@
                             //// set Count
                             var notiCount = 0;
 
-
                             for (var i = 0; i < data.length; i++) {
                                 if (data[i].EmployeeNumber ==@Session["userID"] && data[i].Status==1) {
                                     var date = data[i].Dates.split(' ');
@@ -322,21 +321,13 @@
                                             '</p> <span class="date">' + day + ' ' + date[1] + ' ' + date[2] + '</span></div></div>'
                                     }
 
-
-
-
                                     divNotificaion.append(notification);
                                     divNotificaionmobile.append(notification);
                                     notiCount++
-
-
                                 }
                                 $('#ntCnt').text(notiCount);
                                 $('#cntmobile').text(notiCount);
-
-
                             }
-
                         }
                         if (notiCount == 0) {
                             var notification = '<div class="notifi__footer"><a href="#">No notifications</a> </div>'

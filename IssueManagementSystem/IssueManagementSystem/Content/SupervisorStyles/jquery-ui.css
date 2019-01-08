@@ -1223,7 +1223,7 @@ a.ui-button:active,
 }
 
 .ui-widget-header .ui-icon {
-    background-image: url("images/ui-icons_444444_256x240.png");
+    background-image: url(images/ui-icons_444444_256x240.png");
 }
 
 .ui-state-hover .ui-icon,
