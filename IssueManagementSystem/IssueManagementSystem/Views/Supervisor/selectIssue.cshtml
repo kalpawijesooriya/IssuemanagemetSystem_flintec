@@ -12,11 +12,14 @@
 @{ 
 
     int userID = (int)Session["userID"];// get current supervisorID
-    using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
+
+
+    ViewBag.LineId = Session["lineId"];
+    int line = ViewBag.LineId;
+    using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
     {
-    var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
-    var mapInfo = db.line_map.Where(y => y.line_id == lineInfo.line_line_id).FirstOrDefault();
-    ViewBag.LineId = mapInfo.line_id;
+        var lineInfo = db.lines.Where(x => x.line_id == line).FirstOrDefault();
+        ViewBag.LineName = lineInfo.line_name;
 
     }
 }
@@ -38,6 +41,12 @@
                                     <span>/</span>
                                 </li>
                                 <li class="list-inline-item">Dashboard</li>
+                                <li class="list-inline-item seprate">
+                                    <span>/</span>
+                                </li>
+                                <li class="list-inline-item active">
+                                    <a href="#">@ViewBag.LineName</a>
+                                </li>
                             </ul>
                         </div>
                         <form class="au-form-icon--sm" action="" method="post">

@@ -24,11 +24,13 @@ namespace IssueManagementSystem.Controllers
 
 
         // GET: CellEngineer
-        public ActionResult DashBord()
+
+        public ActionResult DashBord(int lineid)
         {
+            ViewBag.lineId = lineid;
             return View(); 
         }
-        public ActionResult MachinBreakdown()//machine breakedown view
+        public ActionResult MachinBreakdown(int lineid)//machine breakedown view
         {
 
             if ((Session["userID"] == null) || ((string)Session["Role"] != "CellEngineer"))
@@ -36,11 +38,11 @@ namespace IssueManagementSystem.Controllers
                 return RedirectToAction("Index", "Login");
 
             }
-         
+            ViewBag.lineid = lineid;
             return View();
         }
 
-        public ActionResult TechnicalIssue()//Technical Issue View
+        public ActionResult TechnicalIssue(int lineid)//Technical Issue View
         {
 
             if ((Session["userID"] == null) || ((string)Session["Role"] != "CellEngineer"))
@@ -48,11 +50,11 @@ namespace IssueManagementSystem.Controllers
                 return RedirectToAction("Index", "Login");
 
             }
-          
+            ViewBag.lineid = lineid;
             return View();
         }
 
-        public ActionResult MaterialDelay()//MaterialDelay View
+        public ActionResult MaterialDelay(int lineid)//MaterialDelay View
         {
 
             if ((Session["userID"] == null) || ((string)Session["Role"] != "CellEngineer"))
@@ -75,13 +77,13 @@ namespace IssueManagementSystem.Controllers
 
 
             mat_List.materialList = mList;
-
+            ViewBag.lineid = lineid;
             return View(mat_List);
         }
 
 
 
-        public ActionResult ITIssue()//IT ISSUE View
+        public ActionResult ITIssue(int lineid)//IT ISSUE View
         {
             if ((Session["userID"] == null) || ((string)Session["Role"] != "CellEngineer"))
             {
@@ -89,13 +91,47 @@ namespace IssueManagementSystem.Controllers
 
             }
 
-
+            ViewBag.lineid = lineid;
             return View();
 
 
         }
+        private class tempClass3
+        {
+            public int line_id { get; set; }
+            
+        }
+        [HttpPost]
+        public ActionResult getCellEngLins(int empId)
+        {
+         
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+            {
+                string query = "SELECT line_id FROM line_cell_eng WHERE cell_eng_emp_id=" + empId;
+         
+                var chart1Data = db.Database.SqlQuery<tempClass3>(query).ToList();
+                return Json(chart1Data);
+            }
+           
+        }
+        private class tempClass2
+        {
+            public string line_name { get; set; }
 
+        }
 
+        [HttpPost]
+        public ActionResult getCellEngLinName (int lineid)
+        {
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+            {
+                string query = "SELECT line_name FROM lines WHERE line_id=" + lineid;
+
+            
+                var lineData = db.Database.SqlQuery<tempClass2>(query).ToList();
+                return Json(lineData);
+            }
+        }
 
 
         public ActionResult QualtyIssue()// Qualty Issue View

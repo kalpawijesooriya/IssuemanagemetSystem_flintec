@@ -106,13 +106,13 @@ namespace IssueManagementSystem.Controllers
         {
             var time = DateTime.Now;
             string current_time = time.ToString("yyyy-MM-dd HH:mm");//get today to string variable
-
+            int lineId = 1;
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
                 if (ModelState.IsValid)
                 {
                     int userID = (int)Session["userID"];
-                    int lineId = Int32.Parse(issueModel.lineid);
+                     lineId = Int32.Parse(issueModel.lineid);
                     issueModel.responsible_person_confirm_status = 1;
                     issueModel.line_line_id = lineId;
                     issueModel.issue_satus = "1";
@@ -144,13 +144,13 @@ namespace IssueManagementSystem.Controllers
                 }
             }
             if (issueModel.Role == "supervisor") { return RedirectToAction("selectIssue", "Supervisor"); }
-            else { return RedirectToAction("DashBord", "CellEngineer"); }
+            else { return RedirectToAction("DashBord", "CellEngineer", new { lineid = lineId }); }
         }
 
         [HttpPost]//add Tecnical Issues to database
         public ActionResult AddIssueTechnical(issue_occurrence issueModel)
         {
-
+            int lineId=0;
             var time = DateTime.Now;
             string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
 
@@ -161,7 +161,7 @@ namespace IssueManagementSystem.Controllers
                     try
                     {
                         int userID = (int)Session["userID"];
-                        int lineId = Int32.Parse(issueModel.lineid);
+                        lineId = Int32.Parse(issueModel.lineid);
 
                         issueModel.responsible_person_confirm_status = 1;
 
@@ -206,13 +206,14 @@ namespace IssueManagementSystem.Controllers
 
 
                 if (issueModel.Role == "supervisor") { return RedirectToAction("selectIssue", "Supervisor"); }
-                else { return RedirectToAction("DashBord", "CellEngineer"); }
+                else { return RedirectToAction("DashBord", "CellEngineer", new { lineid = lineId }); }
 
             }
         }
         [HttpPost]//add IT Issues to database
         public ActionResult AddIssueIT(issue_occurrence issueModel)
         {
+            int lineId = 1;
             var time = DateTime.Now;
             string current_time = time.ToString("yyyy-MM-dd HH:mm");
 
@@ -220,7 +221,7 @@ namespace IssueManagementSystem.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    int lineId = Int32.Parse(issueModel.lineid);
+                    lineId = Int32.Parse(issueModel.lineid);
                     int userID = (int)Session["userID"];
                    
                     issueModel.responsible_person_confirm_status = 1;
@@ -255,12 +256,13 @@ namespace IssueManagementSystem.Controllers
                 }
             }
             if (issueModel.Role == "supervisor") { return RedirectToAction("selectIssue", "Supervisor"); }
-            else { return RedirectToAction("DashBord", "CellEngineer"); }
+            else { return RedirectToAction("DashBord", "CellEngineer", new { lineid = lineId }); }
         }
 
         [HttpPost]//add Material Delay to database
         public ActionResult AddMaterialDelay(string issueJson, issue_occurrence issueModel)
         {
+            
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
             {
                 JArray issueData = JArray.Parse(issueJson) as JArray;
