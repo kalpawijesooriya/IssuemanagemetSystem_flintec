@@ -151,6 +151,11 @@
                         </div>
                     </div>
                 </div>
+
+                <button type="button" class="btn btn-danger" style="height:25px; font-size:12px" onclick="filterByDate()">
+                    <span class="glyphicon glyphicon-filter"></span> Filter
+                </button>
+
             </div>
             </br>
             <div class="row">
@@ -217,12 +222,162 @@
 
         <div class="row">
             <div class="col-md-12">
-                <h3 class="title-5 m-b-35">data table</h3>
-                <div class="table-data__tool">
+                <h3 class="title-5 m-b-35">Issues</h3>
+
+                <div >
+                    <div class="container" style="display:inline-flex; width:100%; padding-bottom:10px;">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-2">Date</div>
+                                <div class="col-md-1">IssueID</div>
+                                <div class="col-md-4">Issue</div>
+                                <div class="col-md-3">Line</div>
+                                <div class="col-md-2">Status</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="pagesContainer">
+                            <div class="tablePages" id="page1">
+                                <div id="accordion">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div id="paginationDiv">
+
                 </div>
-                <div class="table-responsive table-responsive-data2">
-                    <table class="table table-data2"></table>
-                </div>
+
+                <script>
+                        $(document).ready(function() {
+                            
+                            var obj = [  
+                                            ["2019/12/11","1" ,"Machine Breakdown","ROCKER","Solved"],
+                                            ["2019/12/11","2" ,"Machine Breakdown","ROCKER","Solved"],
+                                            ["2019/12/11","3" ,"Machine Breakdown","ROCKER","Solved"],
+                                            ["2019/12/11","4" ,"Machine Breakdown","ROCKER","Solved"],
+                                            ["2019/12/11","5" ,"Machine Breakdown","ROCKER","Solved"],
+                                            ["2019/12/11","6" ,"Machine Breakdown","ROCKER","Solved"],
+                                            ["2019/12/11","7" ,"Machine Breakdown","ROCKER","Solved"],
+                                            ["2019/12/11","8" ,"Machine Breakdown","ROCKER","Solved"],
+                                            ["2019/12/11","9" ,"Machine Breakdown","ROCKER","Solved"],
+                                            ["2019/12/11","10","Machine Breakdown","ROCKER","Solved"],
+                                            ["2019/12/11","11","Machine Breakdown","ROCKER","Solved"],
+                                            ["2019/12/11","12","Machine Breakdown","ROCKER","Solved"],
+                                            ["2019/12/11","13","Machine Breakdown","ROCKER","Solved"]
+                                        ];
+
+                             loadAccordionTable(obj);
+                             createPagination(Math.ceil((obj.length)/10));
+                             
+                        });
+
+                        function loadAccordionTable(obj)
+                        {
+
+
+                            var accordion  =  document.getElementById('accordion');
+
+                             if(accordion.firstChild){
+                                while (accordion.firstChild){
+                                    accordion.removeChild(accordion.firstChild);
+                                }
+                             }
+
+                             for(var i=0;i<10;i++){
+                                     createAccordionLine(accordion,obj[i][0],obj[i][1],obj[i][2],obj[i][3],obj[i][4]);
+                                }
+                            
+                        }
+
+                        function createAccordionLine(accordion,date,id,issue,line,status){
+
+                            var dateDIV  =  document.createElement('div');
+                            var idDIV    =  document.createElement('div');
+                            var issueDIV =  document.createElement('div');
+                            var lineDIV  =  document.createElement('div');
+                            var statusDIV=  document.createElement('div');
+                     
+                            dateDIV.setAttribute("class","col-md-2");
+                            dateDIV.innerHTML = date;
+
+                            idDIV.setAttribute("class","col-md-1");
+                            idDIV.innerHTML = id;
+
+                            issueDIV.setAttribute("class","col-md-4");
+                            issueDIV.innerHTML = issue;
+
+                            lineDIV.setAttribute("class","col-md-3");
+                            lineDIV.innerHTML = line;
+
+                            statusDIV.setAttribute("class","col-md-2");
+                            statusDIV.innerHTML = status;
+
+                            
+                            var rowDIVinner = document.createElement('div');
+                            rowDIVinner.setAttribute("class","row");
+                            rowDIVinner.appendChild(dateDIV);
+                            rowDIVinner.appendChild(idDIV);
+                            rowDIVinner.appendChild(issueDIV);
+                            rowDIVinner.appendChild(lineDIV);
+                            rowDIVinner.appendChild(statusDIV);
+
+                            var rowDIVinner1 = document.createElement('div');
+                            rowDIVinner1.setAttribute("class","col-md-12");
+                            rowDIVinner1.appendChild(rowDIVinner);
+
+                            var rowDIVcontainer = document.createElement('div');
+                            rowDIVcontainer.setAttribute("class","container");
+                            rowDIVcontainer.style.display="inline-flex";
+                            rowDIVcontainer.style.width="100%";
+
+                            rowDIVcontainer.appendChild(rowDIVinner1);
+
+                            var detailsDIV =  document.createElement('div');
+                            var p1 =  document.createElement('p');
+                            p1.innerHTML="test : Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer";
+                            detailsDIV.appendChild(p1);
+                   
+                            accordion.appendChild(rowDIVcontainer);
+                            accordion.appendChild(detailsDIV);
+                        }
+
+                        function createPagination(numberOfPages){
+
+                            var paginationDiv = document.getElementById("paginationDiv");
+                            var ulElement =  document.createElement('ul');
+                            ulElement.setAttribute("class","pagination");
+
+                            for(var i=0; i<numberOfPages ; i++){
+                                   
+                                    var liElement =  document.createElement('li');
+                                    liElement.setAttribute("class","page-item");
+                                    liElement.setAttribute("id",i);
+
+                                    var aElement =  document.createElement('a');
+                                    aElement.setAttribute("class","page-link");
+                                    aElement.setAttribute("href","#");
+                                    aElement.innerHTML=i+1;
+
+                                    liElement.appendChild(aElement);
+                                    ulElement.appendChild(liElement);
+                            }
+
+                            paginationDiv.appendChild(ulElement);
+                        }
+
+
+                        $( function() {
+                            $( "#accordion" ).accordion();
+                            });
+
+                </script>
+
+                <style>
+                    #accordion .ui-icon {
+                        display: none;
+                    }
+                </style>
+
             </div>
         </div>
     </div>
@@ -230,7 +385,6 @@
 <!-- END DATA TABLE-->
 <script src="~/Scripts/AdminScripts/jscolar.js"></script>
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
-
 
 <script>
 
@@ -250,7 +404,14 @@
 
 <script>
     $(document).ready(function () {
-        $("#datetimepicker1").datepicker();
+        $("#datetimepicker1").datepicker({
+            autoclose: true,
+            todayHighlight: true,
+            format: 'dd.mm.yyyy',
+            startDate: new Date(),
+            updateViewDate: false
+        });
+        
         $("#datetimepicker2").datepicker();
     });
 </script>
