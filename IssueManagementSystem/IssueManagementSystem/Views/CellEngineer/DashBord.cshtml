@@ -47,12 +47,9 @@
                                 </li>
                             </ul>
                         </div>
-                        <form class="au-form-icon--sm  hidden" action="" method="post">
-                            <input class="au-input--w300 au-input--style2" type="text" placeholder="Search for datas &amp; reports...">
-                            <button class="au-btn--submit2" type="submit">
-                                <i class="zmdi zmdi-search"></i>
-                            </button>
-                        </form>
+                  
+                            <button onclick="startConverting();"> Allow Your Voice <i class="fa fa-microphone"></i></button>
+                      
                     </div>
                 </div>
             </div>
@@ -81,12 +78,90 @@
     </section>
 
 </div>
+<style>
+    #result {
+        height: 200px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        box-shadow: 0 0 10px 0 #bbb;
+        margin-bottom: 30px;
+        font-size: 14px;
+        line-height: 25px;
+    }
+</style>
 
 <script src="~/Scripts/jquery-3.3.1.js"></script>
 <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
 <script src="~/Scripts/angular.min.js"></script>
 <script src="~/signalr/Hubs"></script>
+<div id="result"></div>
 
+<script type="text/javascript">
+var r = document.getElementById('result');
+
+			function startConverting () {
+   
+				if('webkitSpeechRecognition' in window){
+					var speechRecognizer = new webkitSpeechRecognition();
+					speechRecognizer.continuous = true;
+					speechRecognizer.interimResults = true;
+					speechRecognizer.lang = 'en-IN';
+					speechRecognizer.start();
+
+					var finalTranscripts = '';
+
+					speechRecognizer.onresult = function(event){
+						var interimTranscripts = '';
+						for(var i = event.resultIndex; i < event.results.length; i++){
+							var transcript = event.results[i][0].transcript;
+							transcript.replace("\n", "<br>");
+							if(event.results[i].isFinal){
+								finalTranscripts += transcript;
+							}else{
+								interimTranscripts += transcript;
+							}
+						}
+						r.innerHTML =  interimTranscripts 
+                           VoiceAction( interimTranscripts )
+					};
+					speechRecognizer.onerror = function (event) {
+					};
+				}else{
+					r.innerHTML = 'Your browser is not supported. If google chrome, please upgrade!';
+				}
+			}
+
+			function playVoice(){
+				var msg = new SpeechSynthesisUtterance('Hello World');
+				window.speechSynthesis.speak(msg);
+
+				speechSynthesis.speak(new SpeechSynthesisUtterance('Hello World'));
+			}
+            function VoiceAction(keyWord )
+            {
+               if(keyWord=="breakdown")
+               {
+                  window.location.href = '/CellEngineer/MachinBreakdown?lineid=' +  @ViewBag.lineId;
+               }
+              if(keyWord=="technical")
+               {
+                  window.location.href = '/CellEngineer/TechnicalIssue?lineid=' +  @ViewBag.lineId;
+               }
+             if(keyWord=="material")
+               {
+                  window.location.href = '/CellEngineer/MaterialDelay?lineid=' +  @ViewBag.lineId;
+               }
+            if(keyWord=="it")
+               {
+                  window.location.href = '/CellEngineer/ITIssue?lineid=' +  @ViewBag.lineId;
+               }
+            //if(keyWord=="breakdown")
+               //{
+                 // window.location.href = '/CellEngineer/MachinBreakdown?lineid=' +  @ViewBag.lineId;
+              // }
+            }
+   
+</script>
 
 
 <script>
