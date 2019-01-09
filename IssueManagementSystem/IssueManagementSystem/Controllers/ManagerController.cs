@@ -172,5 +172,22 @@ namespace IssueManagementSystem.Controllers
             }
         }
 
+        private class tempClass5 {
+            public DateTime issue_date { get; set; }
+            public String issue { get; set; }
+        }
+
+        [HttpPost]
+        public JsonResult loadIssueList() {
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+            {
+                String query = "";
+                var data = db.Database.SqlQuery<tempClass5>(query).ToList();
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+        } 
+
     }
+
+}
 }

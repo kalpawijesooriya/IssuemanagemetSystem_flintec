@@ -253,6 +253,26 @@
                         });
 
                         function loadTablePage(page){
+
+                            var url = '@Url.Action("loadIssueList","cellEngineer")';
+
+                            $.ajax({
+                                    type: "POST",
+                                    dataType: 'text',
+                                    async:false;
+                                    url: url,
+                                    data: {  },
+                                    success: function (data) 
+                                        {
+
+                                        },
+                                        error: function ()
+                                        {
+                                            alert("Error occurred");
+                                        }
+                                  });
+
+
                              var obj = [  
                                             ["2019/12/11","1" ,"Machine Breakdown","ROCKER","Solved"],
                                             ["2019/12/11","2" ,"Machine Breakdown","ROCKER","Solved"],
@@ -267,17 +287,21 @@
                                             ["2019/12/11","11","Machine Breakdown","ROCKER","Solved"],
                                             ["2019/12/11","12","Machine Breakdown","ROCKER","Solved"],
                                             ["2019/12/11","13","Machine Breakdown","ROCKER","Solved"]
-                                        ];
-                                 createPagination(Math.ceil((obj.length)/10));
-                    
-                                    var x = 4;
-                                    var y = 8;
+                                       ];
                                     
+                                    var items_per_page = 10;
+                                    var number_of_pages = Math.ceil((obj.length)/items_per_page);
+                                    createPagination(number_of_pages);
+
+                                    var starting_index = ((items_per_page*page)-items_per_page)+1;
+                                    var last_index = (items_per_page*page);
+                                    if(last_index>obj.length){last_index=obj.length;}
+                                    console.log("starting_index : "+starting_index+"  last_index :"+last_index);
                                     var obj2 = new Array();
 
-                                    for(var i=(x-1);i<=(y-1);i++)
+                                    for(var i=(starting_index-1);i<=(last_index-1);i++)
                                     {
-                                            console.log(obj[i][1]);
+                                           // console.log(obj[i][1]);
                                             obj2.push(obj[i]);
                                     }
                             loadAccordionTable(obj2);
