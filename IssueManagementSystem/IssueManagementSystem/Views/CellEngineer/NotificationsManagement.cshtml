@@ -6,7 +6,7 @@
     {
         Response.Redirect("~/Login/Index");
     }
-    ViewBag.lineid = Session["lineId"];
+ 
 
 }
 @using IssueManagementSystem.Models;
@@ -670,7 +670,7 @@ function saveList() {
         obj.sendAlertAfter = items[i].childNodes[0].childNodes[4].childNodes[0].value;
         obj.levelOfResponsibility = i;
         obj.issue_line_person_id = items[i].childNodes[0].childNodes[0].childNodes[0].innerHTML.split('-')[0].trim();
-
+        obj.lineid='@ViewBag.lineid';
         obj_array.push(obj);
     }
 
@@ -701,7 +701,7 @@ function saveList() {
         objmanager.sendAlertAfter = itemsmanager[i].childNodes[0].childNodes[4].childNodes[0].value;
         objmanager.levelOfResponsibility = i;
         objmanager.issue_line_person_id = itemsmanager[i].childNodes[0].childNodes[0].childNodes[0].innerHTML.split('-')[0].trim();
-
+        objmanager.lineid='@ViewBag.lineid';
         obj_array.push(objmanager );
     }
 

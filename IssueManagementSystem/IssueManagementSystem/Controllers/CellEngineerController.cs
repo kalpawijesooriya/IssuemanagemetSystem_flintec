@@ -149,8 +149,9 @@ namespace IssueManagementSystem.Controllers
         }
 
 
-        public ActionResult NotificationsManagement()
+        public ActionResult NotificationsManagement(int lineid)
         {
+            ViewBag.lineid = lineid;
 
             if ((Session["userID"] == null) || ((string)Session["Role"] != "CellEngineer"))
             {
@@ -166,14 +167,10 @@ namespace IssueManagementSystem.Controllers
             {
 
                 List<department> departments = db.departments.ToList();
-
-                Debug.Print(" .....    "+ CellEngineerController.lineId.ToString());
-
                 dynamic mymodel = new ExpandoObject();
-                mymodel.lineID = CellEngineerController.lineId;
+                mymodel.lineID = lineid;
                 mymodel.users = userList;
                 mymodel.departments = departments;
-
                 return View(mymodel);
             }
         }
@@ -287,14 +284,12 @@ namespace IssueManagementSystem.Controllers
 
                 foreach (JObject user in list_user)
                 {
-                    //get line id of particular cell_eng
-                    int user_id = Int32.Parse(user["user_id"].ToString());
-                    var Cell_Eng_info = db.line_cell_eng.Where(x => x.cell_eng_emp_id == user_id).FirstOrDefault();
+           
 
                     //get issue id of particular issue
                     int issue_id = (Int32)user["issue_id"];
-                    
-                    var issuelist = db.issue_line_person.Where(x => x.issue_id == issue_id && x.line_id == Cell_Eng_info.line_id).ToList();
+                    int lineid = (Int32)user["lineid"];
+                    var issuelist = db.issue_line_person.Where(x => x.issue_id == issue_id && x.line_id == lineid).ToList();
                     
                     if (issuelist != null && delete)
                     {
@@ -308,7 +303,7 @@ namespace IssueManagementSystem.Controllers
                     string query_1 = @"INSERT INTO [dbo].[issue_line_person]
                                      ([issue_id],[line_id],[EmployeeNumber],[assigned_date],[email],[call],
                                      [message],[callRepetitionTime],[sendAlertAfter],[levelOfResponsibility],[issue_line_person_id],[person_level])
-                                     VALUES(" + issue_id + "," + Cell_Eng_info.line_id + "," + user["EmployeeNumber"] + ",'" + user["assigned_date"] + "',"
+                                     VALUES(" + issue_id + "," + lineid + "," + user["EmployeeNumber"] + ",'" + user["assigned_date"] + "',"
                                      + user["email"] + "," + user["call"] + "," + user["message"] + ",'" + user["callRepetitionTime"] + "','"
                                      + user["sendAlertAfter"] + "'," + user["levelOfResponsibility"] + "," + user["issue_line_person_id"] +","+ user["person_level"] + ")";
 
