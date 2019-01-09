@@ -224,33 +224,36 @@
             <div class="col-md-12">
                 <h3 class="title-5 m-b-35">Issues</h3>
 
-                <div >
-                    <div class="container" style="display:inline-flex; width:100%; padding-bottom:10px;">
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-2">Date</div>
-                                <div class="col-md-1">IssueID</div>
-                                <div class="col-md-4">Issue</div>
-                                <div class="col-md-3">Line</div>
-                                <div class="col-md-2">Status</div>
+                    <div >
+                        <div class="container" style="display:inline-flex; width:100%; padding-bottom:10px;">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-2">Date</div>
+                                    <div class="col-md-1">IssueID</div>
+                                    <div class="col-md-4">Issue</div>
+                                    <div class="col-md-3">Line</div>
+                                    <div class="col-md-2">Status</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div id="pagesContainer">
+                         <div id="pagesContainer">
                             <div class="tablePages" id="page1">
                                 <div id="accordion">
                                 </div>
                             </div>
                         </div>
                     </div>
-                <div id="paginationDiv">
 
+                <div id="paginationDiv">
                 </div>
 
                 <script>
-                        $(document).ready(function() {
-                            
-                            var obj = [  
+                        $(document).ready(function() { 
+                             loadTablePage(1);
+                        });
+
+                        function loadTablePage(page){
+                             var obj = [  
                                             ["2019/12/11","1" ,"Machine Breakdown","ROCKER","Solved"],
                                             ["2019/12/11","2" ,"Machine Breakdown","ROCKER","Solved"],
                                             ["2019/12/11","3" ,"Machine Breakdown","ROCKER","Solved"],
@@ -265,28 +268,37 @@
                                             ["2019/12/11","12","Machine Breakdown","ROCKER","Solved"],
                                             ["2019/12/11","13","Machine Breakdown","ROCKER","Solved"]
                                         ];
+                                 createPagination(Math.ceil((obj.length)/10));
+                    
+                                    var x = 4;
+                                    var y = 8;
+                                    
+                                    var obj2 = new Array();
 
-                             loadAccordionTable(obj);
-                             createPagination(Math.ceil((obj.length)/10));
-                             
-                        });
-
-                        function loadAccordionTable(obj)
+                                    for(var i=(x-1);i<=(y-1);i++)
+                                    {
+                                            console.log(obj[i][1]);
+                                            obj2.push(obj[i]);
+                                    }
+                            loadAccordionTable(obj2);
+                        }
+                    
+                       function loadAccordionTable(obj)
                         {
+                              var accordion  =  document.getElementById('accordion');
+                              var childElements = accordion.childNodes;
+                              
+                              $("#accordion").empty();
 
-
-                            var accordion  =  document.getElementById('accordion');
-
-                             if(accordion.firstChild){
-                                while (accordion.firstChild){
-                                    accordion.removeChild(accordion.firstChild);
-                                }
-                             }
-
-                             for(var i=0;i<10;i++){
+                             for(var i=0;i<obj.length;i++){
                                      createAccordionLine(accordion,obj[i][0],obj[i][1],obj[i][2],obj[i][3],obj[i][4]);
                                 }
-                            
+
+                             $( function() {
+                                    $( "#accordion" ).accordion();
+                                    $( "#accordion" ).accordion("refresh");
+                                });
+
                         }
 
                         function createAccordionLine(accordion,date,id,issue,line,status){
@@ -339,11 +351,18 @@
                    
                             accordion.appendChild(rowDIVcontainer);
                             accordion.appendChild(detailsDIV);
+
                         }
 
                         function createPagination(numberOfPages){
-
+                            
                             var paginationDiv = document.getElementById("paginationDiv");
+                            
+                            if(paginationDiv.firstChild){
+                                while (paginationDiv.firstChild){
+                                    paginationDiv.removeChild(paginationDiv.firstChild);
+                                }
+                             }
                             var ulElement =  document.createElement('ul');
                             ulElement.setAttribute("class","pagination");
 
@@ -353,23 +372,17 @@
                                     liElement.setAttribute("class","page-item");
                                     liElement.setAttribute("id",i);
 
-                                    var aElement =  document.createElement('a');
+                                    var aElement =  document.createElement('div');
                                     aElement.setAttribute("class","page-link");
-                                    aElement.setAttribute("href","#");
+                                   // aElement.setAttribute("href","#");
                                     aElement.innerHTML=i+1;
+                                    aElement.setAttribute('onclick',"loadTablePage("+(Number(i)+1)+")"); 
 
                                     liElement.appendChild(aElement);
                                     ulElement.appendChild(liElement);
                             }
-
                             paginationDiv.appendChild(ulElement);
                         }
-
-
-                        $( function() {
-                            $( "#accordion" ).accordion();
-                            });
-
                 </script>
 
                 <style>
