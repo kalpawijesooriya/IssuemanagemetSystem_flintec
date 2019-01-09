@@ -355,6 +355,7 @@
     <Content Include="Content\fontawesome-all.min.css" />
     <Content Include="Content\fontawesome.css" />
     <Content Include="Content\googlegrafics.css" />
+    <Content Include="Content\images\exchange-arrows.svg" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\images\quality-logo.png" />
     <Content Include="Content\images\ui-icons_444444_256x240.png" />

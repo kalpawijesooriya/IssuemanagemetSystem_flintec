@@ -84,15 +84,23 @@ namespace IssueManagementSystem.Controllers
                     saveBase64Image("~/Content/images/" + lineID + ".jpg", mapImage);
                 }
                 else {
-                    string query = "UPDATE SET line_id='" + lineID + "',map='" + mapJSON + "'red=0,green=0,yellow=0,issues=" + issues+"'";
-                        //"INSERT INTO [dbo].[line_map]([line_id],[map],[red],[green],[yellow],[blue],issues)VALUES('" + lineID + "','" + mapJSON + "','0','0','0','0','" + issues + "')";
-                    db.Database.ExecuteSqlCommand(query);
 
-                    string query1 = "UPDATE SET line_id='"+ lineID+ "',raspberry_ip_address='"+ ipAddress+"'";
-                        //"INSERT INTO display(line_id,raspberry_ip_address) VALUES('" + lineID + "','" + ipAddress + "') ";
-                    db.Database.ExecuteSqlCommand(query1);
+                    try {
+                        int line = Int32.Parse(lineID);
+                    var update_map = db.line_map.Where(x=>x.line_id== line).First();
 
-                    saveBase64Image("~/Content/images/" + lineID + ".jpg", mapImage);
+                        update_map.map = mapJSON;
+                        update_map.issues = issues;
+                    
+                    var update_display= db.displays.Where(x => x.line_id == line).First();
+                        update_display.raspberry_ip_address = ipAddress;
+                    db.SaveChanges();
+                   
+
+                    saveBase64Image("~/Content/images/" + lineID + ".jpg", mapImage); }
+                    catch (Exception ex)
+                    { Debug.WriteLine(ex); }
+                    
                 }
             }
 

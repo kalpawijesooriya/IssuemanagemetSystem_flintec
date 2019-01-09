@@ -56,7 +56,7 @@ namespace IssueManagementSystem.Controllers
                             Session["lineId"] = lineInfo.line_id;
                           
                         }
-                        return RedirectToAction("DashBord", "CellEngineer");
+                        return RedirectToAction("DashBord", "CellEngineer", new { lineid = Session["lineId"] });
                     }
                        
 

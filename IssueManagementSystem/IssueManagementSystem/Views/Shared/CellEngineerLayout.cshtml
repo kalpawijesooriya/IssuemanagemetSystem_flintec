@@ -49,14 +49,14 @@
                     <div class="header__navbar">
                         <ul class="list-unstyled">
                             <li class="has-sub">
-                                <a href="@Url.Action("DashBord", "CellEngineer")">
+                                <a href="@Url.Action("DashBord", "CellEngineer")?lineid=@ViewBag.lineId">
                                     <i class="fas fa-tachometer-alt"></i>Dashboard
                                     <span class="bot-line"></span>
                                 </a>
 
                             </li>
                             <li class="has-sub">
-                                <a href="@Url.Action("NotificationsManagement", "CellEngineer")">
+                                <a href="@Url.Action("NotificationsManagement", "CellEngineer")?lineid=@ViewBag.lineId">
                                     <i class="fas fa-tachometer-alt"></i>Notification Management
                                     <span class="bot-line"></span>
                                 </a>
@@ -69,20 +69,28 @@
                                 </a>
                                 <ul class="header3-sub-list list-unstyled">
                                     <li>
-                                        <a href="@Url.Action("MachinBreakdown", "CellEngineer")">Machine Breakedown</a>
+                                        <a href="@Url.Action("MachinBreakdown", "CellEngineer")?lineid=@ViewBag.lineId">Machine Breakedown</a>
                                     </li>
                                     <li>
-                                        <a href="@Url.Action("TechnicalIssue", "CellEngineer")">Technical Issue</a>
+                                        <a href="@Url.Action("TechnicalIssue", "CellEngineer")?lineid=@ViewBag.lineId">Technical Issue</a>
                                     </li>
                                     <li>
-                                        <a href="@Url.Action("MaterialDelay", "CellEngineer")">Material Delay</a>
+                                        <a href="@Url.Action("MaterialDelay", "CellEngineer")?lineid=@ViewBag.lineId">Material Delay</a>
                                     </li>
                                     <li>
-                                        <a href="@Url.Action("ITIssue", "CellEngineer")">Software/IT Issue</a>
+                                        <a href="@Url.Action("ITIssue", "CellEngineer")?lineid=@ViewBag.lineId">Software/IT Issue</a>
                                     </li>
                                 </ul>
                             </li>
+                            <li class="has-sub" id="switch">
+                                <a href="#">
+                                    <i class="fas fa-exchange-alt"></i>Switch Lines
+                                    <span class="bot-line"></span>
+                                </a>
+                                <ul class="header3-sub-list list-unstyled" >
 
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                     <div class="header__tool">
@@ -151,13 +159,13 @@
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
                         <li class="has-sub">
-                            <a class="js-arrow" href="@Url.Action("DashBord", "CellEngineer")">
+                            <a class="js-arrow" href="@Url.Action("DashBord", "CellEngineer")?lineid=@ViewBag.lineId">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard
                             </a>
 
                         </li>
                         <li class="has-sub">
-                            <a class="js-arrow" href="@Url.Action("NotificationsManagement", "CellEngineer")">
+                            <a class="js-arrow" href="@Url.Action("NotificationsManagement", "CellEngineer")?lineid=@ViewBag.lineId">
                                 <i class="fas fa-tachometer-alt"></i>Notification Management
                             </a>
 
@@ -168,22 +176,29 @@
                             </a>
                             <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                                 <li>
-                                    <a href="@Url.Action("MachinBreakdown", "CellEngineer")">Machine BarekeDown </a>
+                                    <a href="@Url.Action("MachinBreakdown", "CellEngineer")?lineid=@ViewBag.lineId">Machine BarekeDown </a>
                                 </li>
                                 <li>
-                                    <a href="@Url.Action("TechnicalIssue", "CellEngineer")">Technival Issue</a>
+                                    <a href="@Url.Action("TechnicalIssue", "CellEngineer")?lineid=@ViewBag.lineId">Technival Issue</a>
                                 </li>
                                 <li>
-                                    <a href="@Url.Action("MaterialDelay", "CellEngineer")">Matirial Delay</a>
+                                    <a href="@Url.Action("MaterialDelay", "CellEngineer")?lineid=@ViewBag.lineId">Matirial Delay</a>
                                 </li>
                                 <li>
-                                    <a href="@Url.Action("ITIssue", "CellEngineer")">Software/IT Issue</a>
+                                    <a href="@Url.Action("ITIssue", "CellEngineer")?lineid=@ViewBag.lineId">Software/IT Issue</a>
                                 </li>
 
 
                             </ul>
                         </li>
+                        <li class="has-sub" id="switchMobile">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-exchange-alt"></i>Switch Lines
+                            </a>
+                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list" >
 
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -359,6 +374,56 @@
 
             $.post(url)
         }
+              var Empid=@Session["userID"]
+              var url = '@Url.Action("getCellEngLins", "CellEngineer")';
+              var url2 = '@Url.Action("getCellEngLinName", "CellEngineer")';
+              var switchLine=document.getElementById("switch");
+              var switchMobile=document.getElementById("switchMobile");
+              var id=[];
+              var lineid;
+        $.ajax({
+            async:false,
+            type: "POST",
+            dataType: 'text',
+            url: url,
+            data: { Empid},
+            success: function (linedata) {
+             var obj=JSON.parse(linedata);
+             for(var i=0;i<obj.length;i++)
+             {
+                
+                lineid=obj[i].line_id;
+                id.push(lineid)
+                $.ajax({
+                async:false,
+                type: "POST",
+                dataType: 'text',
+                url: url2,
+                data: { lineid},
+            success: function (linename) {
+               setTimeout(function(){ 
+               var obj2=JSON.parse(linename);
+               var lineName= obj2[0].line_name
+               var idline=id.shift();
+                 var urldash ='@Url.Action("DashBord", "CellEngineer")?lineid=' +idline
+                 $("#switch ul").append('<li><a id="'+idline+'" href="'+urldash+'"><span class="tab">'+lineName+' Manufacturing Line</span></a></li>');
+                 $("#switchMobile ul").append('<li><a id="'+idline+'" href="'+urldash+'"><span class="tab">'+lineName+' Manufacturing Line</span></a></li>');
+              }, 1000);
+              
+             },
+
+            error: function () {
+                alert("Error when get line Name");
+            }
+            });
+            }
+            },
+
+            error: function () {
+                alert("Error when get Line ID");
+            }
+            });
+      
     </script>
 </body>
 </html>

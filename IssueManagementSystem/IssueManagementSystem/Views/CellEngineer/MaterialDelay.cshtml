@@ -9,13 +9,7 @@
     int userID = (int)Session["userID"];// get current supervisorID
     dynamic mat_List = new System.Dynamic.ExpandoObject();
 
-    using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
-    {
-        mat_List.issue_occurrence = db.issue_occurrence;
-        var lineInfo = db.line_cell_eng.Where(x => x.cell_eng_emp_id == userID).FirstOrDefault();
-        ViewBag.lineID = lineInfo.line_id;
-    }
-    int lineId = ViewBag.lineID;
+ 
 }
 
 @using IssueManagementSystem.Models
@@ -35,7 +29,7 @@
             <div class="form-group" style="width:100%;margin:auto">
                 <label>Select material</label>
 
-                <span id="lineID" style="display:none">@lineId</span>
+            
 
                 <select class="js-example-placeholder-single js-states form-control" id="Material" name="Material" style="width:100%" onchange="">
                     <option></option>
@@ -77,7 +71,7 @@
         obj.issue_date = new Date();
         obj.material_id = document.getElementById("Material").value;
         obj.description = document.getElementById("description").value;
-        obj.line_line_id = document.getElementById("lineID").innerText;
+        obj.line_line_id = @ViewBag.lineid;
         obj.issue_issue_ID = "2";
         obj.responsible_person_emp_id = "";
         obj.issue_satus = "0";
@@ -95,7 +89,7 @@
             url: url,
             data: { issueJson: issueJson },
             success: function (feedback) {
-                window.location.href = '@Url.Action("DashBord", "CellEngineer")';
+                window.location.href = '@Url.Action("DashBord", "CellEngineer")?lineid=' +obj.line_line_id;
             },
             error: function () {
                 alert("Error occurred");
@@ -103,4 +97,4 @@
         });
     }
 </script>
-<script src="~/Scripts/AdminScripts/bootstrap.min.js"></script>
+
