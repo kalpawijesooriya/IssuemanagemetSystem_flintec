@@ -37,7 +37,7 @@
                         @Html.TextAreaFor(model => model.description, new { @class = "form-control", @style = "width: 100%", @rows = 5 })
                     </div>
                     string Role = ViewBag.rol.ToString();
-               
+
                     @Html.TextAreaFor(mo => mo.Role, new { @class = "form-control", @id = "role", style = "display: none;" })
                     @Html.TextAreaFor(mod => mod.lineid, new { @class = "form-control", @id = "lineid", style = "display: none;" })
                     <script>
@@ -61,14 +61,14 @@
 <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
 <script src="~/Scripts/jquery.min.js"></script>
 <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
-<script src="~/signalr/js"></script>
+<script src="~/signalr/Hubs"></script>
 
 <script>
     $("#submit").click(function () {
         $.connection.hub.start()
             .done(function () {
                 console.log("Worked")
-                $.connection.iSMHUB.server.announce();
+                $.connection.ismHub.server.announce();
             })
             .fail(function () { alert("ERROR!") });
     });

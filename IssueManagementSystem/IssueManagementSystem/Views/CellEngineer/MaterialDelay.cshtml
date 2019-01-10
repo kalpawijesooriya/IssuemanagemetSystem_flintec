@@ -9,7 +9,7 @@
     int userID = (int)Session["userID"];// get current supervisorID
     dynamic mat_List = new System.Dynamic.ExpandoObject();
 
- 
+
 }
 
 @using IssueManagementSystem.Models
@@ -29,13 +29,13 @@
             <div class="form-group" style="width:100%;margin:auto">
                 <label>Select material</label>
 
-            
+
 
                 <select class="js-example-placeholder-single js-states form-control" id="Material" name="Material" style="width:100%" onchange="">
                     <option></option>
                     @foreach (var m in Model.materialList)
                     {
-                    <option value="@m.No_">@m.No_ - @m.Search_Description</option>
+                        <option value="@m.No_">@m.No_ - @m.Search_Description</option>
                     }
                 </select>
 
@@ -58,6 +58,9 @@
 
 <script src="~/Scripts/AdminScripts/jscolar.js"></script>
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
+<script src="~/signalr/Hubs"></script>
 <script>
     $('#Material').select2({
         placeholder: "Select Material.....",
@@ -67,7 +70,7 @@
     function SubmitMaterialDelay() {
 
         obj = new Object();
-        
+
         obj.issue_date = new Date();
         obj.material_id = document.getElementById("Material").value;
         obj.description = document.getElementById("description").value;
@@ -98,3 +101,16 @@
     }
 </script>
 
+
+
+<script>
+    $("#submit").click(function () {
+        $.connection.hub.start()
+            .done(function () {
+                console.log("Worked")
+                $.connection.ismHub.server.announce();
+            })
+            .fail(function () { alert("ERROR!") });
+    });
+
+</script>
