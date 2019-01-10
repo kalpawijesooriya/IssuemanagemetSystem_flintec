@@ -45,7 +45,6 @@ function addPerson() {
 
         if ($('#sortable li').length > 1) {
             //if UL has more than one list element
-
             var ul = document.getElementById("sortable");
             var items = ul.getElementsByTagName("li");
             for (var i = 1; i < items.length; ++i) {
