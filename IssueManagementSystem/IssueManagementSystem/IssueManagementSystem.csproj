@@ -215,7 +215,7 @@
     </Compile>
     <Compile Include="Hubs\IssueHub.cs" />
     <Compile Include="Hubs\MyHub.cs" />
-    <Compile Include="ISMHub.cs" />
+    <Compile Include="IsmHub.cs" />
     <Compile Include="JobScheduler.cs" />
     <Compile Include="Models\BigRed.Context.cs">
       <AutoGen>True</AutoGen>

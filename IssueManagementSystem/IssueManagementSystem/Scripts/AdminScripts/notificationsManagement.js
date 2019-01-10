@@ -185,7 +185,7 @@ function addLinemanager(name, empID) {
     var list_element = document.createElement("li");
     var main_div = document.createElement("div");
 
-    list_element.setAttribute("id", empID+"_listItem");
+    list_element.setAttribute("id", empID+"_listItemManager");
 
     list_element.className = "ui-state-default";
     list_element.style.cssText = 'overflow:hidden;display:flex;;width:80%';
@@ -239,7 +239,7 @@ function addLinemanager(name, empID) {
     divIcon.style.color="#848182";
 
 
-    divDelete_inner.addEventListener("click", function(){deleteListItem(empID+"_listItem");});
+    divDelete_inner.addEventListener("click", function(){deleteListItem(empID+"_listItemManager");});
 
     divDelete_inner.appendChild(divIcon);
     divDelete.appendChild(divDelete_inner);

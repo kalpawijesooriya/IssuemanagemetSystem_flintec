@@ -150,6 +150,12 @@
 
 
             <script>
+                $.connection.hub.start()
+                .done(function(){console.log("Its Works")
+                //   $.connection.ismHub.server.announce();
+                })
+                .fail(function(){alert("ERROR!")});
+  $.connection.ismHub.client.announce=function(){location.reload();}
     $(document).ready(function () {
 
         // Proxy created on the fly
@@ -352,7 +358,7 @@
             });
 
              setTimeout(function(){
-                if(ViewBag.id==3)
+                if(@ViewBag.id==3)
                 {
                  window.location.href = "http://192.168.1.30:84/Report/GagingD1/"+'@ViewBag.id'
                 }

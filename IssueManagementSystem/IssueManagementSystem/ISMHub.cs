@@ -7,7 +7,7 @@ using Microsoft.AspNet.SignalR;
 
 namespace IssueManagementSystem
 {
-    public class ISMHUB : Hub
+    public class IsmHub : Hub
     {
         public void Announce()
         {
@@ -18,7 +18,7 @@ namespace IssueManagementSystem
         public static void Send()
         {
 
-            IHubContext context = GlobalHost.ConnectionManager.GetHubContext<ISMHUB>();
+            IHubContext context = GlobalHost.ConnectionManager.GetHubContext<IsmHub>();
             context.Clients.All.displayStatus();
         }
     }
