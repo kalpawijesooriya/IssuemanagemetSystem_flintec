@@ -55,19 +55,6 @@ namespace IssueManagementSystem.Controllers
             return Json(true);
         }
 
-        /*
-         
-        -->  Managers should be able to see how many machine have been broken in a certain time period
-        -->  Machines with highest breakdown rate / Materials coursed for most issues
-        -->  Current issues
-        -->  History of solved issues (All)
-                    ....How much of time has been taken to solve a issue
-                    ....responsible person
-                    ....sort by time
-         --> 
-
-         */
- 
 
         private class tempClass
         {
@@ -178,6 +165,8 @@ namespace IssueManagementSystem.Controllers
             public String issue {get;set;}
             public String line_name {get; set;}
             public String issue_satus {get; set;}
+            public String location { get; set; }
+            public String description { get; set; }
         }
 
         [HttpPost]
@@ -186,7 +175,8 @@ namespace IssueManagementSystem.Controllers
             {
                 String query = @"SELECT issue_occurrence.issue_date,
                                 issue_occurrence.issue_occurrence_id,
-                                issues.issue,lines.line_name,issue_occurrence.issue_satus
+                                issues.issue,lines.line_name,issue_occurrence.issue_satus,
+                                issue_occurrence.location,issue_occurrence.description
                                 FROM issue_occurrence,lines,issues WHERE
                                 lines.line_id = issue_occurrence.line_line_id AND
                                 issues.issue_id LIKE issue_occurrence.issue_issue_ID";
