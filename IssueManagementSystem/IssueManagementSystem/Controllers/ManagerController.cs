@@ -71,7 +71,7 @@ namespace IssueManagementSystem.Controllers
         }
 
         [HttpPost]
-        public JsonResult fillChart1(string barChart)
+        public JsonResult fillChart1(string barChart, string startDate, string endDate)
         {
             var chart1Data = new List<tempClass>();
             var chart2Data = new List<tempClass4>();
@@ -79,19 +79,24 @@ namespace IssueManagementSystem.Controllers
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
                 if (barChart.Equals("1") ) {
-                    String query = "SELECT TOP 10 issue_occurrence.machine_machine_id,count(issue_occurrence.machine_machine_id) AS count FROM issue_occurrence WHERE issue_occurrence.issue_issue_ID = 1 GROUP BY issue_occurrence.machine_machine_id  ORDER BY count Desc";
+                    String query = @"SELECT TOP 10 issue_occurrence.machine_machine_id,
+                                    count(issue_occurrence.machine_machine_id) AS count FROM issue_occurrence 
+                                    WHERE issue_occurrence.issue_issue_ID = 1 AND
+                                     issue_occurrence.issue_date BETWEEN '" + startDate + @"' AND '" + endDate + @"' 
+                                    GROUP BY issue_occurrence.machine_machine_id  ORDER BY count Desc";
 
                     chart1Data = db.Database.SqlQuery<tempClass>(query).ToList();
                     return Json(chart1Data, JsonRequestBehavior.AllowGet);
                 }
 
                 if (barChart.Equals("2")) {
-                    String query = @"SELECT TOP 10 FLINTEC.dbo.FLINTEC$Item.[Search Description] AS Search_Description,
+                    String query =@"SELECT TOP 10 FLINTEC.dbo.FLINTEC$Item.[Search Description] AS Search_Description,
                                     count(issue_management_system.dbo.issue_occurrence.material_id) AS count 
                                     FROM issue_management_system.dbo.issue_occurrence,FLINTEC.dbo.FLINTEC$Item
                                     WHERE issue_occurrence.issue_issue_ID = 2
                                     AND 
                                     issue_management_system.dbo.issue_occurrence.material_id  COLLATE SQL_Latin1_General_CP1_CS_AS LIKE FLINTEC.dbo.FLINTEC$Item.No_ COLLATE SQL_Latin1_General_CP1_CS_AS
+                                    AND issue_occurrence.issue_date BETWEEN '"+ startDate +@"' AND '"+ endDate +@"' 
                                     GROUP BY FLINTEC.dbo.FLINTEC$Item.[Search Description]
                                     ORDER BY count Desc";
 
