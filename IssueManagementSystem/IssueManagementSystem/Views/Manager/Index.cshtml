@@ -130,10 +130,18 @@
                 </div>
             </div>
             <div class="row" style="margin:10px;display:flex !important">
+
+                <div class="col-lg-2">
+                    <select class="js-example-placeholder-single js-states form-control" id="plantSelectBox" name="plantSelectBox" style="width:100%">
+                        <option value="1" selected="selected">Katunayaka</option>
+                        <option value="2">Koggala</option>
+                    </select>
+                </div>
+
                 <div class="col-lg-2">
                     <div class="form-group">
                         <div class='input-group date'>
-                            <input type='text' class="form-control" id='datetimepicker1' />
+                            <input type='text' class="form-control" id='datetimepicker1' style="font-size:13px;" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -144,7 +152,7 @@
                 <div class="col-lg-2">
                     <div class="form-group">
                         <div class='input-group date'>
-                            <input type='text' class="form-control" id='datetimepicker2' />
+                            <input type='text' class="form-control" id='datetimepicker2' style="font-size:13px;" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -152,7 +160,7 @@
                     </div>
                 </div>
 
-                <button type="button" class="btn btn-danger" style="height:25px; font-size:12px" onclick="filterByDate()">
+                <button type="button" class="btn btn-primary" style="height:28px;width:80px; font-size:12px" onclick="filterByDate()">
                     <span class="glyphicon glyphicon-filter"></span> Filter
                 </button>
 
@@ -228,10 +236,11 @@
                         <div class="container" style="display:inline-flex; width:100%; padding-bottom:10px;">
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-md-2">Date</div>
+                                    <div class="col-md-1">Date</div>
                                     <div class="col-md-1">IssueID</div>
-                                    <div class="col-md-4">Issue</div>
-                                    <div class="col-md-3">Line</div>
+                                    <div class="col-md-5">Issue</div>
+                                    <div class="col-md-1">Plant</div>
+                                    <div class="col-md-2">Line</div>
                                     <div class="col-md-2">Status</div>
                                 </div>
                             </div>
@@ -253,31 +262,57 @@
                         });
 
                         function loadTablePage(page){
-                             var obj = [  
-                                            ["2019/12/11","1" ,"Machine Breakdown","ROCKER","Solved"],
-                                            ["2019/12/11","2" ,"Machine Breakdown","ROCKER","Solved"],
-                                            ["2019/12/11","3" ,"Machine Breakdown","ROCKER","Solved"],
-                                            ["2019/12/11","4" ,"Machine Breakdown","ROCKER","Solved"],
-                                            ["2019/12/11","5" ,"Machine Breakdown","ROCKER","Solved"],
-                                            ["2019/12/11","6" ,"Machine Breakdown","ROCKER","Solved"],
-                                            ["2019/12/11","7" ,"Machine Breakdown","ROCKER","Solved"],
-                                            ["2019/12/11","8" ,"Machine Breakdown","ROCKER","Solved"],
-                                            ["2019/12/11","9" ,"Machine Breakdown","ROCKER","Solved"],
-                                            ["2019/12/11","10","Machine Breakdown","ROCKER","Solved"],
-                                            ["2019/12/11","11","Machine Breakdown","ROCKER","Solved"],
-                                            ["2019/12/11","12","Machine Breakdown","ROCKER","Solved"],
-                                            ["2019/12/11","13","Machine Breakdown","ROCKER","Solved"]
-                                        ];
-                                 createPagination(Math.ceil((obj.length)/10));
-                    
-                                    var x = 4;
-                                    var y = 8;
+
+                            var url = '@Url.Action("loadIssueList", "Manager")';
+                            var obj = new Array();
+
+                            $.ajax({
+                                    type: "POST",
+                                    dataType: 'text',
+                                    async:false,
+                                    url: url,
+                                    data: {  },
+                                    success: function (data) 
+                                        {
+                                           // obj = data;
+                                            var dataArray = JSON.parse(data);
+                                            dataArray.forEach(function (i) {
+                                                var tempArr = new Array();
+
+                                                var ele1 = i.issue_date.split('(')[1];
+                                                ele1 = ele1.split(')')[0];
+
+                                                tempArr.push(Unix_timestamp(ele1,'ymd'));
+                                                tempArr.push(i.issue_occurrence_id);
+                                                tempArr.push(i.issue);
+                                                tempArr.push(i.line_name);
+
+                                                if (i.issue_satus == '1') { tempArr.push('Unsolved');}
+                                                if (i.issue_satus == '0') { tempArr.push('Solved'); }
+                                                tempArr.push(i.location);
+                                                tempArr.push(i.description);
+                                                obj.push(tempArr);
+                                            });
+
+                                        },
+                                        error: function ()
+                                        {
+                                            alert("Error occurred");
+                                        }
+                                  });
                                     
+                                    var items_per_page = 10;
+                                    var number_of_pages = Math.ceil((obj.length)/items_per_page);
+                                    createPagination(number_of_pages);
+
+                                    var starting_index = ((items_per_page*page)-items_per_page)+1;
+                                    var last_index = (items_per_page*page);
+                                    if(last_index>obj.length){last_index=obj.length;}
+                                    console.log("starting_index : "+starting_index+"  last_index :"+last_index);
                                     var obj2 = new Array();
 
-                                    for(var i=(x-1);i<=(y-1);i++)
+                                    for(var i=(starting_index-1);i<=(last_index-1);i++)
                                     {
-                                            console.log(obj[i][1]);
                                             obj2.push(obj[i]);
                                     }
                             loadAccordionTable(obj2);
@@ -291,7 +326,7 @@
                               $("#accordion").empty();
 
                              for(var i=0;i<obj.length;i++){
-                                     createAccordionLine(accordion,obj[i][0],obj[i][1],obj[i][2],obj[i][3],obj[i][4]);
+                                     createAccordionLine(accordion,obj[i][0],obj[i][1],obj[i][2],obj[i][5],obj[i][3],obj[i][4],obj[i][6]);
                                 }
 
                              $( function() {
@@ -301,24 +336,30 @@
 
                         }
 
-                        function createAccordionLine(accordion,date,id,issue,line,status){
+                        function createAccordionLine(accordion,date,id,issue,plant,line,status,desc){
 
                             var dateDIV  =  document.createElement('div');
                             var idDIV    =  document.createElement('div');
                             var issueDIV =  document.createElement('div');
+                            var plantDIV =  document.createElement('div');
                             var lineDIV  =  document.createElement('div');
                             var statusDIV=  document.createElement('div');
                      
-                            dateDIV.setAttribute("class","col-md-2");
+                            dateDIV.setAttribute("class","col-md-1");
                             dateDIV.innerHTML = date;
 
                             idDIV.setAttribute("class","col-md-1");
                             idDIV.innerHTML = id;
 
-                            issueDIV.setAttribute("class","col-md-4");
-                            issueDIV.innerHTML = issue;
+                            issueDIV.setAttribute("class","col-md-5");
+                            issueDIV.style.cssText='overflow:hidden';
+                            issueDIV.style.whiteSpace='nowrap';
+                            issueDIV.innerHTML = issue+" : "+desc;
 
-                            lineDIV.setAttribute("class","col-md-3");
+                            plantDIV.setAttribute("class","col-md-1");
+                            plantDIV.innerHTML = plant;
+
+                            lineDIV.setAttribute("class","col-md-2");
                             lineDIV.innerHTML = line;
 
                             statusDIV.setAttribute("class","col-md-2");
@@ -330,6 +371,7 @@
                             rowDIVinner.appendChild(dateDIV);
                             rowDIVinner.appendChild(idDIV);
                             rowDIVinner.appendChild(issueDIV);
+                            rowDIVinner.appendChild(plantDIV);
                             rowDIVinner.appendChild(lineDIV);
                             rowDIVinner.appendChild(statusDIV);
 
@@ -346,7 +388,7 @@
 
                             var detailsDIV =  document.createElement('div');
                             var p1 =  document.createElement('p');
-                            p1.innerHTML="test : Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer";
+                            p1.innerHTML="More Details";
                             detailsDIV.appendChild(p1);
                    
                             accordion.appendChild(rowDIVcontainer);
@@ -362,19 +404,19 @@
                                 while (paginationDiv.firstChild){
                                     paginationDiv.removeChild(paginationDiv.firstChild);
                                 }
-                             }
+                            }
+
                             var ulElement =  document.createElement('ul');
                             ulElement.setAttribute("class","pagination");
 
-                            for(var i=0; i<numberOfPages ; i++){
-                                   
+                            for (var i = 0; i < numberOfPages; i++){ 
+
                                     var liElement =  document.createElement('li');
                                     liElement.setAttribute("class","page-item");
                                     liElement.setAttribute("id",i);
 
                                     var aElement =  document.createElement('div');
                                     aElement.setAttribute("class","page-link");
-                                   // aElement.setAttribute("href","#");
                                     aElement.innerHTML=i+1;
                                     aElement.setAttribute('onclick',"loadTablePage("+(Number(i)+1)+")"); 
 
@@ -386,9 +428,7 @@
                 </script>
 
                 <style>
-                    #accordion .ui-icon {
-                        display: none;
-                    }
+      
                 </style>
 
             </div>
@@ -401,15 +441,9 @@
 
 <script>
 
-    $('#monthSelectBox').select2({
+    $('#plantSelectBox').select2({
         minimumResultsForSearch: -1,
-        placeholder: "Select Month.....",
-        allowClear: false
-    });
-
-    $('#yearSelectBox').select2({
-        minimumResultsForSearch: -1,
-        placeholder: "Select Year.....",
+        placeholder: "Select Plant.....",
         allowClear: false
     });
 
@@ -417,18 +451,24 @@
 
 <script>
     $(document).ready(function () {
-        $("#datetimepicker1").datepicker({
-            autoclose: true,
-            todayHighlight: true,
-            format: 'dd.mm.yyyy',
-            startDate: new Date(),
-            updateViewDate: false
+        $("#datetimepicker1").datepicker({  
         });
         
-        $("#datetimepicker2").datepicker();
+        $("#datetimepicker2").datepicker({
+  
+          });
+        var d = new Date();
+        d.setMonth(d.getMonth() - 1);
+        var d2 = new Date();
+
+        $("#datetimepicker1").datepicker().datepicker("setDate",d);
+
+        $("#datetimepicker2").datepicker().datepicker("setDate",d2);
     });
 </script>
+<style>
 
+</style>
 <script type="text/javascript">
     function getRandomColor() {
         var letters = '0123456789ABCDEF';
@@ -656,11 +696,11 @@
                     var ele5 = element.Name;
                     var ele6 = element.DateDiff
 
-                    if (ele3 == null && ele4 != null) { createRow(Unix_timestamp(ele1) + "</br>(" + (ele6 / 60).toFixed(1) + "Hrs)", ele2, ele4, ele5) }
+                    if (ele3 == null && ele4 != null) { createRow(Unix_timestamp(ele1,'md') + "</br>(" + (ele6 / 60).toFixed(1) + "Hrs)", ele2, ele4, ele5) }
 
-                    if (ele4 == null && ele3 != null) { createRow(Unix_timestamp(ele1) + "</br>(" + (ele6 / 60).toFixed(1) + "Hrs)", ele2, ele3, ele5) }
+                    if (ele4 == null && ele3 != null) { createRow(Unix_timestamp(ele1, 'md') + "</br>(" + (ele6 / 60).toFixed(1) + "Hrs)", ele2, ele3, ele5) }
 
-                    if (ele4 == null && ele3 == null) { createRow(Unix_timestamp(ele1) + "</br>(" + (ele6 / 60).toFixed(1) + "Hrs)", ele2, "", ele5) }
+                    if (ele4 == null && ele3 == null) { createRow(Unix_timestamp(ele1, 'md') + "</br>(" + (ele6 / 60).toFixed(1) + "Hrs)", ele2, "", ele5) }
 
                 });
 
@@ -697,7 +737,7 @@
         mainDiv.appendChild(tableRow);
     }
 
-    function Unix_timestamp(t) {
+    function Unix_timestamp(t,dateType) {
         // Unixtimestamp
         var unixtimestamp = Number(t);
 
@@ -727,9 +767,9 @@
 
         // Display date time in MM-dd-yyyy h:m:s format
         // var convdataTime = month+'-'+day+'-'+year+' '+hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
-        var convdataTime = month + '-' + day;
-
-        return convdataTime;
+        
+        if (dateType == "md") { var convdataTime = month + '-' + day; return convdataTime;}
+        if (dateType == "ymd") { var convdataTime = year+ '-' + month + '-' + day; return convdataTime; }
     }
 
 </script>
