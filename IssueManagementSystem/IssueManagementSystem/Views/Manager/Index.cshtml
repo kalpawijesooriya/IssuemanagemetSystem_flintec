@@ -687,12 +687,18 @@
     });
 
     function createTable() {
+
+        $("#myTable").empty();
+
+        var startDate = (new Date(document.getElementById('datetimepicker1').value)).toISOString();
+        var endDate   = (new Date(document.getElementById('datetimepicker2').value)).toISOString();
+
         $.ajax({
             type: "POST",
             async: false,
             dataType: 'text',
             url: "/Manager/fillChart2",
-            data: { issueJson: 'issueJson' },
+            data: {startDate:startDate,endDate:endDate },
             success: function (feedback) {
                 chartData1 = JSON.parse(feedback);
 
@@ -785,6 +791,7 @@
     
     function filterByDate()
         {
+           createTable();
 
            var elem1 =document.querySelectorAll(".dateGap");
             elem1.forEach(function (i){

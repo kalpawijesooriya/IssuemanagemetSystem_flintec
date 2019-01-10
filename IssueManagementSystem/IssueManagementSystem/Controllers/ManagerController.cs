@@ -121,7 +121,7 @@ namespace IssueManagementSystem.Controllers
         }
 
         [HttpPost]
-        public JsonResult fillChart2()
+        public JsonResult fillChart2(string startDate, string endDate)
         {
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
@@ -136,12 +136,13 @@ namespace IssueManagementSystem.Controllers
                                 issue_management_system.dbo.issue_occurrence,BigRed.dbo.tbl_PPA_User,issue_management_system.dbo.issues
                                 WHERE
                                 BigRed.dbo.tbl_PPA_User.UserName LIKE issue_management_system.dbo.issue_occurrence.responsible_person_emp_id AND
-                                issue_management_system.dbo.issue_occurrence.issue_issue_ID = issue_management_system.dbo.issues.issue_id
+                                issue_management_system.dbo.issue_occurrence.issue_issue_ID = issue_management_system.dbo.issues.issue_id 
+                                 AND issue_occurrence.issue_date BETWEEN '" + startDate + @"' AND '" + endDate + @"' 
                                 ORDER BY DateDiff DESC";
 
                 var chart1Data = db.Database.SqlQuery<tempClass2>(query).ToList();
 
-                System.Diagnostics.Debug.Print( "###############################################"+ chart1Data[0]);
+               
 
                 return Json(chart1Data, JsonRequestBehavior.AllowGet);
             }
