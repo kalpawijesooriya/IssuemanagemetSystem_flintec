@@ -14,10 +14,14 @@
 <script src="~/Scripts/jquery-ui.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+<style>
+    .dateGap {
+           margin-bottom:10px;
+    }
+</style>
 
-<!-- PAGE CONTENT-->
 <div class="page-content--bgf7">
-    <!-- BREADCRUMB-->
+
     <section class="au-breadcrumb2">
         <div class="container">
             <div class="row">
@@ -46,8 +50,7 @@
             </div>
         </div>
     </section>
-    <!-- END BREADCRUMB-->
-    <!-- WELCOME-->
+
     <section class="welcome p-t-10">
         <div class="container">
             <div class="row">
@@ -61,8 +64,7 @@
             </div>
         </div>
     </section>
-    <!-- END WELCOME-->
-    <!-- STATISTIC-->
+
     <section class="statistic statistic2">
         <div class="container">
             <div class="row">
@@ -111,7 +113,7 @@
                 <div class="col">
                     <div class="statistic__item statistic__item--blue">
                         <h2 class="number">@ViewBag.QualityIsuue</h2>
-                        <span class="desc">Qulity Isse</span>
+                        <span class="desc">Quality Isse</span>
                         <div class="icon">
                             <i class="zmdi zmdi-brightness-auto"></i>
                         </div>
@@ -120,8 +122,7 @@
             </div>
         </div>
     </section>
-    <!-- END STATISTIC-->
-    <!-- STATISTIC CHART-->
+
     <section class="statistic-chart">
         <div class="container">
             <div class="row">
@@ -131,10 +132,12 @@
             </div>
             <div class="row" style="margin:10px;display:flex !important">
 
-                <div class="col-lg-2">
-                    <select class="js-example-placeholder-single js-states form-control" id="plantSelectBox" name="plantSelectBox" style="width:100%">
-                        <option value="1" selected="selected">Katunayaka</option>
+                <div class="col-lg-2" style="display:inline-flex">
+                    <p style="margin-right:13px;">Plant</p>
+                    <select class="js-example-placeholder-single js-states form-control" id="plantSelectBox" name="plantSelectBox" style="width:75%;float:right !important;">
+                        <option value="1" selected="selected">All </option>
                         <option value="2">Koggala</option>
+                        <option value="2">Katunayaka</option>
                     </select>
                 </div>
 
@@ -168,13 +171,12 @@
             </br>
             <div class="row">
                 <div class="col-md-6 col-lg-4">
-                    <!-- CHART-->
                     <div class="statistic-chart-1">
 
                         <h3 class="title-3 m-b-30">Machine Breakdowns</h3>
                         <p style="margin-top:-30px" class="title-7 m-xs-r-5 dateGap"> </p>
 
-                        <div id="columnchart_values" style="width: 100%; height: 100%; " data-toggle="tooltip" title="This chart shows Top 10 Material delays and Machine breakdowns">
+                        <div id="columnchart_values" style="width: 100%; height: 100%; " data-toggle="tooltip" title="This chart shows Top 10 Machine breakdowns">
 
                         </div>
                         </br>
@@ -182,21 +184,14 @@
                         <h3 class="title-3 m-b-30">Material Delays</h3>
                         <p style="margin-top:-30px" class="title-7 m-xs-r-5 dateGap"></p>
 
-                        <div id="columnchart_values1" style="width: 100%; height: 100%; " data-toggle="tooltip" title="This chart shows Top 10 Material delays and Machine breakdowns">
+                        <div id="columnchart_values1" style="width: 100%; height: 100%; " data-toggle="tooltip" title="This chart shows Top 10 Material delays">
 
                         </div>
-                        <!-- <div class="row" style="margin:10px;">
-                                <div class="col-lg-12">
-                                </div>
-                             </div>
-                        -->
                     </div>
-                    <!-- END CHART-->
                 </div>
                 <div class="col-md-6 col-lg-4">
-                    <!-- TOP CAMPAIGN-->
                     <div class="top-campaign" style="padding-bottom:50px !important">
-                        <h3 class="title-3 m-b-30">Top 10 Issues took longets time to fix</h3>
+                        <h3 class="title-3 m-b-30">Top Dragged-out Issues</h3>
                         <p style="margin-top:-30px" class="title-7 m-xs-r-5 dateGap"></p>
                         <div class="table-responsive">
                             <table class="table table-striped table-sm" style="font-size:12px !important" id="myTable">
@@ -204,13 +199,11 @@
                             </table>
                         </div>
                     </div>
-                    <!-- END TOP CAMPAIGN-->
                 </div>
 
                 <div class="col-md-6 col-lg-4">
-                    <!-- CHART PERCENT-->
                     <div class="chart-percent-2">
-                        <h3 class="title-3 m-b-30">Number of Issues by Type</h3>
+                        <h3 class="title-3 m-b-30">Issue Occurrences </h3>
                         <p style="margin-top:-30px" class="title-7 m-xs-r-5 dateGap"> </p>
 
                         <div id="piechart_3d" style="width: 100%; height: 100%;"></div>
@@ -218,590 +211,47 @@
 
                     </div>
                 </div>
-                <!-- END CHART PERCENT-->
             </div>
         </div>
 </div>
     </section>
-<!-- END STATISTIC CHART-->
-<!-- DATA TABLE-->
+
 <section class="p-t-20">
     <div class="container">
 
         <div class="row">
             <div class="col-md-12">
-                <h3 class="title-5 m-b-35">Issues</h3>
+                <h3 class="title-5 m-b-35"></h3>
 
-                    <div >
-                        <div class="container" style="display:inline-flex; width:100%; padding-bottom:10px;">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-1">Date</div>
-                                    <div class="col-md-1">IssueID</div>
-                                    <div class="col-md-5">Issue</div>
-                                    <div class="col-md-1">Plant</div>
-                                    <div class="col-md-2">Line</div>
-                                    <div class="col-md-2">Status</div>
-                                </div>
-                            </div>
-                        </div>
-                         <div id="pagesContainer">
-                            <div class="tablePages" id="page1">
-                                <div id="accordion">
-                                </div>
+                <div>
+                    <div class="container" style="display:inline-flex; width:100%; padding-bottom:10px;">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-1">Date</div>
+                                <div class="col-md-1">IssueID</div>
+                                <div class="col-md-5">Issue</div>
+                                <div class="col-md-1">Plant</div>
+                                <div class="col-md-2">Line</div>
+                                <div class="col-md-2">Status</div>
                             </div>
                         </div>
                     </div>
+                    <div id="pagesContainer">
+                        <div class="tablePages" id="page1">
+                            <div id="accordion">
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div id="paginationDiv">
                 </div>
-
-                <script>
-                        $(document).ready(function() { 
-                             loadTablePage(1);
-                             
-                        });
-
-                        function loadTablePage(page){
-
-                            var url = '@Url.Action("loadIssueList", "Manager")';
-                            var obj = new Array();
-
-                            $.ajax({
-                                    type: "POST",
-                                    dataType: 'text',
-                                    async:false,
-                                    url: url,
-                                    data: {  },
-                                    success: function (data) 
-                                        {
-                                           // obj = data;
-                                            var dataArray = JSON.parse(data);
-                                            dataArray.forEach(function (i) {
-                                                var tempArr = new Array();
-
-                                                var ele1 = i.issue_date.split('(')[1];
-                                                ele1 = ele1.split(')')[0];
-
-                                                tempArr.push(Unix_timestamp(ele1,'ymd'));
-                                                tempArr.push(i.issue_occurrence_id);
-                                                tempArr.push(i.issue);
-                                                tempArr.push(i.line_name);
-
-                                                if (i.issue_satus == '1') { tempArr.push('Unsolved');}
-                                                if (i.issue_satus == '0') { tempArr.push('Solved'); }
-                                                tempArr.push(i.location);
-                                                tempArr.push(i.description);
-                                                obj.push(tempArr);
-                                            });
-
-                                        },
-                                        error: function ()
-                                        {
-                                            alert("Error occurred");
-                                        }
-                                  });
-                                    
-                                    var items_per_page = 10;
-                                    var number_of_pages = Math.ceil((obj.length)/items_per_page);
-                                    createPagination(number_of_pages);
-
-                                    var starting_index = ((items_per_page*page)-items_per_page)+1;
-                                    var last_index = (items_per_page*page);
-                                    if(last_index>obj.length){last_index=obj.length;}
-                                    console.log("starting_index : "+starting_index+"  last_index :"+last_index);
-                                    var obj2 = new Array();
-
-                                    for(var i=(starting_index-1);i<=(last_index-1);i++)
-                                    {
-                                            obj2.push(obj[i]);
-                                    }
-                            loadAccordionTable(obj2);
-                        }
-                    
-                       function loadAccordionTable(obj)
-                        {
-                              var accordion  =  document.getElementById('accordion');
-                              var childElements = accordion.childNodes;
-                              
-                              $("#accordion").empty();
-
-                             for(var i=0;i<obj.length;i++){
-                                     createAccordionLine(accordion,obj[i][0],obj[i][1],obj[i][2],obj[i][5],obj[i][3],obj[i][4],obj[i][6]);
-                                }
-
-                             $( function() {
-                                    $( "#accordion" ).accordion();
-                                    $( "#accordion" ).accordion("refresh");
-                                });
-
-                        }
-
-                        function createAccordionLine(accordion,date,id,issue,plant,line,status,desc){
-
-                            var dateDIV  =  document.createElement('div');
-                            var idDIV    =  document.createElement('div');
-                            var issueDIV =  document.createElement('div');
-                            var plantDIV =  document.createElement('div');
-                            var lineDIV  =  document.createElement('div');
-                            var statusDIV=  document.createElement('div');
-                     
-                            dateDIV.setAttribute("class","col-md-1");
-                            dateDIV.innerHTML = date;
-
-                            idDIV.setAttribute("class","col-md-1");
-                            idDIV.innerHTML = id;
-
-                            issueDIV.setAttribute("class","col-md-5");
-                            issueDIV.style.cssText='overflow:hidden';
-                            issueDIV.style.whiteSpace='nowrap';
-                            issueDIV.innerHTML = issue+" : "+desc;
-
-                            plantDIV.setAttribute("class","col-md-1");
-                            plantDIV.innerHTML = plant;
-
-                            lineDIV.setAttribute("class","col-md-2");
-                            lineDIV.innerHTML = line;
-
-                            statusDIV.setAttribute("class","col-md-2");
-                            statusDIV.innerHTML = status;
-
-                            
-                            var rowDIVinner = document.createElement('div');
-                            rowDIVinner.setAttribute("class","row");
-                            rowDIVinner.appendChild(dateDIV);
-                            rowDIVinner.appendChild(idDIV);
-                            rowDIVinner.appendChild(issueDIV);
-                            rowDIVinner.appendChild(plantDIV);
-                            rowDIVinner.appendChild(lineDIV);
-                            rowDIVinner.appendChild(statusDIV);
-
-                            var rowDIVinner1 = document.createElement('div');
-                            rowDIVinner1.setAttribute("class","col-md-12");
-                            rowDIVinner1.appendChild(rowDIVinner);
-
-                            var rowDIVcontainer = document.createElement('div');
-                            rowDIVcontainer.setAttribute("class","container");
-                            rowDIVcontainer.style.display="inline-flex";
-                            rowDIVcontainer.style.width="100%";
-
-                            rowDIVcontainer.appendChild(rowDIVinner1);
-
-                            var detailsDIV =  document.createElement('div');
-                            var p1 =  document.createElement('p');
-                            p1.innerHTML="More Details";
-                            detailsDIV.appendChild(p1);
-                   
-                            accordion.appendChild(rowDIVcontainer);
-                            accordion.appendChild(detailsDIV);
-
-                        }
-
-                        function createPagination(numberOfPages){
-                            
-                            var paginationDiv = document.getElementById("paginationDiv");
-                            
-                            if(paginationDiv.firstChild){
-                                while (paginationDiv.firstChild){
-                                    paginationDiv.removeChild(paginationDiv.firstChild);
-                                }
-                            }
-
-                            var ulElement =  document.createElement('ul');
-                            ulElement.setAttribute("class","pagination");
-
-                            for (var i = 0; i < numberOfPages; i++){ 
-
-                                    var liElement =  document.createElement('li');
-                                    liElement.setAttribute("class","page-item");
-                                    liElement.setAttribute("id",i);
-
-                                    var aElement =  document.createElement('div');
-                                    aElement.setAttribute("class","page-link");
-                                    aElement.innerHTML=i+1;
-                                    aElement.setAttribute('onclick',"loadTablePage("+(Number(i)+1)+")"); 
-
-                                    liElement.appendChild(aElement);
-                                    ulElement.appendChild(liElement);
-                            }
-                            paginationDiv.appendChild(ulElement);
-                        }
-                </script>
-
-                <style>
-                   
-                </style>
-
             </div>
         </div>
     </div>
 </section>
-<!-- END DATA TABLE-->
+
 <script src="~/Scripts/AdminScripts/jscolar.js"></script>
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
+<script src="~/Scripts/Manager/managersScripts.js"></script>
 
-<script>
-
-    $('#plantSelectBox').select2({
-        minimumResultsForSearch: -1,
-        placeholder: "Select Plant.....",
-        allowClear: false
-    });
-
-</script>
-
-<script>
-    $(document).ready(function () {
-        $("#datetimepicker1").datepicker({  
-        });
-        
-        $("#datetimepicker2").datepicker({
-        });
-
-        var d = new Date();
-        d.setMonth(d.getMonth() - 1);
-        var d2 = new Date();
-
-        $("#datetimepicker1").datepicker().datepicker("setDate", d);
-        $("#datetimepicker2").datepicker().datepicker("setDate",d2);
-
-        filterByDate();
-
-    });
-</script>
-<style>
-
-</style>
-<script type="text/javascript">
-    function getRandomColor() {
-        var letters = '0123456789ABCDEF';
-        var color = '#';
-        for (var i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-    }
-
-    var chartData1;
-
-    google.charts.load("current", { packages: ['corechart'] });
-    google.charts.setOnLoadCallback(drawChart1);
-
-    function drawChart1() {
-        var dataArray = new Array();
-
-        var startDate = (new Date(document.getElementById('datetimepicker1').value)).toISOString();
-        var endDate   = (new Date(document.getElementById('datetimepicker2').value)).toISOString();
-
-        $.ajax({
-            type: "POST",
-            async: false,
-            dataType: 'text',
-            url: "/Manager/fillChart1",
-            data: { barChart: '1',startDate:startDate,endDate:endDate},
-            success: function (feedback) {
-                chartData1 = JSON.parse(feedback);
-                var a1 = new Array(chartData1.length + 1);
-                a1[0] = ["Element", "Density", { role: "style" }]
-                var x = new Array();
-                count = 1;
-
-                chartData1.forEach(function (element) {
-                    var ele1 = element.machine_machine_id;
-                    var ele2 = element.count;
-                    var ele3 = getRandomColor();
-                    x = [ele1, ele2, ele3];
-                    a1[count] = x;
-                    count++;
-                });
-
-                dataArray = a1;
-            },
-            error: function () {
-                alert("Error occurred");
-            }
-        });
-
-        var data = google.visualization.arrayToDataTable(dataArray);
-        var view = new google.visualization.DataView(data);
-
-        view.setColumns([0, 1,
-            {
-                calc: "stringify",
-                sourceColumn: 1,
-                type: "string",
-                role: "annotation"
-            }, 2]);
-
-        var options = {
-            bar: { groupWidth: "95%" },
-            legend: { position: "none" },
-            chartArea: { 'width': '100%', 'height': '60%', 'top': '0' },
-            hAxis: {
-                textStyle: {
-                    fontSize: 9 // or the number you want
-                }
-            }
-        };
-        var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
-        chart.draw(view, options);
-    }
-
-</script>
-
-<script type="text/javascript">
-    function getRandomColor() {
-        var letters = '0123456789ABCDEF';
-        var color = '#';
-        for (var i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-    }
-
-    var chartData1;
-
-    google.charts.load("current", { packages: ['corechart'] });
-    google.charts.setOnLoadCallback(drawChart2);
-
-    function drawChart2() {
-
-        var dataArray = new Array();
-        console.log(document.getElementById('datetimepicker1').value);
-        var startDate = (new Date(document.getElementById('datetimepicker1').value)).toISOString();
-        var endDate   = (new Date(document.getElementById('datetimepicker2').value)).toISOString();
-        console.log(startDate);
-
-        $.ajax({
-            type: "POST",
-            async: false,
-            dataType: 'text',
-            url: "/Manager/fillChart1",
-            data: { barChart: '2',startDate:startDate,endDate:endDate},
-            success: function (feedback) {
-                chartData1 = JSON.parse(feedback);
-                console.log(chartData1);
-                var a1 = new Array(chartData1.length + 1);
-                a1[0] = ["Element", "Density", { role: "style" }]
-                var x = new Array();
-                count = 1;
-
-                chartData1.forEach(function (element) {
-                    var ele1 = element.Search_Description;
-                    var ele2 = element.count;
-                    var ele3 = getRandomColor();
-                    x = [ele1, ele2, ele3];
-                    a1[count] = x;
-                    count++;
-                });
-
-                dataArray = a1;
-            },
-            error: function () {
-                alert("Error occurred");
-            }
-        });
-
-        var data = google.visualization.arrayToDataTable(dataArray);
-        var view = new google.visualization.DataView(data);
-
-        view.setColumns([0, 1,
-            {
-                calc: "stringify",
-                sourceColumn: 1,
-                type: "string",
-                role: "annotation"
-            }, 2]);
-
-        var options = {
-            bar: { groupWidth: "95%" },
-            legend: { position: "none" },
-            chartArea: { 'width': '100%', 'height': '60%', 'top': '0' },
-            hAxis: {
-                textStyle: {
-                    fontSize: 9 // or the number you want
-                }
-            }
-        };
-        var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values1"));
-        chart.draw(view, options);
-    }
-
-</script>
-
-<script type="text/javascript">
-    google.charts.load("current", { packages: ["corechart"] });
-    google.charts.setOnLoadCallback(drawChart3);
-    function drawChart3() {
-
-        var dataArray = new Array();
-
-        $.ajax({
-            type: "POST",
-            async: false,
-            dataType: 'text',
-            url: "/Manager/fillChart3",
-            data: { issueJson: 'issueJson' },
-            success: function (feedback) {
-                chartData1 = JSON.parse(feedback);
-                var a1 = new Array(chartData1.length + 1);
-                a1[0] = ["Issue", "Number of Occurrence"]
-                var x = new Array();
-                count = 1;
-
-                chartData1.forEach(function (element) {
-                    var ele1 = element.issue;
-                    var ele2 = element.count;
-                    x = [ele1, ele2];
-                    a1[count] = x;
-                    count++;
-                });
-
-                dataArray = a1;
-            },
-            error: function () {
-                alert("Error occurred");
-            }
-        });
-
-        console.log(dataArray);
-        var data = google.visualization.arrayToDataTable(dataArray);
-
-        var options = {
-            title: 'Number of Issues by Type',
-            is3D: true,
-            chartArea: { 'width': '100%', 'height': '80%', 'top': '0' },
-            legend: { position: "bottom" },
-            slices: { 0: { color: '#f40000' }, 1: { color: '#ffcc00' }, 2: { color: '#1e63ce' }, 3: { color: '#31bc07' }, 4: { color: '#a80da3' } }
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-        chart.draw(data, options);
-    }
-</script>
-
-<script>
-
-    $(document).ready(function () {
-        createTable();
-    });
-
-    function createTable() {
-
-        $("#myTable").empty();
-
-        var startDate = (new Date(document.getElementById('datetimepicker1').value)).toISOString();
-        var endDate   = (new Date(document.getElementById('datetimepicker2').value)).toISOString();
-
-        $.ajax({
-            type: "POST",
-            async: false,
-            dataType: 'text',
-            url: "/Manager/fillChart2",
-            data: {startDate:startDate,endDate:endDate },
-            success: function (feedback) {
-                chartData1 = JSON.parse(feedback);
-
-                chartData1.forEach(function (element) {
-                    var ele1 = element.issue_date.split('(')[1];
-                    ele1 = ele1.split(')')[0];
-                    console.log(ele1);
-
-                    var ele2 = element.issue;
-                    var ele3 = element.machine_machine_id;
-                    var ele4 = element.material_id;
-                    var ele5 = element.Name;
-                    var ele6 = element.DateDiff
-
-                    if (ele3 == null && ele4 != null) { createRow(Unix_timestamp(ele1,'md') + "</br>(" + (ele6 / 60).toFixed(1) + "Hrs)", ele2, ele4, ele5) }
-
-                    if (ele4 == null && ele3 != null) { createRow(Unix_timestamp(ele1, 'md') + "</br>(" + (ele6 / 60).toFixed(1) + "Hrs)", ele2, ele3, ele5) }
-
-                    if (ele4 == null && ele3 == null) { createRow(Unix_timestamp(ele1, 'md') + "</br>(" + (ele6 / 60).toFixed(1) + "Hrs)", ele2, "", ele5) }
-
-                });
-
-            },
-            error: function () {
-                alert("Error occurred");
-            }
-        });
-    }
-
-    function createRow(issue_date, issue, desc, resp_name) {
-
-        var mainDiv = document.getElementById('myTable');
-
-        var tableRow = document.createElement("tr");
-
-        var tableData = document.createElement("td");
-        tableData.innerHTML = issue_date;
-
-        var tableData2 = document.createElement("td");
-        tableData2.innerHTML = issue;
-
-        var tableData3 = document.createElement("td");
-        tableData3.innerHTML = desc;
-
-        var tableData4 = document.createElement("td");
-        tableData4.innerHTML = resp_name;
-
-        tableRow.appendChild(tableData);
-        tableRow.appendChild(tableData2);
-        tableRow.appendChild(tableData3);
-        tableRow.appendChild(tableData4);
-
-        mainDiv.appendChild(tableRow);
-    }
-
-    function Unix_timestamp(t,dateType) {
-        // Unixtimestamp
-        var unixtimestamp = Number(t);
-
-        // Months array
-        var months_arr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-        // Convert timestamp to milliseconds
-        var date = new Date(unixtimestamp);
-
-        // Year
-        var year = date.getFullYear();
-
-        // Month
-        var month = months_arr[date.getMonth()];
-
-        // Day
-        var day = date.getDate();
-
-        // Hours
-        var hours = date.getHours();
-
-        // Minutes
-        var minutes = "0" + date.getMinutes();
-
-        // Seconds
-        var seconds = "0" + date.getSeconds();
-
-        // Display date time in MM-dd-yyyy h:m:s format
-        // var convdataTime = month+'-'+day+'-'+year+' '+hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
-        
-        if (dateType == "md") { var convdataTime = month + '-' + day; return convdataTime;}
-        if (dateType == "ymd") { var convdataTime = year+ '-' + month + '-' + day; return convdataTime; }
-    }
-    
-    function filterByDate()
-        {
-           createTable();
-
-           var elem1 =document.querySelectorAll(".dateGap");
-            elem1.forEach(function (i){
-                           i.innerHTML ="from "+ (new Date(document.getElementById('datetimepicker1').value)).toISOString().substring(0,10) +" to "+(new Date(document.getElementById('datetimepicker2').value)).toISOString().substring(0,10) ;
-                    });
-           
-           drawChart2();drawChart1();
-        }
-
-</script>
-
-
-</div>

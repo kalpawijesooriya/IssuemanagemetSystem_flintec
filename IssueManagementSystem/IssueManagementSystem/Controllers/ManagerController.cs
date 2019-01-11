@@ -155,11 +155,15 @@ namespace IssueManagementSystem.Controllers
         }
 
         [HttpPost]
-        public JsonResult fillChart3()
+        public JsonResult fillChart3(string startDate, string endDate)
         {
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
-                String query = "SELECT TOP 10 issues.issue , count(issue_issue_ID) AS 'count' FROM issue_occurrence,issues WHERE issue_date BETWEEN '2018-12-18 00:00:00.000' AND '2019-12-19 00:00:00.000' AND issues.issue_id = issue_occurrence.issue_issue_ID GROUP BY issue";
+                String query = @"SELECT TOP 10 issues.issue , count(issue_issue_ID) AS 'count'
+                                 FROM issue_occurrence,issues 
+                                 WHERE issue_date BETWEEN  '" + startDate + @"' AND '" + endDate + @"' 
+                                 AND issues.issue_id = issue_occurrence.issue_issue_ID GROUP BY issue";
+
                 var chart1Data = db.Database.SqlQuery<tempClass3>(query).ToList();
                 return Json(chart1Data, JsonRequestBehavior.AllowGet); 
             }
