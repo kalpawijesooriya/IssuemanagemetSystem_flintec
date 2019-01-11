@@ -70,17 +70,17 @@
 <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
 <script src="~/Scripts/jquery.min.js"></script>
 <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
-<script src="~/signalr/js"></script>
+<script src="~/signalr/Hubs"></script>
 
 <script>
-            $("#submit").click(function () {
-                $.connection.hub.start()
-                    .done(function () {
-                        console.log("Worked")
-                        $.connection.iSMHUB.server.announce();
-                    })
-                    .fail(function () { alert("ERROR!") });
-            });
+    $("#submit").click(function () {
+        $.connection.hub.start()
+            .done(function () {
+                console.log("Worked")
+               $.connection.ismHub.server.announce();
+            })
+            .fail(function () { alert("ERROR!") });
+    });
 
 </script>
 

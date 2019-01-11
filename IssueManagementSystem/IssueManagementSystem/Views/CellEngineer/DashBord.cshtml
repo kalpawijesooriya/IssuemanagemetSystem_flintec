@@ -47,9 +47,9 @@
                                 </li>
                             </ul>
                         </div>
-                  
-                            <button onclick="startConverting();"> Allow Your Voice <i class="fa fa-microphone"></i></button>
-                      
+
+                        <button onclick="startConverting();"> Allow Your Voice <i class="fa fa-microphone"></i></button>
+
                     </div>
                 </div>
             </div>
@@ -98,69 +98,99 @@
 
 <script type="text/javascript">
 var r = document.getElementById('result');
-
-			function startConverting () {
+   $(function(){
+  if ('speechSynthesis' in window) {
+    speechSynthesis.onvoiceschanged = function() {}
+     $('#speak').click(function(){
+      var msg = new SpeechSynthesisUtterance();
+      var voices = window.speechSynthesis.getVoices();
+      msg.voice = voices[1];
+      msg.rate = 1;
+      msg.pitch = 1;
+      msg.text = "Hello";
+      msg.onend = function(e) {
+      console.log('Finished in ' + event.elapsedTime + ' seconds.');
+    };
+      speechSynthesis.speak(msg);
+     })
+    }
+  });
    
-				if('webkitSpeechRecognition' in window){
-					var speechRecognizer = new webkitSpeechRecognition();
-					speechRecognizer.continuous = true;
-					speechRecognizer.interimResults = true;
-					speechRecognizer.lang = 'en-IN';
-					speechRecognizer.start();
+    startConverting ()
+	function startConverting ()
+    {
 
-					var finalTranscripts = '';
+		if('webkitSpeechRecognition' in window){
+			var speechRecognizer = new webkitSpeechRecognition();
+			speechRecognizer.continuous = true;
+			speechRecognizer.interimResults = true;
+			speechRecognizer.lang = 'en-IN';
+			speechRecognizer.start();
 
-					speechRecognizer.onresult = function(event){
-						var interimTranscripts = '';
-						for(var i = event.resultIndex; i < event.results.length; i++){
-							var transcript = event.results[i][0].transcript;
-							transcript.replace("\n", "<br>");
-							if(event.results[i].isFinal){
-								finalTranscripts += transcript;
-							}else{
-								interimTranscripts += transcript;
-							}
-						}
-						r.innerHTML =  interimTranscripts 
-                           VoiceAction( interimTranscripts )
-					};
-					speechRecognizer.onerror = function (event) {
-					};
-				}else{
-					r.innerHTML = 'Your browser is not supported. If google chrome, please upgrade!';
+			var finalTranscripts = '';
+
+			speechRecognizer.onresult = function(event){
+				var interimTranscripts = '';
+				for(var i = event.resultIndex; i < event.results.length; i++){
+					var transcript = event.results[i][0].transcript;
+
+					if(event.results[i].isFinal){
+						finalTranscripts += transcript;
+					}else{
+						interimTranscripts += transcript;
+					}
 				}
-			}
+				r.innerHTML =  interimTranscripts
+                    VoiceAction( interimTranscripts )
+			};
+			speechRecognizer.onerror = function (event) {
+			};
+		}else{
+			r.innerHTML = 'Your browser is not supported. If google chrome, please upgrade!';
+		}
+	}
 
-			function playVoice(){
-				var msg = new SpeechSynthesisUtterance('Hello World');
-				window.speechSynthesis.speak(msg);
+		function playVoice(){
+			var msg = new SpeechSynthesisUtterance('Hello World');
+			window.speechSynthesis.speak(msg);
 
-				speechSynthesis.speak(new SpeechSynthesisUtterance('Hello World'));
-			}
-            function VoiceAction(keyWord )
+			speechSynthesis.speak(new SpeechSynthesisUtterance('Hello World'));
+		}
+        function VoiceAction(keyWord )
+        {
+            if(keyWord=="breakdown" || keyWord==" breakdown")
             {
-               if(keyWord=="breakdown")
-               {
-                  window.location.href = '/CellEngineer/MachinBreakdown?lineid=' +  @ViewBag.lineId;
-               }
-              if(keyWord=="technical")
-               {
-                  window.location.href = '/CellEngineer/TechnicalIssue?lineid=' +  @ViewBag.lineId;
-               }
-             if(keyWord=="material")
-               {
-                  window.location.href = '/CellEngineer/MaterialDelay?lineid=' +  @ViewBag.lineId;
-               }
-            if(keyWord=="it")
-               {
-                  window.location.href = '/CellEngineer/ITIssue?lineid=' +  @ViewBag.lineId;
-               }
-            //if(keyWord=="breakdown")
-               //{
-                 // window.location.href = '/CellEngineer/MachinBreakdown?lineid=' +  @ViewBag.lineId;
-              // }
+                debugger;
+                window.location.href = '/CellEngineer/MachinBreakdown?lineid=' +  @ViewBag.lineId;
             }
-   
+            if(keyWord=="technical" || keyWord==" technical")
+            {
+                window.location.href = '/CellEngineer/TechnicalIssue?lineid=' +  @ViewBag.lineId;
+            }
+            if(keyWord=="material" || keyWord==" material")
+            {
+                window.location.href = '/CellEngineer/MaterialDelay?lineid=' +  @ViewBag.lineId;
+            }
+        if(keyWord=="it" || keyWord==" it")
+            {
+                window.location.href = '/CellEngineer/ITIssue?lineid=' +  @ViewBag.lineId;
+            }
+        if(keyWord=="show me today's summary" || keyWord==" show me today's summary")
+            {
+                var url = '@Url.Action("GetIssues", "Supervisor")';
+                $.ajax({
+                url: url,
+                    type: 'GET',
+                    datatype: 'json',
+                    success: function (issuedata) { alert(issuedata) },
+                    error: function () {alert("Error!")}
+                });
+            }
+            else
+            speek("I don't no that word");
+
+        }
+
 </script>
 
 
@@ -273,7 +303,33 @@ var r = document.getElementById('result');
         }
 
 
-
-
+  
 </script>
 
+<!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/materialize/0.95.1/css/materialize.min.css"> -->
+
+<div class="container">
+   
+       
+      
+        <div class="row">
+            <div class="input-field col s12">
+                <textarea id="message" class="materialize-textarea"></textarea>
+                
+            </div>
+        </div>
+        <a href="#" id="speak" class="waves-effect waves-light btn">Speak</a>
+   
+</div>
+
+<div id="modal1" class="modal">
+    <h4>Speech Synthesis not supported</h4>
+    <p>Your browser does not support speech synthesis.</p>
+    <p>We recommend you use Google Chrome.</p>
+    <div class="action-bar">
+        <a href="#" class="waves-effect waves-green btn-flat modal-action modal-close">Close</a>
+    </div>
+</div>
+
+
+<!--<script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.95.1/js/materialize.min.js"></script> -->

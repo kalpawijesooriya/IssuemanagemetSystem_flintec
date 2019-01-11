@@ -42,7 +42,15 @@ namespace IssueManagementSystem
                             {
                                 var responsiblePersonInfo = BR.tbl_PPA_User.Where(y => y.EmployeeNumber == items.responsible_person_emp_id).FirstOrDefault();
 
-                                string msg = "The " + issueInfo.issue1 + " issue occurred on " + issueDate + " in " + lineInfo.line_name + " Line not solved yet. Responsible person is "+ responsiblePersonInfo.Name+" Thank You.";
+                                string msg = "The " + issueInfo.issue1 + " issue occurred on " + issueDate + " in " + lineInfo.line_name + " Line not solved yet. Responsible person is "+ responsiblePersonInfo.Name+" Thank You!";
+                                if (items.material_id != null)
+                                {
+                                    msg = "The " + issueInfo.issue1 + " issue occurred on " + issueDate + " in " + lineInfo.line_name + " Line for "+items.material_id+" is not solved yet. Responsible person is " + responsiblePersonInfo.Name + " Thank You!";
+                                }
+                                if (items.machine_machine_id != null)
+                                {
+                                    msg = "The " + issueInfo.issue1 + " issue occurred on " + issueDate + " in " + lineInfo.line_name + " Line for " + items.material_id + " is not solved yet. Responsible person is " + responsiblePersonInfo.Name + " Thank You!";
+                                }
                                 string callNote = lineInfo.line_name + " Line "+ issueInfo.issue1 + " not solved yet";
                                 var personInfo = BR.tbl_PPA_User.Where(y => y.EmployeeNumber == i.EmployeeNumber).FirstOrDefault();
                                 CommunicationData cd = new CommunicationData(personInfo.Phone, msg, personInfo.EMail, i.email, i.call, i.message, personInfo.EmployeeNumber, "Unsolved Issue", callNote, "0", "0", items.issue_occurrence_id);

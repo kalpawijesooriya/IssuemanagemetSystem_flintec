@@ -89,40 +89,42 @@
     <link href="~/Content/SupervisorStyles/jquery-ui.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-ui.js"></script>
     <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
-    <script src="~/signalr/js"></script>
+    <script src="~/signalr/Hubs"></script>
+
     <script>
-        $("#submit").click(function () {
-            $.connection.hub.start()
-                .done(function () {
-                    console.log("Worked")
-                    $.connection.iSMHUB.server.announce();
-                })
-                .fail(function () { alert("ERROR!") });
-        });
-                var id=@ViewBag.id.ToString();
-                var inputPath="../Content/images/"+id+".jpg"
-              var url = '@Url.Action("loadBase64Image", "Admin")';
-        $.ajax({
-            type: "POST",
-            dataType: 'text',
-            url: url,
-            data: {inputPath},
-            success: function (mapData) {
-                
-            if (mapData.length > 0) {
-                document.getElementById('canvas1').style.background = "url(data:image/jpeg;base64," + mapData + ")";
-            }
-            else {
-                document.getElementById('canvas1').style.background = "";
-            }
+    $("#submit").click(function () {
+        $.connection.hub.start()
+            .done(function () {
+                console.log("Worked")
+                $.connection.ismHub.server.announce();
+            })
+            .fail(function () { alert("ERROR!") });
+    });
 
-             document.getElementById('canvas1').style.backgroundSize = "250px 750px";  
+    var id=@ViewBag.id.ToString();
+    var inputPath="../Content/images/"+id+".jpg"
+    var url = '@Url.Action("loadBase64Image", "Admin")';
+    $.ajax({
+    type: "POST",
+    dataType: 'text',
+    url: url,
+    data: {inputPath},
+    success: function (mapData) {
 
-            },
-            error: function () {
-                alert("Error");
-            }
-            });
+    if (mapData.length > 0) {
+    document.getElementById('canvas1').style.background = "url(data:image/jpeg;base64," + mapData + ")";
+    }
+    else {
+    document.getElementById('canvas1').style.background = "";
+    }
+
+    document.getElementById('canvas1').style.backgroundSize = "250px 750px";
+
+    },
+    error: function () {
+    alert("Error");
+    }
+    });
     </script>
 
 </div>
