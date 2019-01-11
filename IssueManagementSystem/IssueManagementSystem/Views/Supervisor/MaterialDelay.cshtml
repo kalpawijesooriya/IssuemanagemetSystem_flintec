@@ -43,7 +43,7 @@
                     <option></option>
                     @foreach (var m in Model.materialList)
                     {
-                    <option value="@m.No_">@m.No_ - @m.Search_Description</option>
+                        <option value="@m.No_">@m.No_ - @m.Search_Description</option>
                     }
                 </select>
 
@@ -66,6 +66,8 @@
 
 <script src="~/Scripts/AdminScripts/jscolar.js"></script>
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
+<script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
+<script src="~/signalr/Hubs"></script>
 <script>
     $('#Material').select2({
         placeholder: "Select Material.....",
@@ -85,7 +87,7 @@
         obj.issue_satus = "0";
         obj.location = "KTY";
         obj.responsible_person_confirm_status = "0";
-
+        obj.material = $('#Material').find(":selected").text();
         var obj_array = new Array();
         obj_array.push(obj);
 
@@ -106,3 +108,16 @@
     }
 </script>
 <script src="~/Scripts/AdminScripts/bootstrap.min.js"></script>
+
+
+<script>
+    $("#submit").click(function () {
+        $.connection.hub.start()
+            .done(function () {
+                console.log("Worked")
+                $.connection.ismHub.server.announce();
+            })
+            .fail(function () { alert("ERROR!") });
+    });
+
+</script>

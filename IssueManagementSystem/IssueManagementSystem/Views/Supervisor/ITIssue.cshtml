@@ -14,7 +14,7 @@
         ViewBag.lineID = lineInfo.line_line_id;
         var mapInfo = db.line_map.Where(y => y.line_id == lineInfo.line_line_id).FirstOrDefault();
         ViewData["map"] = mapInfo.map.ToString().Trim(); //get the map arry to ViewData
-       
+
     }
 
     int lineId = ViewBag.lineID;
@@ -68,13 +68,14 @@
 <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
 <script src="~/Scripts/jquery.min.js"></script>
 <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
-<script src="~/signalr/js"></script>
+<script src="~/signalr/Hubs"></script>
+
 <script>
     $("#submit").click(function () {
         $.connection.hub.start()
             .done(function () {
                 console.log("Worked")
-                $.connection.iSMHUB.server.announce();
+                $.connection.ismHub.server.announce();
             })
             .fail(function () { alert("ERROR!") });
     });

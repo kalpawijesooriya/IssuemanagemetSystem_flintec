@@ -644,6 +644,7 @@
     <Content Include="Scripts\SupervisorScripts\materialDelay.js" />
     <Content Include="Scripts\SupervisorScripts\moment.min.js" />
     <Content Include="Scripts\SupervisorScripts\showmap.js" />
+    <Content Include="Scripts\Voice\main.js" />
     <Content Include="Scripts\wow.min.js" />
     <Content Include="Views\Manager\Index.cshtml" />
     <Content Include="Web.config">

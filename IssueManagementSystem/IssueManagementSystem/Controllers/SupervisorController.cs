@@ -305,7 +305,7 @@ namespace IssueManagementSystem.Controllers
                             {
                                 var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
                                 var line = db.lines.Where(x => x.line_id == line_id).FirstOrDefault();
-                                string msg = "MaterialDelay has been occurred in " + line.line_name + " line on " + day + " at " + time1 + ". Material:" + item["material"] + " Special Note of Line supervisor - " + item["description"];
+                                string msg = "MaterialDelay has been occurred in " + line.line_name + " line on " + day + " at " + time1 + ". Material:" + item["material"] + ". Special Note of Line supervisor - " + item["description"];
                                 string callNote = "MaterialDelay has been occurred in " + line.line_name + " line on" + day + " at " + time1;
                                 com.lightON("2", displayInfo.raspberry_ip_address);//turn on the Light
                               

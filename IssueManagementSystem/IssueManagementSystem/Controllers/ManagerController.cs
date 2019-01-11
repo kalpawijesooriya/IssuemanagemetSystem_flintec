@@ -167,6 +167,7 @@ namespace IssueManagementSystem.Controllers
             public String issue_satus {get; set;}
             public String location { get; set; }
             public String description { get; set; }
+            public String responsible_person_emp_id { get; set; }
         }
 
         [HttpPost]
@@ -176,7 +177,7 @@ namespace IssueManagementSystem.Controllers
                 String query = @"SELECT issue_occurrence.issue_date,
                                 issue_occurrence.issue_occurrence_id,
                                 issues.issue,lines.line_name,issue_occurrence.issue_satus,
-                                issue_occurrence.location,issue_occurrence.description
+                                issue_occurrence.location,issue_occurrence.description,issue_occurrence.responsible_person_emp_id
                                 FROM issue_occurrence,lines,issues WHERE
                                 lines.line_id = issue_occurrence.line_line_id AND
                                 issues.issue_id LIKE issue_occurrence.issue_issue_ID";
