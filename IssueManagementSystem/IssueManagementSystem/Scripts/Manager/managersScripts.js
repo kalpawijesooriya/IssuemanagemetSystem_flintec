@@ -465,6 +465,8 @@ function filterByDate()
         google.charts.setOnLoadCallback(drawChart1);
         google.charts.setOnLoadCallback(drawChart2);
         google.charts.setOnLoadCallback(drawChart3);
+
+
     }
 
 

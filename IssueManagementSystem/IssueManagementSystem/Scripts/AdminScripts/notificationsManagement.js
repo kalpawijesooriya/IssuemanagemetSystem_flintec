@@ -238,7 +238,6 @@ function addLinemanager(name, empID) {
     divIcon.setAttribute("class","fas fa-backspace fa-2x");
     divIcon.style.color="#848182";
 
-
     divDelete_inner.addEventListener("click", function(){deleteListItem(empID+"_listItemManager");});
 
     divDelete_inner.appendChild(divIcon);

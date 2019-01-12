@@ -16,7 +16,7 @@
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 <style>
     .dateGap {
-           margin-bottom:10px;
+        margin-bottom: 10px;
     }
 </style>
 
@@ -74,13 +74,13 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <div class="statistic__item statistic__item--red">
+                    <button class="statistic__item statistic__item--red" data-toggle="modal" data-target="#modal1">
                         <h2 class="number"> @ViewBag.BrakedownCount</h2>
                         <span class="desc">Machine Brakedown</span>
                         <div class="icon">
                             <i class="zmdi zmdi-settings zmdi-hc-spin"></i>
                         </div>
-                    </div>
+                    </button>
                 </div>
                 <div class="col">
                     <div class="statistic__item statistic__item--blue">
@@ -123,98 +123,130 @@
         </div>
     </section>
 
-    <section class="statistic-chart">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h3 class="title-5 m-b-35">statistics</h3>
+  <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modal1" data-keyboard="false" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header background">
+                        <h4 class="modal-title" style="margin-left:40%;color:white;">Machine Breakdowns</h4>
+                        <button class="close" data-dismiss="modal" style="margin-top:-20px;">&times;</button>
+                    </div>
+               
+                    <div class="modal-body" style="display:flex;">
+                        <div class="container">
+                            <div class="page-header row">
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-4">
+                  
+                                </div>
+                                <div class="col-lg-8" style="margin-top:20px;">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <Button type="button" id="saveMap" class="btn btn-primary" onclick="addPerson()">Add</Button>
+                        <Button type="button" class="btn btn-success" data-dismiss="modal">Close</Button>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+<section class="statistic-chart">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="title-5 m-b-35">statistics</h3>
+            </div>
+        </div>
+        <div class="row" style="margin:10px;display:flex !important">
+
+            <div class="col-lg-2" style="display:inline-flex">
+                <p style="margin-right:13px;">Plant</p>
+                <select class="js-example-placeholder-single js-states form-control" id="plantSelectBox" name="plantSelectBox" style="width:75%;float:right !important;">
+                    <option value="1" selected="selected">All </option>
+                    <option value="2">Koggala</option>
+                    <option value="2">Katunayaka</option>
+                </select>
+            </div>
+
+            <div class="col-lg-2">
+                <div class="form-group">
+                    <div class='input-group date'>
+                        <input type='text' class="form-control" id='datetimepicker1' style="font-size:13px;" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
                 </div>
             </div>
-            <div class="row" style="margin:10px;display:flex !important">
-
-                <div class="col-lg-2" style="display:inline-flex">
-                    <p style="margin-right:13px;">Plant</p>
-                    <select class="js-example-placeholder-single js-states form-control" id="plantSelectBox" name="plantSelectBox" style="width:75%;float:right !important;">
-                        <option value="1" selected="selected">All </option>
-                        <option value="2">Koggala</option>
-                        <option value="2">Katunayaka</option>
-                    </select>
-                </div>
-
-                <div class="col-lg-2">
-                    <div class="form-group">
-                        <div class='input-group date'>
-                            <input type='text' class="form-control" id='datetimepicker1' style="font-size:13px;" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
+            <p>to</p>
+            <div class="col-lg-2">
+                <div class="form-group">
+                    <div class='input-group date'>
+                        <input type='text' class="form-control" id='datetimepicker2' style="font-size:13px;" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
                     </div>
                 </div>
-                <p>to</p>
-                <div class="col-lg-2">
-                    <div class="form-group">
-                        <div class='input-group date'>
-                            <input type='text' class="form-control" id='datetimepicker2' style="font-size:13px;" />
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <button type="button" class="btn btn-primary" style="height:28px;width:80px; font-size:12px" onclick="filterByDate()">
-                    <span class="glyphicon glyphicon-filter"></span> Filter
-                </button>
-
             </div>
-            </br>
-            <div class="row">
-                <div class="col-md-6 col-lg-4">
-                    <div class="statistic-chart-1">
 
-                        <h3 class="title-3 m-b-30">Machine Breakdowns</h3>
-                        <p style="margin-top:-30px" class="title-7 m-xs-r-5 dateGap"> </p>
+            <button type="button" class="btn btn-primary" style="height:28px;width:80px; font-size:12px" onclick="filterByDate()">
+                <span class="glyphicon glyphicon-filter"></span> Filter
+            </button>
 
-                        <div id="columnchart_values" style="width: 100%; height: 100%; " data-toggle="tooltip" title="This chart shows Top 10 Machine breakdowns">
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-md-6 col-lg-4">
+                <div class="statistic-chart-1">
 
-                        </div>
-                        </br>
-                        </br>
-                        <h3 class="title-3 m-b-30">Material Delays</h3>
-                        <p style="margin-top:-30px" class="title-7 m-xs-r-5 dateGap"></p>
+                    <h3 class="title-3 m-b-30">Machine Breakdowns</h3>
+                    <p style="margin-top:-30px" class="title-7 m-xs-r-5 dateGap"> </p>
 
-                        <div id="columnchart_values1" style="width: 100%; height: 100%; " data-toggle="tooltip" title="This chart shows Top 10 Material delays">
+                    <div id="columnchart_values" style="width: 100%; height: 100%; " data-toggle="tooltip" title="This chart shows Top 10 Machine breakdowns">
 
-                        </div>
+                    </div>
+                    </br>
+                    </br>
+                    <h3 class="title-3 m-b-30">Material Delays</h3>
+                    <p style="margin-top:-30px" class="title-7 m-xs-r-5 dateGap"></p>
+
+                    <div id="columnchart_values1" style="width: 100%; height: 100%; " data-toggle="tooltip" title="This chart shows Top 10 Material delays">
+
                     </div>
                 </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="top-campaign" style="padding-bottom:50px !important">
-                        <h3 class="title-3 m-b-30">Top Dragged-out Issues</h3>
-                        <p style="margin-top:-30px" class="title-7 m-xs-r-5 dateGap"></p>
-                        <div class="table-responsive">
-                            <table class="table table-striped table-sm" style="font-size:12px !important" id="myTable">
-                                <tbody></tbody>
-                            </table>
-                        </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="top-campaign" style="padding-bottom:50px !important">
+                    <h3 class="title-3 m-b-30">Top Dragged-out Issues</h3>
+                    <p style="margin-top:-30px" class="title-7 m-xs-r-5 dateGap"></p>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm" style="font-size:12px !important" id="myTable">
+                            <tbody></tbody>
+                        </table>
                     </div>
                 </div>
+            </div>
 
-                <div class="col-md-6 col-lg-4">
-                    <div class="chart-percent-2">
-                        <h3 class="title-3 m-b-30">Issue Occurrences </h3>
-                        <p style="margin-top:-30px" class="title-7 m-xs-r-5 dateGap"> </p>
+            <div class="col-md-6 col-lg-4">
+                <div class="chart-percent-2">
+                    <h3 class="title-3 m-b-30">Issue Occurrences </h3>
+                    <p style="margin-top:-30px" class="title-7 m-xs-r-5 dateGap"> </p>
 
-                        <div id="piechart_3d" style="width: 100%; height: 100%;"></div>
+                    <div id="piechart_3d" style="width: 100%; height: 100%;"></div>
 
 
-                    </div>
                 </div>
             </div>
         </div>
-</div>
-    </section>
+    </div>
+    </div>
+</section>
 
 <section class="p-t-20">
     <div class="container">
