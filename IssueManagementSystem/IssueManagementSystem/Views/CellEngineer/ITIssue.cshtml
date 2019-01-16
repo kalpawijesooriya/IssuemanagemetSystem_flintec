@@ -6,6 +6,9 @@
     {
         Response.Redirect("~/Login/Index");
     }
+
+    int userID = (int)Session["userID"];// get current supervisorID
+    int lineId = ViewBag.lineid;
 }
 @model IssueManagementSystem.Models.issue_occurrence
 <link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
@@ -55,12 +58,15 @@
 
 <script>
     $("#submit").click(function () {
-        $.connection.hub.start()
+
+      $.connection.hub.start()
             .done(function () {
                 console.log("Worked")
                 $.connection.ismHub.server.announce();
             })
             .fail(function () { alert("ERROR!") });
+
+      
     });
 
 </script>

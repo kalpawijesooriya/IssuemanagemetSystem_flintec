@@ -683,7 +683,8 @@
     <Content Include="Views\CellEngineer\ITIssue.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\EditMap.cshtml" />
-    <Content Include="Views\CellEngineer\QualtyIssue.cshtml" />
+    <Content Include="Views\CellEngineer\QualityIssue.cshtml" />
+    <Content Include="Views\Supervisor\QualityIssue.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

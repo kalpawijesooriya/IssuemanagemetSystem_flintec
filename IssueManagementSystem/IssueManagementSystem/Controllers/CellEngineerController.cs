@@ -93,8 +93,17 @@ namespace IssueManagementSystem.Controllers
 
             ViewBag.lineid = lineid;
             return View();
+        }
+        public ActionResult QualityIssue(int lineid)//qualityISSUE View
+        {
+            if ((Session["userID"] == null) || ((string)Session["Role"] != "CellEngineer"))
+            {
+                return RedirectToAction("Index", "Login");
 
+            }
 
+            ViewBag.lineid = lineid;
+            return View();
         }
         private class tempClass3
         {

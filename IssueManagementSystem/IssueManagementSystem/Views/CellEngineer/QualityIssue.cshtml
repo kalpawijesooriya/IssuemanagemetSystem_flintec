@@ -6,12 +6,15 @@
     {
         Response.Redirect("~/Login/Index");
     }
+
+    int userID = (int)Session["userID"];// get current supervisorID
+
 }
 @model IssueManagementSystem.Models.issue_occurrence
 <link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
 
 <div class="container margin ">
-    <h2>IT Issue</h2>
+    <h2>QualityIssue</h2>
     <hr />
     <div class="row">
         <div class="" style="width:50%;margin:auto;">
@@ -26,7 +29,7 @@
                         @Html.TextAreaFor(model => model.description, new { @class = "form-control", @style = "width: 100%", @rows = 5 })
                     </div>
                     string Role = Session["Role"].ToString();
-                    string lineID = Session["lineId"].ToString();
+                    string lineID = ViewBag.lineid.ToString();
                     @Html.TextAreaFor(mo => mo.Role, new { @class = "form-control", @id = "role", style = "display: none;" })
                     @Html.TextAreaFor(mod => mod.lineid, new { @class = "form-control", @id = "lineid", style = "display: none;" })
                     <script>

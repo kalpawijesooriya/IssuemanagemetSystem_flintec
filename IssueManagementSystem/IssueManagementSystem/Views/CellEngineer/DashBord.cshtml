@@ -13,10 +13,6 @@
         ViewBag.LineName = lineInfo.line_name;
 
     }
-
-
-
-
 }
 
 
@@ -91,8 +87,9 @@
 </style>
 
 <script src="~/Scripts/jquery-3.3.1.js"></script>
-<script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
+
 <script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
 <script src="~/signalr/Hubs"></script>
 <div id="result" hidden></div>
 
@@ -115,7 +112,7 @@ var r = document.getElementById('result');
      })
     }
   });
-   
+
     startConverting ()
 	function startConverting ()
     {
@@ -296,30 +293,35 @@ var r = document.getElementById('result');
                 type: 'POST',
 
                 success: function (issuedata) {
-
-                }
+                     $.connection.hub.start()
+                    .done(function () {
+                        console.log("Worked")
+                        $.connection.ismHub.server.announce();
+                    })
+                    .fail(function () { alert("ERROR!") });
+                        }
             });
 
         }
 
 
-  
+
 </script>
 
 <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/materialize/0.95.1/css/materialize.min.css"> -->
 
 <div class="container">
-   
-       
-      
-        <div class="row">
-            <div class="input-field col s12">
-                <textarea id="message" class="materialize-textarea"></textarea>
-                
-            </div>
+
+
+
+    <div class="row">
+        <div class="input-field col s12">
+            <textarea id="message" class="materialize-textarea"></textarea>
+
         </div>
-        <a href="#" id="speak" class="waves-effect waves-light btn" hidden>Speak</a>
-   
+    </div>
+    <a href="#" id="speak" class="waves-effect waves-light btn" hidden>Speak</a>
+
 </div>
 
 <div id="modal1" class="modal">
