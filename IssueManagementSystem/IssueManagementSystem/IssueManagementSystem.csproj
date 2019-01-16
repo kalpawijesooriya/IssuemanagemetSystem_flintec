@@ -629,6 +629,7 @@
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\Manager\bootstrap.min.js" />
     <Content Include="Scripts\Manager\jquery-3.2.1.min.js" />
+    <Content Include="Scripts\Manager\managersScripts.js" />
     <Content Include="Scripts\Manager\popper.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\moment.min.js" />

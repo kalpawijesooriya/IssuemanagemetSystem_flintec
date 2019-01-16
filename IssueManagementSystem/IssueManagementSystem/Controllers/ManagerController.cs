@@ -155,11 +155,15 @@ namespace IssueManagementSystem.Controllers
         }
 
         [HttpPost]
-        public JsonResult fillChart3()
+        public JsonResult fillChart3(string startDate, string endDate)
         {
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
-                String query = "SELECT TOP 10 issues.issue , count(issue_issue_ID) AS 'count' FROM issue_occurrence,issues WHERE issue_date BETWEEN '2018-12-18 00:00:00.000' AND '2019-12-19 00:00:00.000' AND issues.issue_id = issue_occurrence.issue_issue_ID GROUP BY issue";
+                String query = @"SELECT TOP 10 issues.issue , count(issue_issue_ID) AS 'count'
+                                 FROM issue_occurrence,issues 
+                                 WHERE issue_date BETWEEN  '" + startDate + @"' AND '" + endDate + @"' 
+                                 AND issues.issue_id = issue_occurrence.issue_issue_ID GROUP BY issue";
+
                 var chart1Data = db.Database.SqlQuery<tempClass3>(query).ToList();
                 return Json(chart1Data, JsonRequestBehavior.AllowGet); 
             }
@@ -173,7 +177,7 @@ namespace IssueManagementSystem.Controllers
             public String issue_satus {get; set;}
             public String location { get; set; }
             public String description { get; set; }
-            public String responsible_person_emp_id { get; set; }
+            public int responsible_person_emp_id { get; set; }
         }
 
         [HttpPost]
@@ -181,12 +185,12 @@ namespace IssueManagementSystem.Controllers
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
                 String query = @"SELECT issue_occurrence.issue_date,
-                                issue_occurrence.issue_occurrence_id,
-                                issues.issue,lines.line_name,issue_occurrence.issue_satus,
-                                issue_occurrence.location,issue_occurrence.description,issue_occurrence.responsible_person_emp_id
-                                FROM issue_occurrence,lines,issues WHERE
-                                lines.line_id = issue_occurrence.line_line_id AND
-                                issues.issue_id LIKE issue_occurrence.issue_issue_ID";
+                                 issue_occurrence.issue_occurrence_id,
+                                 issues.issue,lines.line_name,issue_occurrence.issue_satus,
+                                 issue_occurrence.location,issue_occurrence.description,issue_occurrence.responsible_person_emp_id
+                                 FROM issue_occurrence,lines,issues WHERE
+                                 lines.line_id = issue_occurrence.line_line_id AND
+                                 issues.issue_id LIKE issue_occurrence.issue_issue_ID";
 
                 var data = db.Database.SqlQuery<tempClass5>(query).ToList();
                 return Json(data, JsonRequestBehavior.AllowGet);
