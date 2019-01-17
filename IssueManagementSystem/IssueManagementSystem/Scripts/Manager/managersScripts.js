@@ -112,89 +112,87 @@ function loadTableData(){
 }
 
 function filterTableData(){
+        
+        data_obj.splice(0, data_obj.length);
 
         var Date_select_start = (new Date(document.getElementById('datetimepicker3').value+" 00:00 UTC")).toISOString().substring(0, 10);
         var Date_select_end = (new Date(document.getElementById('datetimepicker4').value+" 00:00 UTC")).toISOString().substring(0, 10);
         var Plant_select = document.getElementById('plantSelectBox2').value;
-        var Issue_select = document.getElementById('issueSelectBox').value;
+        var Issue_select = $('#issueSelectBox option:selected').text()
         var Department_select = document.getElementById('dptSelectBox').value;
-        var Line_select = document.getElementById('lineSelectBox').value;
+        var Line_select =  $('#lineSelectBox option:selected').text();
         var Status_select  = document.getElementById('statusSelectBox').value;
 
-        console.log(Date_select_start+"-----"+Date_select_end+"-----"+Issue_select+"-----"+Department_select+"-----"+Plant_select+"-----"+Line_select+"-----"+Status_select);
-        if(Issue_select!=""){
-                
+            raw_data.forEach(function (i) 
+                    {
 
-        }
-        if(Department_select!=""){
-                
+                            var condition = true;
 
-        }
-        if(Line_select!=""){
-                
+                            if(Issue_select=="" && Line_select=="" && Status_select==""){
+                               condition = true;
+                                console.log("if 1");
+                            }
 
-        }
-        if(Status_select!=""){
-                
+                            if(Issue_select!="" && Line_select=="" && Status_select==""){
+                                  condition = i.line_name.trim()==Line_select.trim() && i.location.trim()==Plant_select.trim() && flag!=1 ;
+                                console.log("if 2");
+                            }
 
-        }
+                            if(Issue_select=="" && Line_select!="" && Status_select==""){
+                                condition = i.line_name.trim()==Line_select.trim() && i.location.trim()==Plant_select.trim() && flag!=1 ;
+                                console.log("if 3");
+                            }
 
+                            if(Issue_select=="" && Line_select=="" && Status_select!=""){
+                                condition = i.issue_satus.trim()==Status_select.trim() && i.location.trim()==Plant_select.trim() && flag!=1;
+                                console.log("if 4");
+                            }
 
-///////////////////////Search Parameters/////////////////////////////
-/*
-        raw_data.forEach(function (i) 
-            {
-                var tempArr = new Array();
+                            if(Issue_select!="" && Line_select!="" && Status_select==""){
+                                condition =  i.line_name.trim()==Line_select.trim() && i.location.trim()==Plant_select.trim()  && i.issue.trim()==Issue_select.trim() && flag!=1;
+                                console.log("if 5");
+                            }
 
-                var ele1 = i.issue_date.split('(')[1];
-                ele1 = ele1.split(')')[0];
-                var d = Unix_timestamp(ele1,'ymd')
+                            if(Issue_select!="" && Line_select=="" && Status_select!=""){
+                                condition =  i.issue_satus.trim()==Status_select.trim() && i.location.trim()==Plant_select.trim()  && i.issue.trim()==Issue_select.trim() && flag!=1;
+                                console.log("if 6");
+                            }
 
-                if(i.issue_occurrence_id== IssueID_search)
-                {
-                    tempArr.push(d);
-                    tempArr.push(i.issue_occurrence_id);
-                    tempArr.push(i.issue);
-                    tempArr.push(i.line_name);
+                            if(Issue_select=="" && Line_select!="" && Status_select!=""){
+                                 condition =  i.issue_satus.trim()==Status_select.trim() && i.line_name.trim()==Line_select.trim() && i.location.trim()==Plant_select.trim() && flag!=1;
+                                console.log("if 7");
+                            }
+                            if(Issue_select!="" && Line_select!="" && Status_select!=""){
+                                condition =  i.issue_satus.trim()==Status_select.trim() && i.line_name.trim()==Line_select.trim() && i.location.trim()==Plant_select.trim()  && i.issue.trim()==Issue_select.trim() && flag!=1;
+                                console.log("if 8");
+                            }
 
-                    if (i.issue_satus == '1') { tempArr.push('Unsolved');}
-                    if (i.issue_satus == '0') { tempArr.push('Solved'); }
-                    tempArr.push(i.location);
-                    tempArr.push(i.description);
-                    data_obj.push(tempArr);     
-                }
+                        var tempArr = new Array();
 
-                if(i.issue ==Issue_search)
-                {      
-                    tempArr.push(d);
-                    tempArr.push(i.issue_occurrence_id);
-                    tempArr.push(i.issue);
-                    tempArr.push(i.line_name);
+                        var ele1 = i.issue_date.split('(')[1];
+                        ele1 = ele1.split(')')[0];
+                        var d = Unix_timestamp(ele1,'ymd');
 
-                    if (i.issue_satus == '1') { tempArr.push('Unsolved');}
-                    if (i.issue_satus == '0') { tempArr.push('Solved'); }
-                    tempArr.push(i.location);
-                    tempArr.push(i.description);
-                    data_obj.push(tempArr);
-                }
+                        var flag = 0;
 
-                if( i.location==Plant_search)
-                {      
-                    tempArr.push(d);
-                    tempArr.push(i.issue_occurrence_id);
-                    tempArr.push(i.issue);
-                    tempArr.push(i.line_name);
+                        if(condition)
+                            {
+                                console.log(i.issue.trim()+" **issue** "+Issue_select.trim());  
+                                tempArr.push(d);
+                                tempArr.push(i.issue_occurrence_id);
+                                tempArr.push(i.issue);
+                                tempArr.push(i.line_name);
 
-                    if (i.issue_satus == '1') { tempArr.push('Unsolved');}
-                    if (i.issue_satus == '0') { tempArr.push('Solved'); }
-                    tempArr.push(i.location);
-                    tempArr.push(i.description);
-                    data_obj.push(tempArr);
-                }
+                                if (i.issue_satus == '1') { tempArr.push('Unsolved');}
+                                if (i.issue_satus == '0') { tempArr.push('Solved'); }
+                                tempArr.push(i.location);
+                                tempArr.push(i.description);
+                                data_obj.push(tempArr);
+                                flag = 1;
+                            }
+                    });
+        loadTablePage(1);
 
-            });
- */
-///////////////////////Search Parameters/////////////////////////////
 }
 
 
