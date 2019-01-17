@@ -37,6 +37,8 @@ namespace IssueManagementSystem.Models
         public string matirial { get; set; }
         public string lineid { get; set; }
         public string Role { get; set; }
+        public string department { get; set; }
+        public string solved_person_emp_id { get; set; }
         public Nullable<int> manager_notifi_status { get; set; }
 
     }

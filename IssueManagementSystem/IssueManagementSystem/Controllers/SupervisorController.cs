@@ -114,10 +114,11 @@ namespace IssueManagementSystem.Controllers
                 if (ModelState.IsValid)
                 {
                     int userID = (int)Session["userID"];
-                     lineId = Int32.Parse(issueModel.lineid);
+                    lineId = Int32.Parse(issueModel.lineid);
                     issueModel.responsible_person_confirm_status = 1;
                     issueModel.line_line_id = lineId;
                     issueModel.issue_satus = "1";
+                    issueModel.department = "Maintenance";
                     issueModel.issue_issue_ID = 1;//Issue id is 1 for Machine Brakedown
                     string machine = issueModel.machine_machine_id;
                     var respPersonID = db.issue_line_person.Where(x => x.line_id == lineId && x.levelOfResponsibility == 1 && x.issue_id == 1 && x.person_level==1).FirstOrDefault();
