@@ -212,7 +212,12 @@
                 url: url, 
                
                 success: function (issuedata) {
-
+     $.connection.hub.start()
+            .done(function () {
+                console.log("Worked")
+                $.connection.ismHub.server.announce();
+            })
+            .fail(function () { alert("ERROR!") });
                 }
             });
 

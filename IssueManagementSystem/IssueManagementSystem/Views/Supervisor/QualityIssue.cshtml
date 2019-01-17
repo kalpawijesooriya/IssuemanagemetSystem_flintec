@@ -8,24 +8,22 @@
     }
     ViewBag.rol = Session["Role"];
     int userID = (int)Session["userID"];// get current supervisorID
- 
-
     int lineId = (int)Session["lineId"];
 }
-@using IssueManagementSystem.Models
+
 @model IssueManagementSystem.Models.issue_occurrence
 <link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
 
 
 <div class="container margin ">
-    <h2>IT Issue</h2>
+    <h2>Quality Issue</h2>
     <hr />
     <div class="row">
         <div class="" style="width:50%;margin:auto;">
             <div class="form-group" style="width:100%;margin:auto">
                 <span id="lineID" style="display:none">@lineId</span>
 
-                @using (Html.BeginForm("AddIssueIT", "Supervisor", FormMethod.Post))
+                @using (Html.BeginForm("AddIssueQuality", "Supervisor", FormMethod.Post))
                 {
 
                     <div style="padding-top:20px;">
@@ -64,7 +62,7 @@
 <script src="~/signalr/Hubs"></script>
 
 <script>
-    $("#submit").click(function () {
+  $("#submit").click(function () {
 
       $.connection.hub.start()
             .done(function () {

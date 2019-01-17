@@ -58,6 +58,15 @@ namespace IssueManagementSystem.Controllers
          
             return View();
         }
+        public ActionResult QualityIssue()//Qulity view
+        {
+            if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
+            {
+                return RedirectToAction("Index", "Login");
+
+            }
+            return View();
+        }
 
         public ActionResult TechnicalIssue()//Technical Issue View
         {
@@ -75,18 +84,11 @@ namespace IssueManagementSystem.Controllers
             if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
             {
                 return RedirectToAction("Index", "Login");
-
             }
-           
             dynamic mat_List = new System.Dynamic.ExpandoObject();
-
-           
-
             FLINTEC_Item_dbContext materialContext = new FLINTEC_Item_dbContext();
             List<FLINTEC_Item> mList = materialContext.FLINTEC_Items.ToList();
-
             mat_List.materialList = mList;
-
             return View(mat_List);
         }
 
@@ -258,6 +260,56 @@ namespace IssueManagementSystem.Controllers
             if (issueModel.Role == "supervisor") { return RedirectToAction("selectIssue", "Supervisor"); }
             else { return RedirectToAction("DashBord", "CellEngineer", new { lineid = lineId }); }
         }
+
+        [HttpPost]//add IT Issues to database
+        public ActionResult AddIssueQuality(issue_occurrence issueModel)
+        {
+            int lineId = 1;
+            var time = DateTime.Now;
+            string current_time = time.ToString("yyyy-MM-dd HH:mm");
+
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+            {
+                if (ModelState.IsValid)
+                {
+                    lineId = Int32.Parse(issueModel.lineid);
+                    int userID = (int)Session["userID"];
+
+                    issueModel.responsible_person_confirm_status = 1;
+                    issueModel.line_line_id = lineId;
+                    issueModel.issue_satus = "1";
+                    issueModel.issue_issue_ID = 4;//Issue id is 5 for IT Issue
+
+                    //get certain employee assigned for a certain issue in a certain line and the level of resp. should be one
+                    var respPersonID = db.issue_line_person.Where(x => x.line_id == lineId && x.levelOfResponsibility == 1 && x.issue_id == 4 && x.person_level == 1).FirstOrDefault();
+                    issueModel.responsible_person_emp_id = Int32.Parse(respPersonID.EmployeeNumber.ToString());
+
+                    issueModel.location = (string)Session["location"];
+                    var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+                    var dayitem = current_time.Split(' ');
+                    var day = dayitem[0];
+                    var time1 = dayitem[1];
+                    issueModel.issue_date = date;
+
+                    db.issue_occurrence.Add(issueModel);
+                    db.SaveChanges();
+                    var issue_occour_id = issueModel.issue_occurrence_id;
+                    if (issueModel.issue_occurrence_id > 0)
+                    {
+                        var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
+                        string msg = "Quality issue has been occurred in " + line.line_name + " line " + day + " at " + time1 + ". Special Note of Line supervisor - " + issueModel.description;
+                        string callNote = "Quality issue has been occurred in " + line.line_name + " line on" + day + " at " + time1;
+                        var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
+                        com.lightON("4", displayInfo.raspberry_ip_address);//turn on the Light
+                        sendCD(lineId, 4, msg, "Quality Issue has been occered", callNote, issue_occour_id);
+                    }
+                    ModelState.Clear();
+                }
+            }
+            if (issueModel.Role == "supervisor") { return RedirectToAction("selectIssue", "Supervisor"); }
+            else { return RedirectToAction("DashBord", "CellEngineer", new { lineid = lineId }); }
+        }
+
 
         [HttpPost]//add Material Delay to database
         public ActionResult AddMaterialDelay(string issueJson, issue_occurrence issueModel)

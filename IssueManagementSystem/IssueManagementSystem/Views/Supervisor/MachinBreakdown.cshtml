@@ -92,13 +92,15 @@
     <script src="~/signalr/Hubs"></script>
 
     <script>
-    $("#submit").click(function () {
-        $.connection.hub.start()
+  $("#submit").click(function () {
+
+      $.connection.hub.start()
             .done(function () {
                 console.log("Worked")
                 $.connection.ismHub.server.announce();
             })
             .fail(function () { alert("ERROR!") });
+
     });
 
     var id=@ViewBag.id.ToString();
