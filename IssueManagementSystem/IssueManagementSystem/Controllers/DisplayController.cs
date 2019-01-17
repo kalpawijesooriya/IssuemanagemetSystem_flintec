@@ -36,6 +36,12 @@ namespace IssueManagementSystem.Controllers
 
            
         }
+        public ActionResult Stores()
+        {
+
+            return View();
+
+        }
         [HttpPost]//solvedIssueMethod
         public JsonResult updateScreen()
         {

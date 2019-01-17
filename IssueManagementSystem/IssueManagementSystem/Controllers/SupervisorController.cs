@@ -167,7 +167,7 @@ namespace IssueManagementSystem.Controllers
                         lineId = Int32.Parse(issueModel.lineid);
 
                         issueModel.responsible_person_confirm_status = 1;
-
+                        issueModel.department = "Engineering";
                         issueModel.line_line_id = lineId;
                         issueModel.issue_satus = "1";
                         issueModel.issue_issue_ID = 3;//Issue id is 2 for Machine Brakedown
@@ -226,7 +226,7 @@ namespace IssueManagementSystem.Controllers
                 {
                     lineId = Int32.Parse(issueModel.lineid);
                     int userID = (int)Session["userID"];
-                   
+                    issueModel.department = "IT";
                     issueModel.responsible_person_confirm_status = 1;
                     issueModel.line_line_id = lineId;
                     issueModel.issue_satus = "1";
@@ -262,7 +262,7 @@ namespace IssueManagementSystem.Controllers
             else { return RedirectToAction("DashBord", "CellEngineer", new { lineid = lineId }); }
         }
 
-        [HttpPost]//add IT Issues to database
+        [HttpPost]//add Quality Issues to database
         public ActionResult AddIssueQuality(issue_occurrence issueModel)
         {
             int lineId = 1;
@@ -275,7 +275,7 @@ namespace IssueManagementSystem.Controllers
                 {
                     lineId = Int32.Parse(issueModel.lineid);
                     int userID = (int)Session["userID"];
-
+                    issueModel.department = "Quality";
                     issueModel.responsible_person_confirm_status = 1;
                     issueModel.line_line_id = lineId;
                     issueModel.issue_satus = "1";
@@ -345,6 +345,7 @@ namespace IssueManagementSystem.Controllers
                             issueModel.issue_satus = "1";
                             issueModel.issue_issue_ID = 2;
                             issueModel.issue_date = date;
+                            issueModel.department = "Stores";
                             issueModel.material_id = item["material_id"].ToString();
                             issueModel.responsible_person_emp_id = resp_person.EmployeeNumber;
                             issueModel.location = item["location"].ToString();
