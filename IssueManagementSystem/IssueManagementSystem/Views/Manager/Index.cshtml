@@ -130,7 +130,7 @@
                         <h4 class="modal-title" style="margin-left:40%;color:white;">Machine Breakdowns</h4>
                         <button class="close" data-dismiss="modal" style="margin-top:-20px;">&times;</button>
                     </div>
-               
+
                     <div class="modal-body" style="display:flex;">
                         <div class="container">
                             <div class="page-header row">
@@ -139,10 +139,8 @@
 
                             <div class="row">
                                 <div class="col-lg-4">
-                  
                                 </div>
                                 <div class="col-lg-8" style="margin-top:20px;">
-
                                 </div>
                             </div>
                         </div>
@@ -164,12 +162,11 @@
         </div>
         <div class="row" style="margin:10px;display:flex !important">
 
-            <div class="col-lg-2" style="display:inline-flex">
+            <div class="col-lg-3" style="display:inline-flex">
                 <p style="margin-right:13px;">Plant</p>
-                <select class="js-example-placeholder-single js-states form-control" id="plantSelectBox" name="plantSelectBox" style="width:75%;float:right !important;">
-                    <option value="1" selected="selected">All </option>
-                    <option value="2">Koggala</option>
-                    <option value="2">Katunayaka</option>
+                <select class="js-example-placeholder-single js-states form-control" multiple="multiple" id="plantSelectBox"  style="width:75%;float:right !important;">
+                    <option selected="selected" value="KOG">Koggala</option>
+                    <option selected="selected" value="KTY">Katunayaka</option>
                 </select>
             </div>
 
@@ -249,7 +246,93 @@
 </section>
 
 <section class="p-t-20">
+
+
     <div class="container">
+        <div class="row">
+
+            <div class="col-lg-12" style="margin:auto !important">
+
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="row">
+                            <div class="form-group col-sm-6">
+                                <p style="">From</p>
+                                <div class='input-group date'>
+                                    <input type='text' class="form-control" id='datetimepicker3' style="font-size:13px;" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <p style="">To</p>
+                                <div class='input-group date'>
+                                    <input type='text' class="form-control" id='datetimepicker4' style="font-size:13px;" />
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-1">
+                        <p style="margin-right:13px;">Plant</p>
+                        <select class="js-example-placeholder-single js-states form-control" id="plantSelectBox2" style="width:100%;float:right !important;" onchange="filterTableData()">
+                            <option selected="selected"></option>
+                            <option selected="selected" value="KOG">KOG</option>
+                            <option selected="selected" value="KTY">KTY</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <p style="margin-right:13px;">Department</p>
+                        <select class="js-example-placeholder-single js-states form-control" id="dptSelectBox" style="width:100%;float:right !important;" onchange="filterTableData()">
+                            <option selected="selected"></option>
+                            <option value="1">Assembly</option>
+                            <option value="2">Machining</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <p style="margin-right:13px;">Issue</p>
+                        <select class="js-example-placeholder-single js-states form-control" id="issueSelectBox" style="width:100%;float:right !important;" onchange="filterTableData()">
+                            <option selected=""></option>
+                            <option value="1">Machine Breakdown</option>
+                            <option value="2">Material Delay</option>
+                            <option value="3">Technical Issue</option>
+                            <option value="4">Quality Isuue</option>
+                            <option value="5">IT Issue</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <p style="margin-right:13px;">Line</p>
+                        <select class="js-example-placeholder-single js-states form-control" id="lineSelectBox" style="width:100%;float:right !important;" onchange="filterTableData()">
+                            <option selected="selected"></option>
+                            <option value="1">Potted</option>
+                            <option value="2">Welded</option>
+                            <option value="3">Guaging</option>
+                            <option value="4">MD2</option>
+                            <option value="5">SM</option>
+                            <option value="6">Rocker</option>
+                        </select>
+                    </div>
+
+
+                    <div class="col-lg-1">
+                        <p style="margin-right:13px;">Status</p>
+                        <select class="js-example-placeholder-single js-states form-control" id="statusSelectBox" style="width:100%;float:right !important;" onchange="filterTableData()">
+                            <option selected="selected"></option>
+                            <option value="1">Solved</option>
+                            <option value="0">Unsolved</option>
+                        </select>
+                    </div>
+                    </>
+                </div>
+
+        </div>
 
         <div class="row">
             <div class="col-md-12">
@@ -258,7 +341,7 @@
                 <div>
                     <div class="container" style="display:inline-flex; width:100%; padding-bottom:10px;">
                         <div class="col-md-12">
-                            <div class="row">
+                            <div class="row" style="font-weight:600">
                                 <div class="col-md-1">Date</div>
                                 <div class="col-md-1">IssueID</div>
                                 <div class="col-md-5">Issue</div>

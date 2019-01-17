@@ -71,7 +71,7 @@ namespace IssueManagementSystem.Controllers
         }
 
         [HttpPost]
-        public JsonResult fillChart1(string barChart, string startDate, string endDate)
+        public JsonResult fillChart1(string barChart, string startDate, string endDate, string plantLocation)
         {
             var chart1Data = new List<tempClass>();
             var chart2Data = new List<tempClass4>();
@@ -81,22 +81,23 @@ namespace IssueManagementSystem.Controllers
                 if (barChart.Equals("1") ) {
                     String query = @"SELECT TOP 10 issue_occurrence.machine_machine_id,
                                     count(issue_occurrence.machine_machine_id) AS count FROM issue_occurrence 
-                                    WHERE issue_occurrence.issue_issue_ID = 1 AND
-                                     issue_occurrence.issue_date BETWEEN '" + startDate + @"' AND '" + endDate + @"' 
+                                    WHERE issue_occurrence.issue_issue_ID = 1 AND issue_occurrence.location IN ('"+plantLocation+@"')
+                                    AND  issue_occurrence.issue_date BETWEEN '" + startDate + @"' AND '" + endDate + @"' 
                                     GROUP BY issue_occurrence.machine_machine_id  ORDER BY count Desc";
 
+                    System.Diagnostics.Debug.Print(query);
                     chart1Data = db.Database.SqlQuery<tempClass>(query).ToList();
                     return Json(chart1Data, JsonRequestBehavior.AllowGet);
                 }
 
                 if (barChart.Equals("2")) {
-                    String query =@"SELECT TOP 10 FLINTEC.dbo.FLINTEC$Item.[Search Description] AS Search_Description,
+                    String query = @"SELECT TOP 10 FLINTEC.dbo.FLINTEC$Item.[Search Description] AS Search_Description,
                                     count(issue_management_system.dbo.issue_occurrence.material_id) AS count 
                                     FROM issue_management_system.dbo.issue_occurrence,FLINTEC.dbo.FLINTEC$Item
                                     WHERE issue_occurrence.issue_issue_ID = 2
-                                    AND 
+                                    AND issue_occurrence.location IN ('" + plantLocation + @"') AND 
                                     issue_management_system.dbo.issue_occurrence.material_id  COLLATE SQL_Latin1_General_CP1_CS_AS LIKE FLINTEC.dbo.FLINTEC$Item.No_ COLLATE SQL_Latin1_General_CP1_CS_AS
-                                    AND issue_occurrence.issue_date BETWEEN '"+ startDate +@"' AND '"+ endDate +@"' 
+                                    AND issue_occurrence.issue_date BETWEEN '" + startDate +@"' AND '"+ endDate +@"' 
                                     GROUP BY FLINTEC.dbo.FLINTEC$Item.[Search Description]
                                     ORDER BY count Desc";
 
@@ -121,7 +122,7 @@ namespace IssueManagementSystem.Controllers
         }
 
         [HttpPost]
-        public JsonResult fillChart2(string startDate, string endDate)
+        public JsonResult fillChart2(string startDate, string endDate, string plantLocation)
         {
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
@@ -134,7 +135,7 @@ namespace IssueManagementSystem.Controllers
                                 DATEDIFF(minute, issue_occurrence.issue_date, issue_occurrence.solved_date) AS DateDiff
                                 FROM
                                 issue_management_system.dbo.issue_occurrence,BigRed.dbo.tbl_PPA_User,issue_management_system.dbo.issues
-                                WHERE
+                                WHERE issue_occurrence.location IN ('" + plantLocation + @"') AND 
                                 BigRed.dbo.tbl_PPA_User.UserName LIKE issue_management_system.dbo.issue_occurrence.responsible_person_emp_id AND
                                 issue_management_system.dbo.issue_occurrence.issue_issue_ID = issue_management_system.dbo.issues.issue_id 
                                  AND issue_occurrence.issue_date BETWEEN '" + startDate + @"' AND '" + endDate + @"' 
@@ -155,13 +156,13 @@ namespace IssueManagementSystem.Controllers
         }
 
         [HttpPost]
-        public JsonResult fillChart3(string startDate, string endDate)
+        public JsonResult fillChart3(string startDate, string endDate, string plantLocation)
         {
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
                 String query = @"SELECT TOP 10 issues.issue , count(issue_issue_ID) AS 'count'
                                  FROM issue_occurrence,issues 
-                                 WHERE issue_date BETWEEN  '" + startDate + @"' AND '" + endDate + @"' 
+                                 WHERE issue_occurrence.location IN ('" + plantLocation + @"') AND  issue_date BETWEEN  '" + startDate + @"' AND '" + endDate + @"' 
                                  AND issues.issue_id = issue_occurrence.issue_issue_ID GROUP BY issue";
 
                 var chart1Data = db.Database.SqlQuery<tempClass3>(query).ToList();
