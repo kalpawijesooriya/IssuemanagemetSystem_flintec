@@ -1,0 +1,149 @@
+﻿
+@{
+    ViewBag.Title = "Raspberry";
+
+}
+@using IssueManagementSystem.Models;
+@using System.Web.UI.WebControls;
+@using System.Web.UI;
+@model List<IssueManagementSystem.Models.issue_occurrence>
+@{ string lineName = null; string map = null; }
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/Display/jquery.totemticker.js"></script>
+<link href="~/Content/Display/style.css" rel="stylesheet" />
+<link href="~/Content/Display/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Display/displaystyles.css" rel="stylesheet" />
+
+<div style="display:flex">
+    
+
+
+    <div class="container-fluid margin">
+        <div class="displayhedding" style="margin-top:-20pt">
+            <div class="row">
+                <div class="col-lg-5">
+                    <div class="header__logo">
+                        <a href="#">
+                            <img src="~/Content/images/logo.png" alt="CoolAdmin" />
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-7 text-left">
+                    <h3>Stores</h3>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-sm-11" style="margin:20pt">
+                <div id="wrapper">
+                    <ul id="vertical-ticker">
+                       
+                        <li id="maririal_list">
+                            <div class="card text-white bg-warning mb-3"  id="maririaldiv">
+                                <div class="card-header">Material Delay</div>
+                                <div class="card-body">
+                                    <table class="table" style="max-width:80rem;color:black">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Matirial</th>
+                                                <th scope="col">Description</th>
+                                                <th scope="col">Responsible person</th>
+                                                <th scope="col">Line Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="matirial_body"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </li>
+                      
+                      
+                    </ul>
+                </div>
+            </div>
+            <script src="~/Scripts/3.30bootstrap.min.js"></script>
+            <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
+            <script src="~/Scripts/moment.min.js"></script>
+            <script src="~/signalr/Hubs"></script>
+            <script>
+                $.connection.hub.start()
+                .done(function(){console.log("Its Works")
+                //   $.connection.ismHub.server.announce();
+                })
+                .fail(function(){alert("ERROR!")});
+  $.connection.ismHub.client.announce=function(){location.reload();}
+    $(document).ready(function () {
+
+        // Proxy created on the fly
+        var hub = $.connection.issueHub;
+        var issueCount = 0;
+
+        // Declare a function on the hub hub so the server can invoke it
+        hub.client.displayStatus = function () {
+
+            getData();
+        };
+
+        // Start the connection
+        $.connection.hub.start();
+        getData();
+
+        function getData()
+        {
+
+             var url = '@Url.Action("GetIssues", "Supervisor")'
+
+            $.ajax({
+                url: url,
+                    type: 'GET',
+                    datatype: 'json',
+                success: function (issuedata) {
+                    $('#matirial_body').empty();
+                    $('#maririaldiv').hide();
+                    issuedata = $.parseJSON(issuedata);
+                    if (issuedata.length > 0) {
+                        for (var i = 0; i < issuedata.length; i++) {
+                            if (issuedata[i].issue_satus=="1" ) {
+                                var responcibleperson_ststus= issuedata[i].responsible_person_confirm_status
+                                var issueid = issuedata[i].issue_issue_ID
+                                var date = issuedata[i].issueDate.split(' ');
+                                var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
+                                var issue_occurrence_id = issuedata[i].issue_occurrence_id
+                                if (issueid == 2)//Material Delay
+                                {
+                                    $('#maririaldiv').show()
+                                    var divissue = $('#matirial_body');
+                                    var issue = '<tr><td>' + day + '</td><td>' + issuedata[i].matirial + '</td><td>' + issuedata[i].description + '</td><td>' + issuedata[i].responciblepersonName + '</td><td>'+issuedata[i].lineName+'</td></tr>'
+                                    divissue.append(issue)
+                                    divissue.show('slow');
+                                }
+                            }
+
+                        }
+
+                    }
+                }, error: function (r, e, w) {
+                }
+            });
+        }
+
+    })
+            </script>
+         
+         
+        </div>
+    </div>
+</div>>
+
+
+
+
+
+
+
+
+
+

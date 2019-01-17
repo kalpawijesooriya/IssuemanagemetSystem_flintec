@@ -34,7 +34,7 @@ namespace IssueManagementSystem.Models
                    
                     connection.Open();
                     //// Sanjay : Alwasys use "dbo" prefix of database to trigger change event
-                    using (command = new SqlCommand(@"SELECT [issue_occurrence_id],[issue_date],[description],[machine_machine_id],[material_id],[line_line_id],[issue_issue_ID],[responsible_person_emp_id],[issue_satus],[location],[responsible_person_confirm_status],[responsible_person_confirm_feedback],[solved_date],[commented_date] FROM [dbo].[issue_occurrence]", connection))
+                    using (command = new SqlCommand(@"SELECT [issue_occurrence_id],[issue_date],[description],[machine_machine_id],[material_id],[line_line_id],[issue_issue_ID],[responsible_person_emp_id],[issue_satus],[location],[responsible_person_confirm_status],[responsible_person_confirm_feedback],[solved_date],[commented_date],[department],[solved_emp_id] FROM [dbo].[issue_occurrence]", connection))
                     {
                         command.Notification = null;
 
@@ -55,11 +55,12 @@ namespace IssueManagementSystem.Models
                             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
                             {
                                 int enpId = (int)reader["responsible_person_emp_id"];
-
+                                int lineId = (int)reader["line_line_id"];
+                                var lineinfo = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
                                 using (BigRedEntities BE = new BigRedEntities())
                                 {
                                   var  userInfo = BE.tbl_PPA_User.Where(x => x.EmployeeNumber == enpId).FirstOrDefault();
-
+                                  
 
                                     var material_id = reader["material_id"] != DBNull.Value ? (string)reader["material_id"] : "";
                                     string matirialName = null;
@@ -78,7 +79,7 @@ namespace IssueManagementSystem.Models
                                         issue_occurrence_id = (int)reader["issue_occurrence_id"],
                                         issueDate = reader["issue_date"].ToString(),
                                         description = reader["description"] != DBNull.Value ? (string)reader["description"] : "",
-                                        matirial = material_id+" - "+ matirialName,
+                                        matirial = material_id + " - " + matirialName,
                                         machine_machine_id = reader["machine_machine_id"] != DBNull.Value ? (string)reader["machine_machine_id"] : "",
                                         line_line_id = (int)reader["line_line_id"],
                                         issue_issue_ID = (int)reader["issue_issue_ID"],
@@ -89,7 +90,10 @@ namespace IssueManagementSystem.Models
                                         issue_satus = reader["issue_satus"] != DBNull.Value ? (string)reader["issue_satus"] : "",
                                         solvedDate = reader["solved_date"].ToString(),
                                         commentedDate = reader["commented_date"].ToString(),
-                                        responciblepersonName = userInfo.Name
+                                        solved_by = reader["solved_emp_id"] != DBNull.Value ? (string)reader["solved_emp_id"] : "",
+                                        department = reader["department"] != DBNull.Value ? (string)reader["department"] : "",
+                                        responciblepersonName = userInfo.Name,
+                                        lineName = lineinfo.line_name
                                     });
                                 }
                             }

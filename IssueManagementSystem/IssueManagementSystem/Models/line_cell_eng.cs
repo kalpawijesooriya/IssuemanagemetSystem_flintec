@@ -15,6 +15,6 @@ namespace IssueManagementSystem.Models
     public partial class line_cell_eng
     {
         public int cell_eng_emp_id { get; set; }
-        public Nullable<int> line_id { get; set; }
+        public int line_id { get; set; }
     }
 }
