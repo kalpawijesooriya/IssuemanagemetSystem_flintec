@@ -1,7 +1,35 @@
 ﻿$('#plantSelectBox').select2({
     minimumResultsForSearch: -1,
-    placeholder: "Select Plant.....",
     allowClear: false
+});
+
+$('#plantSelectBox2').select2({
+    minimumResultsForSearch: -1,
+    allowClear: false
+});
+
+$('#lineSelectBox').select2({
+    minimumResultsForSearch: -1,
+    allowClear: false,
+    placeholder:"Select Line"
+});
+
+$('#dptSelectBox').select2({
+    minimumResultsForSearch: -1,
+    allowClear: false,
+    placeholder:"Select Department"
+});
+
+$('#statusSelectBox').select2({
+    minimumResultsForSearch: -1,
+    allowClear: false,
+    placeholder:"Select Status"
+});
+
+$('#issueSelectBox').select2({
+    minimumResultsForSearch: -1,
+    allowClear: false,
+    placeholder:"Select Status"
 });
 
 $(document).ready(function() {
@@ -9,7 +37,8 @@ $(document).ready(function() {
         google.charts.setOnLoadCallback(drawChart1);
         google.charts.setOnLoadCallback(drawChart2);
         google.charts.setOnLoadCallback(drawChart3);
-
+        
+        loadTableData();
         loadTablePage(1);
 
         $("#datetimepicker1").datepicker({
@@ -18,71 +47,173 @@ $(document).ready(function() {
         $("#datetimepicker2").datepicker({
         });
 
+       $("#datetimepicker3").datepicker({
+        });
+
+      $("#datetimepicker4").datepicker({
+        });
+
         var d = new Date();
         d.setMonth(d.getMonth() - 1);
         var d2 = new Date();
 
         $("#datetimepicker1").datepicker().datepicker("setDate", d);
         $("#datetimepicker2").datepicker().datepicker("setDate",d2);
+        $("#datetimepicker3").datepicker().datepicker("setDate", d);
+        $("#datetimepicker4").datepicker().datepicker("setDate",d2);
 
         filterByDate();
         createTable();
 });
 
+ var data_obj = new Array();
+ var raw_data = new Array();
 
-function loadTablePage(page){
-        var url = '/Manager/loadIssueList';
-        var obj = new Array();
+function loadTableData(){
 
         $.ajax({
             type:"POST",
             dataType:'text',
             async:false,
-            url:url,
+            url:'/Manager/loadIssueList',
             data:{},
             success: function (data)
-                {
+                {   
                     var dataArray = JSON.parse(data);
-                    dataArray.forEach(function (i) {
-                        var tempArr = new Array();
 
-                        var ele1 = i.issue_date.split('(')[1];
-                        ele1 = ele1.split(')')[0];
+                        raw_data = dataArray;
 
-                        tempArr.push(Unix_timestamp(ele1,'ymd'));
-                        tempArr.push(i.issue_occurrence_id);
-                        tempArr.push(i.issue);
-                        tempArr.push(i.line_name);
+                        dataArray.forEach(function (i) 
+                            {
 
-                        if (i.issue_satus == '1') { tempArr.push('Unsolved');}
-                        if (i.issue_satus == '0') { tempArr.push('Solved'); }
-                        tempArr.push(i.location);
-                        tempArr.push(i.description);
-                        obj.push(tempArr);
-                    });
+                                var tempArr = new Array();
+
+                                var ele1 = i.issue_date.split('(')[1];
+                                ele1 = ele1.split(')')[0];
+
+                                tempArr.push(Unix_timestamp(ele1,'ymd'));
+                                tempArr.push(i.issue_occurrence_id);
+                                tempArr.push(i.issue);
+                                tempArr.push(i.line_name);
+
+                                if (i.issue_satus == '1') { tempArr.push('Unsolved');}
+                                if (i.issue_satus == '0') { tempArr.push('Solved'); }
+                                tempArr.push(i.location);
+                                tempArr.push(i.description);
+                                data_obj.push(tempArr);
+                            });
                 },
                 error: function ()
                 {
                     alert("Error occurred");
                 }
             });
+
+}
+
+function filterTableData(){
+
+        var Date_select_start = (new Date(document.getElementById('datetimepicker3').value+" 00:00 UTC")).toISOString().substring(0, 10);
+        var Date_select_end = (new Date(document.getElementById('datetimepicker4').value+" 00:00 UTC")).toISOString().substring(0, 10);
+        var Plant_select = document.getElementById('plantSelectBox2').value;
+        var Issue_select = document.getElementById('issueSelectBox').value;
+        var Department_select = document.getElementById('dptSelectBox').value;
+        var Line_select = document.getElementById('lineSelectBox').value;
+        var Status_select  = document.getElementById('statusSelectBox').value;
+
+        console.log(Date_select_start+"-----"+Date_select_end+"-----"+Issue_select+"-----"+Department_select+"-----"+Plant_select+"-----"+Line_select+"-----"+Status_select);
+        if(Issue_select!=""){
                 
+
+        }
+        if(Department_select!=""){
+                
+
+        }
+        if(Line_select!=""){
+                
+
+        }
+        if(Status_select!=""){
+                
+
+        }
+
+
+///////////////////////Search Parameters/////////////////////////////
+/*
+        raw_data.forEach(function (i) 
+            {
+                var tempArr = new Array();
+
+                var ele1 = i.issue_date.split('(')[1];
+                ele1 = ele1.split(')')[0];
+                var d = Unix_timestamp(ele1,'ymd')
+
+                if(i.issue_occurrence_id== IssueID_search)
+                {
+                    tempArr.push(d);
+                    tempArr.push(i.issue_occurrence_id);
+                    tempArr.push(i.issue);
+                    tempArr.push(i.line_name);
+
+                    if (i.issue_satus == '1') { tempArr.push('Unsolved');}
+                    if (i.issue_satus == '0') { tempArr.push('Solved'); }
+                    tempArr.push(i.location);
+                    tempArr.push(i.description);
+                    data_obj.push(tempArr);     
+                }
+
+                if(i.issue ==Issue_search)
+                {      
+                    tempArr.push(d);
+                    tempArr.push(i.issue_occurrence_id);
+                    tempArr.push(i.issue);
+                    tempArr.push(i.line_name);
+
+                    if (i.issue_satus == '1') { tempArr.push('Unsolved');}
+                    if (i.issue_satus == '0') { tempArr.push('Solved'); }
+                    tempArr.push(i.location);
+                    tempArr.push(i.description);
+                    data_obj.push(tempArr);
+                }
+
+                if( i.location==Plant_search)
+                {      
+                    tempArr.push(d);
+                    tempArr.push(i.issue_occurrence_id);
+                    tempArr.push(i.issue);
+                    tempArr.push(i.line_name);
+
+                    if (i.issue_satus == '1') { tempArr.push('Unsolved');}
+                    if (i.issue_satus == '0') { tempArr.push('Solved'); }
+                    tempArr.push(i.location);
+                    tempArr.push(i.description);
+                    data_obj.push(tempArr);
+                }
+
+            });
+ */
+///////////////////////Search Parameters/////////////////////////////
+}
+
+
+function loadTablePage(page){
+    
             var items_per_page = 10;
-            var number_of_pages = Math.ceil((obj.length)/items_per_page);
+            var number_of_pages = Math.ceil((data_obj.length)/items_per_page);
             createPagination(number_of_pages);
             var starting_index = ((items_per_page*page)-items_per_page)+1;
             var last_index = (items_per_page*page);
-            if(last_index>obj.length){last_index=obj.length;}
+            if(last_index>data_obj.length){last_index=data_obj.length;}
             var obj2 = new Array();
 
             for(var i=(starting_index-1);i<=(last_index-1);i++)
             {
-                    obj2.push(obj[i]);
+                    obj2.push(data_obj[i]);
             }
         loadAccordionTable(obj2);
 }
-
-
 
 function loadAccordionTable(obj)
 {
@@ -209,13 +340,15 @@ function drawChart1() {
     var dataArray = new Array();
     var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
     var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString();
+    var plantLocation = $('#plantSelectBox').val().join("','");
+    console.log(plantLocation);
 
     $.ajax({
         type: "POST",
         async: false,
         dataType: 'text',
         url: "/Manager/fillChart1",
-        data: { barChart: '1',startDate:startDate,endDate:endDate},
+        data: { barChart: '1',startDate:startDate,endDate:endDate,plantLocation:plantLocation},
         success: function (feedback) {
             chartData1 = JSON.parse(feedback);
             var a1 = new Array(chartData1.length + 1);
@@ -231,6 +364,7 @@ function drawChart1() {
                 a1[count] = x;
                 count++;
             });
+
 
             dataArray = a1;
         },
@@ -282,13 +416,14 @@ function drawChart2() {
     var dataArray1 = new Array();
     var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
     var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString();
+    var plantLocation = $('#plantSelectBox').val().join("','");
 
     $.ajax({
         type: "POST",
         async: false,
         dataType: 'text',
         url: "/Manager/fillChart1",
-        data: { barChart: '2',startDate:startDate,endDate:endDate},
+        data: { barChart: '2',startDate:startDate,endDate:endDate,plantLocation:plantLocation},
         success: function (feedback) {
             chartData1 = JSON.parse(feedback);
             var a1 = new Array(chartData1.length + 1);
@@ -342,13 +477,14 @@ function drawChart3() {
     var dataArray2 = new Array();
     var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
     var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString();
+    var plantLocation = $('#plantSelectBox').val().join("','");
 
     $.ajax({
         type: "POST",
         async: false,
         dataType: 'text',
         url: "/Manager/fillChart3",
-        data: { startDate:startDate,endDate:endDate },
+        data: { startDate:startDate,endDate:endDate,plantLocation:plantLocation },
         success: function (feedback) {
             chartData1 = JSON.parse(feedback);
             var a1 = new Array(chartData1.length + 1);
@@ -388,13 +524,14 @@ function createTable() {
     $("#myTable").empty();
     var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
     var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString();
+    var plantLocation = $('#plantSelectBox').val().join("','");
 
     $.ajax({
         type: "POST",
         async: false,
         dataType: 'text',
         url: "/Manager/fillChart2",
-        data: {startDate:startDate,endDate:endDate },
+        data: {startDate:startDate,endDate:endDate,plantLocation:plantLocation },
         success: function (feedback) {
             chartData1 = JSON.parse(feedback);
 
@@ -457,7 +594,6 @@ function Unix_timestamp(t,dateType) {
 function filterByDate()
     {
         createTable();
-
         var elem1 =document.querySelectorAll(".dateGap");
         elem1.forEach(function (i){
                         i.innerHTML ="from "+ (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString().substring(0,10) +" to "+(new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString().substring(0,10) ;
@@ -465,7 +601,6 @@ function filterByDate()
         google.charts.setOnLoadCallback(drawChart1);
         google.charts.setOnLoadCallback(drawChart2);
         google.charts.setOnLoadCallback(drawChart3);
-
 
     }
 
