@@ -109,7 +109,7 @@ function CanvasState(canvas) {
                 if (myState.shapes[i].machine == blinking_machines[k]) {
 
                     if (globalvariable == 1) {
-                        //  console.log("blinkColor" + globalvariable);
+                        //console.log("blinkColor" + globalvariable);
                         myState.ctx.strokeStyle = myState.blinkColor;
                         myState.ctx.lineWidth = myState.selectionWidth;
                         myState.ctx.strokeRect(mySelx.x, mySelx.y, mySelx.w, mySelx.h);
@@ -125,13 +125,13 @@ function CanvasState(canvas) {
                 }
             }
         }
-    }, 10);
+    }, 500);
 
 
     this.blinkColor = '#ff4000';
     this.selectionColor = '#f4dc42';
     this.selectionWidth = 5;
-    this.interval = 30;
+    this.interval =5000;
     setInterval(function () { myState.draw(); }, myState.interval);
 }
 
