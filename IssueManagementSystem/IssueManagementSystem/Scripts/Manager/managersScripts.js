@@ -235,7 +235,7 @@ function createAccordionLine(accordion,date,id,issue,plant,line,status,desc){
     var lineDIV  =  document.createElement('div');
     var statusDIV=  document.createElement('div');
 
-    dateDIV.setAttribute("class","col-md-1");
+    dateDIV.setAttribute("class","col-md-2");
     dateDIV.innerHTML = date;
 
     idDIV.setAttribute("class","col-md-1");
@@ -252,7 +252,7 @@ function createAccordionLine(accordion,date,id,issue,plant,line,status,desc){
     lineDIV.setAttribute("class","col-md-2");
     lineDIV.innerHTML = line;
 
-    statusDIV.setAttribute("class","col-md-2");
+    statusDIV.setAttribute("class","col-md-1");
     statusDIV.innerHTML = status;
 
     var rowDIVinner = document.createElement('div');
