@@ -83,41 +83,41 @@
                     </button>
                 </div>
                 <div class="col">
-                    <div class="statistic__item statistic__item--blue">
+                    <button class="statistic__item statistic__item--blue" data-toggle="modal" data-target="#modal1">
                         <h2 class="number">@ViewBag.ITIsuue</h2>
                         <span class="desc">IT/SoftWare Issue</span>
                         <div class="icon">
                             <i class="zmdi  zmdi-windows"></i>
                         </div>
-                    </div>
+                    </button>
                 </div>
                 <div class="col">
-                    <div class="statistic__item statistic__item--green">
+                    <button class="statistic__item statistic__item--green" data-toggle="modal" data-target="#modal1">
                         <h2 class="number">@ViewBag.TechnicalIssue</h2>
                         <span class="desc">Technical Issue</span>
                         <div class="icon">
                             <i class="fas fa-wrench"></i>
                         </div>
-                    </div>
+                    </button>
                 </div>
                 <div class="col">
-                    <div class="statistic__item statistic__item--orange">
+                    <button class="statistic__item statistic__item--orange" data-toggle="modal" data-target="#modal1">
                         <h2 class="number">@ViewBag.MaterialDelayCount</h2>
                         <span class="desc">Material Delay</span>
                         <div class="icon">
                             <i class="zmdi animated infinite wobble zmdi-shopping-cart"></i>
                         </div>
-                    </div>
+                    </button>
                 </div>
 
                 <div class="col">
-                    <div class="statistic__item statistic__item--blue">
+                    <button class="statistic__item statistic__item--blue" data-toggle="modal" data-target="#modal1">
                         <h2 class="number">@ViewBag.QualityIsuue</h2>
                         <span class="desc">Quality Isse</span>
                         <div class="icon">
                             <i class="zmdi zmdi-brightness-auto"></i>
                         </div>
-                    </div>
+                    </button>
                 </div>
             </div>
         </div>
@@ -280,7 +280,7 @@
                     <div class="col-lg-1">
                         <p style="margin-right:13px;">Plant</p>
                         <select class="js-example-placeholder-single js-states form-control" id="plantSelectBox2" style="width:100%;float:right !important;" onchange="filterTableData()">
-                            <option selected="selected"></option>
+                            <option value="" selected="selected">All</option>
                             <option selected="selected" value="KOG">KOG</option>
                             <option selected="selected" value="KTY">KTY</option>
                         </select>
@@ -298,25 +298,25 @@
                     <div class="col-lg-2">
                         <p style="margin-right:13px;">Issue</p>
                         <select class="js-example-placeholder-single js-states form-control" id="issueSelectBox" style="width:100%;float:right !important;" onchange="filterTableData()">
-                            <option selected=""></option>
-                            <option value="1">Machine Breakdown</option>
-                            <option value="2">Material Delay</option>
-                            <option value="3">Technical Issue</option>
-                            <option value="4">Quality Isuue</option>
-                            <option value="5">IT Issue</option>
+                            <option  value="" selected="selected">All</option>
+                            <option value="Machine Breakdown">Machine Breakdown</option>
+                            <option value="Material Delay">Material Delay</option>
+                            <option value="Technical Issue">Technical Issue</option>
+                            <option value="Quality Issue">Quality Issue</option>
+                            <option value="IT Issue">IT Issue</option>
                         </select>
                     </div>
 
                     <div class="col-lg-2">
                         <p style="margin-right:13px;">Line</p>
                         <select class="js-example-placeholder-single js-states form-control" id="lineSelectBox" style="width:100%;float:right !important;" onchange="filterTableData()">
-                            <option selected="selected"></option>
-                            <option value="1">Potted</option>
-                            <option value="2">Welded</option>
-                            <option value="3">Guaging</option>
-                            <option value="4">MD2</option>
-                            <option value="5">SM</option>
-                            <option value="6">Rocker</option>
+                            <option value="" selected="selected">All</option>
+                            <option value="Potted">Potted</option>
+                            <option value="Welded">Welded</option>
+                            <option value="Guaging">Guaging</option>
+                            <option value="MD2">MD2</option>
+                            <option value="SM">SM</option>
+                            <option value="Rocker">Rocker</option>
                         </select>
                     </div>
 
@@ -324,7 +324,7 @@
                     <div class="col-lg-1">
                         <p style="margin-right:13px;">Status</p>
                         <select class="js-example-placeholder-single js-states form-control" id="statusSelectBox" style="width:100%;float:right !important;" onchange="filterTableData()">
-                            <option selected="selected"></option>
+                            <option value="" selected="selected">All</option>
                             <option value="0">Solved</option>
                             <option value="1">Unsolved</option>
                         </select>
@@ -334,35 +334,42 @@
 
         </div>
 
-        <div class="row">
-            <div class="col-md-12">
+            <div class="container">
                 <h3 class="title-5 m-b-35"></h3>
+                <div class="row" style="width:100%; !important">
 
-                <div>
-                    <div class="container" style="display:inline-flex; width:100%; padding-bottom:10px;">
-                        <div class="col-md-12">
+
+ 
+                    <div class="col-md-12" id="pagesContainer">
+                        <div class="container">
                             <div class="row" style="font-weight:600">
-                                <div class="col-md-1">Date</div>
-                                <div class="col-md-1">IssueID</div>
-                                <div class="col-md-5">Issue</div>
-                                <div class="col-md-1">Plant</div>
-                                <div class="col-md-2">Line</div>
-                                <div class="col-md-2">Status</div>
+                                <div class="col-md-12">
+                                    <div class="container">
+                                        <div class="col-md-12">
+                                            <div class="row" style="">
+                                                <div class="col-md-2">Date</div>
+                                                <div class="col-md-1">IssueID</div>
+                                                <div class="col-md-5">Issue</div>
+                                                <div class="col-md-1">Plant</div>
+                                                <div class="col-md-2">Line</div>
+                                                <div class="col-md-1">Status</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="accordion"></div>
+                                    <div id="paginationDiv" class="row" style="margin-left:7px;"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div id="pagesContainer">
-                        <div class="tablePages" id="page1">
-                            <div id="accordion">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="paginationDiv">
                 </div>
             </div>
-        </div>
     </div>
 </section>
 

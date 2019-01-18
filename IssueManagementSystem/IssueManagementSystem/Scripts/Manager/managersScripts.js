@@ -11,7 +11,7 @@ $('#plantSelectBox2').select2({
 $('#lineSelectBox').select2({
     minimumResultsForSearch: -1,
     allowClear: false,
-    placeholder:"Select Line"
+    //placeholder:"Select Line"
 });
 
 $('#dptSelectBox').select2({
@@ -23,13 +23,12 @@ $('#dptSelectBox').select2({
 $('#statusSelectBox').select2({
     minimumResultsForSearch: -1,
     allowClear: false,
-    placeholder:"Select Status"
+    //placeholder:"Select Status"
 });
 
 $('#issueSelectBox').select2({
     minimumResultsForSearch: -1,
     allowClear: false,
-    placeholder:"Select Status"
 });
 
 $(document).ready(function() {
@@ -118,54 +117,50 @@ function filterTableData(){
         var Date_select_start = (new Date(document.getElementById('datetimepicker3').value+" 00:00 UTC")).toISOString().substring(0, 10);
         var Date_select_end = (new Date(document.getElementById('datetimepicker4').value+" 00:00 UTC")).toISOString().substring(0, 10);
         var Plant_select = document.getElementById('plantSelectBox2').value;
-        var Issue_select = $('#issueSelectBox option:selected').text()
+        var Issue_select = document.getElementById('issueSelectBox').value
         var Department_select = document.getElementById('dptSelectBox').value;
-        var Line_select =  $('#lineSelectBox option:selected').text();
+        var Line_select =   document.getElementById('lineSelectBox').value;
         var Status_select  = document.getElementById('statusSelectBox').value;
 
-            raw_data.forEach(function (i) 
-                    {
+        raw_data.forEach(function (i) 
+                {
+                        var p =i.location.trim();
+                        var is =i.issue.trim();
+                        var l =i.line_name.trim();
+                        var s =i.issue_satus.trim();
 
-                            var condition = true;
+                        var condition = true;
 
-                            if(Issue_select=="" && Line_select=="" && Status_select==""){
-                               condition = true;
-                                console.log("if 1");
-                            }
+                        if(Issue_select=="" && Line_select=="" && Status_select==""){
+                            condition = true;
+                        }
 
-                            if(Issue_select!="" && Line_select=="" && Status_select==""){
-                                  condition = i.line_name.trim()==Line_select.trim() && i.location.trim()==Plant_select.trim() && flag!=1 ;
-                                console.log("if 2");
-                            }
+                        if(Issue_select!="" && Line_select=="" && Status_select==""){
+                            condition = (is==Issue_select  && p==Plant_select  && flag!=1);
+                        }
 
-                            if(Issue_select=="" && Line_select!="" && Status_select==""){
-                                condition = i.line_name.trim()==Line_select.trim() && i.location.trim()==Plant_select.trim() && flag!=1 ;
-                                console.log("if 3");
-                            }
+                        if(Issue_select=="" && Line_select!="" && Status_select==""){
+                            condition = (l==Line_select  && p==Plant_select  && flag!=1);
+                        }
 
-                            if(Issue_select=="" && Line_select=="" && Status_select!=""){
-                                condition = i.issue_satus.trim()==Status_select.trim() && i.location.trim()==Plant_select.trim() && flag!=1;
-                                console.log("if 4");
-                            }
+                        if(Issue_select=="" && Line_select=="" && Status_select!=""){
+                            condition = (s==Status_select && p==Plant_select  && flag!=1);
+                        }
 
-                            if(Issue_select!="" && Line_select!="" && Status_select==""){
-                                condition =  i.line_name.trim()==Line_select.trim() && i.location.trim()==Plant_select.trim()  && i.issue.trim()==Issue_select.trim() && flag!=1;
-                                console.log("if 5");
-                            }
+                        if(Issue_select!="" && Line_select!="" && Status_select==""){
+                            condition =  (l==Line_select && p==Plant_select && is==Issue_select && flag!=1);
+                        }
 
-                            if(Issue_select!="" && Line_select=="" && Status_select!=""){
-                                condition =  i.issue_satus.trim()==Status_select.trim() && i.location.trim()==Plant_select.trim()  && i.issue.trim()==Issue_select.trim() && flag!=1;
-                                console.log("if 6");
-                            }
+                        if(Issue_select!="" && Line_select=="" && Status_select!=""){
+                            condition = (s==Status_select && p==Plant_select && is==Issue_select && flag!=1);
+                        }
 
-                            if(Issue_select=="" && Line_select!="" && Status_select!=""){
-                                 condition =  i.issue_satus.trim()==Status_select.trim() && i.line_name.trim()==Line_select.trim() && i.location.trim()==Plant_select.trim() && flag!=1;
-                                console.log("if 7");
-                            }
-                            if(Issue_select!="" && Line_select!="" && Status_select!=""){
-                                condition =  i.issue_satus.trim()==Status_select.trim() && i.line_name.trim()==Line_select.trim() && i.location.trim()==Plant_select.trim()  && i.issue.trim()==Issue_select.trim() && flag!=1;
-                                console.log("if 8");
-                            }
+                        if(Issue_select=="" && Line_select!="" && Status_select!=""){
+                            condition =  (s==Status_select && l==Line_select && p==Plant_select && flag!=1);
+                        }
+                        if(Issue_select!="" && Line_select!="" && Status_select!=""){
+                            condition =  (s==Status_select && l==Line_select && p==Plant_select && is==Issue_select && flag!=1);
+                        }
 
                         var tempArr = new Array();
 
@@ -240,7 +235,7 @@ function createAccordionLine(accordion,date,id,issue,plant,line,status,desc){
     var lineDIV  =  document.createElement('div');
     var statusDIV=  document.createElement('div');
 
-    dateDIV.setAttribute("class","col-md-1");
+    dateDIV.setAttribute("class","col-md-2");
     dateDIV.innerHTML = date;
 
     idDIV.setAttribute("class","col-md-1");
@@ -257,7 +252,7 @@ function createAccordionLine(accordion,date,id,issue,plant,line,status,desc){
     lineDIV.setAttribute("class","col-md-2");
     lineDIV.innerHTML = line;
 
-    statusDIV.setAttribute("class","col-md-2");
+    statusDIV.setAttribute("class","col-md-1");
     statusDIV.innerHTML = status;
 
     var rowDIVinner = document.createElement('div');
