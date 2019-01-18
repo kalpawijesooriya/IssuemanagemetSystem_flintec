@@ -77,12 +77,12 @@
                                     <li>
                                         <a href="@Url.Action("MaterialDelay", "CellEngineer")?lineid=@ViewBag.lineId">Material Delay</a>
                                     </li>
-                                    <li>
+                                    <li id="it_drop">
                                         <a href="@Url.Action("ITIssue", "CellEngineer")?lineid=@ViewBag.lineId">Software/IT Issue</a>
                                     </li>
-                                    @*<li>
+                                    <li id="qulity_drop">
                                         <a href="@Url.Action("QualityIssue", "CellEngineer")?lineid=@ViewBag.lineId">Quality Issue</a>
-                                    </li>*@
+                                    </li>
                                 </ul>
                             </li>
                             <li class="has-sub" id="switch">
@@ -187,12 +187,12 @@
                                 <li>
                                     <a href="@Url.Action("MaterialDelay", "CellEngineer")?lineid=@ViewBag.lineId">Matirial Delay</a>
                                 </li>
-                                <li>
+                                <li id="it_drop_mob">
                                     <a href="@Url.Action("ITIssue", "CellEngineer")?lineid=@ViewBag.lineId">Software/IT Issue</a>
                                 </li>
-                                @*<li>
+                                <li id="qulity_drop_mob">
                                     <a href="@Url.Action("QualityIssue", "CellEngineer")?lineid=@ViewBag.lineId">Quality Issue</a>
-                                </li>*@
+                                </li>
 
                             </ul>
                         </li>
@@ -294,6 +294,14 @@
     <script src="~/Scripts/jquery-ui.js"></script>
 
     <script>
+        if('@Session["department"]'=='Production')
+        {
+         $('#qulity_drop').hide();
+         $('#qulity_drop_mob').hide();
+        }else if('@Session["department"]'=='Machining'){
+        $('#it_drop').hide();
+        $('#it_drop_mob').hide();
+        }
         $(document).ready(function () {
 
             // Proxy created on the fly

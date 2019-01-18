@@ -6,7 +6,7 @@
     {
         Response.Redirect("~/Login/Index");
     }
- 
+
 
 }
 @using IssueManagementSystem.Models;
@@ -30,6 +30,15 @@
         width: 100%;
     }
 </style>
+
+
+    
+<div class="alert alert-info  modal fade show text-lg-center center-div" role="alert" style="width:20%;height:10%">
+    <button type="button" class="close" data-dismiss="alert"></button>
+    <strong>Done!</strong><br> Your Line Notification data successfully Saved.
+</div>
+   
+
 <div class="page-content--bgf7" style="margin-top:-2%">
     <!-- BREADCRUMB-->
     <section class="au-breadcrumb2">
@@ -164,9 +173,9 @@
         <div>
             <ul id="managersortable">
                 <li id="managerunsortable" style="overflow:hidden;display:flex;height:50px;">
-                    <div style="display:grid;grid-template-columns:3fr 1fr 1fr 1fr 1fr 1fr">
-                        <div style="margin-left:20px"><p>Name </p></div>
-                        <div><p>Email</p></div>
+                    <div style="display:grid;grid-template-columns:2.8fr 0.6fr 0.8fr 1fr 1fr ">
+                        <div style="margin-left:5%"><p>Name </p></div>
+                        <div style="margin-left:-20%"><p>Email</p></div>
                         <div><p>SMS</p></div>
                         <div><p>Call</p></div>
                         <div class="text-center"><p>Send alert after<br />(hours)</p></div>
@@ -272,7 +281,6 @@
     </div>
 </div>
 
-
 <div class="modal fade bd-example-modal-lg" tabindex="-1" id="modalmanager" data-keyboard="false" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -368,6 +376,7 @@
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
 <script src="~/Scripts/AdminScripts/notificationsManagement.js"></script>
 <script>
+
     function clear_ul(ul_id) {
 
         var main_ul = document.getElementById(ul_id);
@@ -716,7 +725,10 @@ function saveList() {
         url: url,
         data: { userList_json: userList_json },
         success: function (response) {
-           alert(response);
+         $(".alert").removeClass("in").show();
+	      $(".alert").delay(800).addClass("in").fadeOut(3000);
+    setTimeout(function(){  location.reload();; }, 3000);
+          
         },
         error: function (response)
         {
@@ -724,4 +736,19 @@ function saveList() {
         }
     });
 }
+   
 </script>
+<style>
+    .center-div {
+        position: absolute;
+        margin: auto;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100px;
+        height: 100px;
+        background-color: #ccc;
+        border-radius: 3px;
+    }
+</style>

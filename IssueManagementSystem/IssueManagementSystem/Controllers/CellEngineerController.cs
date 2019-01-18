@@ -289,24 +289,27 @@ namespace IssueManagementSystem.Controllers
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
             {
                 JArray list_user = JArray.Parse(userList_json) as JArray;
-                Boolean delete = true;
-
+                 Boolean delete = true;
+              
                 foreach (JObject user in list_user)
                 {
            
-
+                   
                     //get issue id of particular issue
                     int issue_id = (Int32)user["issue_id"];
                     int lineid = (Int32)user["lineid"];
-                    var issuelist = db.issue_line_person.Where(x => x.issue_id == issue_id && x.line_id == lineid).ToList();
-                    
-                    if (issuelist != null && delete)
+                    //var issuelist = db.issue_line_person.Where(x => x.issue_id == issue_id && x.line_id == lineid).ToList();
+                  
+
+                    if ( delete)
                     {
-                        foreach (var item in issuelist)
+                        try
                         {
-                            db.issue_line_person.Remove(item);
-                            db.SaveChanges();
+                            string query = "DELETE FROM issue_line_person WHERE issue_id ="+ issue_id + "AND line_id ="+ lineid;
+                            db.Database.ExecuteSqlCommand(query);
                         }
+
+                        catch (Exception ex) { }
                         delete = false;
                     }
                     string query_1 = @"INSERT INTO [dbo].[issue_line_person]
