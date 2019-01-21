@@ -7,7 +7,7 @@
 @using System.Web.UI.WebControls;
 @using System.Web.UI;
 @model List<IssueManagementSystem.Models.issue_occurrence>
-@{ string lineName = null; string map = null; }
+
 <script src="~/Scripts/jquery.min.js"></script>
 <script src="~/Scripts/Display/jquery.totemticker.js"></script>
 <link href="~/Content/Display/style.css" rel="stylesheet" />
@@ -48,7 +48,8 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col">Date</th>
-                                                <th scope="col">Matirial</th>
+                                                <th scope="col">Time</th>
+                                                <th scope="col">Material</th>
                                                 <th scope="col">Description</th>
                                                 <th scope="col">Responsible person</th>
                                                 <th scope="col">Line Name</th>
@@ -111,12 +112,13 @@
                                 var issueid = issuedata[i].issue_issue_ID
                                 var date = issuedata[i].issueDate.split(' ');
                                 var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
+                                var time=date[1] +" "+ date[2]
                                 var issue_occurrence_id = issuedata[i].issue_occurrence_id
                                 if (issueid == 2)//Material Delay
                                 {
                                     $('#maririaldiv').show()
                                     var divissue = $('#matirial_body');
-                                    var issue = '<tr><td>' + day + '</td><td>' + issuedata[i].matirial + '</td><td>' + issuedata[i].description + '</td><td>' + issuedata[i].responciblepersonName + '</td><td>'+issuedata[i].lineName+'</td></tr>'
+                                    var issue = '<tr><td>' + day + '</td><td>'+time+'</td><td>' + issuedata[i].matirial + '</td><td>' + issuedata[i].description + '</td><td>' + issuedata[i].responciblepersonName + '</td><td>'+issuedata[i].lineName+'</td></tr>'
                                     divissue.append(issue)
                                     divissue.show('slow');
                                 }

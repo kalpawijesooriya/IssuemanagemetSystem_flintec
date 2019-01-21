@@ -50,7 +50,7 @@
             {
                 <div class="form-group machine">
                     <label for="exampleFormControlTextarea1">Machine</label>
-                    @Html.TextBoxFor(model => model.machine_machine_id, new { @class = "form-control", @id = "machine" })
+                    @Html.TextBoxFor(model => model.machine_machine_id, new { @class = "form-control", @id = "machine", @readonly = "readonly" })
                 </div>
                 <label id="map" style="display: none;">@ViewData["map"]</label>
                 <div class="form-group machine">

@@ -19,6 +19,7 @@
 
 @using IssueManagementSystem.Models;
 @model List<IssueManagementSystem.Models.issue_occurrence>
+
 <div class="page-content--bgf7">
     <section class="au-breadcrumb2">
         <div class="container">
@@ -51,6 +52,7 @@
             </div>
         </div>
     </section>
+
     <section class="welcome p-t-10">
         <div class="container">
             <div class="row">
@@ -90,7 +92,11 @@
 
 <script src="~/Scripts/angular.min.js"></script>
 <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
+<script src="~/Scripts/bootstrap-confirmation.min.js"></script>
+<script src="~/Scripts/Gruntfile.js"></script>
+<script src="~/Scripts/popover.js"></script>
 <script src="~/signalr/Hubs"></script>
+
 <div id="result" hidden></div>
 
 <script type="text/javascript">
@@ -183,7 +189,7 @@ var r = document.getElementById('result');
                     error: function () {alert("Error!")}
                 });
             }
-            else
+           // else
          //   speek("I don't no that word");
 
         }
@@ -284,6 +290,7 @@ var r = document.getElementById('result');
     })
 
         function myfunction(param) {
+
             var id = $(param).data('id');
             var issue_id = $(param).data('issue_id');
             var url = '@Url.Action("SolvedIssue", "Supervisor")?issueId=' + issue_id + '&issueOccourId=' + id+'&lineId='+'@ViewBag.lineId ';
@@ -331,7 +338,8 @@ var r = document.getElementById('result');
     <div class="action-bar">
         <a href="#" class="waves-effect waves-green btn-flat modal-action modal-close">Close</a>
     </div>
-</div>
 
+</div>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
 
 <!--<script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.95.1/js/materialize.min.js"></script> -->
