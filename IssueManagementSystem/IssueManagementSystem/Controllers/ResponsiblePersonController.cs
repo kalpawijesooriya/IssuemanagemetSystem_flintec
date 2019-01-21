@@ -1,4 +1,5 @@
 ﻿using IssueManagementSystem.Models;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,6 +64,41 @@ namespace IssueManagementSystem.Controllers
                 return this.Json(e, JsonRequestBehavior.AllowGet);
             }
             
+        }
+
+        public JsonResult offBuzzer(string issueJson)
+        {
+            Communication com = new Communication();
+            JArray issueData = JArray.Parse(issueJson) as JArray;
+            foreach (JObject item in issueData)
+            {
+                var time = DateTime.Now;
+                string current_time = time.ToString("yyyy-MM-dd HH:mm");
+                var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+                int issueid = Int32.Parse(item["issueid"].ToString()); 
+                int emp_id = Int32.Parse(item["employee_id"].ToString());
+                issue_management_systemEntities1 db = new issue_management_systemEntities1();
+                var issueoccourInfo = db.issue_occurrence.Where(x => x.issue_occurrence_id == issueid).FirstOrDefault();
+                issueoccourInfo.buzzer_off_by = emp_id;
+                issueoccourInfo.buzzer_off_time = date;
+
+                db.SaveChanges();
+
+                var  count = db.issue_occurrence.Where(x=>x.issue_issue_ID==2 && x.buzzer_off_by==null).Count();
+          
+                if (count == 0)
+                {
+                 com.storesbuzzerOff();
+                }
+            }
+             
+           
+            //update Issueststus as 0
+ 
+           
+
+
+            return Json(true);
         }
     }
    
