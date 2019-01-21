@@ -111,7 +111,7 @@ function loadTableData(){
 }
 
 function filterTableData(){
-        
+   
         data_obj.splice(0, data_obj.length);
 
         var Date_select_start = (new Date(document.getElementById('datetimepicker3').value+" 00:00 UTC")).toISOString().substring(0, 10);
@@ -122,57 +122,76 @@ function filterTableData(){
         var Line_select =   document.getElementById('lineSelectBox').value;
         var Status_select  = document.getElementById('statusSelectBox').value;
 
+        var o= ""; var m= ""; var b= ""; var nq="";
+
+        (Issue_select == "") ? (nq="*0"):(nq="*1"); //Issue_select
+        (Line_select  == "") ? (m="*0"):(m="*1");  //Line_select
+        (Status_select== "") ? (o="*0"):(o="*1") ; //Status_select
+        (Department_select == "") ? (true):(true); //Department_select
+        (Plant_select  == "") ? (b="*0"):(b="*1");  //Plant_select
+
+        var comparing_string = b+nq+m+o;
+
+        var condition = false;
+
         raw_data.forEach(function (i) 
                 {
+                        var countx=0;
                         var p =i.location.trim();
                         var is =i.issue.trim();
                         var l =i.line_name.trim();
                         var s =i.issue_satus.trim();
 
-                        var condition = true;
+                        var var_array = ["*0","*1"];
+                            lable:
+                            for(var x =0;x<var_array.length;x++){
+                                for(var y=0;y<var_array.length;y++){
+                                    for(var z=0;z<var_array.length;z++){
+                                        for(var q=0;q<var_array.length;q++){
+                                            for(var u=0;u<var_array.length;u++){
+                                                for(var v=0;v<var_array.length;v++){ 
 
-                        if(Issue_select=="" && Line_select=="" && Status_select==""){
-                            condition = true;
-                        }
+                                                   var binary_code = var_array[v]+var_array[u]+var_array[q]+var_array[y];
 
-                        if(Issue_select!="" && Line_select=="" && Status_select==""){
-                            condition = (is==Issue_select  && p==Plant_select  && flag!=1);
-                        }
+                                                   if(comparing_string == binary_code)
+                                                        {
+                                                            console.log(binary_code);
+                                                            
+                                                             o= (s===Status_select);
+                                                             m= (l===Line_select); 
+                                                             b= (p===Plant_select);
+                                                             nq= (is===Issue_select);
+          
+                                                            var split_str = binary_code.split("*");
 
-                        if(Issue_select=="" && Line_select!="" && Status_select==""){
-                            condition = (l==Line_select  && p==Plant_select  && flag!=1);
-                        }
+                                                            (split_str[1] == "0") ? (b=true):(true); //Issue_select
+                                                            (split_str[2] == "0") ? (nq=true):(true);  //Line_select
+                                                            (split_str[3] == "0") ? (m=true):(true); //Status_select
+                                                            (split_str[4] == "0") ? (o=true):(true);  //Plant_select
 
-                        if(Issue_select=="" && Line_select=="" && Status_select!=""){
-                            condition = (s==Status_select && p==Plant_select  && flag!=1);
-                        }
+                                                            condition =  ( b && nq && m && o );//b+nq+m+o
 
-                        if(Issue_select!="" && Line_select!="" && Status_select==""){
-                            condition =  (l==Line_select && p==Plant_select && is==Issue_select && flag!=1);
-                        }
+                                                            break lable;
+                                                        }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
 
-                        if(Issue_select!="" && Line_select=="" && Status_select!=""){
-                            condition = (s==Status_select && p==Plant_select && is==Issue_select && flag!=1);
-                        }
-
-                        if(Issue_select=="" && Line_select!="" && Status_select!=""){
-                            condition =  (s==Status_select && l==Line_select && p==Plant_select && flag!=1);
-                        }
-                        if(Issue_select!="" && Line_select!="" && Status_select!=""){
-                            condition =  (s==Status_select && l==Line_select && p==Plant_select && is==Issue_select && flag!=1);
-                        }
-
-                        var tempArr = new Array();
-
-                        var ele1 = i.issue_date.split('(')[1];
-                        ele1 = ele1.split(')')[0];
-                        var d = Unix_timestamp(ele1,'ymd');
-
-                        var flag = 0;
-
-                        if(condition)
+                        if(condition==true)
                             {
-                                console.log(i.issue.trim()+" **issue** "+Issue_select.trim());  
+                                var tempArr = new Array();
+
+                                var ele1 = i.issue_date.split('(')[1];
+                                ele1 = ele1.split(')')[0];
+                                var d = Unix_timestamp(ele1,'ymd');
+
+                                var flag = 0;
+
+                                console.log("Plant_select :"+b+"Issue_select :"+nq+"Line_select:"+m+"Status_select:"+o);
+                                
                                 tempArr.push(d);
                                 tempArr.push(i.issue_occurrence_id);
                                 tempArr.push(i.issue);
@@ -184,6 +203,8 @@ function filterTableData(){
                                 tempArr.push(i.description);
                                 data_obj.push(tempArr);
                                 flag = 1;
+
+                                condition = false;
                             }
                     });
         loadTablePage(1);
@@ -326,8 +347,6 @@ function getRandomColor() {
 
 var chartData1;
 
-
-
 function drawChart1() {
     
     var dataArray = new Array();
@@ -391,7 +410,6 @@ function drawChart1() {
     var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
     chart.draw(view, options);
 }
-
 
 function getRandomColor() {
     var letters = '0123456789ABCDEF';
