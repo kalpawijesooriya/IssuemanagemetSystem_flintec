@@ -17,7 +17,7 @@ $('#lineSelectBox').select2({
 $('#dptSelectBox').select2({
     minimumResultsForSearch: -1,
     allowClear: false,
-    placeholder:"Select Department"
+   // placeholder:"Select Department"
 });
 
 $('#statusSelectBox').select2({
@@ -78,7 +78,6 @@ function loadTableData(){
             data:{},
             success: function (data)
                 {   console.log(data);
-
                     var dataArray = JSON.parse(data);
 
                         raw_data = dataArray;
@@ -124,15 +123,15 @@ function filterTableData(){
         var Line_select =   document.getElementById('lineSelectBox').value;
         var Status_select  = document.getElementById('statusSelectBox').value;
 
-        var o= ""; var m= ""; var b= ""; var nq="";
+        var o= ""; var m= ""; var b= ""; var nq="";var de="";
 
         (Issue_select == "") ? (nq="*0"):(nq="*1"); //Issue_select
         (Line_select  == "") ? (m="*0"):(m="*1");  //Line_select
         (Status_select== "") ? (o="*0"):(o="*1") ; //Status_select
-        (Department_select == "") ? (true):(true); //Department_select
         (Plant_select  == "") ? (b="*0"):(b="*1");  //Plant_select
+        (Department_select == "") ? (de="*0"):(de="*1"); //Department_select
 
-        var comparing_string = b+nq+m+o;
+        var comparing_string = b+nq+m+o+de;
 
         var condition = false;
 
@@ -143,7 +142,9 @@ function filterTableData(){
                         var is =i.issue.trim();
                         var l =i.line_name.trim();
                         var s =i.issue_satus.trim();
-
+                        var dep =i.dep_occured;
+                        //console.log(Department_select);
+                       // console.log(dep);
                         var dateVar = i.issue_date.split('(')[1];
                         dateVar = dateVar.split(')')[0];
 
@@ -161,7 +162,7 @@ function filterTableData(){
                                             for(var u=0;u<var_array.length;u++){
                                                 for(var v=0;v<var_array.length;v++){ 
 
-                                                   var binary_code = var_array[v]+var_array[u]+var_array[q]+var_array[y];
+                                                   var binary_code = var_array[v]+var_array[u]+var_array[q]+var_array[y]+var_array[x];
 
                                                    if(comparing_string == binary_code)
                                                         {
@@ -171,6 +172,7 @@ function filterTableData(){
                                                              m= (l===Line_select); 
                                                              b= (p===Plant_select);
                                                              nq= (is===Issue_select);
+                                                             de= (dep==Department_select);
           
                                                             var split_str = binary_code.split("*");
 
@@ -178,8 +180,8 @@ function filterTableData(){
                                                             (split_str[2] == "0") ? (nq=true):(true);  //Line_select
                                                             (split_str[3] == "0") ? (m=true):(true);   //Status_select
                                                             (split_str[4] == "0") ? (o=true):(true);   //Plant_select
-
-                                                            condition =  ( b && nq && m && o && dateCheck_result);//b+nq+m+o
+                                                            (split_str[5] == "0") ? (de=true):(true);   //Department_select
+                                                            condition =  ( b && nq && m && o && de && dateCheck_result);//b+nq+m+o
 
                                                             break OuterLoop;
                                                         }
