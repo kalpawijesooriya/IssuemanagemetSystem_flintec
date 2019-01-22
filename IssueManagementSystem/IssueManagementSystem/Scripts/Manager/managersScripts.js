@@ -77,7 +77,8 @@ function loadTableData(){
             url:'/Manager/loadIssueList',
             data:{},
             success: function (data)
-                {   
+                {   console.log(data);
+
                     var dataArray = JSON.parse(data);
 
                         raw_data = dataArray;
@@ -116,6 +117,7 @@ function filterTableData(){
 
         var Date_select_start = (new Date(document.getElementById('datetimepicker3').value+" 00:00 UTC")).toISOString().substring(0, 10);
         var Date_select_end = (new Date(document.getElementById('datetimepicker4').value+" 00:00 UTC")).toISOString().substring(0, 10);
+
         var Plant_select = document.getElementById('plantSelectBox2').value;
         var Issue_select = document.getElementById('issueSelectBox').value
         var Department_select = document.getElementById('dptSelectBox').value;
@@ -142,8 +144,16 @@ function filterTableData(){
                         var l =i.line_name.trim();
                         var s =i.issue_satus.trim();
 
+                        var dateVar = i.issue_date.split('(')[1];
+                        dateVar = dateVar.split(')')[0];
+
+                        var dateCheck_result = dateCheck(new Date(Unix_timestamp(dateVar,'ymd')),
+                                                         new Date(document.getElementById('datetimepicker3').value+" 00:00 UTC"),
+                                                         new Date(document.getElementById('datetimepicker4').value+" 00:00 UTC")
+                                                        );
+
                         var var_array = ["*0","*1"];
-                            lable:
+                            OuterLoop:
                             for(var x =0;x<var_array.length;x++){
                                 for(var y=0;y<var_array.length;y++){
                                     for(var z=0;z<var_array.length;z++){
@@ -164,14 +174,14 @@ function filterTableData(){
           
                                                             var split_str = binary_code.split("*");
 
-                                                            (split_str[1] == "0") ? (b=true):(true); //Issue_select
+                                                            (split_str[1] == "0") ? (b=true):(true);   //Issue_select
                                                             (split_str[2] == "0") ? (nq=true):(true);  //Line_select
-                                                            (split_str[3] == "0") ? (m=true):(true); //Status_select
-                                                            (split_str[4] == "0") ? (o=true):(true);  //Plant_select
+                                                            (split_str[3] == "0") ? (m=true):(true);   //Status_select
+                                                            (split_str[4] == "0") ? (o=true):(true);   //Plant_select
 
-                                                            condition =  ( b && nq && m && o );//b+nq+m+o
+                                                            condition =  ( b && nq && m && o && dateCheck_result);//b+nq+m+o
 
-                                                            break lable;
+                                                            break OuterLoop;
                                                         }
                                                 }
                                             }
@@ -210,7 +220,6 @@ function filterTableData(){
         loadTablePage(1);
 
 }
-
 
 function loadTablePage(page){
     
@@ -334,6 +343,14 @@ function createPagination(numberOfPages){
     paginationDiv.appendChild(ulElement);
 }
 
+function dateCheck(checkingDate,startDate,endDate){
+
+ if(checkingDate<endDate && checkingDate>startDate)
+    {
+        return(true);
+    }
+        else return(false);
+}
 
 
 function getRandomColor() {

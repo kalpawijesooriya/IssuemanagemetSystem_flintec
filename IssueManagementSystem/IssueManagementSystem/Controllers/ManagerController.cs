@@ -170,15 +170,13 @@ namespace IssueManagementSystem.Controllers
             }
         }
 
-        private class tempClass5 {
-            public DateTime issue_date {get; set;}
-            public int issue_occurrence_id {get; set;}
-            public String issue {get;set;}
-            public String line_name {get; set;}
-            public String issue_satus {get; set;}
-            public String location { get; set; }
-            public String description { get; set; }
-            public int responsible_person_emp_id { get; set; }
+        private class tempClass5 : issue_occurrence
+        {
+
+            public String issue { get; set; }
+            public String line_name { get; set; }
+          
+
         }
 
         [HttpPost]

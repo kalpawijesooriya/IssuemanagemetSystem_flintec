@@ -56,7 +56,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1 class="title-4">
-                        Welcome back
+                       Hi
                         <span>@Session["name"]!</span>
                     </h1>
                     <hr class="line-seprate">
@@ -257,7 +257,7 @@
                             <div class="form-group col-sm-6">
                                 <p style="">From</p>
                                 <div class='input-group date'>
-                                    <input type='text' class="form-control" id='datetimepicker3' style="font-size:13px;" />
+                                    <input type='text' class="form-control" id='datetimepicker3' style="font-size:13px;"  onchange="filterTableData()"/>
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -266,7 +266,7 @@
                             <div class="form-group col-sm-6">
                                 <p style="">To</p>
                                 <div class='input-group date'>
-                                    <input type='text' class="form-control" id='datetimepicker4' style="font-size:13px;" />
+                                    <input type='text' class="form-control" id='datetimepicker4' style="font-size:13px;"  onchange="filterTableData()" />
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -279,8 +279,8 @@
                         <p style="margin-right:13px;">Plant</p>
                         <select class="js-example-placeholder-single js-states form-control" id="plantSelectBox2" style="width:100%;float:right !important;" onchange="filterTableData()">
                             <option value="" selected="selected">All</option>
-                            <option selected="selected" value="KOG">KOG</option>
-                            <option selected="selected" value="KTY">KTY</option>
+                            <option value="KOG">KOG</option>
+                            <option value="KTY">KTY</option>
                         </select>
                     </div>
 
