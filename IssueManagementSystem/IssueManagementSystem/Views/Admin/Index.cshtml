@@ -9,7 +9,7 @@
     }
 }
 
-
+<link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
 <!-- PAGE CONTENT-->
 <div class="page-content--bgf7">
     <!-- BREADCRUMB-->
@@ -30,12 +30,16 @@
                                 <li class="list-inline-item">Dashboard</li>
                             </ul>
                         </div>
-                        <form class="au-form-icon--sm" action="" method="post">
-                            <input class="au-input--w300 au-input--style2" type="text" placeholder="Search for datas &amp; reports...">
-                            <button class="au-btn--submit2" type="submit">
-                                <i class="zmdi zmdi-search"></i>
-                            </button>
-                        </form>
+
+                        <div class="button-holder" style="display:block">
+                            <div class="ajax-button">
+                                <div class="fa fa-check done"></div>
+                                <div class="fa fa-close failed"></div>
+                                <input id="submit" class="submit" type="submit" value="Submit" />
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
             </div>
@@ -403,5 +407,18 @@
         </div>
     </section>
     <!-- END DATA TABLE-->
+    <script src="~/Scripts/jquery-3.3.1.slim.min.js"></script>
+    <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
+    <script src="~/signalr/Hubs"></script>
+    <script>
+    $("#submit").click(function () {
+ $.connection.hub.start()//Refresh Screen
+                .done(function () {
+                 console.log("Worked")
+                 $.connection.ismHub.server.announce();
+              }).fail(function () { alert("Can't Refresh Your Line Screen! Plese Inform IT Department!") });//return to dashbord
 
+    });
+    </script>
 </div>

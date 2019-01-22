@@ -44,7 +44,7 @@ namespace IssueManagementSystem.Controllers
             
         }
 
-        public JsonResult savecomment(int? id ,string comment )
+        public JsonResult savecomment(int? id ,string comment,int? emp_id)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace IssueManagementSystem.Controllers
                 {
                     var time = DateTime.Now;
                     string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
-                    string query = "UPDATE issue_occurrence SET responsible_person_confirm_status = 0 ,responsible_person_confirm_feedback='"+ comment + "',commented_date='"+ current_time + "'WHERE issue_occurrence_id =" + id ;
+                    string query = "UPDATE issue_occurrence SET responsible_person_confirm_status = 0 ,responsible_person_confirm_feedback='"+ comment + "',commented_date='"+ current_time + "' , solved_emp_id='"+ emp_id + "'WHERE issue_occurrence_id =" + id ;
                     db.Database.ExecuteSqlCommand(query);
                     var issueinfo = db.issue_occurrence.Where(x => x.issue_occurrence_id ==id).First();
                     return this.Json(issueinfo.issue_satus, JsonRequestBehavior.AllowGet);

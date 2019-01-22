@@ -326,7 +326,7 @@ if (Session["userID"] == null)
                 $.ajax({
                     type: "POST",
                     url: url,
-                    data: { id: id, comment: $('#comment').val()}
+                    data: { id: id, comment: $('#comment').val(),emp_id:@Session["userID"]}
                    
                 }).done(function (response) {
                     var body = $("#issueData")

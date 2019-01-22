@@ -91,7 +91,7 @@ namespace IssueManagementSystem.Models
                                         issue_satus = reader["issue_satus"] != DBNull.Value ? (string)reader["issue_satus"] : "",
                                         solvedDate = reader["solved_date"].ToString(),
                                         commentedDate = reader["commented_date"].ToString(),
-                                        solved_by = reader["solved_emp_id"] != DBNull.Value ? (string)reader["solved_emp_id"] : "",
+                                        solved_emp_id = reader["solved_emp_id"] == System.DBNull.Value ? default(int) : (int)reader["solved_emp_id"],
                                         department = reader["department"] != DBNull.Value ? (string)reader["department"] : "",
                                         responciblepersonName = userInfo.Name,
                                         lineName = lineinfo.line_name,

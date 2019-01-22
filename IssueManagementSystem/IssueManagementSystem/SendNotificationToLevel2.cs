@@ -13,6 +13,7 @@ namespace IssueManagementSystem
     {
         public void Execute(IJobExecutionContext context)
         {
+            System.Diagnostics.Debug.WriteLine("Test");
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
                DateTime current =DateTime.Now;
@@ -41,18 +42,25 @@ namespace IssueManagementSystem
                             using (BigRedEntities BR = new BigRedEntities())
                             {
                                 var responsiblePersonInfo = BR.tbl_PPA_User.Where(y => y.EmployeeNumber == items.responsible_person_emp_id).FirstOrDefault();
+                                string msg = "Good morning!@@ "+ issueInfo.issue1 + " issue is not resolved @ Line : " + lineInfo.line_name + " @ Material : " + items.material_id + "@ Responsible person : " + responsiblePersonInfo.Name + " @ Thank You!";
 
-                                string msg = "The " + issueInfo.issue1 + " issue occurred on " + issueDate + " in " + lineInfo.line_name + " Line not solved yet. Responsible person is "+ responsiblePersonInfo.Name+" Thank You!";
+                               
                                 if (items.material_id != null)
                                 {
-                                    msg = "The " + issueInfo.issue1 + " issue occurred on " + issueDate + " in " + lineInfo.line_name + " Line for "+items.material_id+" is not solved yet. Responsible person is " + responsiblePersonInfo.Name + " Thank You!";
+                                    
+                                    msg = "Good morning!@@ Material delay is not resolved @ Line : " + lineInfo.line_name + " @ Material : " + items.material_id + "@ Responsible person : " + responsiblePersonInfo.Name + " @ Thank You!";
+
+
                                 }
                                 if (items.machine_machine_id != null)
                                 {
-                                    msg = "The " + issueInfo.issue1 + " issue occurred on " + issueDate + " in " + lineInfo.line_name + " Line for " + items.material_id + " is not solved yet. Responsible person is " + responsiblePersonInfo.Name + " Thank You!";
+                                   
+                                    msg = "Good morning!@@ Machine Breakdown is not resolved @ Line : " + lineInfo.line_name + " @ Machine : " + items.machine_machine_id + "@ Responsible person : " + responsiblePersonInfo.Name + " @ Thank You!";
+                                    
                                 }
                                 string callNote = lineInfo.line_name + " Line "+ issueInfo.issue1 + " not solved yet";
                                 var personInfo = BR.tbl_PPA_User.Where(y => y.EmployeeNumber == i.EmployeeNumber).FirstOrDefault();
+                                msg = msg.Replace("@", Environment.NewLine);
                                 CommunicationData cd = new CommunicationData(personInfo.Phone, msg, personInfo.EMail, i.email, i.call, i.message, personInfo.EmployeeNumber, "Unsolved Issue", callNote, "0", "0", items.issue_occurrence_id);
                                 numberList.Enqueue(cd);
 
