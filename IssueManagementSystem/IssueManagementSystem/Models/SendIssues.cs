@@ -11,7 +11,7 @@ using System.Web.Script.Serialization;
 
 namespace IssueManagementSystem.Models
 {
-    public static class IssueService
+    public static class IssueService 
     {
         
         static readonly string connString = ConfigurationManager.ConnectionStrings["issue_management_systemEntities2"].ToString();
