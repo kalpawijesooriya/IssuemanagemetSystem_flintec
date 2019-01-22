@@ -46,7 +46,7 @@ if (Session["userID"] == null)
                 <div class="row">
                     <div class="col-md-12">
                         <h1 class="title-4">
-                            Welcome back
+                            Hi
                             <span>@Session["name"], You have <span id="issueCnt"></span> new jobs!</span>
                         </h1>
                         <hr class="line-seprate">
@@ -145,6 +145,7 @@ if (Session["userID"] == null)
 
                                 var line_id = issuedata[i].line_line_id;
                                 var issueid = issuedata[i].issue_issue_ID;
+                                var bell_ststus=issuedata[i].buzzer_off_by;
                                 var comment=null
                                 var issueStstus = 2;//issue not soled and not comment
                                 if (issuedata[i].responsible_person_confirm_status == 0 && issuedata[i].issue_satus == "1")
@@ -160,7 +161,7 @@ if (Session["userID"] == null)
                                 var index = i;
 
                             
-                                get_line(line_id, issueid, divissue, issuedata[i], issueStstus, comment, index, issuedata[i].matirial)
+                                get_line(line_id, issueid, divissue, issuedata[i], issueStstus, comment, index, issuedata[i].matirial,bell_ststus)
 
                             }
                         }
@@ -171,7 +172,7 @@ if (Session["userID"] == null)
         }
 
 
-        function get_line(line_id, issueid, divissue, issuedata, issueStstus, comment, index, matirial) {
+        function get_line(line_id, issueid, divissue, issuedata, issueStstus, comment, index, matirial,bell_ststus) {
             issueCount=0
             var line = new Object();
             var url = '@Url.Action("getlineInfo", "ResponsiblePerson")';
@@ -184,7 +185,7 @@ if (Session["userID"] == null)
 
                         var lineName = response.line_name.toString();;
                         if (issueid == 1) { mb(lineName, divissue, issuedata, issueStstus, comment, index)}
-                        else if (issueid == 2) { md(lineName, divissue, issuedata, issueStstus, comment, index, matirial)}
+                        else if (issueid == 2) { md(lineName, divissue, issuedata, issueStstus, comment, index, matirial,bell_ststus)}
                         else if (issueid == 3) { ti(lineName, divissue, issuedata, issueStstus, comment, index)}
                         else if (issueid == 4) { qi(lineName, divissue, issuedata, issueStstus, comment, index)}
                         else if (issueid == 5) { it(lineName, divissue, issuedata, issueStstus, comment, index)}
@@ -251,11 +252,11 @@ if (Session["userID"] == null)
             if (issueStstus == 2) { $('#' + index) }
             if (issueStstus == 0) { $('#' + index).text("Issue Solved") }
         }
-        function md(lineName, divissue, issuedata, issueStstus, comment, index, matirial) {
+        function md(lineName, divissue, issuedata, issueStstus, comment, index, matirial,bell_ststus) {
             var date = issuedata.issueDate.split(' ');
             var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
             var msg = 'In <strong> ' + lineName + ' Line</strong> new Material Delay has been occouered . At <strong> ' + day + '</strong> on ' + date[1] + '.</br> Responsible Person - <strong>'+issuedata.responciblepersonName+'</strong> .</br> <strong>Material : </strong>' + matirial +'.'
-            var issue = '<div class="col-md-6 col-lg-3" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--orange"><span class="desc" style="color:white">Material Delay</span><div class="icon" ><i class="zmdi animated infinite wobble zmdi-shopping-cart"></i></div></div><div class="card-body"><h5 class="card-title" id="' + index +'"></h5><p class="card-text">' + msg + '</p> <div class="text-right" style="margin-top:10%"><button style="margin-right:53%" ><i style="font-size: 25px;color:red" class="zmdi zmdi-notifications-active animated infinite wobble zmdi-hc-fw mdc-text-blue"></i> </button><button style="color:#1183ff" class="card-link" data-toggle="modal" data-target="#moreIssueInfo" data-msg="' + msg + '" data-issueinfo="' + issuedata.issue_occurrence_id + '" data-dis="' + issuedata.description + '"  data-ststus="' + issueStstus + '" data-comment="' + comment +'" onclick="myfunction(this)">Show More >></button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
+            var issue = '<div class="col-md-6 col-lg-3" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--orange"><span class="desc" style="color:white">Material Delay</span><div class="icon" ><i class="zmdi infinite wobble zmdi-shopping-cart"></i></div></div><div class="card-body"><h5 class="card-title" id="' + index +'"></h5><p class="card-text">' + msg + '</p> <div class="text-right" style="margin-top:10%"><button id="' + issuedata.issue_occurrence_id +'bell" data-issue_id="' + issuedata.issue_occurrence_id +'" onclick="buzzeroff(this)" style="margin-right:53%" ><i style="font-size: 25px;color:red" class="zmdi zmdi-notifications-active animated infinite wobble zmdi-hc-fw mdc-text-blue"></i> </button><button style="color:#1183ff" class="card-link" data-toggle="modal" data-target="#moreIssueInfo" data-msg="' + msg + '" data-issueinfo="' + issuedata.issue_occurrence_id + '" data-dis="' + issuedata.description + '"  data-ststus="' + issueStstus + '" data-comment="' + comment +'" onclick="myfunction(this)">Show More >></button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
             issueCount++
 
                 divissue.append(issue)
@@ -265,6 +266,7 @@ if (Session["userID"] == null)
             if (issueStstus == 1) { $('#' + index).text("commented")}
             if (issueStstus == 2) { $('#' + index)}
             if (issueStstus == 0) { $('#' + index).text("Issue Solved") }
+            if(bell_ststus!=0) {  document.getElementById(issuedata.issue_occurrence_id +'bell').style.display = "none" }
         }
         function qi(lineName, divissue, issuedata, issueStstus, comment, index) {
             var date = issuedata.issueDate.split(' ');
@@ -324,7 +326,7 @@ if (Session["userID"] == null)
                 $.ajax({
                     type: "POST",
                     url: url,
-                    data: { id: id, comment: $('#comment').val()}
+                    data: { id: id, comment: $('#comment').val(),emp_id:@Session["userID"]}
                    
                 }).done(function (response) {
                     var body = $("#issueData")
@@ -344,6 +346,35 @@ if (Session["userID"] == null)
             $('#comment').css('border-color', '#ced4da');
             $("#waring").hide();
         });
+
+        function buzzeroff(param)
+        { 
+        var id = $(param).data('issue_id');
+          
+        obj = new Object();
+        obj.issueid  = id ;
+        obj.employee_id=@Session["userID"]
+        var obj_array = new Array();
+        obj_array.push(obj);
+
+        var issueJson = JSON.stringify(obj_array);
+         var url = '@Url.Action("offBuzzer", "ResponsiblePerson")'
+        $.ajax({
+            type: "POST",
+            dataType: 'text',
+            url: url,
+            data: { issueJson: issueJson },
+            success: function (feedback) {
+           
+            },
+            error: function (feedback) {
+                alert(feedback);
+            }
+        });
+
+
+         
+        }
         </script>
     </div>
 </div>

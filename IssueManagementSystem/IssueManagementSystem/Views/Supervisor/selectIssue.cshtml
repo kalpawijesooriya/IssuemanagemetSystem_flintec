@@ -65,7 +65,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1 class="title-4">
-                        Welcome back @Session["name"]
+                        Hi @Session["name"]
                     </h1>
                     <hr class="line-seprate">
                 </div>
@@ -146,7 +146,7 @@
                                 if (issueid == 2)//Material Delay
                                 {
 
-                                    issue = '<div class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--orange"><span class="desc" style="color:white">Material Delay</span><div class="icon" ><i class="zmdi animated infinite wobble zmdi-shopping-cart"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><div style="display:none" id="check' + issue_occurrence_id +'"><i  class="fas fa-check" style="font-size:30px; color:green;float:right;"></i></div><p class="card-text"><strong>Issue Date : </strong>' + day + '</br><strong>Time : </strong> ' + date[1] + " " + date[2] + '</br><strong>Responsible Person :</strong> ' + issuedata[i].responciblepersonName + '</br><strong>Matirial : </strong>' + issuedata[i].matirial+'</p> <div class="text-right"><button  class="btn btn-success"  data-id="' + issue_occurrence_id + '" data-issue_id="' + issueid +'" onclick="myfunction(this)">Solved</button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
+                                    issue = '<div class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--orange"><span class="desc" style="color:white">Material Delay</span><div class="icon" ><i class="zmdi animated infinite wobble zmdi-shopping-cart"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><div style="display:none" id="check' + issue_occurrence_id +'"><i  class="fas fa-check" style="font-size:30px; color:green;float:right;"></i></div><p class="card-text"><strong>Issue Date : </strong>' + day + '</br><strong>Time : </strong> ' + date[1] + " " + date[2] + '</br><strong>Responsible Person :</strong> ' + issuedata[i].responciblepersonName + '</br><strong>Material : </strong>' + issuedata[i].matirial+'</p> <div class="text-right"><button  class="btn btn-success"  data-id="' + issue_occurrence_id + '" data-issue_id="' + issueid +'" onclick="myfunction(this)">Solved</button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
 
 
                                 }

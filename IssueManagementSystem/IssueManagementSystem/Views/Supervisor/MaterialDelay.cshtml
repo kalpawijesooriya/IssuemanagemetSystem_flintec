@@ -85,7 +85,7 @@
         obj.issue_issue_ID = "2";
         obj.responsible_person_emp_id = "";
         obj.issue_satus = "0";
-        obj.location = "KTY";
+        obj.location =  '@Session["location"]';
         obj.responsible_person_confirm_status = "0";
         obj.material = $('#Material').find(":selected").text();
         var obj_array = new Array();
@@ -99,7 +99,14 @@
             url: url,
             data: { issueJson: issueJson },
             success: function (feedback) {
-                  window.location.href = '@Url.Action("selectIssue", "Supervisor")';
+            $.connection.hub.start()//Refresh Screen
+                .done(function () {
+                 console.log("Worked")
+                 $.connection.ismHub.server.announce();
+              }).fail(function () { alert("Can't Refresh Your Line Screen! Plese Inform IT Department!") });
+
+
+              window.location.href = '@Url.Action("selectIssue", "Supervisor")'; //return to dashbord
             },
             error: function (feedback) {
                 alert(feedback);
@@ -111,17 +118,6 @@
 
 
 <script>
-    $("#submit").click(function () {
- 
-      $.connection.hub.start()
-            .done(function () {
-                console.log("Worked")
-                $.connection.ismHub.server.announce();
-            })
-            .fail(function () { alert("ERROR!") });
-    
-  
-      
-    });
+   
 
 </script>

@@ -11,7 +11,7 @@ using System.Web.Script.Serialization;
 
 namespace IssueManagementSystem.Models
 {
-    public static class IssueService
+    public static class IssueService 
     {
         
         static readonly string connString = ConfigurationManager.ConnectionStrings["issue_management_systemEntities2"].ToString();
@@ -34,7 +34,7 @@ namespace IssueManagementSystem.Models
                    
                     connection.Open();
                     //// Sanjay : Alwasys use "dbo" prefix of database to trigger change event
-                    using (command = new SqlCommand(@"SELECT [issue_occurrence_id],[issue_date],[description],[machine_machine_id],[material_id],[line_line_id],[issue_issue_ID],[responsible_person_emp_id],[issue_satus],[location],[responsible_person_confirm_status],[responsible_person_confirm_feedback],[solved_date],[commented_date],[department],[solved_emp_id] FROM [dbo].[issue_occurrence]", connection))
+                    using (command = new SqlCommand(@"SELECT [issue_occurrence_id],[issue_date],[description],[machine_machine_id],[material_id],[line_line_id],[issue_issue_ID],[responsible_person_emp_id],[issue_satus],[location],[responsible_person_confirm_status],[responsible_person_confirm_feedback],[solved_date],[commented_date],[department],[buzzer_off_by] ,[solved_emp_id] FROM [dbo].[issue_occurrence]", connection))
                     {
                         command.Notification = null;
 
@@ -56,6 +56,7 @@ namespace IssueManagementSystem.Models
                             {
                                 int enpId = (int)reader["responsible_person_emp_id"];
                                 int lineId = (int)reader["line_line_id"];
+                             
                                 var lineinfo = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
                                 using (BigRedEntities BE = new BigRedEntities())
                                 {
@@ -90,10 +91,12 @@ namespace IssueManagementSystem.Models
                                         issue_satus = reader["issue_satus"] != DBNull.Value ? (string)reader["issue_satus"] : "",
                                         solvedDate = reader["solved_date"].ToString(),
                                         commentedDate = reader["commented_date"].ToString(),
-                                        solved_by = reader["solved_emp_id"] != DBNull.Value ? (string)reader["solved_emp_id"] : "",
+                                        solved_emp_id = reader["solved_emp_id"] == System.DBNull.Value ? default(int) : (int)reader["solved_emp_id"],
                                         department = reader["department"] != DBNull.Value ? (string)reader["department"] : "",
                                         responciblepersonName = userInfo.Name,
-                                        lineName = lineinfo.line_name
+                                        lineName = lineinfo.line_name,
+                                        buzzer_off_by = reader["buzzer_off_by"] == System.DBNull.Value ? default(int) : (int)reader["buzzer_off_by"],
+                                       
                                     });
                                 }
                             }

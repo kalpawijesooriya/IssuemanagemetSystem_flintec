@@ -7,7 +7,7 @@
         Response.Redirect("~/Login/Index");
     }
 
-    int userID = (int)Session["userID"];// get current supervisorID
+ 
     int lineId = ViewBag.lineid;
 }
 @model IssueManagementSystem.Models.issue_occurrence
@@ -21,21 +21,16 @@
             <div class="form-group" style="width:100%;margin:auto">
 
 
-                @using (Html.BeginForm("AddIssueIT", "Supervisor", FormMethod.Post))
-                {
+              
 
-                    <div style="padding-top:20px;">
-                        <label for="exampleFormControlTextarea1">Description</label>
-                        @Html.TextAreaFor(model => model.description, new { @class = "form-control", @style = "width: 100%", @rows = 5 })
-                    </div>
-                    string Role = Session["Role"].ToString();
+                <div style="padding-top:20px;">
+                    <label for="exampleFormControlTextarea1">Description</label>
+                    <textarea class="form-control" rows="5" id="description"></textarea>
+                </div>
+                  
 
-                    @Html.TextAreaFor(mo => mo.Role, new { @class = "form-control", @id = "role", style = "display: none;" })
-                    @Html.TextAreaFor(mod => mod.lineid, new { @class = "form-control", @id = "lineid", style = "display: none;" })
-                    <script>
-                        document.getElementById("lineid").value=@ViewBag.lineid;
-                        document.getElementById("role").value = "@Role";
-                    </script>
+               
+                  
                     <div class="button-holder" style="display:block">
                         <div class="ajax-button">
                             <div class="fa fa-check done"></div>
@@ -43,7 +38,7 @@
                             <input id="submit" class="submit" type="submit" value="Submit" />
                         </div>
                     </div>
-                }
+          
             </div>
         </div>
     </div>
@@ -59,14 +54,33 @@
 <script>
     $("#submit").click(function () {
 
-      $.connection.hub.start()
-            .done(function () {
-                console.log("Worked")
-                $.connection.ismHub.server.announce();
-            })
-            .fail(function () { alert("ERROR!") });
+        obj = new Object();
+        obj.description = document.getElementById("description").value;
+        obj.line_line_id = '@ViewBag.lineid';
+        obj.location =  '@Session["location"]';
+        var obj_array = new Array();
+        obj_array.push(obj);
 
-      
+        var issueJson = JSON.stringify(obj_array);
+         var url = '@Url.Action("AddIssueIT", "Supervisor")'
+        $.ajax({
+            type: "POST",
+            dataType: 'text',
+            url: url,
+            data: { issueJson: issueJson },
+            success: function (feedback) {
+               $.connection.hub.start()//Refresh Screen
+                .done(function () {
+                 console.log("Worked")
+                 $.connection.ismHub.server.announce();
+              }).fail(function () { alert("Can't Refresh Your Line Screen! Plese Inform IT Department!") });//return to dashbord
+
+              window.location.href = '@Url.Action("DashBord", "CellEngineer")?lineid=@ViewBag.lineId';
+            },
+            error: function (feedback) {
+                alert(feedback);
+            }
+        });
     });
 
 </script>

@@ -19,6 +19,9 @@
 
 @using IssueManagementSystem.Models;
 @model List<IssueManagementSystem.Models.issue_occurrence>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
+
+
 
 <div class="page-content--bgf7">
     <section class="au-breadcrumb2">
@@ -58,7 +61,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1 class="title-4">
-                        Welcome back @Session["name"]
+                        Hi @Session["name"]
                     </h1>
                     <hr class="line-seprate">
                 </div>
@@ -74,7 +77,21 @@
 
         </div>
     </section>
-
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <style>
     #result {
@@ -89,112 +106,16 @@
 </style>
 
 <script src="~/Scripts/jquery-3.3.1.js"></script>
-
-<script src="~/Scripts/angular.min.js"></script>
 <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
-<script src="~/Scripts/bootstrap-confirmation.min.js"></script>
-<script src="~/Scripts/Gruntfile.js"></script>
-<script src="~/Scripts/popover.js"></script>
 <script src="~/signalr/Hubs"></script>
 
-<div id="result" hidden></div>
 
-<script type="text/javascript">
-var r = document.getElementById('result');
-   $(function(){
-  if ('speechSynthesis' in window) {
-    speechSynthesis.onvoiceschanged = function() {}
-     $('#speak').click(function(){
-      var msg = new SpeechSynthesisUtterance();
-      var voices = window.speechSynthesis.getVoices();
-      msg.voice = voices[1];
-      msg.rate = 1;
-      msg.pitch = 1;
-      msg.text = "Hello";
-      msg.onend = function(e) {
-      console.log('Finished in ' + event.elapsedTime + ' seconds.');
-    };
-      speechSynthesis.speak(msg);
-     })
-    }
-  });
+<div id="result"></div>
 
-    startConverting ()
-	function startConverting ()
-    {
 
-		if('webkitSpeechRecognition' in window){
-			var speechRecognizer = new webkitSpeechRecognition();
-			speechRecognizer.continuous = true;
-			speechRecognizer.interimResults = true;
-			speechRecognizer.lang = 'en-IN';
-			speechRecognizer.start();
 
-			var finalTranscripts = '';
 
-			speechRecognizer.onresult = function(event){
-				var interimTranscripts = '';
-				for(var i = event.resultIndex; i < event.results.length; i++){
-					var transcript = event.results[i][0].transcript;
 
-					if(event.results[i].isFinal){
-						finalTranscripts += transcript;
-					}else{
-						interimTranscripts += transcript;
-					}
-				}
-				r.innerHTML =  interimTranscripts
-                    VoiceAction( interimTranscripts )
-			};
-			speechRecognizer.onerror = function (event) {
-			};
-		}else{
-			r.innerHTML = 'Your browser is not supported. If google chrome, please upgrade!';
-		}
-	}
-
-		function playVoice(){
-			var msg = new SpeechSynthesisUtterance('Hello World');
-			window.speechSynthesis.speak(msg);
-
-			speechSynthesis.speak(new SpeechSynthesisUtterance('Hello World'));
-		}
-        function VoiceAction(keyWord )
-        {
-            if(keyWord=="breakdown" || keyWord==" breakdown")
-            {
-                debugger;
-                window.location.href = '/CellEngineer/MachinBreakdown?lineid=' +  @ViewBag.lineId;
-            }
-            if(keyWord=="technical" || keyWord==" technical")
-            {
-                window.location.href = '/CellEngineer/TechnicalIssue?lineid=' +  @ViewBag.lineId;
-            }
-            if(keyWord=="material" || keyWord==" material")
-            {
-                window.location.href = '/CellEngineer/MaterialDelay?lineid=' +  @ViewBag.lineId;
-            }
-        if(keyWord=="it" || keyWord==" it")
-            {
-                window.location.href = '/CellEngineer/ITIssue?lineid=' +  @ViewBag.lineId;
-            }
-        if(keyWord=="show me today's summary" || keyWord==" show me today's summary")
-            {
-                var url = '@Url.Action("GetIssues", "Supervisor")';
-                $.ajax({
-                url: url,
-                    type: 'GET',
-                    datatype: 'json',
-                    success: function (issuedata) { alert(issuedata) },
-                    error: function () {alert("Error!")}
-                });
-            }
-           // else
-         //   speek("I don't no that word");
-
-        }
-
-</script>
 
 
 <script>
@@ -248,7 +169,7 @@ var r = document.getElementById('result');
                                 if (issueid == 2)//Material Delay
                                 {
 
-                                    issue = '<div class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--orange"><span class="desc" style="color:white">Material Delay</span><div class="icon" ><i class="zmdi animated infinite wobble zmdi-shopping-cart"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><div style="display:none" id="check' + issue_occurrence_id +'"><i  class="fas fa-check" style="font-size:30px; color:green;float:right;"></i></div><p class="card-text"><strong>Issue Date : </strong>' + day + '</br><strong>Time : </strong> ' + date[1] + " " + date[2] + '</br><strong>Responsible Person :</strong> ' + issuedata[i].responciblepersonName + '</br><strong>Matirial : </strong>' + issuedata[i].matirial+'</p> <div class="text-right"><button  class="btn btn-success"  data-id="' + issue_occurrence_id + '" data-issue_id="' + issueid +'" onclick="myfunction(this)">Solved</button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
+                                    issue = '<div class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--orange"><span class="desc" style="color:white">Material Delay</span><div class="icon" ><i class="zmdi animated infinite wobble zmdi-shopping-cart"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><div style="display:none" id="check' + issue_occurrence_id +'"><i  class="fas fa-check" style="font-size:30px; color:green;float:right;"></i></div><p class="card-text"><strong>Issue Date : </strong>' + day + '</br><strong>Time : </strong> ' + date[1] + " " + date[2] + '</br><strong>Responsible Person :</strong> ' + issuedata[i].responciblepersonName + '</br><strong>Material : </strong>' + issuedata[i].matirial+'</p> <div class="text-right"><button  class="btn btn-success"  data-id="' + issue_occurrence_id + '" data-issue_id="' + issueid +'" onclick="myfunction(this)">Solved</button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
 
 
                                 }
@@ -289,34 +210,161 @@ var r = document.getElementById('result');
 
     })
 
-        function myfunction(param) {
-
-            var id = $(param).data('id');
-            var issue_id = $(param).data('issue_id');
-            var url = '@Url.Action("SolvedIssue", "Supervisor")?issueId=' + issue_id + '&issueOccourId=' + id+'&lineId='+'@ViewBag.lineId ';
-
-            $.ajax({
-                url: url,
-                type: 'POST',
-
-                success: function (issuedata) {
-                     $.connection.hub.start()
-                    .done(function () {
-                        console.log("Worked")
-                        $.connection.ismHub.server.announce();
-                    })
-                    .fail(function () { alert("ERROR!") });
-                        }
-            });
-
-        }
 
 
 
 </script>
+<script src="~/Scripts/bootstrap.min.js"></script>
 
-<!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/materialize/0.95.1/css/materialize.min.css"> -->
+<script type="text/javascript">
 
+function myfunction(param)
+{
+
+
+
+    var id = $(param).data('id');
+    var issue_id = $(param).data('issue_id');
+    var url = '@Url.Action("SolvedIssue", "Supervisor")?issueId=' + issue_id + '&issueOccourId=' + id+'&lineId='+'@ViewBag.lineId ';
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+
+        success: function (issuedata) {
+                $.connection.hub.start()
+            .done(function () {
+                console.log("Worked")
+                $.connection.ismHub.server.announce();
+            })
+            .fail(function () { alert("ERROR!") });
+            }
+            });
+
+}
+
+var r = document.getElementById('result');
+   $(function(){
+  if ('speechSynthesis' in window) {
+    speechSynthesis.onvoiceschanged = function() {}
+    window.getVoice = function(voicemsg) {
+      var msg = new SpeechSynthesisUtterance();
+      var voices = window.speechSynthesis.getVoices();
+      msg.voice = voices[1];
+      msg.rate = 1;
+      msg.pitch = 1;
+      msg.text = voicemsg;
+      msg.onend = function(e) {
+      console.log('Finished in ' + event.elapsedTime + ' seconds.');
+    };
+      speechSynthesis.speak(msg);
+     }
+    }
+  });
+
+    startConverting ()
+	function startConverting ()
+    {
+
+		if('webkitSpeechRecognition' in window){
+			var speechRecognizer = new webkitSpeechRecognition();
+			speechRecognizer.continuous = true;
+			speechRecognizer.interimResults = true;
+			speechRecognizer.lang = 'en-IN';
+			speechRecognizer.start();
+
+			var finalTranscripts = '';
+
+			speechRecognizer.onresult = function(event){
+				var interimTranscripts = '';
+				for(var i = event.resultIndex; i < event.results.length; i++){
+					var transcript = event.results[i][0].transcript;
+
+					if(event.results[i].isFinal){
+						finalTranscripts += transcript.trim();
+                           r.innerHTML =  transcript.trim()
+                         VoiceAction( transcript.trim() )
+
+					}else{
+						interimTranscripts += transcript;
+					}
+				}
+
+
+			};
+			speechRecognizer.onerror = function (event) {
+			};
+		}else{
+			r.innerHTML = 'Your browser is not supported. If google chrome, please upgrade!';
+		}
+	}
+
+		function playVoice(){
+			var msg = new SpeechSynthesisUtterance('Hello World');
+			window.speechSynthesis.speak(msg);
+
+			speechSynthesis.speak(new SpeechSynthesisUtterance('Hello World'));
+		}
+        function VoiceAction(keyWord )
+        {
+            if(keyWord=="breakdown" || keyWord=="machine breakdown")
+            {
+                debugger;
+                window.location.href = '/CellEngineer/MachinBreakdown?lineid=' +  @ViewBag.lineId;
+            }
+            else if(keyWord=="technical" || keyWord=="technical issue")
+            {
+                window.location.href = '/CellEngineer/TechnicalIssue?lineid=' +  @ViewBag.lineId;
+            }
+            else if(keyWord=="material" || keyWord=="material delay")
+            {
+                window.location.href = '/CellEngineer/MaterialDelay?lineid=' +  @ViewBag.lineId;
+            }
+            else if(keyWord=="it" || keyWord=="it issue")
+            {
+                window.location.href = '/CellEngineer/ITIssue?lineid=' +  @ViewBag.lineId;
+            }
+            else if(keyWord=="what is your name" || keyWord=="name"|| keyWord=="what's your name")
+            {
+                  getVoice("My name is Flintec issue management system. How could I help you " + '@Session["name"]' );
+            }
+           else if(keyWord=="hello" || keyWord=="hi" || keyWord=="how are you" || keyWord=="hello how are you")
+            {
+                  getVoice("Hello "+ '@Session["name"]' +' How are you!');
+            }
+          else if(keyWord=="show me today's summary" || keyWord=="summary"|| keyWord=="today"  )
+            {
+                var url = '@Url.Action("GetIssues", "Supervisor")';
+                $.ajax({
+                url: url,
+                    type: 'GET',
+                    datatype: 'json',
+                    success: function (issuedata) {
+                             showIssues(issuedata) 
+                             },
+                    error: function () {alert("Error!")}
+                });
+            }
+          else
+           {
+                 getVoice("Sorry! I don't know that command.");
+           }
+
+
+
+        }
+    
+
+
+$('document').ready(function() {
+  function  showIssues(issuedata)
+    {
+     $(".bd-example-modal-lg").modal("show");
+    }
+})
+
+</script>
+<script src="~/Scripts/bootstrap.min.js"></script>
 <div class="container">
 
 
@@ -327,7 +375,7 @@ var r = document.getElementById('result');
 
         </div>
     </div>
-    <a href="#" id="speak" class="waves-effect waves-light btn" hidden>Speak</a>
+
 
 </div>
 
@@ -340,6 +388,6 @@ var r = document.getElementById('result');
     </div>
 
 </div>
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
 
 <!--<script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.95.1/js/materialize.min.js"></script> -->

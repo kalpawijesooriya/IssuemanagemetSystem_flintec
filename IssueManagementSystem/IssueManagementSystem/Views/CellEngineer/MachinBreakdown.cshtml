@@ -6,7 +6,7 @@
     {
         Response.Redirect("~/Login/Index");
     }
-    ViewBag.rol = Session["Role"];
+  
     int userID = (int)Session["userID"];// get current supervisorID
     using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
     {
@@ -42,25 +42,19 @@
             </div>
         </div>
         <div class="col-sm-3 machine">
-            @using (Html.BeginForm("AddIssueBreakedown", "Supervisor", FormMethod.Post))
-            {
-                <div class="form-group machine">
-                    <label for="exampleFormControlTextarea1">Machine</label>
-                    @Html.TextBoxFor(model => model.machine_machine_id, new { @class = "form-control", @id = "machine" , @readonly = "readonly" })
-                </div>
+            <div class="form-group machine">
+                <label for="exampleFormControlTextarea1">Machine</label>
+                <input type="text" class="form-control" id="machine" disabled>
+            </div>
                 <label id="map" style="display: none;">@ViewData["map"]</label>
                 <div class="form-group machine">
                     <label for="exampleFormControlTextarea1">Extra Information</label>
-                    @Html.TextAreaFor(model => model.description, new { @class = "form-control" })
+                    <textarea class="form-control" rows="5" id="description"></textarea>
                 </div>
-                string Role = ViewBag.rol.ToString();
+              
 
-                @Html.TextAreaFor(mo => mo.Role, new { @class = "form-control", @id = "role", style = "display: none;" })
-                @Html.TextAreaFor(mod => mod.lineid, new { @class = "form-control", @id = "lineid", style = "display: none;" })
-                <script>
-                    document.getElementById("lineid").value=@ViewBag.lineid;
-                    document.getElementById("role").value = "@Role";
-                </script>
+           
+               
                 <div class="container-fluid row ">
                     <div class="container">
                         <div class="row">
@@ -74,28 +68,52 @@
                         </div>
                     </div>
                 </div>
-            }
+    
 
         </div>
     </div>
 
-    <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
+
     <script src="~/Scripts/SupervisorScripts/showmap.js"></script>
     <script src="~/Scripts/jquery.min.js"></script>
     <link href="~/Content/SupervisorStyles/jquery-ui.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-ui.js"></script>
     <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
     <script src="~/signalr/Hubs"></script>
-
+    <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
     <script>
-    $("#submit").click(function () {
-        $.connection.hub.start()
-            .done(function () {
-                console.log("Worked")
-                $.connection.ismHub.server.announce();
-            })
-            .fail(function () { alert("ERROR!") });
+   $("#submit").click(function () {
+
+        obj = new Object();
+        obj.description = document.getElementById("description").value;
+        obj.machine = document.getElementById("machine").value;
+        obj.line_line_id = '@ViewBag.lineid';
+        obj.location =  '@Session["location"]';
+        var obj_array = new Array();
+        obj_array.push(obj);
+
+        var issueJson = JSON.stringify(obj_array);
+         var url = '@Url.Action("AddIssueBreakedown", "Supervisor")'
+        $.ajax({
+            type: "POST",
+            dataType: 'text',
+            url: url,
+            data: { issueJson: issueJson },
+            success: function (feedback) {
+               $.connection.hub.start()//Refresh Screen
+                .done(function () {
+                 console.log("Worked")
+                 $.connection.ismHub.server.announce();
+              }).fail(function () { alert("Can't Refresh Your Line Screen! Plese Inform IT Department!") });//return to dashbord
+
+              window.location.href = '@Url.Action("DashBord", "CellEngineer")?lineid=@ViewBag.lineId';
+            },
+            error: function (feedback) {
+                alert(feedback);
+            }
+        });
     });
+
 
 
     var id=@ViewBag.lineid.ToString();

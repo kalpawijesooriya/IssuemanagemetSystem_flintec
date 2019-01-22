@@ -367,6 +367,7 @@
     <Content Include="Content\images\ui-icons_777777_256x240.png" />
     <Content Include="Content\images\ui-icons_cc0000_256x240.png" />
     <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\jquery-confirm.min.css" />
     <Content Include="Content\Manager\bootstrap.min.css" />
     <Content Include="Content\material-design-iconic-font.min.css" />
     <Content Include="Content\hamburgers.min.css" />
@@ -430,6 +431,7 @@
     <Content Include="Scripts\bootstrap-progressbar.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Chart.bundle.min.js" />
     <Content Include="Scripts\circle-progress.min.js" />
     <Content Include="Scripts\Display\jquery.totemticker.js" />
@@ -607,6 +609,7 @@
     <Content Include="Scripts\AdminScripts\select2-min.js" />
     <Content Include="Scripts\AdminScripts\notificationsManagement.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
+    <Content Include="Scripts\jquery-confirm.min.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery.counterup.min.js" />
     <Content Include="Scripts\jquery.min.js" />
