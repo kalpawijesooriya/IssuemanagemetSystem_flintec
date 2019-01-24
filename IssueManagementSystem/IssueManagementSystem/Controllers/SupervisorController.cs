@@ -155,12 +155,12 @@ namespace IssueManagementSystem.Controllers
                             if (issueModel.issue_occurrence_id > 0)
                             {
                                 var line = db.lines.Where(x => x.line_id == line_id).FirstOrDefault();
-                                string msg = " Breakedown has occurred.@@ Line : " + line.line_name + " Line @ Date : " + day + " @ Time : " + time1 + " @ Machine : " + machine + " @ Note : " + issueModel.description;
+                                string msg = " Breakdown has occurred.@@ Line : " + line.line_name + " Line @ Date : " + day + " @ Time : " + time1 + " @ Machine : " + machine + " @ Note : " + issueModel.description;
                                 msg = msg.Replace("@", Environment.NewLine);
-                                string callNote = line.line_name + " line Breakedown has occurred at " + time1;
+                                string callNote = line.line_name + " line Breakdown has occurred at " + time1;
                                 var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
                                 com.lightON("1", displayInfo.raspberry_ip_address);//turn on the Light
-                                sendCD(line_id, 1, msg, "Machine Brakedown has occurred", callNote, issue_occour_id);
+                                sendCD(line_id, 1, msg, "Machine Breakdown has occurred", callNote, issue_occour_id);
                             }
                             ModelState.Clear();
                         }

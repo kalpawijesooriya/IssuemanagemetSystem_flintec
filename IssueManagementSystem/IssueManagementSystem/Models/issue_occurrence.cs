@@ -43,6 +43,7 @@ namespace IssueManagementSystem.Models
         public string Role { get; set; }
         public string solved_by { get; set; }
         public String lineName { get; set; }
+        public String issueName { get; set; }
 
     }
 }

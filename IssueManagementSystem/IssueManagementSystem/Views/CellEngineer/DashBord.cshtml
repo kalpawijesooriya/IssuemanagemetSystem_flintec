@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "DashBord";
     Layout = "~/Views/Shared/CellEngineerLayout.cshtml";
     if (Session["userID"] == null)
@@ -14,17 +13,18 @@
 
     }
 }
-
-
-
 @using IssueManagementSystem.Models;
 @model List<IssueManagementSystem.Models.issue_occurrence>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
 
+
+
+<link href="~/Content/test/jquery-confirm.min.css" rel="stylesheet" />
+<link href="~/Content/SupervisorStyles/voiceanimations.css" rel="stylesheet" />
 
 
 <div class="page-content--bgf7">
     <section class="au-breadcrumb2">
+        
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -47,8 +47,15 @@
                                 </li>
                             </ul>
                         </div>
-
-                        <button onclick="startConverting();"> Allow Your Voice <i class="fa fa-microphone"></i></button>
+                        <div class="container h-100">
+                            <div class="d-flex justify-content h-100"  style="float:right">
+                                <div class="searchbar">
+                                    <img id="listening" src="~/Content/images/Ripple-1.8s-34px.svg" ><input class="search_input" type="text" name="" placeholder="Listening....">
+                                    <button onclick="startConverting()" class="search_icon"><i class="fa fa-microphone"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        
 
                     </div>
                 </div>
@@ -70,74 +77,75 @@
     </section>
     <section class="welcome p-t-10" style="padding-top:50px;padding-bottom:50px">
         <div class="container-fluid">
+            <div  class="text-center">
+                <img src="~/Content/images/loding.svg" id="loding_icon">
+            </div>
+           
             <div class="row" id="divIssue" style="margin: auto;">
-
 
             </div>
 
         </div>
     </section>
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" >
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
+
+</div>
+
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" id="modalPopup" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Date and Time</th>
+                            <th scope="col">Line</th>
+                            <th scope="col">Issue</th>
+                            <th scope="col">Responcible Person</th>
+                            <th scope="col">Count down</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody id="issue_body">
+
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
-<style>
-    #result {
-        height: 200px;
-        border: 1px solid #ccc;
-        padding: 10px;
-        box-shadow: 0 0 10px 0 #bbb;
-        margin-bottom: 30px;
-        font-size: 14px;
-        line-height: 25px;
-    }
-</style>
 
-<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Content/test/jquery-3.3.1.min.js"></script>
+<script src="~/Content/test/jquery-confirm.min.js"></script>
+
+<script src="~/Content/test/bootstrap.bundle.min.js"></script>
 <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
 <script src="~/signalr/Hubs"></script>
 
-
-<div id="result"></div>
-
-
-
-
-
-
-
 <script>
-    $(document).ready(function () {
+     $("#listening").hide()
 
+    $(document).ready(function () {
         // Proxy created on the fly
         var hub = $.connection.issueHub;
         var issueCount = 0;
-
         // Declare a function on the hub hub so the server can invoke it
         hub.client.displayStatus = function () {
             debugger
             getData();
         };
-
         // Start the connection
         $.connection.hub.start();
         getData();
-
         function getData()
         {
-
             var divissue = $('#divIssue');
              var url = '@Url.Action("GetIssues", "Supervisor")';
             $.ajax({
@@ -145,13 +153,10 @@
                     type: 'GET',
                     datatype: 'json',
                     success: function (issuedata) {
-
                     issuedata = $.parseJSON(issuedata);
                     if (issuedata.length > 0) {
                         divissue.empty();
-
                         for (var i = 0; i < issuedata.length; i++) {
-
                             if ((issuedata[i].line_line_id==@ViewBag.lineId ) && (issuedata[i].issue_satus=="1" )) {
                                 var responcibleperson_ststus= issuedata[i].responsible_person_confirm_status
                                 var issueid = issuedata[i].issue_issue_ID
@@ -162,21 +167,14 @@
                                 var issue
                                 if (issueid == 1)//breakedown
                                 {
-
                                     issue = '<div class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--red"><span class="desc" style="color:white">Machine Breakdown</span><div class="icon" ><i class="zmdi zmdi-settings zmdi-hc-spin"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><div style="display:none" id="check' + issue_occurrence_id+'"><i  class="fas fa-check" style="font-size:30px; color:green;float:right;"></i></div><p class="card-text"><strong>Issue Date : </strong>' + day + '</br><strong>Time : </strong> ' + date[1] + " " + date[2] + '</br><strong>Responsible Person :</strong> ' + issuedata[i].responciblepersonName + '</br><strong>Machine : </strong>' + issuedata[i].machine_machine_id + '</p> <div class="text-right"> <button  class="btn btn-success"   data-id="' + issue_occurrence_id + '"  data-issue_id="' + issueid + '" onclick="myfunction(this)">Solved </button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
-
                                 }
                                 if (issueid == 2)//Material Delay
                                 {
-
                                     issue = '<div class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--orange"><span class="desc" style="color:white">Material Delay</span><div class="icon" ><i class="zmdi animated infinite wobble zmdi-shopping-cart"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><div style="display:none" id="check' + issue_occurrence_id +'"><i  class="fas fa-check" style="font-size:30px; color:green;float:right;"></i></div><p class="card-text"><strong>Issue Date : </strong>' + day + '</br><strong>Time : </strong> ' + date[1] + " " + date[2] + '</br><strong>Responsible Person :</strong> ' + issuedata[i].responciblepersonName + '</br><strong>Material : </strong>' + issuedata[i].matirial+'</p> <div class="text-right"><button  class="btn btn-success"  data-id="' + issue_occurrence_id + '" data-issue_id="' + issueid +'" onclick="myfunction(this)">Solved</button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
-
-
                                 }
                                 if (issueid == 3)//Technical Issue
                                 {
-
-
                                     issue = '<div class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--green"><span class="desc" style="color:white">Technical Issue</span><div class="icon" ><i class="fas fa-wrench"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><div style="display:none" id="check' + issue_occurrence_id +'"><i  class="fas fa-check" style="font-size:30px; color:green;float:right;"></i></div><p class="card-text"><strong>Issue Date : </strong>' + day + '</br><strong>Time : </strong>' + date[1] + " " + date[2] + '</br><strong>Responsible Person :</strong> ' + issuedata[i].responciblepersonName + '</p> <div class="text-right"> <button  class="btn btn-success"  data-id="' + issue_occurrence_id + '" data-issue_id="' + issueid +'" onclick="myfunction(this)">Solved</button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
                                 }
                                 if (issueid == 4)//Quility
@@ -185,52 +183,35 @@
                                 }
                                 if (issueid == 5)//IT/Software
                                 {
-
                                     issue = '<div class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--blue"><span class="desc" style="color:white">IT/Software Issue</span><div class="icon" ><i class="zmdi zmdi-windows"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><div style="display:none" id="check' + issue_occurrence_id +'"><i  class="fas fa-check" style="font-size:30px; color:green;float:right;"></i></div><p class="card-text"><strong>Issue Date : </strong>' + day + '</br><strong>Time : </strong>' + date[1] + " " + date[2] + '</br><strong>Responsible Person :</strong> ' + issuedata[i].responciblepersonName + '</p> <div class="text-right"> <button  class="btn btn-success"  data-id="' + issue_occurrence_id + '" data-issue_id="' + issueid +'"onclick="myfunction(this)">Solved</button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
-
                                 }
-
                                 divissue.append(issue)
+                                $('#loding_icon').hide();
                                 divissue.show('slow');
+                               
                                 if (responce_comment != '') {
                                     document.getElementById("check" + issue_occurrence_id).style.display = "block" }
-
                             }
-
-
-
                         }
-
-
                     }
                 }, error: function (r, e, w) {
                 }
             });
         }
-
     })
-
-
-
-
 </script>
-<script src="~/Scripts/bootstrap.min.js"></script>
+
 
 <script type="text/javascript">
 
 function myfunction(param)
 {
-
-
-
     var id = $(param).data('id');
     var issue_id = $(param).data('issue_id');
     var url = '@Url.Action("SolvedIssue", "Supervisor")?issueId=' + issue_id + '&issueOccourId=' + id+'&lineId='+'@ViewBag.lineId ';
-
     $.ajax({
         url: url,
         type: 'POST',
-
         success: function (issuedata) {
                 $.connection.hub.start()
             .done(function () {
@@ -240,10 +221,8 @@ function myfunction(param)
             .fail(function () { alert("ERROR!") });
             }
             });
-
 }
-
-var r = document.getElementById('result');
+var r = $('.search_input');
    $(function(){
   if ('speechSynthesis' in window) {
     speechSynthesis.onvoiceschanged = function() {}
@@ -261,67 +240,59 @@ var r = document.getElementById('result');
      }
     }
   });
-
-    startConverting ()
+ 
 	function startConverting ()
-    {
-
+    {    $("#listening").show();
+        getVoice("Hello "+ '@Session["name"]' +" I'm listening for you!");
 		if('webkitSpeechRecognition' in window){
 			var speechRecognizer = new webkitSpeechRecognition();
 			speechRecognizer.continuous = true;
 			speechRecognizer.interimResults = true;
 			speechRecognizer.lang = 'en-IN';
 			speechRecognizer.start();
-
 			var finalTranscripts = '';
-
 			speechRecognizer.onresult = function(event){
 				var interimTranscripts = '';
 				for(var i = event.resultIndex; i < event.results.length; i++){
 					var transcript = event.results[i][0].transcript;
-
 					if(event.results[i].isFinal){
 						finalTranscripts += transcript.trim();
-                           r.innerHTML =  transcript.trim()
+                           $("#listening").hide()
+                           r.val(transcript.trim())
                          VoiceAction( transcript.trim() )
-
 					}else{
 						interimTranscripts += transcript;
 					}
 				}
-
-
 			};
 			speechRecognizer.onerror = function (event) {
 			};
 		}else{
-			r.innerHTML = 'Your browser is not supported. If google chrome, please upgrade!';
+			r.value = 'Your browser is not supported. If google chrome, please upgrade!';
 		}
 	}
-
 		function playVoice(){
 			var msg = new SpeechSynthesisUtterance('Hello World');
 			window.speechSynthesis.speak(msg);
-
 			speechSynthesis.speak(new SpeechSynthesisUtterance('Hello World'));
 		}
         function VoiceAction(keyWord )
         {
             if(keyWord=="breakdown" || keyWord=="machine breakdown")
             {
-                debugger;
+                  $('.search_input').val('') 
                 window.location.href = '/CellEngineer/MachinBreakdown?lineid=' +  @ViewBag.lineId;
             }
             else if(keyWord=="technical" || keyWord=="technical issue")
-            {
+            {   $('.search_input').val('') 
                 window.location.href = '/CellEngineer/TechnicalIssue?lineid=' +  @ViewBag.lineId;
             }
             else if(keyWord=="material" || keyWord=="material delay")
-            {
+            {   $('.search_input').val('') 
                 window.location.href = '/CellEngineer/MaterialDelay?lineid=' +  @ViewBag.lineId;
             }
             else if(keyWord=="it" || keyWord=="it issue")
-            {
+            {   $('.search_input').val('') 
                 window.location.href = '/CellEngineer/ITIssue?lineid=' +  @ViewBag.lineId;
             }
             else if(keyWord=="what is your name" || keyWord=="name"|| keyWord=="what's your name")
@@ -332,15 +303,20 @@ var r = document.getElementById('result');
             {
                   getVoice("Hello "+ '@Session["name"]' +' How are you!');
             }
-          else if(keyWord=="show me today's summary" || keyWord=="summary"|| keyWord=="today"  )
+           else if(keyWord=="who am I" || keyWord=="hi" || keyWord=="how are you" || keyWord=="hello how are you")
             {
+                  getVoice("You are "+ '@Session["name"]' +'. And you are a '+ '@Session["Role"]'+ ' of Flintec Transducers');
+            }
+          else if(keyWord=="show me today's summary" || keyWord=="summary"|| keyWord=="today" ||keyWord=="show me today summary"||keyWord=="show me today issues" )
+            { 
+                getVoice("wait a second I will find it for you");
                 var url = '@Url.Action("GetIssues", "Supervisor")';
                 $.ajax({
                 url: url,
                     type: 'GET',
                     datatype: 'json',
                     success: function (issuedata) {
-                             showIssues(issuedata) 
+                             showIssues(issuedata)
                              },
                     error: function () {alert("Error!")}
                 });
@@ -349,45 +325,50 @@ var r = document.getElementById('result');
            {
                  getVoice("Sorry! I don't know that command.");
            }
-
-
-
+       setTimeout(function(){   
+                   $('.search_input').val('') 
+                  $("#listening").show()}, 3000);
+               
         }
-    
 
-
-$('document').ready(function() {
-  function  showIssues(issuedata)
+function showIssues(issuedata)
     {
-     $(".bd-example-modal-lg").modal("show");
+    var options = {
+            "backdrop" : "static",
+            "show":true
+        }
+   var issueBody=$("#issue_body")
+   issuedata = $.parseJSON(issuedata);
+    issueBody.empty()
+    var count=0;
+                    if (issuedata.length > 0) {
+
+                        for (var i = 0; i < issuedata.length; i++) 
+                         {
+                           if(issuedata[i].issue_satus=="1")
+                            {
+                                var row='<tr><td>'+i+'</td><td>'+issuedata[i].issueDate+'</td><td>'+issuedata[i].lineName+'</td><td>'+issuedata[i].issueName+'</td><td>'+issuedata[i].responciblepersonName+'</td><td>'+i+'</td></tr>'
+                                count++;
+                              issueBody.append(row)
+                            }
+                         
+                         }
+                      }
+        console.log("modal popup");
+        $('#modalPopup').modal(options);
+     getVoice("There are "+count+" issues today");
     }
-})
-
+    $('.searchbar').click(function() {
+      $( '.search_input').css( "padding", "0 10px" );
+      $( '.search_input').css( "width", "450px" );
+      $( '.search_input').css( "caret-color", "red" );
+      $( '.search_input').css( "transition", "width 0.4s linear" );
+      $( '.search_icon').css( "background", "white" );
+      $( '.search_icon').css( "color", "#e74c3c" );
+    
+});
 </script>
-<script src="~/Scripts/bootstrap.min.js"></script>
-<div class="container">
 
 
 
-    <div class="row">
-        <div class="input-field col s12">
-            <textarea id="message" class="materialize-textarea"></textarea>
 
-        </div>
-    </div>
-
-
-</div>
-
-<div id="modal1" class="modal">
-    <h4>Speech Synthesis not supported</h4>
-    <p>Your browser does not support speech synthesis.</p>
-    <p>We recommend you use Google Chrome.</p>
-    <div class="action-bar">
-        <a href="#" class="waves-effect waves-green btn-flat modal-action modal-close">Close</a>
-    </div>
-
-</div>
-
-
-<!--<script src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.95.1/js/materialize.min.js"></script> -->

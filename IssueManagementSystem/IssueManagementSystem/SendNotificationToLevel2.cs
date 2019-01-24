@@ -13,7 +13,7 @@ namespace IssueManagementSystem
     {
         public void Execute(IJobExecutionContext context)
         {
-            System.Diagnostics.Debug.WriteLine("Test");
+            System.Diagnostics.Debug.WriteLine("");
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
                DateTime current =DateTime.Now;
@@ -32,7 +32,7 @@ namespace IssueManagementSystem
                     var communicationInfo = db.issue_line_person.Where(x => x.line_id == items.line_line_id && x.issue_id == items.issue_issue_ID && x.person_level==2).OrderBy(x => x.levelOfResponsibility).ToList();
                     foreach (var i in communicationInfo)
                     {
-                       int responceTime = Int32.Parse(i.sendAlertAfter) ;
+                        int responceTime = Int32.Parse(i.sendAlertAfter) ;
                         if (timeInHours >= responceTime)
                         {
                            
@@ -70,7 +70,10 @@ namespace IssueManagementSystem
                    
                     System.Diagnostics.Debug.WriteLine(DD);
                 }
-                if (numberList != null) { com.setCD(numberList); }
+                if (numberList != null)
+                {
+                    com.setCD(numberList);
+                }
               
             }
 

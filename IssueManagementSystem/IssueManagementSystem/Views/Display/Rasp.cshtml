@@ -157,7 +157,7 @@
                 .done(function(){console.log("Its Works")
                 //   $.connection.ismHub.server.announce();
                 })
-                .fail(function(){alert("ERROR!")});
+                .fail(function(){ console.log("hub Error occurred");});
   $.connection.ismHub.client.announce=function(){location.reload();}
     $(document).ready(function () {
 
@@ -297,7 +297,7 @@
                         set_blinking_machines(obj);
                     },
                     error: function () {
-                        alert("Error occurred");
+                       console.log("Error occurred"); 
                     }
                 });
 
@@ -317,7 +317,8 @@
                         set_blinking_machines(obj);
                     },
                     error: function () {
-                        alert("Error occurred");
+                         console.log("Error occurred");
+                        
                     }
                 });
             }
@@ -375,7 +376,7 @@
             </script>
         </div>
     </div>
-</div>>
+</div>
 
 
 
