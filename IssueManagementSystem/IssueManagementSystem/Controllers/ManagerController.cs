@@ -7,6 +7,7 @@ using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
+
 namespace IssueManagementSystem.Controllers
 {
     public class ManagerController : Controller
@@ -55,26 +56,11 @@ namespace IssueManagementSystem.Controllers
             return Json(true);
         }
 
-
-        private class tempClass
-        {
-            public String machine_machine_id { get; set; }
-            public int count { get; set; }
-
-        }
-
-        private class tempClass4  
-        {
-            public String Search_Description { get; set; }
-            public int count { get; set; }
-
-        }
-
         [HttpPost]
         public JsonResult fillChart1(string barChart, string startDate, string endDate, string plantLocation)
         {
-            var chart1Data = new List<tempClass>();
-            var chart2Data = new List<tempClass4>();
+            var chart1Data = new List<TempClasses.tempClass>();
+            var chart2Data = new List<TempClasses.tempClass4>();
 
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
@@ -86,7 +72,7 @@ namespace IssueManagementSystem.Controllers
                                     GROUP BY issue_occurrence.machine_machine_id  ORDER BY count Desc";
 
                     System.Diagnostics.Debug.Print(query);
-                    chart1Data = db.Database.SqlQuery<tempClass>(query).ToList();
+                    chart1Data = db.Database.SqlQuery<TempClasses.tempClass>(query).ToList();
                     return Json(chart1Data, JsonRequestBehavior.AllowGet);
                 }
 
@@ -101,24 +87,12 @@ namespace IssueManagementSystem.Controllers
                                     GROUP BY FLINTEC.dbo.FLINTEC$Item.[Search Description]
                                     ORDER BY count Desc";
 
-                    chart2Data = db.Database.SqlQuery<tempClass4>(query).ToList();
+                    chart2Data = db.Database.SqlQuery<TempClasses.tempClass4>(query).ToList();
                     return Json(chart2Data, JsonRequestBehavior.AllowGet);
                 }
 
                 return Json(chart1Data, JsonRequestBehavior.AllowGet);
             }
-        }
-
-
-        private class tempClass2
-        {
-            public DateTime issue_date { get; set; }
-            public String issue { get; set; }
-            public String machine_machine_id { get; set; }
-            public String material_id { get; set; }
-            public String Name { get; set; }
-            public int DateDiff { get; set; }
-
         }
 
         [HttpPost]
@@ -141,18 +115,12 @@ namespace IssueManagementSystem.Controllers
                                  AND issue_occurrence.issue_date BETWEEN '" + startDate + @"' AND '" + endDate + @"' 
                                 ORDER BY DateDiff DESC";
 
-                var chart1Data = db.Database.SqlQuery<tempClass2>(query).ToList();
+                var chart1Data = db.Database.SqlQuery<TempClasses.tempClass2>(query).ToList();
 
                
 
                 return Json(chart1Data, JsonRequestBehavior.AllowGet);
             }
-        }
-
-        private class tempClass3
-        {
-            public String issue { get; set; }
-            public int count { get; set; }
         }
 
         [HttpPost]
@@ -165,35 +133,22 @@ namespace IssueManagementSystem.Controllers
                                  WHERE issue_occurrence.location IN ('" + plantLocation + @"') AND  issue_date BETWEEN  '" + startDate + @"' AND '" + endDate + @"' 
                                  AND issues.issue_id = issue_occurrence.issue_issue_ID GROUP BY issue";
 
-                var chart1Data = db.Database.SqlQuery<tempClass3>(query).ToList();
+                var chart1Data = db.Database.SqlQuery<TempClasses.tempClass3>(query).ToList();
                 return Json(chart1Data, JsonRequestBehavior.AllowGet); 
             }
         }
 
-        private class tempClass5 {
-            public DateTime issue_date {get; set;}
-            public int issue_occurrence_id {get; set;}
-            public String issue {get;set;}
-            public String line_name {get; set;}
-            public String issue_satus {get; set;}
-            public String location { get; set; }
-            public String description { get; set; }
-            public int responsible_person_emp_id { get; set; }
-        }
 
         [HttpPost]
         public JsonResult loadIssueList() {
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
-                String query = @"SELECT issue_occurrence.issue_date,
-                                 issue_occurrence.issue_occurrence_id,
-                                 issues.issue,lines.line_name,issue_occurrence.issue_satus,
-                                 issue_occurrence.location,issue_occurrence.description,issue_occurrence.responsible_person_emp_id
-                                 FROM issue_occurrence,lines,issues WHERE
-                                 lines.line_id = issue_occurrence.line_line_id AND
-                                 issues.issue_id LIKE issue_occurrence.issue_issue_ID";
+                String query = @"SELECT (lines.department_id)AS dep_occured,issues.issue,lines.line_name,issue_occurrence.* 
+                                FROM issue_occurrence,lines,issues WHERE
+                                lines.line_id = issue_occurrence.line_line_id AND
+                                issues.issue_id = issue_occurrence.issue_issue_ID";
 
-                var data = db.Database.SqlQuery<tempClass5>(query).ToList();
+                var data = db.Database.SqlQuery<TempClasses.tempClass5>(query).ToList();//dep_occured
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
         } 

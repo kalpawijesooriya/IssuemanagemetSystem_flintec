@@ -206,6 +206,7 @@
     <Compile Include="Controllers\VoiceController.cs" />
     <Compile Include="Hubs\BreakeHub.cs" />
     <Compile Include="Models\BreakeDownListener.cs" />
+    <Compile Include="Models\TempClasses.cs" />
     <Compile Include="Models\department.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
