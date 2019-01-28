@@ -42,7 +42,7 @@ namespace IssueManagementSystem
                             using (BigRedEntities BR = new BigRedEntities())
                             {
                                 var responsiblePersonInfo = BR.tbl_PPA_User.Where(y => y.EmployeeNumber == items.responsible_person_emp_id).FirstOrDefault();
-                                string msg = "Good morning!@@ "+ issueInfo.issue1 + " issue is not resolved @ Line : " + lineInfo.line_name + " @ Material : " + items.material_id + "@ Responsible person : " + responsiblePersonInfo.Name + " @ Thank You!";
+                                string msg = "Good morning!@@ "+ issueInfo.issue1 + " issue is not resolved @ Line : " + lineInfo.line_name + "@ Responsible person : " + responsiblePersonInfo.Name + " @ Thank You!";
 
                                
                                 if (items.material_id != null)

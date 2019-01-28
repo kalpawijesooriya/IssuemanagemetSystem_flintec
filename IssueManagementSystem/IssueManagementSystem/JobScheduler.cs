@@ -15,7 +15,7 @@ namespace IssueManagementSystem
 
             ITrigger trigger1 = TriggerBuilder.Create()
                 .WithDescription("trigger1")
-                .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(9, 36))
+                .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(11,41))
                 .Build();
 
             //ITrigger trigger = TriggerBuilder.Create()

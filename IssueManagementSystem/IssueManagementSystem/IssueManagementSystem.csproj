@@ -353,6 +353,8 @@
     <Content Include="Content\Display\css\bootstrap-reboot.min.css" />
     <Content Include="Content\Display\css\bootstrap.css" />
     <Content Include="Content\Display\css\bootstrap.min.css" />
+    <Content Include="Content\flipclock.css" />
+    <Content Include="Scripts\flipclock.js" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\font-face.css" />
     <Content Include="Content\fontawesome-all.min.css" />

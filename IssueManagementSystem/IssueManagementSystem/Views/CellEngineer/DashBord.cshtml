@@ -26,8 +26,8 @@
     <section class="au-breadcrumb2">
         
         <div class="container">
-            <div class="row">
-                <div class="col-md-12">
+            <div class="row justify-content-between">
+                <div class="col-4">
                     <div class="au-breadcrumb-content">
                         <div class="au-breadcrumb-left">
                             <span class="au-breadcrumb-span">You are here:</span>
@@ -47,17 +47,17 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="container h-100">
-                            <div class="d-flex justify-content h-100"  style="float:right">
-                                <div class="searchbar">
-                                    <img id="listening" src="~/Content/images/Ripple-1.8s-34px.svg" ><input class="search_input" type="text" name="" placeholder="Listening....">
-                                    <button onclick="startConverting()" class="search_icon"><i class="fa fa-microphone"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                        
-
                     </div>
+                </div>
+                <div class="col-8" >
+                    <div class="container h-100">
+                        <div class="d-flex justify-content h-100" style="float:right">
+                            <div class="searchbar">
+                                <img id="listening" src="~/Content/images/Ripple-1.8s-34px.svg"><input class="search_input" type="text" name="" placeholder="Listening....">
+                                <button onclick="startConverting()" class="search_icon"><i class="fa fa-microphone"></i></button>
+                            </div>
+                         </div>
+                     </div>
                 </div>
             </div>
         </div>
@@ -310,7 +310,7 @@ var r = $('.search_input');
           else if(keyWord=="show me today's summary" || keyWord=="summary"|| keyWord=="today" ||keyWord=="show me today summary"||keyWord=="show me today issues" )
             { 
                 getVoice("wait a second I will find it for you");
-                var url = '@Url.Action("GetIssues", "Supervisor")';
+                var url = '@Url.Action("GetIssues", "Voice")';
                 $.ajax({
                 url: url,
                     type: 'GET',
@@ -358,7 +358,36 @@ function showIssues(issuedata)
         $('#modalPopup').modal(options);
      getVoice("There are "+count+" issues today");
     }
-    $('.searchbar').click(function() {
+function showLastMonthIssues(issuedata)
+    {
+    var options = {
+            "backdrop" : "static",
+            "show":true
+     }
+   var issueBody=$("#issue_body")
+   issuedata = $.parseJSON(issuedata);
+   issueBody.empty()
+    var count=0;
+    if (issuedata.length > 0) 
+    {
+
+        for (var i = 0; i < issuedata.length; i++) 
+            {
+            if(issuedata[i].issue_satus=="1")
+            {
+                var row='<tr><td>'+i+'</td><td>'+issuedata[i].issueDate+'</td><td>'+issuedata[i].lineName+'</td><td>'+issuedata[i].issueName+'</td><td>'+issuedata[i].responciblepersonName+'</td><td>'+i+'</td></tr>'
+                count++;
+                issueBody.append(row)
+            }
+                         
+            }
+    }
+     console.log("modal popup");
+     $('#modalPopup').modal(options);
+     getVoice("There are "+count+" issues today");
+ }
+
+$('.searchbar').click(function() {
       $( '.search_input').css( "padding", "0 10px" );
       $( '.search_input').css( "width", "450px" );
       $( '.search_input').css( "caret-color", "red" );
