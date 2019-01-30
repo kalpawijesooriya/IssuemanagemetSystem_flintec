@@ -53,7 +53,7 @@ namespace IssueManagementSystem.Models
             public String responsible_person_confirm_feedback { get; set; }
             public Nullable<DateTime> solved_date { get; set; }
             public Nullable<DateTime> commented_date { get; set; }
-            public Nullable<int> manager_notifi_status { get; set; }
+            public Nullable<int> notification_status { get; set; }
             public String department { get; set; }
             public String solved_emp { get; set; }
             public String buzzer_off_by { get; set; }

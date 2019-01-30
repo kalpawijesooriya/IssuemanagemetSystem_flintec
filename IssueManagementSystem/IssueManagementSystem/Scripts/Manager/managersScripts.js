@@ -82,13 +82,12 @@ function loadTableData(){
                                 tempArr.push(i.responsible_person_confirm_feedback);  //15
                                 tempArr.push(i.solved_date);                          //16
                                 tempArr.push(i.commented_date);                       //17
-                                tempArr.push(i.manager_notifi_status);                //18
-                                tempArr.push(i.department);                           //19
-                                tempArr.push(i.solved_emp);                           //20
-                                tempArr.push(i.buzzer_off_by);                        //21
-                                tempArr.push(i.buzzer_off_time);                      //22
-                                tempArr.push(i.dep_occured);                          //23
-
+                                tempArr.push(i.department);                           //18
+                                tempArr.push(i.solved_emp);                           //19
+                                tempArr.push(i.buzzer_off_by);                        //20
+                                tempArr.push(i.buzzer_off_time);                      //21
+                                tempArr.push(i.dep_occured);                          //22
+                                tempArr.push(i.notification_status);                  //23
                                 data_obj.push(tempArr);
                             });
                 },
@@ -207,12 +206,12 @@ function filterTableData(){
                                 tempArr.push(i.responsible_person_confirm_feedback);
                                 tempArr.push(i.solved_date);
                                 tempArr.push(i.commented_date);
-                                tempArr.push(i.manager_notifi_status);
                                 tempArr.push(i.department);
                                 tempArr.push(i.solved_emp);
                                 tempArr.push(i.buzzer_off_by);
                                 tempArr.push(i.buzzer_off_time);
                                 tempArr.push(i.dep_occured);
+                                tempArr.push(i.notification_status); 
 
                                 data_obj.push(tempArr);
                                 flag = 1;
@@ -283,14 +282,14 @@ function loadAccordionTable(obj)
 //responsible_person_confirm_feedback //13
 //solved_date                         //14
 //commented_date                      //15
-//manager_notifi_status               //16
-//department                          //17
-//solved_emp                          //18
-//buzzer_off_by                       //19
-//buzzer_off_time                     //20
-//dep_occured                         //21
+//department                          //16
+//solved_emp                          //17
+//buzzer_off_by                       //18
+//buzzer_off_time                     //19
+//dep_occured                         //20
+//notification_status                 //21
 
-function createAccordionLine(accordion,date,id,issue,plant,line,status,desc,resp,matID,machID,linID,issID,respStatus,respFeed,solDate,comDate,manNotStatus,dept,solEmp,buzOffBy,buzOffT,deptOccrd){
+function createAccordionLine(accordion,date,id,issue,plant,line,status,desc,resp,matID,machID,linID,issID,respStatus,respFeed,solDate,comDate,dept,solEmp,buzOffBy,buzOffT,deptOccrd,notfStatus){
 
     var dateDIV  =  document.createElement('div');
     var idDIV    =  document.createElement('div');
@@ -365,9 +364,6 @@ function createAccordionLine(accordion,date,id,issue,plant,line,status,desc,resp
     var div_1_row =  document.createElement('div');
     var eye_span =  document.createElement('span');
 
-    var notification_btn_span = document.createElement('span');
-    var notification_btn =  document.createElement('input');
-
     div_1_left.appendChild(p1);
     div_1_left.appendChild(p2);
     div_1_left.appendChild(eye_span);
@@ -386,8 +382,7 @@ function createAccordionLine(accordion,date,id,issue,plant,line,status,desc,resp
     div_1_right.appendChild(p14);
     div_1_right.appendChild(p15);
     div_1_right.appendChild(p16);
-    notification_btn_span.appendChild(notification_btn);
-    div_1_right.appendChild(notification_btn_span);
+
 
     div_1_container.appendChild(div_1_row);
     div_1_row.appendChild(div_1_left);
@@ -398,16 +393,43 @@ function createAccordionLine(accordion,date,id,issue,plant,line,status,desc,resp
     div_1_left.setAttribute("class","col-md-6");
     div_1_right.setAttribute("class","col-md-6");
 
-    notification_btn_span.title = "Turn on/off SMS,Call,Email notifications";
-    notification_btn_span.setAttribute("data-toggle","tooltip");
-    notification_btn.type="checkbox";
-    notification_btn.setAttribute('onChange',"notificationOnOff('"+issue+"')");
-    notification_btn.setAttribute("class","myCheckbox");
-    notification_btn.dataset.toggle = "toggle";
-    notification_btn.dataset.on = "<i class='fas fa-bell fa-2x'>&nbspon</i>";
-    notification_btn.dataset.off = "<i class='fas fa-bell-slash fa-2x'>&nbspoff&nbsp&nbsp</i>";
-    //notification_btn.setAttribute("data-on","<i class='fas fa-bell fa-2x'>&nbspon</i>");
-    //notification_btn.setAttribute("data-off","<i class='fas fa-bell-slash fa-2x'>&nbspoff&nbsp&nbsp</i>");
+  console.log(document.getElementById('hidden_userID').innerHTML+" , "+issue+" ,  "+line);
+
+        $.ajax({
+        type:"POST",
+        dataType:'text',
+        async:false,
+        url:'/Manager/checkNotificationList_formanagers',
+        data:{empID:document.getElementById('hidden_userID').innerHTML,issue:issue,line:line},
+        success:function(flag){
+
+            var flagVal = flag;
+            console.log(flagVal);
+
+            if(flagVal == 'true'){
+                    
+                var notification_btn_span = document.createElement('span');
+                var notification_btn =  document.createElement('input');
+
+                notification_btn_span.appendChild(notification_btn);
+                div_1_right.appendChild(notification_btn_span);
+
+                notification_btn_span.title = "Turn on/off SMS,Call,Email notifications";
+                notification_btn_span.setAttribute("data-toggle","tooltip");
+                notification_btn.type="checkbox";
+                notification_btn.setAttribute('onChange',"notificationOnOff('"+id+"')");
+                notification_btn.setAttribute("class","myCheckbox");
+                notification_btn.dataset.toggle = "toggle";
+                notification_btn.dataset.on = "<i class='fas fa-bell fa-2x'>&nbspon</i>";
+                notification_btn.dataset.off = "<i class='fas fa-bell-slash fa-2x'>&nbspoff&nbsp&nbsp</i>";
+            }
+
+        },
+        error:function(){
+             console.log("Error");
+        }
+        });
+
 
     detailsDIV.appendChild(div_1_container);
 
@@ -840,15 +862,14 @@ function topCardClick(issue_name){
   
 }
 
-function notificationOnOff(issue){
+function notificationOnOff(issue_occurrence_id){
 
         var issue_line_person_id = document.getElementById('hidden_userID').innerHTML;
-        
         $.ajax({
             type: "POST",
             dataType: 'text',
             url: "/Manager/notificationOnOff",
-            data: { issue_line_person_id:issue_line_person_id,issue:issue},
+            data: { issue_line_person_id:issue_line_person_id,issue_occurrence_id:issue_occurrence_id},
             success: function (feedback) {
                     alert(feedback);
             },

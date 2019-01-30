@@ -442,19 +442,7 @@
       <DependentUpon>BigRed.edmx</DependentUpon>
       <LastGenOutput>BigRed.cs</LastGenOutput>
     </Content>
-
-    <Content Include="Models\IssueManagementSystem.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>IssueManagementSystem.edmx</DependentUpon>
-      <LastGenOutput>IssueManagementSystem.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\IssueManagementSystem.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>IssueManagementSystem.edmx</DependentUpon>
-      <LastGenOutput>IssueManagementSystem.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\AdminScripts\select2-min.js" />
-
     <Content Include="Scripts\animsition.min.js" />
     <Content Include="Scripts\bootstrap-progressbar.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
