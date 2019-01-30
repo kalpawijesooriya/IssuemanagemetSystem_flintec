@@ -407,11 +407,13 @@
         </div>
     </section>
     <!-- END DATA TABLE-->
-    <script src="~/Scripts/jquery-3.3.1.slim.min.js"></script>
-    <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
-    <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
-    <script src="~/signalr/Hubs"></script>
-    <script>
+
+</div>
+<script src="~/Scripts/jquery-3.3.1.slim.min.js"></script>
+<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
+<script src="~/signalr/Hubs"></script>
+<script>
     $("#submit").click(function () {
  $.connection.hub.start()//Refresh Screen
                 .done(function () {
@@ -420,5 +422,4 @@
               }).fail(function () { alert("Can't Refresh Your Line Screen! Plese Inform IT Department!") });//return to dashbord
 
     });
-    </script>
-</div>
+</script>

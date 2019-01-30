@@ -74,8 +74,11 @@
     </section>
     <section class="welcome p-t-10" style="padding-top:50px;padding-bottom:50px">
         <div class="container-fluid">
-            <div class="row" id="divIssue" style="margin: auto;">
+            <div class="text-center">
+                <img src="~/Content/images/loding.svg" id="loding_icon">
+            </div>
 
+            <div class="row" id="divIssue" style="margin: auto;">
 
             </div>
 
@@ -179,7 +182,9 @@
                                
 
                                 divissue.append(issue)
+                                $('#loding_icon').hide();
                                 divissue.show('slow');
+                                      
                                 if (responce_comment != '') {
                                     document.getElementById("check" + issue_occurrence_id).style.display = "block"
                                 }

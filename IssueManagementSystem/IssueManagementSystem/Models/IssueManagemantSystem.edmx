@@ -73,7 +73,6 @@ warning 6002: The table/view 'issue_management_system.dbo.issue_line_person' doe
           <Property Name="responsible_person_confirm_feedback" Type="varchar(max)" />
           <Property Name="solved_date" Type="datetime" />
           <Property Name="commented_date" Type="datetime" />
-          <Property Name="manager_notifi_status" Type="int" />
           <Property Name="department" Type="varchar(max)" />
           <Property Name="solved_emp_id" Type="int" />
           <Property Name="buzzer_off_by" Type="int" />
@@ -173,6 +172,15 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           </Key>
           <Property Name="material" Type="varchar" MaxLength="45" />
           <Property Name="material_id" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="notification_handling">
+          <Key>
+            <PropertyRef Name="issue_occurrence_id" />
+            <PropertyRef Name="EmployeeNumber" />
+          </Key>
+          <Property Name="issue_occurrence_id" Type="int" Nullable="false" />
+          <Property Name="EmployeeNumber" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="notification_status" Type="int" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -275,6 +283,7 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <EntitySet Name="line_computer" EntityType="Self.line_computer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="line_map" EntityType="Self.line_map" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="line_supervisor" EntityType="Self.line_supervisor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="notification_handling" EntityType="Self.notification_handling" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_issue_feedback" EntityType="Self.tbl_issue_feedback" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Notifications" EntityType="Self.tbl_Notifications" Schema="dbo" store:Type="Tables" />
@@ -393,7 +402,6 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <Property Name="responsible_person_confirm_feedback" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="solved_date" Type="DateTime" Precision="3" />
           <Property Name="commented_date" Type="DateTime" Precision="3" />
-          <Property Name="manager_notifi_status" Type="Int32" />
           <Property Name="department" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="solved_emp_id" Type="Int32" />
           <Property Name="buzzer_off_by" Type="Int32" />
@@ -443,6 +451,15 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <Property Name="logged_in_time" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="supervisor_emp_id" Type="Int32" Nullable="false" />
           <Property Name="line_line_id" Type="Int32" />
+        </EntityType>
+        <EntityType Name="notification_handling">
+          <Key>
+            <PropertyRef Name="issue_occurrence_id" />
+            <PropertyRef Name="EmployeeNumber" />
+          </Key>
+          <Property Name="issue_occurrence_id" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="notification_status" Type="Int32" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -612,6 +629,7 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <EntitySet Name="line_computer" EntityType="Self.line_computer" />
           <EntitySet Name="line_map" EntityType="Self.line_map" />
           <EntitySet Name="line_supervisor" EntityType="Self.line_supervisor" />
+          <EntitySet Name="notification_handling" EntityType="Self.notification_handling" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="tbl_issue_feedback" EntityType="Self.tbl_issue_feedback" />
           <EntitySet Name="tbl_Notifications" EntityType="Self.tbl_Notifications" />
@@ -682,7 +700,6 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
                 <ScalarProperty Name="responsible_person_confirm_feedback" ColumnName="responsible_person_confirm_feedback" />
                 <ScalarProperty Name="solved_date" ColumnName="solved_date" />
                 <ScalarProperty Name="commented_date" ColumnName="commented_date" />
-                <ScalarProperty Name="manager_notifi_status" ColumnName="manager_notifi_status" />
                 <ScalarProperty Name="department" ColumnName="department" />
                 <ScalarProperty Name="solved_emp_id" ColumnName="solved_emp_id" />
                 <ScalarProperty Name="buzzer_off_by" ColumnName="buzzer_off_by" />
@@ -734,6 +751,15 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
                 <ScalarProperty Name="logged_in_time" ColumnName="logged_in_time" />
                 <ScalarProperty Name="supervisor_emp_id" ColumnName="supervisor_emp_id" />
                 <ScalarProperty Name="line_line_id" ColumnName="line_line_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="notification_handling">
+            <EntityTypeMapping TypeName="issue_management_systemModel.notification_handling">
+              <MappingFragment StoreEntitySet="notification_handling">
+                <ScalarProperty Name="issue_occurrence_id" ColumnName="issue_occurrence_id" />
+                <ScalarProperty Name="EmployeeNumber" ColumnName="EmployeeNumber" />
+                <ScalarProperty Name="notification_status" ColumnName="notification_status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

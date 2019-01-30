@@ -13,7 +13,7 @@ namespace IssueManagementSystem
     {
         public void Execute(IJobExecutionContext context)
         {
-            System.Diagnostics.Debug.WriteLine("Test");
+            System.Diagnostics.Debug.WriteLine("");
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
                DateTime current =DateTime.Now;
@@ -32,7 +32,7 @@ namespace IssueManagementSystem
                     var communicationInfo = db.issue_line_person.Where(x => x.line_id == items.line_line_id && x.issue_id == items.issue_issue_ID && x.person_level==2).OrderBy(x => x.levelOfResponsibility).ToList();
                     foreach (var i in communicationInfo)
                     {
-                       int responceTime = Int32.Parse(i.sendAlertAfter) ;
+                        int responceTime = Int32.Parse(i.sendAlertAfter) ;
                         if (timeInHours >= responceTime)
                         {
                            
@@ -42,7 +42,7 @@ namespace IssueManagementSystem
                             using (BigRedEntities BR = new BigRedEntities())
                             {
                                 var responsiblePersonInfo = BR.tbl_PPA_User.Where(y => y.EmployeeNumber == items.responsible_person_emp_id).FirstOrDefault();
-                                string msg = "Good morning!@@ "+ issueInfo.issue1 + " issue is not resolved @ Line : " + lineInfo.line_name + " @ Material : " + items.material_id + "@ Responsible person : " + responsiblePersonInfo.Name + " @ Thank You!";
+                                string msg = "Good morning!@@ "+ issueInfo.issue1 + " issue is not resolved @ Line : " + lineInfo.line_name + "@ Responsible person : " + responsiblePersonInfo.Name + " @ Thank You!";
 
                                
                                 if (items.material_id != null)
@@ -70,7 +70,10 @@ namespace IssueManagementSystem
                    
                     System.Diagnostics.Debug.WriteLine(DD);
                 }
-                if (numberList != null) { com.setCD(numberList); }
+                if (numberList != null)
+                {
+                    com.setCD(numberList);
+                }
               
             }
 

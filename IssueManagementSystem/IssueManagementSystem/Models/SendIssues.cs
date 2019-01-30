@@ -11,7 +11,7 @@ using System.Web.Script.Serialization;
 
 namespace IssueManagementSystem.Models
 {
-    public static class IssueService 
+    public static class IssueService
     {
         
         static readonly string connString = ConfigurationManager.ConnectionStrings["issue_management_systemEntities2"].ToString();
@@ -56,8 +56,11 @@ namespace IssueManagementSystem.Models
                             {
                                 int enpId = (int)reader["responsible_person_emp_id"];
                                 int lineId = (int)reader["line_line_id"];
-                             
+                                int issueId = (int)reader["issue_issue_ID"];
+
+
                                 var lineinfo = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
+                                var issueInfo = db.issues.Where(x => x.issue_id == issueId).FirstOrDefault();
                                 using (BigRedEntities BE = new BigRedEntities())
                                 {
                                   var  userInfo = BE.tbl_PPA_User.Where(x => x.EmployeeNumber == enpId).FirstOrDefault();
@@ -65,13 +68,14 @@ namespace IssueManagementSystem.Models
 
                                     var material_id = reader["material_id"] != DBNull.Value ? (string)reader["material_id"] : "";
                                     string matirialName = null;
+                                    string issueName = null;
                                     if (material_id != "")
                                     {
                                         using (FLINTEC_Item_dbContext context = new FLINTEC_Item_dbContext())
                                         {
                                             var matirialInfo = context.FLINTEC_Items.Where(x => x.No_ == material_id).FirstOrDefault();
                                             matirialName = matirialInfo.Search_Description;
-
+                                           
                                         }
                                     }
 
@@ -96,7 +100,7 @@ namespace IssueManagementSystem.Models
                                         responciblepersonName = userInfo.Name,
                                         lineName = lineinfo.line_name,
                                         buzzer_off_by = reader["buzzer_off_by"] == System.DBNull.Value ? default(int) : (int)reader["buzzer_off_by"],
-                                       
+                                        issueName = issueInfo.issue1,
                                     });
                                 }
                             }

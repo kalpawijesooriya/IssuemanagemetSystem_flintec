@@ -121,16 +121,16 @@ namespace IssueManagementSystem.Controllers
         }
         public void storesbuzzerOn()
         {
-            string url = "http://192.168.40.246/led.php?on=1";
-          //  string url = "http://192.168.137.238/led.php?on=1";
+            // string url = "http://192.168.40.246/led.php?on=1";
+            string url = "http://192.168.137.238/led.php?on=1";
             HttpWebRequest webReq = (HttpWebRequest)WebRequest.Create(string.Format(url));
             webReq.Method = "GET";
             HttpWebResponse webResponse = (HttpWebResponse)webReq.GetResponse();
         }
         public void storesbuzzerOff()
         {
-             string url = "http://192.168.40.246/led.php?off=1";
-           // string url = "http://192.168.137.238/led.php?off=1";
+            //  string url = "http://192.168.40.246/led.php?off=1";
+            string url = "http://192.168.137.238/led.php?off=1";
             HttpWebRequest webReq = (HttpWebRequest)WebRequest.Create(string.Format(url));
             webReq.Method = "GET";
             HttpWebResponse webResponse = (HttpWebResponse)webReq.GetResponse();

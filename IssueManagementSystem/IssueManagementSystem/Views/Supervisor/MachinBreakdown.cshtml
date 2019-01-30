@@ -105,7 +105,7 @@
                  $.connection.ismHub.server.announce();
               }).fail(function () { alert("Can't Refresh Your Line Screen! Plese Inform IT Department!") });//return to dashbord
 
-              window.location.href = '@Url.Action("DashBord", "CellEngineer")?lineid=@ViewBag.lineId';
+              window.location.href = '@Url.Action("selectIssue", "Supervisor")'; //return to dashbord
             },
             error: function (feedback) {
                 alert(feedback);
