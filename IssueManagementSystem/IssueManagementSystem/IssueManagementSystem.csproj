@@ -442,6 +442,7 @@
       <DependentUpon>BigRed.edmx</DependentUpon>
       <LastGenOutput>BigRed.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\AdminScripts\select2-min.js" />
     <Content Include="Scripts\animsition.min.js" />
     <Content Include="Scripts\bootstrap-progressbar.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -621,7 +622,6 @@
     <None Include="Properties\PublishProfiles\FolderProfile5.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile6.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Scripts\AdminScripts\select2-min.js" />
     <Content Include="Scripts\AdminScripts\notificationsManagement.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-confirm.min.js" />

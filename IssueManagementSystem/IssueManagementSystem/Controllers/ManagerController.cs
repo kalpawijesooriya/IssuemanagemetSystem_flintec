@@ -28,11 +28,11 @@ namespace IssueManagementSystem.Controllers
                 else
                 {
                     string location = Session["location"].ToString();
-                    ViewBag.BrakedownCount = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 1 && location == x.location).Count();
-                    ViewBag.MaterialDelayCount = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 2 && x.location == location).Count();
-                    ViewBag.TechnicalIssue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 3 && x.location == location).Count();
-                    ViewBag.QualityIsuue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 4 && x.location == location).Count();
-                    ViewBag.ITIsuue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 5 && x.location == location).Count();
+                    ViewBag.BrakedownCount = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 1).Count();
+                    ViewBag.MaterialDelayCount = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 2).Count();
+                    ViewBag.TechnicalIssue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 3).Count();
+                    ViewBag.QualityIsuue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 4 ).Count();
+                    ViewBag.ITIsuue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 5 ).Count();
                 }
             }
             return View();
@@ -143,15 +143,100 @@ namespace IssueManagementSystem.Controllers
         public JsonResult loadIssueList() {
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
-                String query = @"SELECT (lines.department_id)AS dep_occured,issues.issue,lines.line_name,issue_occurrence.* 
-                                FROM issue_occurrence,lines,issues WHERE
-                                lines.line_id = issue_occurrence.line_line_id AND
-                                issues.issue_id = issue_occurrence.issue_issue_ID";
+                String query = @"SELECT(lines.department_id)AS dep_occured,issues.issue,lines.line_name,f.issue_occurrence_id,issue_date,g.Name,
+                                CONCAT(FLINTEC.dbo.FLINTEC$Item.No_,'  ',FLINTEC.dbo.FLINTEC$Item.Description) AS material_id,description,
+                                machine_machine_id,line_line_id,issue_issue_ID,issue_satus,f.location,responsible_person_confirm_status,
+                                responsible_person_confirm_feedback,solved_date,commented_date,f.department,
+                                (SELECT  a.Name FROM BigRed.dbo.tbl_PPA_User a  WHERE a.UserName LIKE f.solved_emp_id ) AS solved_emp,
+                                (SELECT  i.Name FROM BigRed.dbo.tbl_PPA_User i WHERE i.UserName LIKE f.buzzer_off_by  ) AS buzzer_off_by
+                                ,buzzer_off_time,notification_status 
+
+                                FROM 
+
+                                issue_occurrence f,lines,issues,FLINTEC.dbo.FLINTEC$Item,BigRed.dbo.tbl_PPA_User g,notification_handling k
+
+                                WHERE
+
+                                lines.line_id = f.line_line_id AND issues.issue_id = f.issue_issue_ID AND
+                                (FLINTEC.dbo.FLINTEC$Item.No_ COLLATE SQL_Latin1_General_CP1_CS_AS LIKE f.material_id COLLATE SQL_Latin1_General_CP1_CS_AS)
+                                AND g.UserName LIKE f.responsible_person_emp_id
+                                AND k.EmployeeNumber = f.responsible_person_emp_id 
+                                AND k.issue_occurrence_id = f.issue_occurrence_id
+ 
+                                UNION 
+
+                                SELECT(lines.department_id)AS dep_occured,issues.issue,lines.line_name,e.issue_occurrence_id,issue_date,h.Name,
+                                (NULL) AS material_id,description,machine_machine_id,line_line_id,issue_issue_ID,issue_satus,
+                                e.location,responsible_person_confirm_status,responsible_person_confirm_feedback,solved_date,commented_date,
+                                e.department,
+                                (SELECT  c.Name FROM BigRed.dbo.tbl_PPA_User c WHERE c.UserName LIKE e.solved_emp_id  ) AS solved_emp,
+                                (SELECT  i.Name FROM BigRed.dbo.tbl_PPA_User i WHERE i.UserName LIKE e.buzzer_off_by  ) AS buzzer_off_by
+                                ,buzzer_off_time,notification_status 
+
+                                FROM
+
+                                issue_occurrence e,lines,issues,BigRed.dbo.tbl_PPA_User h,notification_handling n
+                                WHERE
+
+                                lines.line_id = e.line_line_id AND issues.issue_id = e.issue_issue_ID AND 
+                                h.UserName LIKE e.responsible_person_emp_id AND
+                                n.EmployeeNumber = e.responsible_person_emp_id AND
+                                n.issue_occurrence_id = e.issue_occurrence_id AND
+                                e.material_id IS NULL ORDER BY issue_date DESC";
 
                 var data = db.Database.SqlQuery<TempClasses.tempClass5>(query).ToList();//dep_occured
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
-        } 
+        }
+
+        [HttpPost]
+        public JsonResult notificationOnOff(string issue_line_person_id, string issue_occurrence_id)
+        {
+
+            /*
+              String query = @"UPDATE c SET  c.email = 0,c.call = 0,c.message = 0 FROM issue_line_person AS c ,issues,lines
+                  WHERE c.assigned_date = (
+                  SELECT MAX(d.assigned_date)
+                  FROM issue_line_person d,lines,issues 
+                  WHERE issues.issue_id = d.issue_id 
+                  AND lines.line_id = d.line_id
+                  AND lines.line_name ='"+line+@"' AND issues.issue = '"+issue+ @"' AND d.issue_line_person_id='"+issue_line_person_id+@"'
+                  )AND lines.line_name ='" + line+@"' AND issues.issue ='"+issue+ @"' AND c.issue_line_person_id='"+issue_line_person_id+@"'";
+            */
+
+            String query = @"UPDATE notification_handling 
+                            SET 
+                            notification_handling.notification_status='0'
+                            WHERE 
+                            notification_handling.issue_occurrence_id='" + issue_occurrence_id + @"' AND 
+                            notification_handling.EmployeeNumber='" + issue_line_person_id + @"'";
+
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+            {
+                db.Database.ExecuteSqlCommand(query);
+            }
+
+           return Json("Changes Updated", JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpPost]
+        public JsonResult checkNotificationList_formanagers(int empID, string issue, string line) {
+
+            String query = @"SELECT CASE WHEN
+                            (" + empID + @" IN(SELECT issue_line_person.EmployeeNumber FROM issue_line_person WHERE issue_line_person.issue_id = (SELECT issues.issue_id FROM issues  WHERE issue LIKE '" + issue + @"') AND issue_line_person.line_id = (SELECT lines.line_id FROM lines WHERE lines.line_name LIKE '" + line + @"')))
+                            THEN CAST(1 AS BIT)
+                            ELSE CAST(0 AS BIT) END";
+            
+            Boolean resultVar;
+                 
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+            {
+                resultVar = db.Database.SqlQuery<Boolean>(query).Single();
+            }
+            return Json(resultVar, JsonRequestBehavior.AllowGet);
+        }
+
 
     }
 

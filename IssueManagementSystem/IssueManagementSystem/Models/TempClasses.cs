@@ -44,7 +44,7 @@ namespace IssueManagementSystem.Models
             public String issue_satus { get; set; }
             public String location { get; set; }
             public String description { get; set; }
-            public Nullable<int> responsible_person_emp_id { get; set; }
+            public String Name { get; set; }
             public String material_id { get; set; }
             public String machine_machine_id { get; set; }
             public Nullable<int> line_line_id { get; set; }
@@ -53,10 +53,10 @@ namespace IssueManagementSystem.Models
             public String responsible_person_confirm_feedback { get; set; }
             public Nullable<DateTime> solved_date { get; set; }
             public Nullable<DateTime> commented_date { get; set; }
-            public Nullable<int> manager_notifi_status { get; set; }
+            public Nullable<int> notification_status { get; set; }
             public String department { get; set; }
-            public Nullable<int> solved_emp_id { get; set; }
-            public Nullable<int> buzzer_off_by { get; set; }
+            public String solved_emp { get; set; }
+            public String buzzer_off_by { get; set; }
             public Nullable<DateTime> buzzer_off_time { get; set; }
             public int dep_occured { get; set; }
         }
