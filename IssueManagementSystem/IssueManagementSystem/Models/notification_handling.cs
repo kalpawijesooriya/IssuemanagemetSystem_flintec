@@ -14,8 +14,9 @@ namespace IssueManagementSystem.Models
     
     public partial class notification_handling
     {
-        public int issue_occurrence_id { get; set; }
-        public string EmployeeNumber { get; set; }
+        public Nullable<int> issue_occurrence_id { get; set; }
+        public Nullable<int> EmployeeNumber { get; set; }
         public Nullable<int> notification_status { get; set; }
+        public int notification_handling_id { get; set; }
     }
 }

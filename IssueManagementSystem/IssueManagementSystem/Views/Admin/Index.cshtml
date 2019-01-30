@@ -35,7 +35,7 @@
                             <div class="ajax-button">
                                 <div class="fa fa-check done"></div>
                                 <div class="fa fa-close failed"></div>
-                                <input id="submit" class="submit" type="submit" value="Submit" />
+                                <button id="submit" class="btn-danger">Refresh Screen</button>
                             </div>
                         </div>
 
@@ -407,7 +407,6 @@
         </div>
     </section>
     <!-- END DATA TABLE-->
-
 </div>
 <script src="~/Scripts/jquery-3.3.1.slim.min.js"></script>
 <script src="~/Scripts/jquery.min.js"></script>
@@ -415,11 +414,10 @@
 <script src="~/signalr/Hubs"></script>
 <script>
     $("#submit").click(function () {
- $.connection.hub.start()//Refresh Screen
-                .done(function () {
-                 console.log("Worked")
-                 $.connection.ismHub.server.announce();
-              }).fail(function () { alert("Can't Refresh Your Line Screen! Plese Inform IT Department!") });//return to dashbord
-
+    $.connection.hub.start()//Refresh Screen
+    .done(function () {
+        console.log("Worked")
+        $.connection.ismHub.server.announce();
+    }).fail(function () { alert("Can't Refresh Your Line Screen! Plese Inform IT Department!") });//return to dashbord
     });
 </script>

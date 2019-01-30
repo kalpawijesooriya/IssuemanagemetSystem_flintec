@@ -104,7 +104,7 @@ namespace IssueManagementSystem.Controllers
         }
 
         [HttpPost] //add Breakedown to database
-        public ActionResult AddIssueBreakedown(issue_occurrence issueModel, string issueJson)
+        public ActionResult AddIssueBreakedown(issue_occurrence issueModel, string issueJson, notification_handling notification_HandlingModel)
         {
             var time = DateTime.Now;
             string current_time = time.ToString("yyyy-MM-dd HH:mm");//get today to string variable
@@ -160,7 +160,8 @@ namespace IssueManagementSystem.Controllers
                                 string callNote = line.line_name + " line Breakdown has occurred at " + time1;
                                 var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
                                 com.lightON("1", displayInfo.raspberry_ip_address);//turn on the Light
-                                sendCD(line_id, 1, msg, "Machine Breakdown has occurred", callNote, issue_occour_id);
+                                com.maintenancesbuzzerOn();
+                                sendCD(line_id, 1, msg, "Machine Breakdown has occurred", callNote, issue_occour_id, notification_HandlingModel);
                             }
                             ModelState.Clear();
                         }
@@ -178,7 +179,7 @@ namespace IssueManagementSystem.Controllers
         }
 
         [HttpPost]//add Tecnical Issues to database
-        public ActionResult AddIssueTechnical(string issueJson, issue_occurrence issueModel)
+        public ActionResult AddIssueTechnical(string issueJson, issue_occurrence issueModel, notification_handling notification_HandlingModel)
         {
             var time = DateTime.Now;
             string current_time = time.ToString("yyyy-MM-dd HH:mm");
@@ -227,7 +228,7 @@ namespace IssueManagementSystem.Controllers
                                 msg = msg.Replace("@", Environment.NewLine);
                                 string callNote = "Technical issue has occurred in " + line.line_name + " line at " + HHMM[0] + ":" + HHMM[1];
                                 com.lightON("3", displayInfo.raspberry_ip_address);//turn on the Light
-                                sendCD(line_id, 3, msg, "Tecnical Issue has occered", callNote, issue_occour_id);
+                                sendCD(line_id, 3, msg, "Tecnical Issue has occered", callNote, issue_occour_id, notification_HandlingModel);
 
                                 ModelState.Clear();
                             }
@@ -246,7 +247,7 @@ namespace IssueManagementSystem.Controllers
             return Content("Technical Issue Recorded", MediaTypeNames.Text.Plain);
         }
         [HttpPost]//add IT Issues to database
-        public ActionResult AddIssueIT(string issueJson, issue_occurrence issueModel)
+        public ActionResult AddIssueIT(string issueJson, issue_occurrence issueModel, notification_handling notification_HandlingModel)
         {
           
             var time = DateTime.Now;
@@ -296,7 +297,7 @@ namespace IssueManagementSystem.Controllers
                                     string callNote = "IT Software issue has occurred in " + line.line_name + " line at " + time1;
                                     var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
                                     com.lightON("5", displayInfo.raspberry_ip_address);//turn on the Light
-                                    sendCD(line_id, 5, msg, "IT/Software Issue has occered", callNote, issue_occour_id);
+                                    sendCD(line_id, 5, msg, "IT/Software Issue has occered", callNote, issue_occour_id, notification_HandlingModel);
                                 }
                                 ModelState.Clear();
                             
@@ -312,7 +313,7 @@ namespace IssueManagementSystem.Controllers
         }
 
         [HttpPost]//add Quality Issues to database
-        public ActionResult AddIssueQuality(issue_occurrence issueModel)
+        public ActionResult AddIssueQuality(issue_occurrence issueModel, notification_handling notification_HandlingModel)
         {
             int lineId = 1;
             var time = DateTime.Now;
@@ -352,7 +353,7 @@ namespace IssueManagementSystem.Controllers
                         string callNote = "Quality issue has occurred in " + line.line_name + " line at " + time1;
                         var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
                         com.lightON("4", displayInfo.raspberry_ip_address);//turn on the Light
-                        sendCD(lineId, 4, msg, "Quality Issue has occered", callNote, issue_occour_id);
+                        sendCD(lineId, 4, msg, "Quality Issue has occered", callNote, issue_occour_id, notification_HandlingModel);
                     }
                     ModelState.Clear();
                 }
@@ -363,7 +364,7 @@ namespace IssueManagementSystem.Controllers
 
 
         [HttpPost]//add Material Delay to database
-        public ActionResult AddMaterialDelay(string issueJson, issue_occurrence issueModel)
+        public ActionResult AddMaterialDelay(string issueJson, issue_occurrence issueModel ,notification_handling notification_HandlingModel)
         {
             
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) 
@@ -401,9 +402,12 @@ namespace IssueManagementSystem.Controllers
                             issueModel.location = item["location"].ToString();
                             issueModel.description = item["description"].ToString();
                             db.issue_occurrence.Add(issueModel);
+
+                          
                             db.SaveChanges();
                             var issue_occour_id = issueModel.issue_occurrence_id;
-                            System.Diagnostics.Debug.WriteLine("New Issue ID" + issue_occour_id);
+                            
+                          System.Diagnostics.Debug.WriteLine("New Issue ID" + issue_occour_id);
 
                             if (issueModel.issue_occurrence_id > 0)
                             {
@@ -414,7 +418,7 @@ namespace IssueManagementSystem.Controllers
                                 string callNote = "MaterialDelay has occurred in " + line.line_name + " line at " + time1;
                                 com.lightON("2", displayInfo.raspberry_ip_address);//turn on the Light
                                 com.storesbuzzerOn();
-                                sendCD(line_id, 2, msg, "MaterialDelay has occered", callNote, issue_occour_id);
+                                sendCD(line_id, 2, msg, "MaterialDelay has occered", callNote, issue_occour_id, notification_HandlingModel);
                                 ModelState.Clear();
                             }
                         }
@@ -429,7 +433,7 @@ namespace IssueManagementSystem.Controllers
             }
         }
 
-        private void sendCD(int? line_line_id, int issueId, string msg, string subject, string callNote,int  issue_occour_id)
+        private void sendCD(int? line_line_id, int issueId, string msg, string subject, string callNote,int  issue_occour_id, notification_handling notification_HandlingModel)
         {
             var time = DateTime.Now;
             string current_time = time.ToString("yyyy-MM-dd HH:mm");
@@ -450,18 +454,30 @@ namespace IssueManagementSystem.Controllers
                 }
                 using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
                 {
-                    var communicationInfo = db.issue_line_person.Where(x => x.line_id == line_line_id && x.issue_id == issueId &&x.person_level==1).OrderBy(x => x.levelOfResponsibility).ToList();
+                    var communicationInfo = db.issue_line_person.Where(x => x.line_id == line_line_id && x.issue_id == issueId ).OrderBy(x => x.levelOfResponsibility).ToList();
                     Queue numberList = new Queue();
                     foreach (var item in communicationInfo)
                     {
-                        using (BigRedEntities BR = new BigRedEntities())
+                        if (item.person_level == 2)
                         {
-                           
-                            var personInfo = BR.tbl_PPA_User.Where(y => y.EmployeeNumber == item.EmployeeNumber).FirstOrDefault();
-                            CommunicationData cd = new CommunicationData(personInfo.Phone, msg, personInfo.EMail, item.email, item.call, item.message, personInfo.EmployeeNumber, subject, callNote,item.callRepetitionTime,item.sendAlertAfter, issue_occour_id);
-                            numberList.Enqueue(cd);
-                          
+                            notification_HandlingModel.issue_occurrence_id = issue_occour_id;
+                            notification_HandlingModel.EmployeeNumber = item.EmployeeNumber;
+                            notification_HandlingModel.notification_status = 1;
+                            db.notification_handling.Add(notification_HandlingModel);
+                            db.SaveChanges();
                         }
+                        if (item.person_level == 1)
+                        {
+                            using (BigRedEntities BR = new BigRedEntities())
+                            {
+
+                                var personInfo = BR.tbl_PPA_User.Where(y => y.EmployeeNumber == item.EmployeeNumber).FirstOrDefault();
+                                CommunicationData cd = new CommunicationData(personInfo.Phone, msg, personInfo.EMail, item.email, item.call, item.message, personInfo.EmployeeNumber, subject, callNote, item.callRepetitionTime, item.sendAlertAfter, issue_occour_id);
+                                numberList.Enqueue(cd);
+
+                            }
+                        }
+                      
 
                     }
                     com.setCD(numberList);

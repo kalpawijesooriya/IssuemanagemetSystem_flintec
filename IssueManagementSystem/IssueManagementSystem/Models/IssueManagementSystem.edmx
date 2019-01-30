@@ -175,12 +175,12 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
         </EntityType>
         <EntityType Name="notification_handling">
           <Key>
-            <PropertyRef Name="issue_occurrence_id" />
-            <PropertyRef Name="EmployeeNumber" />
+            <PropertyRef Name="notification_handling_id" />
           </Key>
-          <Property Name="issue_occurrence_id" Type="int" Nullable="false" />
-          <Property Name="EmployeeNumber" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="issue_occurrence_id" Type="int" />
+          <Property Name="EmployeeNumber" Type="int" />
           <Property Name="notification_status" Type="int" />
+          <Property Name="notification_handling_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -454,12 +454,12 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
         </EntityType>
         <EntityType Name="notification_handling">
           <Key>
-            <PropertyRef Name="issue_occurrence_id" />
-            <PropertyRef Name="EmployeeNumber" />
+            <PropertyRef Name="notification_handling_id" />
           </Key>
-          <Property Name="issue_occurrence_id" Type="Int32" Nullable="false" />
-          <Property Name="EmployeeNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="issue_occurrence_id" Type="Int32" />
+          <Property Name="EmployeeNumber" Type="Int32" />
           <Property Name="notification_status" Type="Int32" />
+          <Property Name="notification_handling_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -760,6 +760,7 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
                 <ScalarProperty Name="issue_occurrence_id" ColumnName="issue_occurrence_id" />
                 <ScalarProperty Name="EmployeeNumber" ColumnName="EmployeeNumber" />
                 <ScalarProperty Name="notification_status" ColumnName="notification_status" />
+                <ScalarProperty Name="notification_handling_id" ColumnName="notification_handling_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
