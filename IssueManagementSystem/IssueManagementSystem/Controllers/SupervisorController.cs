@@ -139,7 +139,7 @@ namespace IssueManagementSystem.Controllers
                             issueModel.responsible_person_emp_id = resp_person.EmployeeNumber;
                             issueModel.location = item["location"].ToString();
                             issueModel.description = item["description"].ToString();
-                            issueModel.manager_notifi_status = 1;
+                        
                             issueModel.issue_date = date;
                             db.issue_occurrence.Add(issueModel);
                             db.SaveChanges();// end of the save
@@ -213,7 +213,7 @@ namespace IssueManagementSystem.Controllers
                             issueModel.responsible_person_emp_id = resp_person.EmployeeNumber;
                             issueModel.location = item["location"].ToString();
                             issueModel.description = item["description"].ToString();
-                            issueModel.manager_notifi_status = 1;
+                    
                             issueModel.issue_date = date;
                             db.issue_occurrence.Add(issueModel);
                             db.SaveChanges();// end of the save
@@ -282,7 +282,7 @@ namespace IssueManagementSystem.Controllers
                                 issueModel.responsible_person_emp_id = resp_person.EmployeeNumber;
                                 issueModel.location = item["location"].ToString();
                                 issueModel.description = item["description"].ToString();
-                                issueModel.manager_notifi_status = 1;
+                     
                                 db.issue_occurrence.Add(issueModel);
                                 db.SaveChanges();// end of the save
 

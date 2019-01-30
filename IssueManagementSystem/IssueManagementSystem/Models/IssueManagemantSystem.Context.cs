@@ -34,6 +34,7 @@ namespace IssueManagementSystem.Models
         public virtual DbSet<line_computer> line_computer { get; set; }
         public virtual DbSet<line_map> line_map { get; set; }
         public virtual DbSet<line_supervisor> line_supervisor { get; set; }
+        public virtual DbSet<notification_handling> notification_handling { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<tbl_issue_feedback> tbl_issue_feedback { get; set; }
         public virtual DbSet<tbl_Notifications> tbl_Notifications { get; set; }

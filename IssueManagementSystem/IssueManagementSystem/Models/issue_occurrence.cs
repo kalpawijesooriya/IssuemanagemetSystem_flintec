@@ -11,7 +11,7 @@ namespace IssueManagementSystem.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class issue_occurrence
     {
         public int issue_occurrence_id { get; set; }
@@ -28,7 +28,7 @@ namespace IssueManagementSystem.Models
         public string responsible_person_confirm_feedback { get; set; }
         public Nullable<System.DateTime> solved_date { get; set; }
         public Nullable<System.DateTime> commented_date { get; set; }
-        public Nullable<int> manager_notifi_status { get; set; }
+
         public string department { get; set; }
         public Nullable<int> solved_emp_id { get; set; }
         public Nullable<int> buzzer_off_by { get; set; }
