@@ -1,44 +1,14 @@
-﻿$('#plantSelectBox').select2({
+﻿$('select').select2({
     minimumResultsForSearch: -1,
     allowClear: false
-});
-
-$('#plantSelectBox2').select2({
-    minimumResultsForSearch: -1,
-    allowClear: false
-});
-
-$('#lineSelectBox').select2({
-    minimumResultsForSearch: -1,
-    allowClear: false,
-    //placeholder:"Select Line"
-});
-
-$('#dptSelectBox').select2({
-    minimumResultsForSearch: -1,
-    allowClear: false,
-   // placeholder:"Select Department"
-});
-
-$('#statusSelectBox').select2({
-    minimumResultsForSearch: -1,
-    allowClear: false,
-    //placeholder:"Select Status"
-});
-
-$('#issueSelectBox').select2({
-    minimumResultsForSearch: -1,
-    allowClear: false,
 });
 
 $(document).ready(function() {
+
         google.charts.load("current",{packages: ['corechart']});
         google.charts.setOnLoadCallback(drawChart1);
         google.charts.setOnLoadCallback(drawChart2);
         google.charts.setOnLoadCallback(drawChart3);
-        
-        loadTableData();
-        loadTablePage(1);
 
         $("#datetimepicker1").datepicker({
         });
@@ -46,10 +16,10 @@ $(document).ready(function() {
         $("#datetimepicker2").datepicker({
         });
 
-       $("#datetimepicker3").datepicker({
+        $("#datetimepicker3").datepicker({
         });
 
-      $("#datetimepicker4").datepicker({
+        $("#datetimepicker4").datepicker({
         });
 
         var d = new Date();
@@ -61,8 +31,14 @@ $(document).ready(function() {
         $("#datetimepicker3").datepicker().datepicker("setDate", d);
         $("#datetimepicker4").datepicker().datepicker("setDate",d2);
 
+
+
         filterByDate();
         createTable();
+
+        loadTableData();
+        loadTablePage(1);
+
 });
 
  var data_obj = new Array();
@@ -77,28 +53,42 @@ function loadTableData(){
             url:'/Manager/loadIssueList',
             data:{},
             success: function (data)
-                {   console.log(data);
-                    var dataArray = JSON.parse(data);
+                { 
+                        var dataArray = JSON.parse(data);
 
                         raw_data = dataArray;
 
                         dataArray.forEach(function (i) 
                             {
-
                                 var tempArr = new Array();
 
                                 var ele1 = i.issue_date.split('(')[1];
                                 ele1 = ele1.split(')')[0];
 
-                                tempArr.push(Unix_timestamp(ele1,'ymd'));
-                                tempArr.push(i.issue_occurrence_id);
-                                tempArr.push(i.issue);
-                                tempArr.push(i.line_name);
+                                tempArr.push(Unix_timestamp(ele1,'ymd'));              //1
+                                tempArr.push(i.issue_occurrence_id);                   //2
+                                tempArr.push(i.issue);                                 //3
+                                tempArr.push(i.line_name);                             //4
+                                if (i.issue_satus == '1') { tempArr.push('Unsolved');} //5
+                                if (i.issue_satus == '0') { tempArr.push('Solved'); }  //6
+                                tempArr.push(i.location);                              //7
+                                tempArr.push(i.description);                           //8
+                                tempArr.push(i.Name);                                  //9
+                                tempArr.push(i.material_id);                          //10
+                                tempArr.push(i.machine_machine_id);                   //11
+                                tempArr.push(i.line_line_id);                         //12
+                                tempArr.push(i.issue_issue_ID);                       //13
+                                tempArr.push(i.responsible_person_confirm_status);    //14
+                                tempArr.push(i.responsible_person_confirm_feedback);  //15
+                                tempArr.push(i.solved_date);                          //16
+                                tempArr.push(i.commented_date);                       //17
+                                tempArr.push(i.manager_notifi_status);                //18
+                                tempArr.push(i.department);                           //19
+                                tempArr.push(i.solved_emp);                           //20
+                                tempArr.push(i.buzzer_off_by);                        //21
+                                tempArr.push(i.buzzer_off_time);                      //22
+                                tempArr.push(i.dep_occured);                          //23
 
-                                if (i.issue_satus == '1') { tempArr.push('Unsolved');}
-                                if (i.issue_satus == '0') { tempArr.push('Solved'); }
-                                tempArr.push(i.location);
-                                tempArr.push(i.description);
                                 data_obj.push(tempArr);
                             });
                 },
@@ -143,8 +133,6 @@ function filterTableData(){
                         var l =i.line_name.trim();
                         var s =i.issue_satus.trim();
                         var dep =i.dep_occured;
-                        //console.log(Department_select);
-                       // console.log(dep);
                         var dateVar = i.issue_date.split('(')[1];
                         dateVar = dateVar.split(')')[0];
 
@@ -166,8 +154,6 @@ function filterTableData(){
 
                                                    if(comparing_string == binary_code)
                                                         {
-                                                            console.log(binary_code);
-                                                            
                                                              o= (s===Status_select);
                                                              m= (l===Line_select); 
                                                              b= (p===Plant_select);
@@ -202,8 +188,6 @@ function filterTableData(){
 
                                 var flag = 0;
 
-                                console.log("Plant_select :"+b+"Issue_select :"+nq+"Line_select:"+m+"Status_select:"+o);
-                                
                                 tempArr.push(d);
                                 tempArr.push(i.issue_occurrence_id);
                                 tempArr.push(i.issue);
@@ -211,8 +195,25 @@ function filterTableData(){
 
                                 if (i.issue_satus == '1') { tempArr.push('Unsolved');}
                                 if (i.issue_satus == '0') { tempArr.push('Solved'); }
+
                                 tempArr.push(i.location);
                                 tempArr.push(i.description);
+                                tempArr.push(i.Name);
+                                tempArr.push(i.material_id);
+                                tempArr.push(i.machine_machine_id);
+                                tempArr.push(i.line_line_id);
+                                tempArr.push(i.issue_issue_ID);
+                                tempArr.push(i.responsible_person_confirm_status);
+                                tempArr.push(i.responsible_person_confirm_feedback);
+                                tempArr.push(i.solved_date);
+                                tempArr.push(i.commented_date);
+                                tempArr.push(i.manager_notifi_status);
+                                tempArr.push(i.department);
+                                tempArr.push(i.solved_emp);
+                                tempArr.push(i.buzzer_off_by);
+                                tempArr.push(i.buzzer_off_time);
+                                tempArr.push(i.dep_occured);
+
                                 data_obj.push(tempArr);
                                 flag = 1;
 
@@ -220,11 +221,9 @@ function filterTableData(){
                             }
                     });
         loadTablePage(1);
-
 }
 
 function loadTablePage(page){
-    
             var items_per_page = 10;
             var number_of_pages = Math.ceil((data_obj.length)/items_per_page);
             createPagination(number_of_pages);
@@ -237,7 +236,17 @@ function loadTablePage(page){
             {
                     obj2.push(data_obj[i]);
             }
-        loadAccordionTable(obj2);
+
+            loadAccordionTable(obj2);
+
+            var idString = (Number(page)-1).toString();
+            var paginationItem = document.getElementById(""+idString);
+            if(paginationItem != null){
+                     paginationItem.setAttribute("class","page-item active");
+                }
+
+            $('[data-toggle="tooltip"]').tooltip();
+            $('.myCheckbox').bootstrapToggle();
 }
 
 function loadAccordionTable(obj)
@@ -245,10 +254,15 @@ function loadAccordionTable(obj)
         var accordion  =  document.getElementById('accordion');
         var childElements = accordion.childNodes;
 
-        $("#accordion").empty();
+         if(obj.length<1){
+             accordion.innerHTML="No Issues";
+          }    
 
+        $("#accordion").empty();
         for(var i=0;i<obj.length;i++){
-                createAccordionLine(accordion,obj[i][0],obj[i][1],obj[i][2],obj[i][5],obj[i][3],obj[i][4],obj[i][6]);
+            createAccordionLine(accordion,obj[i][0],obj[i][1],obj[i][2],obj[i][5],obj[i][3],obj[i][4],obj[i][6],
+            obj[i][7],obj[i][8],obj[i][9],obj[i][10],obj[i][11],obj[i][12],obj[i][13],obj[i][14],obj[i][15],
+            obj[i][16],obj[i][17],obj[i][18],obj[i][19],obj[i][20],obj[i][21]);
         }
 
         $( function() {
@@ -258,7 +272,25 @@ function loadAccordionTable(obj)
 
 }
 
-function createAccordionLine(accordion,date,id,issue,plant,line,status,desc){
+//location                            //5
+//description                         //6
+//Name                                //7
+//material_id                         //8
+//machine_name                        //9
+//line_line_id                        //10
+//issue_issue_ID                      //11
+//responsible_person_confirm_status   //12
+//responsible_person_confirm_feedback //13
+//solved_date                         //14
+//commented_date                      //15
+//manager_notifi_status               //16
+//department                          //17
+//solved_emp                          //18
+//buzzer_off_by                       //19
+//buzzer_off_time                     //20
+//dep_occured                         //21
+
+function createAccordionLine(accordion,date,id,issue,plant,line,status,desc,resp,matID,machID,linID,issID,respStatus,respFeed,solDate,comDate,manNotStatus,dept,solEmp,buzOffBy,buzOffT,deptOccrd){
 
     var dateDIV  =  document.createElement('div');
     var idDIV    =  document.createElement('div');
@@ -308,15 +340,114 @@ function createAccordionLine(accordion,date,id,issue,plant,line,status,desc){
     rowDIVcontainer.appendChild(rowDIVinner1);
 
     var detailsDIV =  document.createElement('div');
+
     var p1 =  document.createElement('p');
-    p1.innerHTML="More Details";
-    detailsDIV.appendChild(p1);
+    var p2 =  document.createElement('p');
+    var p3 =  document.createElement('p');
+    var p4 =  document.createElement('p');
+    var p5 =  document.createElement('p');
+    var p6 =  document.createElement('p');
+    var p7 =  document.createElement('p');
+    var p8 =  document.createElement('p');
+
+    var p9 =  document.createElement('p');
+    var p10 = document.createElement('p');
+    var p11 = document.createElement('p');
+    var p12 = document.createElement('p');
+    var p13 = document.createElement('p');
+    var p14 = document.createElement('p');
+    var p15 = document.createElement('p');
+    var p16 = document.createElement('p');
+   
+    var div_1_left =  document.createElement('div');
+    var div_1_right =  document.createElement('div');
+    var div_1_container =  document.createElement('div');
+    var div_1_row =  document.createElement('div');
+    var eye_span =  document.createElement('span');
+
+    var notification_btn_span = document.createElement('span');
+    var notification_btn =  document.createElement('input');
+
+    div_1_left.appendChild(p1);
+    div_1_left.appendChild(p2);
+    div_1_left.appendChild(eye_span);
+    div_1_left.appendChild(p3);
+    div_1_left.appendChild(p4);
+    div_1_left.appendChild(p5);
+    div_1_left.appendChild(p6);
+    div_1_left.appendChild(p7);
+    div_1_left.appendChild(p8);
+
+    div_1_right.appendChild(p9);
+    div_1_right.appendChild(p10);
+    div_1_right.appendChild(p11);
+    div_1_right.appendChild(p12);
+    div_1_right.appendChild(p13);
+    div_1_right.appendChild(p14);
+    div_1_right.appendChild(p15);
+    div_1_right.appendChild(p16);
+    notification_btn_span.appendChild(notification_btn);
+    div_1_right.appendChild(notification_btn_span);
+
+    div_1_container.appendChild(div_1_row);
+    div_1_row.appendChild(div_1_left);
+    div_1_row.appendChild(div_1_right);
+ 
+    div_1_container.setAttribute("class","container");
+    div_1_row.setAttribute("class","row");
+    div_1_left.setAttribute("class","col-md-6");
+    div_1_right.setAttribute("class","col-md-6");
+
+    notification_btn_span.title = "Turn on/off SMS,Call,Email notifications";
+    notification_btn_span.setAttribute("data-toggle","tooltip");
+    notification_btn.type="checkbox";
+    notification_btn.setAttribute('onChange',"notificationOnOff('"+issue+"')");
+    notification_btn.setAttribute("class","myCheckbox");
+    notification_btn.dataset.toggle = "toggle";
+    notification_btn.dataset.on = "<i class='fas fa-bell fa-2x'>&nbspon</i>";
+    notification_btn.dataset.off = "<i class='fas fa-bell-slash fa-2x'>&nbspoff&nbsp&nbsp</i>";
+    //notification_btn.setAttribute("data-on","<i class='fas fa-bell fa-2x'>&nbspon</i>");
+    //notification_btn.setAttribute("data-off","<i class='fas fa-bell-slash fa-2x'>&nbspoff&nbsp&nbsp</i>");
+
+    detailsDIV.appendChild(div_1_container);
+
+    (desc!=null)?(p1.innerHTML="<span style=' color:#5b5a5a;font-weight: bold'>Description</span> : <span  style='font-size:16px'>"+desc+"</span>"):(p1.innerHTML ="");
+    (resp!=null)?(p2.innerHTML="<span style=' color:#5b5a5a;font-weight: bold'>Responisble Person </span> :<span  style='font-size:16px'>"+resp+" - "+dept+"</span>"):(p2.innerHTML ="");
+
+    if(respStatus!=null && respStatus== 1)
+        {  
+            eye_span.setAttribute("class","glyphicon glyphicon-eye-open");
+            eye_span.setAttribute("data-toggle","tooltip");
+            eye_span.title = "Checked by responsible person";
+            eye_span.style.color="#42c44d";
+        }
+        else{
+            eye_span.setAttribute("class","glyphicon glyphicon-eye-close");
+            eye_span.setAttribute("data-toggle","tooltip");
+            eye_span.title = "To be checked by responsible person";
+            eye_span.style.color="#e04c4c";
+        }
+ 
+    (machID!=null)?(p4.innerHTML       ="<span style='color:#5b5a5a;font-weight: bold'>Machine </span>:<span  style='font-size:16px'>"+machID+"</span>"):(p4.innerHTML ="");
+    (matID!=null)?(p3.innerHTML        ="<span style='color:#5b5a5a;font-weight: bold'>Material  </span>:<span  style='font-size:16px'>"+matID+"</span>"):(p3.innerHTML ="");
+    //(linID!=null)?(p5.innerHTML      ="<span style='color:#5b5a5a;font-weight: bold'>Line Id </span>:<span  style='font-size:16px'>"+linID+"</span>"):(p5.innerHTML ="");
+    //(issID!=null)?(p6.innerHTML      ="<span style='color:#5b5a5a;font-weight: bold'>Issue Id </span>:<span  style='font-size:16px'>"+issID+"</span>"):(p6.innerHTML ="");
+    (respFeed!=null)?(p8.innerHTML     ="<span style='color:#5b5a5a;font-weight: bold'>Responsible Person Feedback </span>:<span  style='font-size:16px'>"+respFeed+"</span>"):(p8.innerHTML ="");
+    (solDate!=null)?(p9.innerHTML      ="<span style='color:#5b5a5a;font-weight: bold'>Solved Date </span>:<span  style='font-size:16px'>"+Unix_timestamp((solDate.split('(')[1]).split(')')[0],'ymdt')+"</span>"):(p9.innerHTML ="");
+    (comDate!=null)?(p10.innerHTML     ="<span style='color:#5b5a5a;font-weight: bold'>Commented Date</span> :<span  style='font-size:16px'>"+ Unix_timestamp((comDate.split('(')[1]).split(')')[0],'ymdt')+"</span>"):(p10.innerHTML ="");
+    //(manNotStatus!=null)?(p11.innerHTML="<span style='color:#5b5a5a;font-weight: bold'>Responsible Person Feedback </span>:<span  style='font-size:16px'>"+manNotStatus):(p11.innerHTML ="");
+    //(dept!=null)?(p12.innerHTML      ="<span style='color:#5b5a5a;font-weight: bold'>Responsible Department </span>:<span  style='font-size:16px'>"+dept+"</span>"):(p12.innerHTML ="");
+    (solEmp!=null)?(p13.innerHTML    ="<span style='color:#5b5a5a;font-weight: bold'>Issue resolved by </span>:<span  style='font-size:16px'>"+solEmp+"</span>"):(p13.innerHTML ="");
+    (buzOffBy!=null)?(p14.innerHTML    ="<span style='color:#5b5a5a;font-weight: bold'>Buzzer Turned off by </span>:<span  style='font-size:16px'>"+buzOffBy+"</span>"):(p14.innerHTML ="");
+    (buzOffT!=null)?(p15.innerHTML     ="<span style='color:#5b5a5a;font-weight: bold'>Buzzer Turned off at </span>:<span  style='font-size:16px'>"+Unix_timestamp((buzOffT.split('(')[1]).split(')')[0],'ymdt')+"</span>"):(p15.innerHTML ="");
+    //(deptOccrd!=null)?(p16.innerHTML ="<span style='color:#5b5a5a;font-weight: bold'>Issue Occured Department </span>:<span  style='font-size:16px'>"+deptOccrd+"</span>"):(p16.innerHTML ="");
 
     accordion.appendChild(rowDIVcontainer);
     accordion.appendChild(detailsDIV);
 }
 
 function createPagination(numberOfPages){
+
     var paginationDiv = document.getElementById("paginationDiv");
 
     if(paginationDiv.firstChild){
@@ -329,14 +460,12 @@ function createPagination(numberOfPages){
     ulElement.setAttribute("class","pagination");
 
     for (var i = 0; i < numberOfPages; i++){
-
             var liElement =  document.createElement('li');
-            liElement.setAttribute("class","page-item");
-            liElement.setAttribute("id",i);
+            liElement.setAttribute("class","page-item ");
 
             var aElement =  document.createElement('div');
             aElement.setAttribute("class","page-link");
-            aElement.innerHTML=i+1;
+            aElement.innerHTML= i+1 ;
             aElement.setAttribute('onclick',"loadTablePage("+(Number(i)+1)+")");
 
             liElement.appendChild(aElement);
@@ -353,7 +482,6 @@ function dateCheck(checkingDate,startDate,endDate){
     }
         else return(false);
 }
-
 
 function getRandomColor() {
     var letters = '0123456789ABCDEF';
@@ -372,7 +500,6 @@ function drawChart1() {
     var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
     var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString();
     var plantLocation = $('#plantSelectBox').val().join("','");
-    console.log(plantLocation);
 
     $.ajax({
         type: "POST",
@@ -381,6 +508,10 @@ function drawChart1() {
         url: "/Manager/fillChart1",
         data: { barChart: '1',startDate:startDate,endDate:endDate,plantLocation:plantLocation},
         success: function (feedback) {
+
+            console.log("drawChart1@@@@@@@@@@@@@@@@@@@@@");
+            console.log(feedback);
+
             chartData1 = JSON.parse(feedback);
             var a1 = new Array(chartData1.length + 1);
             a1[0] = ["Element", "Density", { role: "style" }]
@@ -403,8 +534,6 @@ function drawChart1() {
             alert("Error occurred");
         }
     });
-    console.log("drawChart1");
-    console.log(dataArray);
     var data = google.visualization.arrayToDataTable(dataArray);
     var view = new google.visualization.DataView(data);
 
@@ -422,7 +551,7 @@ function drawChart1() {
         chartArea: { 'width': '100%', 'height': '60%', 'top': '0' },
         hAxis: {
             textStyle: {
-                fontSize: 9 // or the number you want
+                fontSize: 9
             }
         }
     };
@@ -455,6 +584,10 @@ function drawChart2() {
         url: "/Manager/fillChart1",
         data: { barChart: '2',startDate:startDate,endDate:endDate,plantLocation:plantLocation},
         success: function (feedback) {
+
+            console.log("drawChart2@@@@@@@@@@@@@@@@@@@@@");
+            console.log(feedback);
+
             chartData1 = JSON.parse(feedback);
             var a1 = new Array(chartData1.length + 1);
             a1[0] = ["Element", "Density", { role: "style" }]
@@ -476,8 +609,6 @@ function drawChart2() {
             alert("Error occurred");
         }
     });
-    console.log("drawChart2");
-    console.log(dataArray1);
     var data = google.visualization.arrayToDataTable(dataArray1);
     var view = new google.visualization.DataView(data);
 
@@ -495,7 +626,7 @@ function drawChart2() {
         chartArea: { 'width': '100%', 'height': '60%', 'top': '0' },
         hAxis: {
             textStyle: {
-                fontSize: 9 // or the number you want
+                fontSize: 9
             }
         }
     };
@@ -516,6 +647,10 @@ function drawChart3() {
         url: "/Manager/fillChart3",
         data: { startDate:startDate,endDate:endDate,plantLocation:plantLocation },
         success: function (feedback) {
+
+            console.log("drawChart3@@@@@@@@@@@@@@@@@@@@@");
+            console.log(feedback);
+
             chartData1 = JSON.parse(feedback);
             var a1 = new Array(chartData1.length + 1);
             a1[0] = ["Issue", "Number of Occurrence"]
@@ -563,6 +698,10 @@ function createTable() {
         url: "/Manager/fillChart2",
         data: {startDate:startDate,endDate:endDate,plantLocation:plantLocation },
         success: function (feedback) {
+
+            console.log("myTable @@@@@@@@@@@@@@@@@@@@@");
+            console.log(feedback)
+
             chartData1 = JSON.parse(feedback);
 
             chartData1.forEach(function (element) {
@@ -575,9 +714,9 @@ function createTable() {
                 var ele5 = element.Name;
                 var ele6 = element.DateDiff
 
-                if (ele3 == null && ele4 != null) { createRow(Unix_timestamp(ele1,'md') + "</br>(" + (ele6 / 60).toFixed(1) + "Hrs)", ele2, ele4, ele5) }
-                if (ele4 == null && ele3 != null) { createRow(Unix_timestamp(ele1, 'md') + "</br>(" + (ele6 / 60).toFixed(1) + "Hrs)", ele2, ele3, ele5) }
-                if (ele4 == null && ele3 == null) { createRow(Unix_timestamp(ele1, 'md') + "</br>(" + (ele6 / 60).toFixed(1) + "Hrs)", ele2, "", ele5) }
+                if (ele3 == null && ele4 !=null){createRow(Unix_timestamp(ele1,'md')+"</br>(" + (ele6 / 60).toFixed(1) + "Hrs)",ele2,ele4,ele5) }
+                if (ele4 == null && ele3 !=null){createRow(Unix_timestamp(ele1,'md')+"</br>(" + (ele6 / 60).toFixed(1) + "Hrs)",ele2,ele3,ele5) }
+                if (ele4 == null && ele3 ==null){createRow(Unix_timestamp(ele1,'md')+"</br>(" + (ele6 / 60).toFixed(1) + "Hrs)",ele2,  "",ele5) }
             });
         },
         error: function () {
@@ -615,23 +754,108 @@ function Unix_timestamp(t,dateType) {
     var month = months_arr[date.getMonth()];
     var day = date.getDate();
     var hours = date.getHours();
-    var minutes = "0" + date.getMinutes();
-    var seconds = "0" + date.getSeconds();
+ 
+    var minutes = date.getMinutes();
+
+    ( (""+minutes).length<2 )?(minutes="0"+minutes):(minutes=minutes);
+
+    var seconds = date.getSeconds();
+
+    ( (""+seconds).length<2 )?(seconds="0"+seconds):(seconds=seconds);
+
     if (dateType == "md") { var convdataTime = month + '-' + day; return convdataTime;}
     if (dateType == "ymd") { var convdataTime = year+ '-' + month + '-' + day; return convdataTime; }
+    if (dateType == "ymdt") { var convdataTime = year+ '-' + month + '-' + day+ ' ' +hours+ ':' +minutes ; return convdataTime; }
+    if (dateType == "ymdts") { var convdataTime = year+ '-' + month + '-' + day+' '+hours+':'+minutes+':'+seconds; return convdataTime; }
 }
 
 function filterByDate()
     {
         createTable();
         var elem1 =document.querySelectorAll(".dateGap");
-        elem1.forEach(function (i){
-                        i.innerHTML ="from "+ (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString().substring(0,10) +" to "+(new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString().substring(0,10) ;
+        elem1.forEach(function (i)
+                {
+                    i.innerHTML ="from "+ (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString().substring(0,10) +" to "+(new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString().substring(0,10) ;
                 });
         google.charts.setOnLoadCallback(drawChart1);
         google.charts.setOnLoadCallback(drawChart2);
         google.charts.setOnLoadCallback(drawChart3);
 
     }
+/*
+$(document).on("click", ".statistic__item", function(e) 
+{
+        $('#issueSelectBox').val('Machine Breakdown');
+        $('#statusSelectBox').val('1');
+
+        $('#issueSelectBox').trigger('change.select2');
+        $('#statusSelectBox').trigger('change.select2');
+
+      //  $('#issueSelectBox').select2("val",$('#issueSelectBox option:eq(2)').val());
+      //  $('#issueSelectBox').select2().select2();
+
+        document.getElementById('datetimepicker1').value ='Machine Breakdown';
+});
+*/
+function topCardClick(issue_name){
+
+    if(issue_name=='mb'){
+
+        $('#issueSelectBox').val('Machine Breakdown');
+        $('#statusSelectBox').val('1');
+
+        $('#issueSelectBox').trigger('change.select2');
+        $('#statusSelectBox').trigger('change.select2');
+    }
+
+    if(issue_name=='md'){
+        $('#issueSelectBox').val('Material Delay').trigger('change');
+        $('#statusSelectBox').val('1').trigger('change');
+        
+        $('#issueSelectBox').trigger('change');
+        $('#statusSelectBox').trigger('change');
+    }
+    if(issue_name=='ti'){
+        $('#issueSelectBox').val('Technical Issue').trigger('change');
+        $('#statusSelectBox').val('1').trigger('change');
+        
+        $('#issueSelectBox').trigger('change');
+        $('#statusSelectBox').trigger('change');
+    }
+    if(issue_name=='it'){
+        $('#issueSelectBox').val('IT Issue').trigger('change');
+        $('#statusSelectBox').val('1').trigger('change');
+        
+        $('#issueSelectBox').trigger('change');
+        $('#statusSelectBox').trigger('change');
+    }
+    if(issue_name=='qi'){
+        $('#issueSelectBox').val('Quality Issue').trigger('change');
+        $('#statusSelectBox').val('1').trigger('change');
+        
+        $('#issueSelectBox').trigger('change');
+        $('#statusSelectBox').trigger('change');
+    }
+
+  
+}
+
+function notificationOnOff(issue){
+
+        var issue_line_person_id = document.getElementById('hidden_userID').innerHTML;
+        
+        $.ajax({
+            type: "POST",
+            dataType: 'text',
+            url: "/Manager/notificationOnOff",
+            data: { issue_line_person_id:issue_line_person_id,issue:issue},
+            success: function (feedback) {
+                    alert(feedback);
+            },
+            error: function () {
+                alert("Error occurred");
+            }
+        });
+}
 
 
