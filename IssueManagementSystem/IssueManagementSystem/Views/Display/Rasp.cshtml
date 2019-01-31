@@ -152,16 +152,13 @@
     $('#matirial_body').empty();
     $('#technical_body').empty();
     $('#it_body').empty();
-            </script>
+    </script>
 
-            <script src="~/Scripts/3.30bootstrap.min.js"></script>
-            <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
-            <script src="~/Scripts/moment.min.js"></script>
-            <script src="~/signalr/Hubs"></script>
-
-
-
-            <script>
+    <script src="~/Scripts/3.30bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/signalr/Hubs"></script>
+    <script>
 
 
     $.connection.hub.start()
@@ -199,7 +196,7 @@ $.ajax({
         if (issuedata.length > 0)
         {
             blinkMap();
-                     var seconds=[]
+             var seconds=[]
              for (var i = 0; i < issuedata.length; i++) {
                
                 if ((issuedata[i].line_line_id==@ViewBag.Id) && (issuedata[i].issue_satus=="1" ))
@@ -287,7 +284,7 @@ $.ajax({
         }
       
        setTimmer(seconds, count)
-                alert(seconds)
+  
         var countdownTimer = setInterval('timer()', 1000);
 
     }
@@ -304,21 +301,21 @@ $.ajax({
 
     window.timer = function() 
     {  
-       for(var j=1;j<=i;j++)
+       for(var j=0;j<i;j++)
         {
           console.log(seconds[0])
-        var days        = Math.floor(seconds[j-1]/24/60/60);
-        var hoursLeft   = Math.floor((seconds[j-1]) - (days*86400));
+        var days        = Math.floor(seconds[j]/24/60/60);
+        var hoursLeft   = Math.floor((seconds[j]) - (days*86400));
         var hours       = Math.floor(hoursLeft/3600);
         var minutesLeft = Math.floor((hoursLeft) - (hours*3600));
         var minutes     = Math.floor(minutesLeft/60);
-        var remainingSeconds = seconds[j-1] % 60;
+        var remainingSeconds = seconds[j] % 60;
         window.pad = function(n) 
        {
         return (n < 10 ? "0" + n : n);
        };
-     
-       document.getElementById('countdown'+j).innerHTML = pad(days) + ":" + pad(hours) + ":" + pad(minutes) + ":" + pad(remainingSeconds);
+     var divid=j+1
+       document.getElementById('countdown'+divid).innerHTML = pad(days) + ":" + pad(hours) + ":" + pad(minutes) + ":" + pad(remainingSeconds);
         
         seconds[j]++;
        }

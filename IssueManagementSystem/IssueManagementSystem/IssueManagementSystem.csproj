@@ -207,77 +207,77 @@
     <Compile Include="Hubs\BreakeHub.cs" />
     <Compile Include="Models\BreakeDownListener.cs" />
     <Compile Include="Models\department.cs">
-      <DependentUpon>IssueManagemantSystem.tt</DependentUpon>
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\display.cs">
-      <DependentUpon>IssueManagemantSystem.tt</DependentUpon>
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\employee.cs">
-      <DependentUpon>IssueManagemantSystem.tt</DependentUpon>
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\issue.cs">
-      <DependentUpon>IssueManagemantSystem.tt</DependentUpon>
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\IssueManagemantSystem.Context.cs">
+    <Compile Include="Models\IssueManagementSystem.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>IssueManagemantSystem.Context.tt</DependentUpon>
+      <DependentUpon>IssueManagementSystem.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\IssueManagemantSystem.cs">
+    <Compile Include="Models\IssueManagementSystem.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>IssueManagemantSystem.tt</DependentUpon>
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\IssueManagemantSystem.Designer.cs">
+    <Compile Include="Models\IssueManagementSystem.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>IssueManagemantSystem.edmx</DependentUpon>
+      <DependentUpon>IssueManagementSystem.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\issue_line_person.cs">
-      <DependentUpon>IssueManagemantSystem.tt</DependentUpon>
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\issue_occurrence.cs">
-      <DependentUpon>IssueManagemantSystem.tt</DependentUpon>
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\line.cs">
-      <DependentUpon>IssueManagemantSystem.tt</DependentUpon>
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\line_cell_eng.cs">
-      <DependentUpon>IssueManagemantSystem.tt</DependentUpon>
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\line_computer.cs">
-      <DependentUpon>IssueManagemantSystem.tt</DependentUpon>
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\line_machine.cs">
-      <DependentUpon>IssueManagemantSystem.tt</DependentUpon>
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\line_map.cs">
-      <DependentUpon>IssueManagemantSystem.tt</DependentUpon>
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\line_supervisor.cs">
-      <DependentUpon>IssueManagemantSystem.tt</DependentUpon>
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\machine.cs">
-      <DependentUpon>IssueManagemantSystem.tt</DependentUpon>
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\material.cs">
-      <DependentUpon>IssueManagemantSystem.tt</DependentUpon>
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\notification_handling.cs">
-      <DependentUpon>IssueManagemantSystem.tt</DependentUpon>
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>IssueManagemantSystem.tt</DependentUpon>
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_issue_feedback.cs">
-      <DependentUpon>IssueManagemantSystem.tt</DependentUpon>
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tbl_Notifications.cs">
-      <DependentUpon>IssueManagemantSystem.tt</DependentUpon>
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TempClasses.cs" />
     <Compile Include="Models\User_tbl.cs">
-      <DependentUpon>IssueManagemantSystem.tt</DependentUpon>
+      <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
     <Compile Include="SendNotificationToLevel2.cs" />
     <Compile Include="Global.asax.cs">
@@ -357,15 +357,16 @@
     <Content Include="Content\Display\css\bootstrap.css" />
     <Content Include="Content\Display\css\bootstrap.min.css" />
     <Content Include="Content\flipclock.css" />
-    <Content Include="Models\IssueManagemantSystem.Context.tt">
+    <Content Include="Content\images\error.png" />
+    <Content Include="Models\IssueManagementSystem.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>IssueManagemantSystem.edmx</DependentUpon>
-      <LastGenOutput>IssueManagemantSystem.Context.cs</LastGenOutput>
+      <DependentUpon>IssueManagementSystem.edmx</DependentUpon>
+      <LastGenOutput>IssueManagementSystem.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\IssueManagemantSystem.tt">
+    <Content Include="Models\IssueManagementSystem.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>IssueManagemantSystem.edmx</DependentUpon>
-      <LastGenOutput>IssueManagemantSystem.cs</LastGenOutput>
+      <DependentUpon>IssueManagementSystem.edmx</DependentUpon>
+      <LastGenOutput>IssueManagementSystem.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\flipclock.js" />
     <Content Include="Content\font-awesome.min.css" />
@@ -602,12 +603,12 @@
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>
-    <EntityDeploy Include="Models\IssueManagemantSystem.edmx">
+    <EntityDeploy Include="Models\IssueManagementSystem.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>IssueManagemantSystem.Designer.cs</LastGenOutput>
+      <LastGenOutput>IssueManagementSystem.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\IssueManagemantSystem.edmx.diagram">
-      <DependentUpon>IssueManagemantSystem.edmx</DependentUpon>
+    <Content Include="Models\IssueManagementSystem.edmx.diagram">
+      <DependentUpon>IssueManagementSystem.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
@@ -706,6 +707,7 @@
     <Content Include="Views\CellEngineer\QualityIssue.cshtml" />
     <Content Include="Views\Supervisor\QualityIssue.cshtml" />
     <Content Include="Views\Display\Stores.cshtml" />
+    <Content Include="Views\Display\Maintenance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

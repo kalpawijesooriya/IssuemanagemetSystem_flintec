@@ -37,13 +37,13 @@ namespace IssueManagementSystem
                         {
                            
                             var lineInfo=db.lines.Where(x=>x.line_id== items.line_line_id).FirstOrDefault();
-                           var issueInfo=db.issues.Where(x=>x.issue_id== items.issue_issue_ID).FirstOrDefault();
-                           
+                            var issueInfo=db.issues.Where(x=>x.issue_id== items.issue_issue_ID).FirstOrDefault();
+                            var notificationHandalingInfo = db.notification_handling.Where(x => x.issue_occurrence_id == items.issue_occurrence_id && x.EmployeeNumber == items.responsible_person_emp_id).FirstOrDefault();
                             using (BigRedEntities BR = new BigRedEntities())
                             {
                                 var responsiblePersonInfo = BR.tbl_PPA_User.Where(y => y.EmployeeNumber == items.responsible_person_emp_id).FirstOrDefault();
                                 string msg = "Good morning!@@ "+ issueInfo.issue1 + " issue is not resolved @ Line : " + lineInfo.line_name + "@ Responsible person : " + responsiblePersonInfo.Name + " @ Thank You!";
-
+                                
                                
                                 if (items.material_id != null)
                                 {
@@ -61,8 +61,11 @@ namespace IssueManagementSystem
                                 string callNote = lineInfo.line_name + " Line "+ issueInfo.issue1 + " not solved yet";
                                 var personInfo = BR.tbl_PPA_User.Where(y => y.EmployeeNumber == i.EmployeeNumber).FirstOrDefault();
                                 msg = msg.Replace("@", Environment.NewLine);
+                                if (notificationHandalingInfo.notification_status==1)
+                                { 
                                 CommunicationData cd = new CommunicationData(personInfo.Phone, msg, personInfo.EMail, i.email, i.call, i.message, personInfo.EmployeeNumber, "Unsolved Issue", callNote, "0", "0", items.issue_occurrence_id);
                                 numberList.Enqueue(cd);
+                                }
 
                             }
                         }

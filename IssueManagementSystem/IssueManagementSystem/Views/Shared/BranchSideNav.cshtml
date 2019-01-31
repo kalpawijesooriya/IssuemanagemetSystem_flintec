@@ -73,7 +73,7 @@
                     <div class="header__tool">
                         <div class="header-button-item has-noti js-item-menu">
 
-                          
+
                             <span class="badge" style="color:white;font-size:initial;font-family:'Bodoni MT'" id="ntCnt"></span>
                             <div class="notifi-dropdown notifi-dropdown--no-bor js-dropdown" id="divNotificaion">
 
@@ -82,7 +82,7 @@
 
                             </div>
                         </div>
-                      
+
                         <div class="account-wrap">
                             <div class="account-item account-item--style2 clearfix js-item-menu">
                                 <div class="image">
@@ -105,7 +105,7 @@
                                             <span class="email">@Session["email"]</span>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="account-dropdown__footer">
                                         <a href="@Url.Action("LogOut","Login")">
                                             <i class="zmdi zmdi-power"></i>Logout
@@ -156,7 +156,7 @@
         <div class="sub-header-mobile-2 d-block d-lg-none">
             <div class="header__tool">
                 <div class="header-button-item has-noti js-item-menu">
-                   
+
                     <span class="badge" style="color:orangered;font-size:initial;font-family:'Bodoni MT'" id="cntmobile"></span>
                     <div class="notifi-dropdown notifi-dropdown--no-bor js-dropdown" id="divNotificaionmobile">
 
@@ -165,7 +165,7 @@
 
                     </div>
                 </div>
-                
+
                 <div class="account-wrap">
                     <div class="account-item account-item--style2 clearfix js-item-menu">
                         <div class="image">
@@ -188,7 +188,7 @@
                                     <span class="email">@Session["email"]</span>
                                 </div>
                             </div>
-                           
+
                             <div class="account-dropdown__footer">
                                 <a href="@Url.Action("LogOut","Login")">
                                     <i class="zmdi zmdi-power"></i>Logout
@@ -236,7 +236,10 @@
     <script src="~/Scripts/AdminScripts/select2-min.js"></script>
     <script src="~/Scripts/main.js"></script>
 
- 
+    <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
+    <script src="~/signalr/Hubs"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
+
 
 
 
