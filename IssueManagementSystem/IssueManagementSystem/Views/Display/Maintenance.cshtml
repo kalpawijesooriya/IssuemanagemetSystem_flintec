@@ -20,7 +20,7 @@
 <div style="display:flex">
     <div class="container-fluid margin">
         <div class="displayhedding" style="margin-top:-20pt">
-          
+
             <div class="row">
                 <div class="col-sm-3">
                     <div class="header__logo">
@@ -77,13 +77,13 @@
     $('#matirial_body').empty();
     $('#technical_body').empty();
     $('#it_body').empty();
-</script>
+            </script>
 
-<script src="~/Scripts/3.30bootstrap.min.js"></script>
-<script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
-<script src="~/Scripts/moment.min.js"></script>
-<script src="~/signalr/Hubs"></script>
-<script>
+            <script src="~/Scripts/3.30bootstrap.min.js"></script>
+            <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
+            <script src="~/Scripts/moment.min.js"></script>
+            <script src="~/signalr/Hubs"></script>
+            <script>
 
 
     $.connection.hub.start()
@@ -120,7 +120,7 @@ $.ajax({
         issuedata = $.parseJSON(issuedata);
         if (issuedata.length > 0)
         {
-           
+
              var seconds=[]
              for (var i = 0; i < issuedata.length; i++) {
 
@@ -128,7 +128,7 @@ $.ajax({
                 {
                     var responcibleperson_ststus= issuedata[i].responsible_person_confirm_status
                     var issueid = issuedata[i].issue_issue_ID
-                  
+
                     var date = issuedata[i].issueDate.split(' ');
                     var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
                     var time=date[1] +" "+ date[2]
@@ -142,13 +142,13 @@ $.ajax({
                    var gap = Math.round(Math.abs(today - milliseconds)/1000);
 
 
-                
+
                     if (issueid == 1)//breakedown
                     {   seconds.push(gap)
                         count++
                         $('#brakediv').show()
                         var divissue = $('#breake_body');
-                        var issue = '<tr><td>' + day + '</td><td>'+time+'</td><td>' + issuedata[i].machine_machine_id+'</td><td>'+issuedata[i].lineName+'</td><td>' + issuedata[i].description+'</td><td>' + issuedata[i].responciblepersonName+'</td><td><span id="countdown'+count+'" class="timer"></span></td></tr>'
+                        var issue = '<tr><td>' + day + '</td><td>'+time+'</td><td>'+issuedata[i].lineName+'</td><td>' + issuedata[i].machine_machine_id+'</td><td>' + issuedata[i].description+'</td><td>' + issuedata[i].responciblepersonName+'</td><td><span id="countdown'+count+'" class="timer"></span></td></tr>'
                         divissue.append(issue)
                         divissue.show('slow');
                         $('#loding_icon').hide();
@@ -161,7 +161,7 @@ $.ajax({
         }
 
        setTimmer(seconds, count)
-  
+
         var countdownTimer = setInterval('timer()', 1000);
 
     }
@@ -199,16 +199,16 @@ $.ajax({
     }
 
   }
-</script>
+            </script>
 
 
-<script>
+            <script>
    setTimeout(function(){
 
      location.reload();
 
     },3600000);
-</script>
+            </script>
         </div>
     </div>
 </div>

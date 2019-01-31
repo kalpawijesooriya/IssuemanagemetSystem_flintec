@@ -357,6 +357,7 @@
     <Content Include="Content\Display\css\bootstrap.css" />
     <Content Include="Content\Display\css\bootstrap.min.css" />
     <Content Include="Content\flipclock.css" />
+    <Content Include="Content\images\error.png" />
     <Content Include="Models\IssueManagementSystem.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>IssueManagementSystem.edmx</DependentUpon>

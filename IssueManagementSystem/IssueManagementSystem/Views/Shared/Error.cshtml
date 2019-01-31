@@ -9,15 +9,16 @@
     <title>Error</title>
 </head>
 <body>
-   
+
     <hgroup>
         <h1> Whoops!</h1>
         <h2>Something went wrong.</h2>
     </hgroup>
+    <img src="~/Content/images/error.png" style="align-content:center" />
     <style>
         body {
             display: inline-block;
-            background: #00AFF9 url("~/Content/images/Unplugged.png") center/cover no-repeat;
+            background: #00AFF9;
             height: 100vh;
             margin: 0;
             color: white;
@@ -30,9 +31,17 @@
 
         p {
             display: inline-block;
-            margin: .2em 3rem;
+            margin: 2em 5rem;
             font: 2em Roboto;
         }
+
+        img {
+            margin-top: -15%;
+            margin-left: 20%;
+            height: 100%;
+            width: 80%
+        }
     </style>
+    <script src="~/Scripts/bootstrap.min.js"></script>
 </body>
 </html>

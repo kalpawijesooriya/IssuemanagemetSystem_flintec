@@ -8,7 +8,7 @@
     }
     ViewBag.rol = Session["Role"];
     int userID = (int)Session["userID"];// get current supervisorID
- 
+
 
     int lineId = (int)Session["lineId"];
 }
@@ -18,6 +18,12 @@
 
 
 <div class="container margin ">
+    <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
+    <link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
+    <link href="~/Content/googlegrafics.css" rel="stylesheet" />
+    <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
+    <link href="~/Content/adminstyles/Settings.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <h2>IT Issue</h2>
     <hr />
     <div class="row">
@@ -25,36 +31,38 @@
             <div class="form-group" style="width:100%;margin:auto">
                 <span id="lineID" style="display:none">@lineId</span>
 
-              
 
-                    <div style="padding-top:20px;">
-                        <label for="exampleFormControlTextarea1">Description</label>
-                        <textarea class="form-control" rows="5" id="description"></textarea>
+                <label for="exampleFormControlTextarea1" style="margin-top:5%">Select Group</label>
+                <select class="js-example-placeholder-single js-states form-control" id="groups" name="Material" style="width:100%;" onchange="">
+                    <option></option>
+
+                </select>
+
+
+                <div style="padding-top:20px;margin-top:5%">
+                    <label for="exampleFormControlTextarea1">Description</label>
+                    <textarea class="form-control" rows="5" id="description"></textarea>
+                </div>
+
+                <div class="button-holder" style="display:block">
+                    <div class="ajax-button">
+                        <div class="fa fa-check done"></div>
+                        <div class="fa fa-close failed"></div>
+                        <input id="submit" class="submit" type="submit" value="Submit" />
                     </div>
-                  
-                
-                    <div class="button-holder" style="display:block">
-                        <div class="ajax-button">
-                            <div class="fa fa-check done"></div>
-                            <div class="fa fa-close failed"></div>
-                            <input id="submit" class="submit" type="submit" value="Submit" />
-                        </div>
-                    </div>
-            
+                </div>
+
             </div>
         </div>
     </div>
 
 
 </div>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
 
-
-<script src="~/Scripts/jquery-3.3.1.slim.min.js"></script>
-<script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
-<script src="~/Scripts/jquery.min.js"></script>
+<script src="~/Scripts/AdminScripts/jscolar.js"></script>
+<script src="~/Scripts/AdminScripts/select2-min.js"></script>
 <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
-<script src="~/signalr/Hubs"></script>
-
 <script>
     $("#submit").click(function () {
 
@@ -78,7 +86,7 @@
                  console.log("Worked")
                  $.connection.ismHub.server.announce();
               }).fail(function () { alert("Can't Refresh Your Line Screen! Plese Inform IT Department!") });//return to dashbord
-             
+
               window.location.href = '@Url.Action("selectIssue", "Supervisor")';
             },
             error: function (feedback) {
@@ -86,6 +94,9 @@
             }
         });
     });
-
+   $('#groups').select2({
+        placeholder: "Select Group.....",
+        allowClear: false
+    });
 </script>
 
