@@ -52,6 +52,7 @@
                                             <tr>
                                                 <th scope="col">Date</th>
                                                 <th scope="col">Time</th>
+                                                <th scope="col">Line</th>
                                                 <th scope="col">Machine</th>
                                                 <th scope="col">Description</th>
                                                 <th scope="col">Responsible Person</th>
@@ -147,7 +148,7 @@ $.ajax({
                         count++
                         $('#brakediv').show()
                         var divissue = $('#breake_body');
-                        var issue = '<tr><td>' + day + '</td><td>'+time+'</td><td>' + issuedata[i].machine_machine_id+'</td><td>' + issuedata[i].description+'</td><td>' + issuedata[i].responciblepersonName+'</td><td><span id="countdown'+count+'" class="timer"></span></td></tr>'
+                        var issue = '<tr><td>' + day + '</td><td>'+time+'</td><td>' + issuedata[i].machine_machine_id+'</td><td>'+issuedata[i].lineName+'</td><td>' + issuedata[i].description+'</td><td>' + issuedata[i].responciblepersonName+'</td><td><span id="countdown'+count+'" class="timer"></span></td></tr>'
                         divissue.append(issue)
                         divissue.show('slow');
                         $('#loding_icon').hide();
