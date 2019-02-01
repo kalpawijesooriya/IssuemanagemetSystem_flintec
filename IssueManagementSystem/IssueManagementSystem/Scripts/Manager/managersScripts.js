@@ -103,7 +103,7 @@ function filterTableData(){
         data_obj.splice(0, data_obj.length);
 
         var Date_select_start = (new Date(document.getElementById('datetimepicker3').value+" 00:00 UTC")).toISOString().substring(0, 10);
-        var Date_select_end = (new Date(document.getElementById('datetimepicker4').value+" 00:00 UTC")).toISOString().substring(0, 10);
+        var Date_select_end = (new Date(document.getElementById('datetimepicker4').value+" 23:59 UTC")).toISOString().substring(0, 10);
 
         var Plant_select = document.getElementById('plantSelectBox2').value;
         var Issue_select = document.getElementById('issueSelectBox').value
@@ -136,7 +136,7 @@ function filterTableData(){
 
                         var dateCheck_result = dateCheck(new Date(Unix_timestamp(dateVar,'ymd')),
                                                          new Date(document.getElementById('datetimepicker3').value+" 00:00 UTC"),
-                                                         new Date(document.getElementById('datetimepicker4').value+" 00:00 UTC")
+                                                         new Date(document.getElementById('datetimepicker4').value+" 23:59 UTC")
                                                         );
 
                         var var_array = ["*0","*1"];
@@ -432,7 +432,7 @@ console.log(document.getElementById('hidden_userID').innerHTML+"  - --  "+id);
     (desc!=null)?(p1.innerHTML="<span style=' color:#5b5a5a;font-weight: bold'>Description</span> : <span  style='font-size:16px'>"+desc+"</span>"):(p1.innerHTML ="");
     (resp!=null)?(p2.innerHTML="<span style=' color:#5b5a5a;font-weight: bold'>Responisble Person </span> :<span  style='font-size:16px'>"+resp+" - "+dept+"</span>"):(p2.innerHTML ="");
 
-    if(respStatus!=null && respStatus== 1)
+    if(respStatus!=null && respStatus== 0)
         {  
             eye_span.setAttribute("class","glyphicon glyphicon-eye-open");
             eye_span.setAttribute("data-toggle","tooltip");
@@ -516,7 +516,7 @@ function drawChart1() {
     
     var dataArray = new Array();
     var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
-    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 11:59 UTC")).toISOString();
+    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 23:59 UTC")).toISOString();
     var plantLocation = $('#plantSelectBox').val().join("','");
 
     $.ajax({
@@ -533,7 +533,7 @@ function drawChart1() {
 
             chartData1 = JSON.parse(feedback);
             var a1 = new Array(chartData1.length + 1);
-            a1[0] = ["Element", "Density", { role: "style" }]
+            a1[0] = ["Element", "Frequency", { role: "style" }]
             var x = new Array();
             count = 1;
 
@@ -593,7 +593,7 @@ var chartData1;
 function drawChart2() {
     var dataArray1 = new Array();
     var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
-    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 11:59 UTC")).toISOString();
+    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 23:59 UTC")).toISOString();
     var plantLocation = $('#plantSelectBox').val().join("','");
 
     $.ajax({
@@ -609,7 +609,7 @@ function drawChart2() {
 
             chartData1 = JSON.parse(feedback);
             var a1 = new Array(chartData1.length + 1);
-            a1[0] = ["Element", "Density", { role: "style" }]
+            a1[0] = ["Element", "Frequency", { role: "style" }]
             var x = new Array();
             count = 1;
 
@@ -656,7 +656,7 @@ function drawChart2() {
 function drawChart3() {
     var dataArray2 = new Array();
     var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
-    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 11:59 UTC")).toISOString();
+    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 23:59 UTC")).toISOString();
     var plantLocation = $('#plantSelectBox').val().join("','");
 
     $.ajax({
@@ -707,7 +707,7 @@ function drawChart3() {
 function createTable() {
     $("#myTable").empty();
     var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
-    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 11:59 UTC")).toISOString();
+    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 23:59 UTC")).toISOString();
     var plantLocation = $('#plantSelectBox').val().join("','");
 
     $.ajax({
@@ -794,7 +794,7 @@ function filterByDate()
         var elem1 =document.querySelectorAll(".dateGap");
         elem1.forEach(function (i)
                 {
-                    i.innerHTML ="from "+ (new Date(document.getElementById('datetimepicker1').value+" 11:59 UTC")).toISOString().substring(0,10) +" to "+(new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString().substring(0,10) ;
+                    i.innerHTML ="from "+ (new Date(document.getElementById('datetimepicker1').value+" 23:59 UTC")).toISOString().substring(0,10) +" to "+(new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString().substring(0,10) ;
                 });
         google.charts.setOnLoadCallback(drawChart1);
         google.charts.setOnLoadCallback(drawChart2);

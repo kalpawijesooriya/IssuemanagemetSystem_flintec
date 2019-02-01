@@ -185,14 +185,6 @@ namespace IssueManagementSystem.Controllers
         }
 
         [HttpPost]
-        public ActionResult fillDepartmentDropDown(string person_name)
-        {
-
-            return Json("9989", JsonRequestBehavior.AllowGet);
-        }
-
-
-        [HttpPost]
         public ActionResult fillNameDropDown(string department)
         {
             using (BigRedEntities db = new BigRedEntities()) //method for load the map acordinto the surevisor line

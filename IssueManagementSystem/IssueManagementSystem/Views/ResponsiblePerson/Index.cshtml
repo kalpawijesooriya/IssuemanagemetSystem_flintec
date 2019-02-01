@@ -30,12 +30,6 @@ if (Session["userID"] == null)
                                     <li class="list-inline-item">Dashboard</li>
                                 </ul>
                             </div>
-                            <form class="au-form-icon--sm" action="" method="post">
-                                <input class="au-input--w300 au-input--style2" type="text" placeholder="Search for datas &amp; reports...">
-                                <button class="au-btn--submit2" type="submit">
-                                    <i class="zmdi zmdi-search"></i>
-                                </button>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -47,7 +41,7 @@ if (Session["userID"] == null)
                     <div class="col-md-12">
                         <h1 class="title-4">
                             Hi
-                            <span>@Session["name"], You have <span id="issueCnt"></span> new jobs!</span>
+                            <span>@Session["name"], You have <span id="issueCnt"></span> new job<span id="span_x"></span></span>
                         </h1>
                         <hr class="line-seprate">
                     </div>
@@ -93,7 +87,6 @@ if (Session["userID"] == null)
                         </div>
                     </div>
                     <div class="modal-footer">
-                      
                         <button type="button" class="btn btn-success" id="savecomment">Submit</button>
                     </div>
                 </div>
@@ -109,11 +102,13 @@ if (Session["userID"] == null)
 
     <script>
     $(document).ready(function () {
-   
+  
         // Proxy created on the fly
         var hub = $.connection.issueHub;
        
         var issueCount = 0;
+
+        (issueCount != 1) ? ($('#span_x').text("s!")) : ($('#span_x').text("!"));
 
         // Declare a function on the hub hub so the server can invoke it
         hub.client.displayStatus = function () {
@@ -136,27 +131,28 @@ if (Session["userID"] == null)
                     success: function (issuedata) {
                  
                     issuedata = $.parseJSON(issuedata);
-                    if (issuedata.length > 0) {
+                        if (issuedata.length > 0) {
+                           
                         divissue.empty();
-
+                       $('#issueCnt').text("0");
                         for (var i = 0; i < issuedata.length; i++) {
-
+                          
                             if ((issuedata[i].department =='@Session["department"]') && (issuedata[i].issue_satus=="1" || issuedata[i].responsible_person_confirm_status==1)) {
-
+                                
                                 var line_id = issuedata[i].line_line_id;
                                 var issueid = issuedata[i].issue_issue_ID;
-                                var bell_ststus=issuedata[i].buzzer_off_by;
+                                var bell_ststus =issuedata[i].buzzer_off_by;
                                 var comment=null
-                                var issueStstus = 2;//issue not soled and not comment
+                                var issueStstus = 2;//issue not solved and not comment
                                 if (issuedata[i].responsible_person_confirm_status == 0 && issuedata[i].issue_satus == "1")
                                 {
-                                    issueStstus = 1;// if issue is not soled but commented
+                                    issueStstus = 1;// if issue is not solved but commented
                                     comment = issuedata[i].responsible_person_confirm_feedback;
                                 }
 
                                 if (issuedata[i].responsible_person_confirm_status == 1 && issuedata[i].issue_satus == "0")
                                 {
-                                    issueStstus = 0;//issue is soled bt not comment
+                                    issueStstus = 0;//issue is solved bt not commented
                                 }
                                 var index = i;
 
@@ -169,11 +165,13 @@ if (Session["userID"] == null)
                 }, error: function (r, e, w) {
                 }
             });
+
+            (issueCount != 1) ? ($('#span_x').text("s!")) : ($('#span_x').text("!"));
         }
 
 
         function get_line(line_id, issueid, divissue, issuedata, issueStstus, comment, index, matirial,bell_ststus) {
-            issueCount=0
+            issueCount = 0;
             var line = new Object();
             var url = '@Url.Action("getlineInfo", "ResponsiblePerson")';
             $.ajax({
@@ -188,11 +186,14 @@ if (Session["userID"] == null)
                         else if (issueid == 2) { md(lineName, divissue, issuedata, issueStstus, comment, index, matirial,bell_ststus)}
                         else if (issueid == 3) { ti(lineName, divissue, issuedata, issueStstus, comment, index)}
                         else if (issueid == 4) { qi(lineName, divissue, issuedata, issueStstus, comment, index)}
-                        else if (issueid == 5) { it(lineName, divissue, issuedata, issueStstus, comment, index)}
+                        else if (issueid == 5) { it(lineName, divissue, issuedata, issueStstus, comment, index) }
+
+                        (issueCount != 1) ? ($('#span_x').text("s!")) : ($('#span_x').text("!"));
 
                     } else {
                         alert("Something went wrong");
                     }
+                    
                 },
                 failure: function (response) {
                     alert(response.responseText);
@@ -216,8 +217,7 @@ if (Session["userID"] == null)
                 divissue.append(issue)
                 divissue.show('slow');
 
-
-            $('#issueCnt').text(issueCount);
+            $('#issueCnt').text(""+issueCount.toString());
             if (issueStstus == 1) { $('#' + index).text("commented") }
             if (issueStstus == 2) { $('#' + index) }
             if (issueStstus == 0) { $('#' + index).text("Issue Solved")}
@@ -232,7 +232,7 @@ if (Session["userID"] == null)
                 divissue.append(issue)
                 divissue.show('slow');
 
-            $('#issueCnt').text(issueCount);
+            $('#issueCnt').text("" +issueCount.toString());
             if (issueStstus == 1) { $('#' + index).text("commented")}
             if (issueStstus == 2) { $('#' + index) }
             if (issueStstus == 0) { $('#' + index).text("Issue Solved") }
@@ -248,7 +248,7 @@ if (Session["userID"] == null)
                 divissue.append(issue)
                 divissue.show('slow');
 
-            $('#issueCnt').text(issueCount);
+            $('#issueCnt').text("" +issueCount.toString());
             if (issueStstus == 1) { $('#' + index).text("commented") }
             if (issueStstus == 2) { $('#' + index) }
             if (issueStstus == 0) { $('#' + index).text("Issue Solved") }
@@ -263,7 +263,7 @@ if (Session["userID"] == null)
                 divissue.append(issue)
                 divissue.show('slow');
 
-            $('#issueCnt').text(issueCount);
+            $('#issueCnt').text("" +issueCount.toString());
             if (issueStstus == 1) { $('#' + index).text("commented")}
             if (issueStstus == 2) { $('#' + index)}
             if (issueStstus == 0) { $('#' + index).text("Issue Solved") }
@@ -279,16 +279,11 @@ if (Session["userID"] == null)
                 divissue.append(issue)
                 divissue.show('slow');
 
-            $('#issueCnt').text(issueCount);
+            $('#issueCnt').text("" +issueCount.toString());
             if (issueStstus == 1) { $('#' + index).text("commented")}
             if (issueStstus == 2) { $('#' + index)}
             if (issueStstus == 0) { $('#' + index).text("Issue Solved")}
         }
-
-
-
-
-
 
 
     })
@@ -308,6 +303,7 @@ if (Session["userID"] == null)
             else if (ststus == 2) { text.prop('disabled', false); $("#savecomment").prop('disabled', false);}
             var issueInfo = '<p hidden id="id">'+id+'</p><p style="color:#4CAF50"><strong>Message : </strong></p><p>' + msg + '</p></br><p style="color:#4CAF50"><strong>supervisor Note : </strong></p><p class="mb-0">' + dis+' </p>'
             $('#issueData').append(issueInfo) 
+            $("#savecomment").show();
         }
      
 
@@ -333,10 +329,14 @@ if (Session["userID"] == null)
                     var body = $("#issueData")
                     $("#text").hide();
                     body.empty();
-                    if (response==1)
-                        body.append('<P style="color:red" class="text-center">Your comment is saved. Waiting for production line supervisors confirmation.</br>Thank You.</p>')
-                    else
-                        body.append('<P style="color:green" class="text-center">Issue is Solved. Great work!</br>Thank You.</p>')
+                    if (response == 1) {
+                        body.append('<P style="color:red" class="text-center">Your comment is saved. Waiting for the production line supervisors confirmation.</br>Thank You.</p>');
+                        $("#savecomment").hide();
+                    }
+                    else {
+                        body.append('<P style="color:green" class="text-center">Issue is Solved. Great work!</br>Thank You.</p>');
+                        $("#savecomment").hide();
+                    }
                 }).fail(function (response) {
                     console.log('Error: ' + response);
                 });
