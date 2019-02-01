@@ -516,7 +516,7 @@ function drawChart1() {
     
     var dataArray = new Array();
     var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
-    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString();
+    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 11:59 UTC")).toISOString();
     var plantLocation = $('#plantSelectBox').val().join("','");
 
     $.ajax({
@@ -528,6 +528,7 @@ function drawChart1() {
         success: function (feedback) {
 
             console.log("drawChart1@@@@@@@@@@@@@@@@@@@@@");
+            console.log(" startDate:"+startDate+" endDate:"+endDate+" plantLocation:"+plantLocation);
             console.log(feedback);
 
             chartData1 = JSON.parse(feedback);
@@ -592,7 +593,7 @@ var chartData1;
 function drawChart2() {
     var dataArray1 = new Array();
     var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
-    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString();
+    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 11:59 UTC")).toISOString();
     var plantLocation = $('#plantSelectBox').val().join("','");
 
     $.ajax({
@@ -655,7 +656,7 @@ function drawChart2() {
 function drawChart3() {
     var dataArray2 = new Array();
     var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
-    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString();
+    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 11:59 UTC")).toISOString();
     var plantLocation = $('#plantSelectBox').val().join("','");
 
     $.ajax({
@@ -706,7 +707,7 @@ function drawChart3() {
 function createTable() {
     $("#myTable").empty();
     var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
-    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString();
+    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 11:59 UTC")).toISOString();
     var plantLocation = $('#plantSelectBox').val().join("','");
 
     $.ajax({
@@ -793,7 +794,7 @@ function filterByDate()
         var elem1 =document.querySelectorAll(".dateGap");
         elem1.forEach(function (i)
                 {
-                    i.innerHTML ="from "+ (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString().substring(0,10) +" to "+(new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString().substring(0,10) ;
+                    i.innerHTML ="from "+ (new Date(document.getElementById('datetimepicker1').value+" 11:59 UTC")).toISOString().substring(0,10) +" to "+(new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString().substring(0,10) ;
                 });
         google.charts.setOnLoadCallback(drawChart1);
         google.charts.setOnLoadCallback(drawChart2);
@@ -875,7 +876,7 @@ function notificationOnOff(issue_occurrence_id){
         }
 
         var issue_line_person_id = document.getElementById('hidden_userID').innerHTML;
-alert(issue_line_person_id+" -- "+issue_occurrence_id+" -- "+status);
+
         $.ajax({
             type: "POST",
             dataType: 'text',
