@@ -294,11 +294,11 @@
     <script src="~/Scripts/jquery-ui.js"></script>
 
     <script>
-        if('@Session["department"]'=='Production')
+        if('@Session["department"]'!='MachineShop')
         {
          $('#qulity_drop').hide();
          $('#qulity_drop_mob').hide();
-        }else if('@Session["department"]'=='Machining'){
+        }else {
         $('#it_drop').hide();
         $('#it_drop_mob').hide();
         }
