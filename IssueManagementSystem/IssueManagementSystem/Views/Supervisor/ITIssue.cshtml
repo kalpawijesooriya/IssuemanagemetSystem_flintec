@@ -18,7 +18,7 @@
 
 
 <div class="container margin ">
-    <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
+
     <link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
     <link href="~/Content/googlegrafics.css" rel="stylesheet" />
     <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
@@ -31,13 +31,7 @@
             <div class="form-group" style="width:100%;margin:auto">
                 <span id="lineID" style="display:none">@lineId</span>
 
-
-                <label for="exampleFormControlTextarea1" style="margin-top:5%">Select Group</label>
-                <select class="js-example-placeholder-single js-states form-control" id="groups" name="Material" style="width:100%;" onchange="">
-                    <option></option>
-
-                </select>
-
+           
 
                 <div style="padding-top:20px;margin-top:5%">
                     <label for="exampleFormControlTextarea1">Description</label>
@@ -63,13 +57,16 @@
 <script src="~/Scripts/AdminScripts/jscolar.js"></script>
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
 <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
+<script src="~/signalr/Hubs"></script>
 <script>
+   
     $("#submit").click(function () {
 
         obj = new Object();
         obj.description = document.getElementById("description").value;
         obj.line_line_id = @Session["lineId"];
         obj.location =  '@Session["location"]';
+  
         var obj_array = new Array();
         obj_array.push(obj);
 

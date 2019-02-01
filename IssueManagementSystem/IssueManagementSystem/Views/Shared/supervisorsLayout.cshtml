@@ -69,12 +69,12 @@
                                     <li>
                                         <a href="@Url.Action("MaterialDelay", "Supervisor")">Material Delay</a>
                                     </li>
-                                    <li>
+                                    <li id="itweb">
                                         <a href="@Url.Action("ITIssue", "Supervisor")">Software/IT Issue</a>
                                     </li>
-                                    @*<li>
+                                    <li id="qtyweb">
                                         <a href="@Url.Action("QualityIssue", "Supervisor")">Quality Issue</a>
-                                    </li>*@
+                                    </li>
                                 </ul>
                             </li>
                            
@@ -165,12 +165,12 @@
                                 <li>
                                     <a href="@Url.Action("MaterialDelay", "Supervisor")">Matirial Delay</a>
                                 </li>
-                                <li>
+                                <li id="itmobile">
                                     <a href="@Url.Action("ITIssue", "Supervisor")">Software/IT Issue</a>
                                 </li>
-                                @*<li>
+                                <li id="qtymobile">
                                     <a href="@Url.Action("QualityIssue", "Supervisor")">Quality Issue</a>
-                                </li>*@
+                                </li>
                                 
 
                             </ul>
@@ -267,6 +267,8 @@
     <script src="~/signalr/Hubs"></script>
 
     <script>
+        if('@Session["department"]'!='MachineShop'){$('#qtymobile').hide();$('#qtyweb').hide();}
+        else{$('#itmobile').hide();$('#itweb').hide();}
         $(document).ready(function () {
            
             // Proxy created on the fly

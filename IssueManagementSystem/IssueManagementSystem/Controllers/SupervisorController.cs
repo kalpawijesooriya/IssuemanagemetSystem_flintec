@@ -294,7 +294,7 @@ namespace IssueManagementSystem.Controllers
                                     var line = db.lines.Where(x => x.line_id == line_id).FirstOrDefault();
                                     string msg = "IT/SoftWare issue has occurred @@ Line : " + line.line_name + " Line @ Date : " + day + "@ Time : " + time1 + "@ Note : " + issueModel.description;
                                     msg = msg.Replace("@", Environment.NewLine);
-                                    string callNote = "IT Software issue has occurred in " + line.line_name + " line at " + time1;
+                                    string callNote = "IT/Software issue has occurred in " + line.line_name + " line at " + time1;
                                     var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
                                     com.lightON("5", displayInfo.raspberry_ip_address);//turn on the Light
                                     sendCD(line_id, 5, msg, "IT/Software Issue has occered", callNote, issue_occour_id, notification_HandlingModel);
@@ -313,9 +313,8 @@ namespace IssueManagementSystem.Controllers
         }
 
         [HttpPost]//add Quality Issues to database
-        public ActionResult AddIssueQuality(issue_occurrence issueModel, notification_handling notification_HandlingModel)
+        public ActionResult AddIssueQuality(string issueJson, issue_occurrence issueModel, notification_handling notification_HandlingModel)
         {
-            int lineId = 1;
             var time = DateTime.Now;
             string current_time = time.ToString("yyyy-MM-dd HH:mm");
 
@@ -323,43 +322,62 @@ namespace IssueManagementSystem.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    lineId = Int32.Parse(issueModel.lineid);
-                    int userID = (int)Session["userID"];
-                    issueModel.department = "Quality";
-                    issueModel.responsible_person_confirm_status = 1;
-                    issueModel.line_line_id = lineId;
-                    issueModel.issue_satus = "1";
-                    issueModel.issue_issue_ID = 4;//Issue id is 5 for IT Issue
 
-                    //get certain employee assigned for a certain issue in a certain line and the level of resp. should be one
-                    var respPersonID = db.issue_line_person.Where(x => x.line_id == lineId && x.levelOfResponsibility == 1 && x.issue_id == 4 && x.person_level == 1).FirstOrDefault();
-                    issueModel.responsible_person_emp_id = Int32.Parse(respPersonID.EmployeeNumber.ToString());
+                    JArray issueData = JArray.Parse(issueJson) as JArray;
+                    System.Diagnostics.Debug.WriteLine(issueData);
 
-                    issueModel.location = (string)Session["location"];
                     var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture);
                     var dayitem = current_time.Split(' ');
                     var day = dayitem[0];
                     var time1 = dayitem[1];
-                    issueModel.issue_date = date;
-
-                    db.issue_occurrence.Add(issueModel);
-                    db.SaveChanges();
-                    var issue_occour_id = issueModel.issue_occurrence_id;
-                    if (issueModel.issue_occurrence_id > 0)
+                    var HHMM = time1.Split(':');
+                    try
                     {
-                        var line = db.lines.Where(x => x.line_id == lineId).FirstOrDefault();
-                        string msg = "Quality issue has occurred @@ Line :" + line.line_name + " Line @ Date : " + day + " @ Time : " + time1 + ". @ Note : " + issueModel.description;
-                        msg = msg.Replace("@", Environment.NewLine);
-                        string callNote = "Quality issue has occurred in " + line.line_name + " line at " + time1;
-                        var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
-                        com.lightON("4", displayInfo.raspberry_ip_address);//turn on the Light
-                        sendCD(lineId, 4, msg, "Quality Issue has occered", callNote, issue_occour_id, notification_HandlingModel);
+
+                        foreach (JObject item in issueData)
+                        {
+                            int line_id = Int32.Parse(item["line_line_id"].ToString());
+                            int issue_id = 4;
+                            var resp_person = db.issue_line_person.Where(x => x.levelOfResponsibility == 1 && x.line_id == line_id && x.issue_id == issue_id && x.person_level == 1).FirstOrDefault();
+                            var responsible_person_emp_id = resp_person.EmployeeNumber; //get certain employee assigned for a certain issue in a certain line and the level of resp. should be one
+
+                            issueModel.line_line_id = line_id;
+                            issueModel.responsible_person_confirm_status = 1;
+                            issueModel.department = "Quality";
+                            issueModel.issue_satus = "1";
+                            issueModel.issue_issue_ID = 4;//Issue id is 4 for quality
+                            issueModel.responsible_person_emp_id = resp_person.EmployeeNumber;
+                            issueModel.location = item["location"].ToString();
+                            issueModel.description = item["description"].ToString();
+
+                            issueModel.issue_date = date;
+                            db.issue_occurrence.Add(issueModel);
+                            db.SaveChanges();// end of the save
+
+                            if (issueModel.issue_occurrence_id > 0)
+                            {
+                                var issue_occour_id = issueModel.issue_occurrence_id;
+                                var line = db.lines.Where(x => x.line_id == line_id).FirstOrDefault();
+                                var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
+                                string msg = " Quality issue has occurred @@ Area : "+ line.line_name + " @ Group : Group 0" + item["group"] + " @ Date" + day + " @ Time : " + HHMM[0] + ":" + HHMM[1] + "@ Special Note : " + issueModel.description;
+                                msg = msg.Replace("@", Environment.NewLine);
+                                string callNote = "Quality issue has occurred in " + line.line_name + "at " + HHMM[0] + ":" + HHMM[1];
+                                com.lightON("4", displayInfo.raspberry_ip_address);//turn on the Light
+                                sendCD(line_id, 4, msg, "Quality Issue has occered", callNote, issue_occour_id, notification_HandlingModel);
+
+                                ModelState.Clear();
+                            }
+
+                        }
                     }
-                    ModelState.Clear();
+                    catch (Exception ex)
+                    {
+                        return Content("Error Occured" + ex.ToString(), MediaTypeNames.Text.Plain);
+
+                    }
                 }
             }
-            if (issueModel.Role == "supervisor") { return RedirectToAction("selectIssue", "Supervisor"); }
-            else { return RedirectToAction("DashBord", "CellEngineer", new { lineid = lineId }); }
+            return Content("Qulity Issue Recorded", MediaTypeNames.Text.Plain);
         }
 
 
