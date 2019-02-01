@@ -149,19 +149,17 @@ namespace IssueManagementSystem.Controllers
                                 responsible_person_confirm_feedback,solved_date,commented_date,f.department,
                                 (SELECT  a.Name FROM BigRed.dbo.tbl_PPA_User a  WHERE a.UserName LIKE f.solved_emp_id ) AS solved_emp,
                                 (SELECT  i.Name FROM BigRed.dbo.tbl_PPA_User i WHERE i.UserName LIKE f.buzzer_off_by  ) AS buzzer_off_by
-                                ,buzzer_off_time,notification_status 
+                                ,buzzer_off_time 
 
                                 FROM 
 
-                                issue_occurrence f,lines,issues,FLINTEC.dbo.FLINTEC$Item,BigRed.dbo.tbl_PPA_User g,notification_handling k
+                                issue_occurrence f,lines,issues,FLINTEC.dbo.FLINTEC$Item,BigRed.dbo.tbl_PPA_User g
 
                                 WHERE
 
                                 lines.line_id = f.line_line_id AND issues.issue_id = f.issue_issue_ID AND
                                 (FLINTEC.dbo.FLINTEC$Item.No_ COLLATE SQL_Latin1_General_CP1_CS_AS LIKE f.material_id COLLATE SQL_Latin1_General_CP1_CS_AS)
                                 AND g.UserName LIKE f.responsible_person_emp_id
-                                AND k.EmployeeNumber = f.responsible_person_emp_id 
-                                AND k.issue_occurrence_id = f.issue_occurrence_id
  
                                 UNION 
 
@@ -171,26 +169,24 @@ namespace IssueManagementSystem.Controllers
                                 e.department,
                                 (SELECT  c.Name FROM BigRed.dbo.tbl_PPA_User c WHERE c.UserName LIKE e.solved_emp_id  ) AS solved_emp,
                                 (SELECT  i.Name FROM BigRed.dbo.tbl_PPA_User i WHERE i.UserName LIKE e.buzzer_off_by  ) AS buzzer_off_by
-                                ,buzzer_off_time,notification_status 
+                                ,buzzer_off_time 
 
                                 FROM
 
-                                issue_occurrence e,lines,issues,BigRed.dbo.tbl_PPA_User h,notification_handling n
+                                issue_occurrence e,lines,issues,BigRed.dbo.tbl_PPA_User h
                                 WHERE
 
                                 lines.line_id = e.line_line_id AND issues.issue_id = e.issue_issue_ID AND 
                                 h.UserName LIKE e.responsible_person_emp_id AND
-                                n.EmployeeNumber = e.responsible_person_emp_id AND
-                                n.issue_occurrence_id = e.issue_occurrence_id AND
                                 e.material_id IS NULL ORDER BY issue_date DESC";
 
-                var data = db.Database.SqlQuery<TempClasses.tempClass5>(query).ToList();//dep_occured
+                var data = db.Database.SqlQuery<TempClasses.tempClass5>(query).ToList();
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
         }
 
         [HttpPost]
-        public JsonResult notificationOnOff(string issue_line_person_id, string issue_occurrence_id)
+        public JsonResult notificationOnOff(string issue_line_person_id, string issue_occurrence_id, string status)
         {
 
             /*
@@ -206,10 +202,10 @@ namespace IssueManagementSystem.Controllers
 
             String query = @"UPDATE notification_handling 
                             SET 
-                            notification_handling.notification_status='0'
+                            notification_handling.notification_status="+status+@"
                             WHERE 
-                            notification_handling.issue_occurrence_id='" + issue_occurrence_id + @"' AND 
-                            notification_handling.EmployeeNumber='" + issue_line_person_id + @"'";
+                            notification_handling.issue_occurrence_id='"+issue_occurrence_id+@"' AND 
+                            notification_handling.EmployeeNumber='"+issue_line_person_id+@"'";
 
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
@@ -221,10 +217,11 @@ namespace IssueManagementSystem.Controllers
 
 
         [HttpPost]
-        public JsonResult checkNotificationList_formanagers(int empID, string issue, string line) {
+        public JsonResult checkNotificationList_formanagers(int empID, string issueOccID) {
+
 
             String query = @"SELECT CASE WHEN
-                            (" + empID + @" IN(SELECT issue_line_person.EmployeeNumber FROM issue_line_person WHERE issue_line_person.issue_id = (SELECT issues.issue_id FROM issues  WHERE issue LIKE '" + issue + @"') AND issue_line_person.line_id = (SELECT lines.line_id FROM lines WHERE lines.line_name LIKE '" + line + @"')))
+                            (" + empID + @" IN(SELECT notification_handling.EmployeeNumber FROM notification_handling WHERE notification_handling.issue_occurrence_id = " + issueOccID + @"  AND notification_handling.notification_status=1))
                             THEN CAST(1 AS BIT)
                             ELSE CAST(0 AS BIT) END";
             

@@ -294,12 +294,10 @@ namespace IssueManagementSystem.Controllers
                 foreach (JObject user in list_user)
                 {
            
-                   
                     //get issue id of particular issue
                     int issue_id = (Int32)user["issue_id"];
                     int lineid = (Int32)user["lineid"];
                     //var issuelist = db.issue_line_person.Where(x => x.issue_id == issue_id && x.line_id == lineid).ToList();
-                  
 
                     if ( delete)
                     {

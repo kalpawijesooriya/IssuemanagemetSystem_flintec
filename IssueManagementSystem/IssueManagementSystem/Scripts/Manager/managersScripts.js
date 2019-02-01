@@ -87,7 +87,6 @@ function loadTableData(){
                                 tempArr.push(i.buzzer_off_by);                        //20
                                 tempArr.push(i.buzzer_off_time);                      //21
                                 tempArr.push(i.dep_occured);                          //22
-                                tempArr.push(i.notification_status);                  //23
                                 data_obj.push(tempArr);
                             });
                 },
@@ -211,7 +210,6 @@ function filterTableData(){
                                 tempArr.push(i.buzzer_off_by);
                                 tempArr.push(i.buzzer_off_time);
                                 tempArr.push(i.dep_occured);
-                                tempArr.push(i.notification_status); 
 
                                 data_obj.push(tempArr);
                                 flag = 1;
@@ -261,7 +259,7 @@ function loadAccordionTable(obj)
         for(var i=0;i<obj.length;i++){
             createAccordionLine(accordion,obj[i][0],obj[i][1],obj[i][2],obj[i][5],obj[i][3],obj[i][4],obj[i][6],
             obj[i][7],obj[i][8],obj[i][9],obj[i][10],obj[i][11],obj[i][12],obj[i][13],obj[i][14],obj[i][15],
-            obj[i][16],obj[i][17],obj[i][18],obj[i][19],obj[i][20],obj[i][21]);
+            obj[i][16],obj[i][17],obj[i][18],obj[i][19],obj[i][20]);
         }
 
         $( function() {
@@ -287,9 +285,8 @@ function loadAccordionTable(obj)
 //buzzer_off_by                       //18
 //buzzer_off_time                     //19
 //dep_occured                         //20
-//notification_status                 //21
 
-function createAccordionLine(accordion,date,id,issue,plant,line,status,desc,resp,matID,machID,linID,issID,respStatus,respFeed,solDate,comDate,dept,solEmp,buzOffBy,buzOffT,deptOccrd,notfStatus){
+function createAccordionLine(accordion,date,id,issue,plant,line,status,desc,resp,matID,machID,linID,issID,respStatus,respFeed,solDate,comDate,dept,solEmp,buzOffBy,buzOffT,deptOccrd){
 
     var dateDIV  =  document.createElement('div');
     var idDIV    =  document.createElement('div');
@@ -392,15 +389,13 @@ function createAccordionLine(accordion,date,id,issue,plant,line,status,desc,resp
     div_1_row.setAttribute("class","row");
     div_1_left.setAttribute("class","col-md-6");
     div_1_right.setAttribute("class","col-md-6");
-
-  console.log(document.getElementById('hidden_userID').innerHTML+" , "+issue+" ,  "+line);
-
+console.log(document.getElementById('hidden_userID').innerHTML+"  - --  "+id);
         $.ajax({
         type:"POST",
         dataType:'text',
         async:false,
         url:'/Manager/checkNotificationList_formanagers',
-        data:{empID:document.getElementById('hidden_userID').innerHTML,issue:issue,line:line},
+        data:{empID:document.getElementById('hidden_userID').innerHTML,issueOccID:id},
         success:function(flag){
 
             var flagVal = flag;
@@ -420,6 +415,7 @@ function createAccordionLine(accordion,date,id,issue,plant,line,status,desc,resp
                 notification_btn.setAttribute('onChange',"notificationOnOff('"+id+"')");
                 notification_btn.setAttribute("class","myCheckbox");
                 notification_btn.dataset.toggle = "toggle";
+                notification_btn.setAttribute('checked',"true");
                 notification_btn.dataset.on = "<i class='fas fa-bell fa-2x'>&nbspon</i>";
                 notification_btn.dataset.off = "<i class='fas fa-bell-slash fa-2x'>&nbspoff&nbsp&nbsp</i>";
             }
@@ -520,7 +516,7 @@ function drawChart1() {
     
     var dataArray = new Array();
     var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
-    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString();
+    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 11:59 UTC")).toISOString();
     var plantLocation = $('#plantSelectBox').val().join("','");
 
     $.ajax({
@@ -532,6 +528,7 @@ function drawChart1() {
         success: function (feedback) {
 
             console.log("drawChart1@@@@@@@@@@@@@@@@@@@@@");
+            console.log(" startDate:"+startDate+" endDate:"+endDate+" plantLocation:"+plantLocation);
             console.log(feedback);
 
             chartData1 = JSON.parse(feedback);
@@ -596,7 +593,7 @@ var chartData1;
 function drawChart2() {
     var dataArray1 = new Array();
     var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
-    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString();
+    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 11:59 UTC")).toISOString();
     var plantLocation = $('#plantSelectBox').val().join("','");
 
     $.ajax({
@@ -659,7 +656,7 @@ function drawChart2() {
 function drawChart3() {
     var dataArray2 = new Array();
     var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
-    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString();
+    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 11:59 UTC")).toISOString();
     var plantLocation = $('#plantSelectBox').val().join("','");
 
     $.ajax({
@@ -710,7 +707,7 @@ function drawChart3() {
 function createTable() {
     $("#myTable").empty();
     var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
-    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString();
+    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 11:59 UTC")).toISOString();
     var plantLocation = $('#plantSelectBox').val().join("','");
 
     $.ajax({
@@ -797,7 +794,7 @@ function filterByDate()
         var elem1 =document.querySelectorAll(".dateGap");
         elem1.forEach(function (i)
                 {
-                    i.innerHTML ="from "+ (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString().substring(0,10) +" to "+(new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString().substring(0,10) ;
+                    i.innerHTML ="from "+ (new Date(document.getElementById('datetimepicker1').value+" 11:59 UTC")).toISOString().substring(0,10) +" to "+(new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString().substring(0,10) ;
                 });
         google.charts.setOnLoadCallback(drawChart1);
         google.charts.setOnLoadCallback(drawChart2);
@@ -859,19 +856,34 @@ function topCardClick(issue_name){
         $('#statusSelectBox').trigger('change');
     }
 
-  
 }
 
+var flag1 = 1;
+
 function notificationOnOff(issue_occurrence_id){
+        var status;
+
+        if (flag1==1)  
+        {
+            status =0;
+            flag1 = 0;
+        }
+
+        else if (flag1==0)  
+       { 
+            status =1;
+            flag1 = 1;
+        }
 
         var issue_line_person_id = document.getElementById('hidden_userID').innerHTML;
+
         $.ajax({
             type: "POST",
             dataType: 'text',
             url: "/Manager/notificationOnOff",
-            data: { issue_line_person_id:issue_line_person_id,issue_occurrence_id:issue_occurrence_id},
+            data: { issue_line_person_id:issue_line_person_id,issue_occurrence_id:issue_occurrence_id,status:status},
             success: function (feedback) {
-                    alert(feedback);
+                   
             },
             error: function () {
                 alert("Error occurred");
