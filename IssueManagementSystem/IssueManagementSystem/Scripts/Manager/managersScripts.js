@@ -238,7 +238,7 @@ function loadTablePage(page){
 
             var idString = (Number(page)-1).toString();
             var paginationItem = document.getElementById(""+idString);
-            if(paginationItem != null){
+            if(paginationItem != null ){
                      paginationItem.setAttribute("class","page-item active");
                 }
 
@@ -440,6 +440,7 @@ console.log(document.getElementById('hidden_userID').innerHTML+"  - --  "+id);
             eye_span.style.color="#42c44d";
         }
         else{
+
             eye_span.setAttribute("class","glyphicon glyphicon-eye-close");
             eye_span.setAttribute("data-toggle","tooltip");
             eye_span.title = "To be checked by responsible person";
@@ -480,7 +481,7 @@ function createPagination(numberOfPages){
     for (var i = 0; i < numberOfPages; i++){
             var liElement =  document.createElement('li');
             liElement.setAttribute("class","page-item ");
-
+            liElement.setAttribute("id",i);
             var aElement =  document.createElement('div');
             aElement.setAttribute("class","page-link");
             aElement.innerHTML= i+1 ;
@@ -588,7 +589,6 @@ function getRandomColor() {
 }
 
 var chartData1;
-
 
 function drawChart2() {
     var dataArray1 = new Array();
@@ -889,6 +889,30 @@ function notificationOnOff(issue_occurrence_id){
                 alert("Error occurred");
             }
         });
+}
+
+
+function numberOfIssues(){
+    
+    var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
+    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 23:59 UTC")).toISOString();
+
+        $.ajax({
+            type: "POST",
+            dataType: 'text',
+            url: "/Manager/totalNumberOfIssues",
+            data: {startDate:startDate,endDate:endDate },
+            success: function (feedback) {
+                   
+            },
+            error: function () {
+                alert("Error occurred");
+            }
+        });
+    
+    var ttlIssues = document.getElementById("ttlIssues");
+    ttlIssues.innerHTML("");
+
 }
 
 
