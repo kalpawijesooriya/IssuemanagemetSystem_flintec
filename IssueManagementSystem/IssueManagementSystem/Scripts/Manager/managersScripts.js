@@ -380,7 +380,6 @@ function createAccordionLine(accordion,date,id,issue,plant,line,status,desc,resp
     div_1_right.appendChild(p15);
     div_1_right.appendChild(p16);
 
-
     div_1_container.appendChild(div_1_row);
     div_1_row.appendChild(div_1_left);
     div_1_row.appendChild(div_1_right);
@@ -388,7 +387,10 @@ function createAccordionLine(accordion,date,id,issue,plant,line,status,desc,resp
     div_1_container.setAttribute("class","container");
     div_1_row.setAttribute("class","row");
     div_1_left.setAttribute("class","col-md-6");
+    div_1_left.setAttribute("style","overflow-wrap: break-word;");
     div_1_right.setAttribute("class","col-md-6");
+    div_1_right.setAttribute("style","overflow-wrap: break-word;");
+
 console.log(document.getElementById('hidden_userID').innerHTML+"  - --  "+id);
         $.ajax({
         type:"POST",
@@ -429,8 +431,8 @@ console.log(document.getElementById('hidden_userID').innerHTML+"  - --  "+id);
 
     detailsDIV.appendChild(div_1_container);
 
-    (desc!=null)?(p1.innerHTML="<span style=' color:#5b5a5a;font-weight: bold'>Description</span> : <span  style='font-size:16px'>"+desc+"</span>"):(p1.innerHTML ="");
-    (resp!=null)?(p2.innerHTML="<span style=' color:#5b5a5a;font-weight: bold'>Responisble Person </span> :<span  style='font-size:16px'>"+resp+" - "+dept+"</span>"):(p2.innerHTML ="");
+    (desc!=null)?(p1.innerHTML="<span style=' color:#5b5a5a;font-weight: bold'>Description</span> : <span  style='font-size:16px;'>"+desc+"</span>"):(p1.innerHTML="");
+    (resp!=null)?(p2.innerHTML="<span style=' color:#5b5a5a;font-weight: bold'>Responisble Person </span> :<span  style='font-size:16px'>"+resp+" - "+dept+"</span>"):(p2.innerHTML="");
 
     if(respStatus!=null && respStatus== 0)
         {  
@@ -457,8 +459,8 @@ console.log(document.getElementById('hidden_userID').innerHTML+"  - --  "+id);
     //(manNotStatus!=null)?(p11.innerHTML="<span style='color:#5b5a5a;font-weight: bold'>Responsible Person Feedback </span>:<span  style='font-size:16px'>"+manNotStatus):(p11.innerHTML ="");
     //(dept!=null)?(p12.innerHTML      ="<span style='color:#5b5a5a;font-weight: bold'>Responsible Department </span>:<span  style='font-size:16px'>"+dept+"</span>"):(p12.innerHTML ="");
     (solEmp!=null)?(p13.innerHTML    ="<span style='color:#5b5a5a;font-weight: bold'>Issue resolved by </span>:<span  style='font-size:16px'>"+solEmp+"</span>"):(p13.innerHTML ="");
-    (buzOffBy!=null)?(p14.innerHTML    ="<span style='color:#5b5a5a;font-weight: bold'>Buzzer Turned off by </span>:<span  style='font-size:16px'>"+buzOffBy+"</span>"):(p14.innerHTML ="");
-    (buzOffT!=null)?(p15.innerHTML     ="<span style='color:#5b5a5a;font-weight: bold'>Buzzer Turned off at </span>:<span  style='font-size:16px'>"+Unix_timestamp((buzOffT.split('(')[1]).split(')')[0],'ymdt')+"</span>"):(p15.innerHTML ="");
+    (buzOffBy!=null)?(p14.innerHTML    ="<span style='color:#5b5a5a;font-weight: bold'>Buzzer Turned off by </span>:<span  style='font-size:16px'>"+buzOffBy+" at "+Unix_timestamp((buzOffT.split('(')[1]).split(')')[0],'ymdt')+"</span>"):(p14.innerHTML ="");
+    //(buzOffT!=null)?(p15.innerHTML     ="<span style='color:#5b5a5a;font-weight: bold'>Buzzer Turned off at </span>:<span  style='font-size:16px'>"+Unix_timestamp((buzOffT.split('(')[1]).split(')')[0],'ymdt')+"</span>"):(p15.innerHTML ="");
     //(deptOccrd!=null)?(p16.innerHTML ="<span style='color:#5b5a5a;font-weight: bold'>Issue Occured Department </span>:<span  style='font-size:16px'>"+deptOccrd+"</span>"):(p16.innerHTML ="");
 
     accordion.appendChild(rowDIVcontainer);
@@ -799,6 +801,7 @@ function filterByDate()
         google.charts.setOnLoadCallback(drawChart1);
         google.charts.setOnLoadCallback(drawChart2);
         google.charts.setOnLoadCallback(drawChart3);
+        numberOfIssues();
 
     }
 /*
@@ -897,13 +900,16 @@ function numberOfIssues(){
     var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
     var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 23:59 UTC")).toISOString();
 
+    var count = 0;
+
         $.ajax({
             type: "POST",
             dataType: 'text',
+            async:false,
             url: "/Manager/totalNumberOfIssues",
             data: {startDate:startDate,endDate:endDate },
             success: function (feedback) {
-                   
+                count = feedback;
             },
             error: function () {
                 alert("Error occurred");
@@ -911,7 +917,7 @@ function numberOfIssues(){
         });
     
     var ttlIssues = document.getElementById("ttlIssues");
-    ttlIssues.innerHTML("");
+    ttlIssues.innerHTML=count;
 
 }
 
