@@ -103,7 +103,7 @@ function filterTableData(){
         data_obj.splice(0, data_obj.length);
 
         var Date_select_start = (new Date(document.getElementById('datetimepicker3').value+" 00:00 UTC")).toISOString().substring(0, 10);
-        var Date_select_end = (new Date(document.getElementById('datetimepicker4').value+" 00:00 UTC")).toISOString().substring(0, 10);
+        var Date_select_end = (new Date(document.getElementById('datetimepicker4').value+" 23:59 UTC")).toISOString().substring(0, 10);
 
         var Plant_select = document.getElementById('plantSelectBox2').value;
         var Issue_select = document.getElementById('issueSelectBox').value
@@ -136,7 +136,7 @@ function filterTableData(){
 
                         var dateCheck_result = dateCheck(new Date(Unix_timestamp(dateVar,'ymd')),
                                                          new Date(document.getElementById('datetimepicker3').value+" 00:00 UTC"),
-                                                         new Date(document.getElementById('datetimepicker4').value+" 00:00 UTC")
+                                                         new Date(document.getElementById('datetimepicker4').value+" 23:59 UTC")
                                                         );
 
                         var var_array = ["*0","*1"];
@@ -238,7 +238,7 @@ function loadTablePage(page){
 
             var idString = (Number(page)-1).toString();
             var paginationItem = document.getElementById(""+idString);
-            if(paginationItem != null){
+            if(paginationItem != null ){
                      paginationItem.setAttribute("class","page-item active");
                 }
 
@@ -380,7 +380,6 @@ function createAccordionLine(accordion,date,id,issue,plant,line,status,desc,resp
     div_1_right.appendChild(p15);
     div_1_right.appendChild(p16);
 
-
     div_1_container.appendChild(div_1_row);
     div_1_row.appendChild(div_1_left);
     div_1_row.appendChild(div_1_right);
@@ -388,7 +387,10 @@ function createAccordionLine(accordion,date,id,issue,plant,line,status,desc,resp
     div_1_container.setAttribute("class","container");
     div_1_row.setAttribute("class","row");
     div_1_left.setAttribute("class","col-md-6");
+    div_1_left.setAttribute("style","overflow-wrap: break-word;");
     div_1_right.setAttribute("class","col-md-6");
+    div_1_right.setAttribute("style","overflow-wrap: break-word;");
+
 console.log(document.getElementById('hidden_userID').innerHTML+"  - --  "+id);
         $.ajax({
         type:"POST",
@@ -429,10 +431,10 @@ console.log(document.getElementById('hidden_userID').innerHTML+"  - --  "+id);
 
     detailsDIV.appendChild(div_1_container);
 
-    (desc!=null)?(p1.innerHTML="<span style=' color:#5b5a5a;font-weight: bold'>Description</span> : <span  style='font-size:16px'>"+desc+"</span>"):(p1.innerHTML ="");
-    (resp!=null)?(p2.innerHTML="<span style=' color:#5b5a5a;font-weight: bold'>Responisble Person </span> :<span  style='font-size:16px'>"+resp+" - "+dept+"</span>"):(p2.innerHTML ="");
+    (desc!=null)?(p1.innerHTML="<span style=' color:#5b5a5a;font-weight: bold'>Description</span> : <span  style='font-size:16px;'>"+desc+"</span>"):(p1.innerHTML="");
+    (resp!=null)?(p2.innerHTML="<span style=' color:#5b5a5a;font-weight: bold'>Responisble Person </span> :<span  style='font-size:16px'>"+resp+" - "+dept+"</span>"):(p2.innerHTML="");
 
-    if(respStatus!=null && respStatus== 1)
+    if(respStatus!=null && respStatus== 0)
         {  
             eye_span.setAttribute("class","glyphicon glyphicon-eye-open");
             eye_span.setAttribute("data-toggle","tooltip");
@@ -440,6 +442,7 @@ console.log(document.getElementById('hidden_userID').innerHTML+"  - --  "+id);
             eye_span.style.color="#42c44d";
         }
         else{
+
             eye_span.setAttribute("class","glyphicon glyphicon-eye-close");
             eye_span.setAttribute("data-toggle","tooltip");
             eye_span.title = "To be checked by responsible person";
@@ -456,8 +459,8 @@ console.log(document.getElementById('hidden_userID').innerHTML+"  - --  "+id);
     //(manNotStatus!=null)?(p11.innerHTML="<span style='color:#5b5a5a;font-weight: bold'>Responsible Person Feedback </span>:<span  style='font-size:16px'>"+manNotStatus):(p11.innerHTML ="");
     //(dept!=null)?(p12.innerHTML      ="<span style='color:#5b5a5a;font-weight: bold'>Responsible Department </span>:<span  style='font-size:16px'>"+dept+"</span>"):(p12.innerHTML ="");
     (solEmp!=null)?(p13.innerHTML    ="<span style='color:#5b5a5a;font-weight: bold'>Issue resolved by </span>:<span  style='font-size:16px'>"+solEmp+"</span>"):(p13.innerHTML ="");
-    (buzOffBy!=null)?(p14.innerHTML    ="<span style='color:#5b5a5a;font-weight: bold'>Buzzer Turned off by </span>:<span  style='font-size:16px'>"+buzOffBy+"</span>"):(p14.innerHTML ="");
-    (buzOffT!=null)?(p15.innerHTML     ="<span style='color:#5b5a5a;font-weight: bold'>Buzzer Turned off at </span>:<span  style='font-size:16px'>"+Unix_timestamp((buzOffT.split('(')[1]).split(')')[0],'ymdt')+"</span>"):(p15.innerHTML ="");
+    (buzOffBy!=null)?(p14.innerHTML    ="<span style='color:#5b5a5a;font-weight: bold'>Buzzer Turned off by </span>:<span  style='font-size:16px'>"+buzOffBy+" at "+Unix_timestamp((buzOffT.split('(')[1]).split(')')[0],'ymdt')+"</span>"):(p14.innerHTML ="");
+    //(buzOffT!=null)?(p15.innerHTML     ="<span style='color:#5b5a5a;font-weight: bold'>Buzzer Turned off at </span>:<span  style='font-size:16px'>"+Unix_timestamp((buzOffT.split('(')[1]).split(')')[0],'ymdt')+"</span>"):(p15.innerHTML ="");
     //(deptOccrd!=null)?(p16.innerHTML ="<span style='color:#5b5a5a;font-weight: bold'>Issue Occured Department </span>:<span  style='font-size:16px'>"+deptOccrd+"</span>"):(p16.innerHTML ="");
 
     accordion.appendChild(rowDIVcontainer);
@@ -480,7 +483,7 @@ function createPagination(numberOfPages){
     for (var i = 0; i < numberOfPages; i++){
             var liElement =  document.createElement('li');
             liElement.setAttribute("class","page-item ");
-
+            liElement.setAttribute("id",i);
             var aElement =  document.createElement('div');
             aElement.setAttribute("class","page-link");
             aElement.innerHTML= i+1 ;
@@ -516,7 +519,7 @@ function drawChart1() {
     
     var dataArray = new Array();
     var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
-    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 11:59 UTC")).toISOString();
+    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 23:59 UTC")).toISOString();
     var plantLocation = $('#plantSelectBox').val().join("','");
 
     $.ajax({
@@ -533,7 +536,7 @@ function drawChart1() {
 
             chartData1 = JSON.parse(feedback);
             var a1 = new Array(chartData1.length + 1);
-            a1[0] = ["Element", "Density", { role: "style" }]
+            a1[0] = ["Element", "Frequency", { role: "style" }]
             var x = new Array();
             count = 1;
 
@@ -589,11 +592,10 @@ function getRandomColor() {
 
 var chartData1;
 
-
 function drawChart2() {
     var dataArray1 = new Array();
     var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
-    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 11:59 UTC")).toISOString();
+    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 23:59 UTC")).toISOString();
     var plantLocation = $('#plantSelectBox').val().join("','");
 
     $.ajax({
@@ -609,7 +611,7 @@ function drawChart2() {
 
             chartData1 = JSON.parse(feedback);
             var a1 = new Array(chartData1.length + 1);
-            a1[0] = ["Element", "Density", { role: "style" }]
+            a1[0] = ["Element", "Frequency", { role: "style" }]
             var x = new Array();
             count = 1;
 
@@ -656,7 +658,7 @@ function drawChart2() {
 function drawChart3() {
     var dataArray2 = new Array();
     var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
-    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 11:59 UTC")).toISOString();
+    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 23:59 UTC")).toISOString();
     var plantLocation = $('#plantSelectBox').val().join("','");
 
     $.ajax({
@@ -707,7 +709,7 @@ function drawChart3() {
 function createTable() {
     $("#myTable").empty();
     var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
-    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 11:59 UTC")).toISOString();
+    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 23:59 UTC")).toISOString();
     var plantLocation = $('#plantSelectBox').val().join("','");
 
     $.ajax({
@@ -794,11 +796,12 @@ function filterByDate()
         var elem1 =document.querySelectorAll(".dateGap");
         elem1.forEach(function (i)
                 {
-                    i.innerHTML ="from "+ (new Date(document.getElementById('datetimepicker1').value+" 11:59 UTC")).toISOString().substring(0,10) +" to "+(new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString().substring(0,10) ;
+                    i.innerHTML ="from "+ (new Date(document.getElementById('datetimepicker1').value+" 23:59 UTC")).toISOString().substring(0,10) +" to "+(new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString().substring(0,10) ;
                 });
         google.charts.setOnLoadCallback(drawChart1);
         google.charts.setOnLoadCallback(drawChart2);
         google.charts.setOnLoadCallback(drawChart3);
+        numberOfIssues();
 
     }
 /*
@@ -889,6 +892,33 @@ function notificationOnOff(issue_occurrence_id){
                 alert("Error occurred");
             }
         });
+}
+
+
+function numberOfIssues(){
+    
+    var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
+    var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 23:59 UTC")).toISOString();
+
+    var count = 0;
+
+        $.ajax({
+            type: "POST",
+            dataType: 'text',
+            async:false,
+            url: "/Manager/totalNumberOfIssues",
+            data: {startDate:startDate,endDate:endDate },
+            success: function (feedback) {
+                count = feedback;
+            },
+            error: function () {
+                alert("Error occurred");
+            }
+        });
+    
+    var ttlIssues = document.getElementById("ttlIssues");
+    ttlIssues.innerHTML=count;
+
 }
 
 

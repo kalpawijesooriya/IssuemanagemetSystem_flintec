@@ -221,7 +221,10 @@ namespace IssueManagementSystem.Controllers
 
 
             String query = @"SELECT CASE WHEN
-                            (" + empID + @" IN(SELECT notification_handling.EmployeeNumber FROM notification_handling WHERE notification_handling.issue_occurrence_id = " + issueOccID + @"  AND notification_handling.notification_status=1))
+                            (" + empID + @" IN(SELECT notification_handling.EmployeeNumber 
+                                  FROM notification_handling 
+                                  WHERE notification_handling.issue_occurrence_id = " + issueOccID + @"  
+                                  AND notification_handling.notification_status=1))
                             THEN CAST(1 AS BIT)
                             ELSE CAST(0 AS BIT) END";
             
@@ -231,6 +234,24 @@ namespace IssueManagementSystem.Controllers
             {
                 resultVar = db.Database.SqlQuery<Boolean>(query).Single();
             }
+            return Json(resultVar, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult totalNumberOfIssues(string startDate, string endDate) {
+
+            String query = @"SELECT COUNT(issue_occurrence.issue_occurrence_id) AS issuesCount 
+                                FROM issue_occurrence 
+                                WHERE issue_occurrence.issue_date 
+                                BETWEEN '"+ startDate + @"' AND '"+ endDate + @"'";
+
+            int resultVar;
+
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+            {
+                resultVar = db.Database.SqlQuery<int>(query).Single();
+            }
+
             return Json(resultVar, JsonRequestBehavior.AllowGet);
         }
 

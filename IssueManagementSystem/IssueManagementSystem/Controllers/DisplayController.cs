@@ -29,7 +29,7 @@ namespace IssueManagementSystem.Controllers
                 {
                     return Redirect("http://192.168.1.30:84/Report/GagingD1/"+id);
                 }
-                else
+                else 
                     return View();
 
             }
