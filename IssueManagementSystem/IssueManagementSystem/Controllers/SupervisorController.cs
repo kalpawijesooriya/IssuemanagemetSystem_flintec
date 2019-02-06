@@ -128,6 +128,7 @@ namespace IssueManagementSystem.Controllers
                         {
                             int line_id = Int32.Parse(item["line_line_id"].ToString());
                             int issue_id = 1;
+                            string group = item["group"].ToString();
                             var resp_person = db.issue_line_person.Where(x => x.levelOfResponsibility == 1 && x.line_id == line_id && x.issue_id == issue_id && x.person_level == 1).FirstOrDefault();
                             var responsible_person_emp_id = resp_person.EmployeeNumber; //get certain employee assigned for a certain issue in a certain line and the level of resp. should be one
                             issueModel.machine_machine_id = item["machine"].ToString();
@@ -141,14 +142,14 @@ namespace IssueManagementSystem.Controllers
                             issueModel.description = item["description"].ToString();
                         
                             issueModel.issue_date = date;
-                            db.issue_occurrence.Add(issueModel);
-                            db.SaveChanges();// end of the save
+                            
 
 
                             string machine = issueModel.machine_machine_id;
                             var respPersonID = db.issue_line_person.Where(x => x.line_id == line_id && x.levelOfResponsibility == 1 && x.issue_id == 1 && x.person_level == 1).FirstOrDefault();
                             issueModel.responsible_person_emp_id = Int32.Parse(respPersonID.EmployeeNumber.ToString());
-
+                            db.issue_occurrence.Add(issueModel);
+                            db.SaveChanges();// end of the save
 
                             var issue_occour_id = issueModel.issue_occurrence_id;
 
@@ -159,11 +160,19 @@ namespace IssueManagementSystem.Controllers
                                 msg = msg.Replace("@", Environment.NewLine);
                                 string callNote = line.line_name + " line Breakdown has occurred at " + time1;
                                 var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
-                                com.lightON("1", displayInfo.raspberry_ip_address);//turn on the Light
+                               
+                                //turn on the Light
+                                if (group == null) { com.lightON("1", displayInfo.raspberry_ip_address); }
+                                else if (group != null) { com.lightONMachineshop("1", displayInfo.raspberry_ip_address, group ); }
+
+
                                 com.maintenancesbuzzerOn();
+                               
+                                ModelState.Clear();
                                 sendCD(line_id, 1, msg, "Machine Breakdown has occurred", callNote, issue_occour_id, notification_HandlingModel);
+                               
                             }
-                            ModelState.Clear();
+                            
                         }
 
                     }
@@ -205,7 +214,7 @@ namespace IssueManagementSystem.Controllers
                             int issue_id = 3;
                             var resp_person = db.issue_line_person.Where(x => x.levelOfResponsibility == 1 && x.line_id == line_id && x.issue_id == issue_id && x.person_level == 1).FirstOrDefault();
                             var responsible_person_emp_id = resp_person.EmployeeNumber; //get certain employee assigned for a certain issue in a certain line and the level of resp. should be one
-
+                            string group = item["group"].ToString();
                             issueModel.line_line_id = line_id;
                             issueModel.responsible_person_confirm_status = 1;
                             issueModel.department = "Engineering";
@@ -227,10 +236,13 @@ namespace IssueManagementSystem.Controllers
                                 string msg = " Technical issue has occurred @@ Line : " + line.line_name + " Line @ Date" + day + " @ Time : " + HHMM[0] + ":" + HHMM[1] + "@ Special Note : " + issueModel.description;
                                 msg = msg.Replace("@", Environment.NewLine);
                                 string callNote = "Technical issue has occurred in " + line.line_name + " line at " + HHMM[0] + ":" + HHMM[1];
-                                com.lightON("3", displayInfo.raspberry_ip_address);//turn on the Light
-                                sendCD(line_id, 3, msg, "Tecnical Issue has occered", callNote, issue_occour_id, notification_HandlingModel);
-
+                                if (group == null) { com.lightON("3", displayInfo.raspberry_ip_address); }
+                                else if (group != null) { com.lightONMachineshop("3", displayInfo.raspberry_ip_address, group); }
+                               
+                           
                                 ModelState.Clear();
+                                sendCD(line_id, 3, msg, "Tecnical Issue has occered", callNote, issue_occour_id, notification_HandlingModel);
+                               
                             }
 
                         }
@@ -271,6 +283,7 @@ namespace IssueManagementSystem.Controllers
                         {
                             int line_id = Int32.Parse(item["line_line_id"].ToString());
                             int issue_id = 5;
+                           
                             var resp_person = db.issue_line_person.Where(x => x.levelOfResponsibility == 1 && x.line_id == line_id && x.issue_id == issue_id && x.person_level == 1).FirstOrDefault();
                             var responsible_person_emp_id = resp_person.EmployeeNumber; //get certain employee assigned for a certain issue in a certain line and the level of resp. should be one
                              //save IT Issue to databse
@@ -283,12 +296,11 @@ namespace IssueManagementSystem.Controllers
                                 issueModel.responsible_person_emp_id = resp_person.EmployeeNumber;
                                 issueModel.location = item["location"].ToString();
                                 issueModel.description = item["description"].ToString();
-                     
-                                db.issue_occurrence.Add(issueModel);
-                                db.SaveChanges();// end of the save
 
-                                //send notifications
-                                var issue_occour_id = issueModel.issue_occurrence_id;
+                            db.issue_occurrence.Add(issueModel);
+                            db.SaveChanges();// end of the save
+                                             //send notifications
+                            var issue_occour_id = issueModel.issue_occurrence_id;
                                 if (issueModel.issue_occurrence_id > 0)
                                 {
                                     var line = db.lines.Where(x => x.line_id == line_id).FirstOrDefault();
@@ -297,10 +309,13 @@ namespace IssueManagementSystem.Controllers
                                     string callNote = "IT/Software issue has occurred in " + line.line_name + " line at " + time1;
                                     var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
                                     com.lightON("5", displayInfo.raspberry_ip_address);//turn on the Light
+                                   
+                                    ModelState.Clear();
                                     sendCD(line_id, 5, msg, "IT/Software Issue has occered", callNote, issue_occour_id, notification_HandlingModel);
                                 }
-                                ModelState.Clear();
                             
+
+                           
                         }
                     }
                     catch (Exception ex)
@@ -340,7 +355,7 @@ namespace IssueManagementSystem.Controllers
                             int issue_id = 4;
                             var resp_person = db.issue_line_person.Where(x => x.levelOfResponsibility == 1 && x.line_id == line_id && x.issue_id == issue_id && x.person_level == 1).FirstOrDefault();
                             var responsible_person_emp_id = resp_person.EmployeeNumber; //get certain employee assigned for a certain issue in a certain line and the level of resp. should be one
-
+                            string group = item["group"].ToString();
                             issueModel.line_line_id = line_id;
                             issueModel.responsible_person_confirm_status = 1;
                             issueModel.department = "Quality";
@@ -362,10 +377,12 @@ namespace IssueManagementSystem.Controllers
                                 string msg = " Quality issue has occurred @@ Area : "+ line.line_name + " @ Group : Group 0" + item["group"] + " @ Date" + day + " @ Time : " + HHMM[0] + ":" + HHMM[1] + "@ Special Note : " + issueModel.description;
                                 msg = msg.Replace("@", Environment.NewLine);
                                 string callNote = "Quality issue has occurred in " + line.line_name + "at " + HHMM[0] + ":" + HHMM[1];
-                                com.lightON("4", displayInfo.raspberry_ip_address);//turn on the Light
-                                sendCD(line_id, 4, msg, "Quality Issue has occered", callNote, issue_occour_id, notification_HandlingModel);
-
+                                if (group == null) { com.lightON("4", displayInfo.raspberry_ip_address); }
+                                else if (group != null) { com.lightONMachineshop("4", displayInfo.raspberry_ip_address, group); }
+                                
                                 ModelState.Clear();
+                                sendCD(line_id, 4, msg, "Quality Issue has occered", callNote, issue_occour_id, notification_HandlingModel);
+                                
                             }
 
                         }
@@ -395,6 +412,7 @@ namespace IssueManagementSystem.Controllers
                 var dayitem = current_time.Split(' ');
                 var day = dayitem[0];
                 var time1 = dayitem[1];
+
                 foreach (JObject item in issueData)
                 {
                     
@@ -404,8 +422,8 @@ namespace IssueManagementSystem.Controllers
                     try
                     {
                         var responsible_person_emp_id = resp_person.EmployeeNumber;
+                        string group = item["group"].ToString();
 
-             
                         if (ModelState.IsValid)
                         {
 
@@ -420,8 +438,9 @@ namespace IssueManagementSystem.Controllers
                             issueModel.location = item["location"].ToString();
                             issueModel.description = item["description"].ToString();
                             db.issue_occurrence.Add(issueModel);
+                            db.issue_occurrence.Add(issueModel);
+                            db.SaveChanges();// end of the save
 
-                          
                             db.SaveChanges();
                             var issue_occour_id = issueModel.issue_occurrence_id;
                             
@@ -434,9 +453,12 @@ namespace IssueManagementSystem.Controllers
                                 string msg = "MaterialDelay has occurred @@ Line : " + line.line_name + " Line @ Date :" + day + " @Time : " + time1 + " @ Material : " + item["material"] + " @ Note : " + item["description"];
                                 msg = msg.Replace("@", Environment.NewLine);
                                 string callNote = "MaterialDelay has occurred in " + line.line_name + " line at " + time1;
-                                com.lightON("2", displayInfo.raspberry_ip_address);//turn on the Light
+                                if (group == null) { com.lightON("2", displayInfo.raspberry_ip_address); }
+                                else if (group != null) { com.lightONMachineshop("2", displayInfo.raspberry_ip_address, group); }
                                 com.storesbuzzerOn();
                                 sendCD(line_id, 2, msg, "MaterialDelay has occered", callNote, issue_occour_id, notification_HandlingModel);
+                            
+                              
                                 ModelState.Clear();
                             }
                         }

@@ -38,7 +38,7 @@ namespace IssueManagementSystem
                            
                             var lineInfo=db.lines.Where(x=>x.line_id== items.line_line_id).FirstOrDefault();
                             var issueInfo=db.issues.Where(x=>x.issue_id== items.issue_issue_ID).FirstOrDefault();
-                            var notificationHandalingInfo = db.notification_handling.Where(x => x.issue_occurrence_id == items.issue_occurrence_id && x.EmployeeNumber == items.responsible_person_emp_id).FirstOrDefault();
+                            var notificationHandalingInfo = db.notification_handling.Where(x => x.issue_occurrence_id == items.issue_occurrence_id && x.EmployeeNumber == i.EmployeeNumber).FirstOrDefault();
                             using (BigRedEntities BR = new BigRedEntities())
                             {
                                 var responsiblePersonInfo = BR.tbl_PPA_User.Where(y => y.EmployeeNumber == items.responsible_person_emp_id).FirstOrDefault();

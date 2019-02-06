@@ -29,23 +29,34 @@
         <div class="" style="width:50%;margin:auto;">
             <div class="form-group" style="width:100%;margin:auto">
 
+                <div id="groupsdiv">
+                    <label for="exampleFormControlTextarea1" style="margin-top:5%">Select Group</label>
+                    <select class="js-example-placeholder-single js-states form-control" id="groups" name="Material" style="width:100%;" onchange="">
+                        <option></option>
+                        <option value="1">Group01</option>
+                        <option value="2">Group02</option>
+                        <option value="3">Group03</option>
+                        <option value="4">Group04</option>
+                        <option value="5">Group05</option>
+                        <option value="6">Group06</option>
+                        <option value="7">Group07</option>
+                        <option value="8">Group08</option>
+                        <option value="9">Group09</option>
+                        <option value="10">Group10</option>
+                    </select>
+                </div>
 
-              
                 <div style="padding-top:20px;">
                     <label for="exampleFormControlTextarea1">Description</label>
                     <textarea class="form-control" rows="5" id="description"></textarea>
                 </div>
-                
-
-                  
-                  
-                    <div class="button-holder" style="display:block">
-                        <div class="ajax-button">
-                            <div class="fa fa-check done"></div>
-                            <div class="fa fa-close failed"></div>
-                            <input id="submit" class="submit" type="submit" value="Submit" />
-                        </div>
+                <div class="button-holder" style="display:block">
+                    <div class="ajax-button">
+                        <div class="fa fa-check done"></div>
+                        <div class="fa fa-close failed"></div>
+                        <input id="submit" class="submit" type="submit" value="Submit" />
                     </div>
+                </div>
             </div>
         </div>
     </div>
@@ -56,14 +67,19 @@
 <script src="~/Scripts/jquery.min.js"></script>
 <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
 <script src="~/signalr/Hubs"></script>
-
+<script src="~/Scripts/AdminScripts/select2-min.js"></script>
 <script>
+    if('@Session["department"]'!='MachineShop')
+    {
+    $('#groupsdiv').hide()
+    }
     $("#submit").click(function () {
 
         obj = new Object();
         obj.description = document.getElementById("description").value;
         obj.line_line_id = '@ViewBag.lineid';
         obj.location =  '@Session["location"]';
+        obj.group=document.getElementById("groups").value
         var obj_array = new Array();
         obj_array.push(obj);
 
@@ -88,7 +104,10 @@
             }
         });
     });
-
+  $('#groups').select2({
+        placeholder: "Select Group.....",
+        allowClear: false
+    });
 </script>
 
 
