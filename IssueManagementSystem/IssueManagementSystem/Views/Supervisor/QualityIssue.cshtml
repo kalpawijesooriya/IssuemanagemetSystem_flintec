@@ -6,9 +6,8 @@
     {
         Response.Redirect("~/Login/Index");
     }
-    ViewBag.rol = Session["Role"];
-    int userID = (int)Session["userID"];// get current supervisorID
-    int lineId = (int)Session["lineId"];
+
+   
 }
 
 @model IssueManagementSystem.Models.issue_occurrence
@@ -38,7 +37,10 @@
                         <option value="10">Group10</option>
                     </select>
                 </div>
-
+                <div style="padding-top:20px;margin-top:5%">
+                    <label for="exampleFormControlTextarea1">Description</label>
+                    <textarea class="form-control" rows="5" id="description"></textarea>
+                </div>
                 <div class="button-holder" style="display:block">
                     <div class="ajax-button">
                         <div class="fa fa-check done"></div>
@@ -46,7 +48,6 @@
                         <input id="submit" class="submit" type="submit" value="Submit" />
                     </div>
                 </div>
-                }
             </div>
         </div>
     </div>
@@ -55,11 +56,10 @@
 </div>
 
 
-<script src="~/Scripts/jquery-3.3.1.slim.min.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
 <script src="~/Scripts/AdminScripts/jscolar.js"></script>
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
-<script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
-<script src="~/Scripts/jquery.min.js"></script>
 <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
 <script src="~/signalr/Hubs"></script>
 
@@ -75,7 +75,7 @@
 
         var issueJson = JSON.stringify(obj_array);
         var url = '@Url.Action("AddIssueQuality", "Supervisor")'
-             $.ajax({
+            $.ajax({
             type: "POST",
             dataType: 'text',
             url: url,
@@ -93,7 +93,7 @@
                 alert(feedback);
             }
         });
-    
+
 
 
 

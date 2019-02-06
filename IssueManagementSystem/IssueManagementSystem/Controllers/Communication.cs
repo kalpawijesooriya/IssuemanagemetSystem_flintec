@@ -119,6 +119,20 @@ namespace IssueManagementSystem.Controllers
             webReq.Method = "GET";
             HttpWebResponse webResponse = (HttpWebResponse)webReq.GetResponse();
         }
+        public void lightONMachineshop(string light, string ip,string group)
+        {
+            string url = "http://" + ip + "/ledmachineshop.php?on=" + light+"&group="+ group;
+            HttpWebRequest webReq = (HttpWebRequest)WebRequest.Create(string.Format(url));
+            webReq.Method = "GET";
+            HttpWebResponse webResponse = (HttpWebResponse)webReq.GetResponse();
+        }
+        public void lightOFFMachineshop(string light, string ip, string group)
+        {
+            string url = "http://" + ip + "/ledmachineshop.php?off=" + light + "&group=" + group;
+            HttpWebRequest webReq = (HttpWebRequest)WebRequest.Create(string.Format(url));
+            webReq.Method = "GET";
+            HttpWebResponse webResponse = (HttpWebResponse)webReq.GetResponse();
+        }
         public void storesbuzzerOn()
         {
             //string url = "http://192.168.40.246/led.php?on=1";
@@ -191,35 +205,33 @@ namespace IssueManagementSystem.Controllers
         public  void send_SMS(string number,string message)
         {
 
-           
-
-                    ASCIIEncoding encoding = new ASCIIEncoding();
+            ASCIIEncoding encoding = new ASCIIEncoding();
                    
                     
-                    string postData = "p=" + number + "&m="+ message;
-                    byte[] data = encoding.GetBytes(postData);
+            string postData = "p=" + number + "&m="+ message;
+            byte[] data = encoding.GetBytes(postData);
 
-                    WebRequest request = WebRequest.Create("http://192.168.40.241/sms_call.php");
+            WebRequest request = WebRequest.Create("http://192.168.40.241/sms_call.php");
 
-                    request.Method = "POST";
-                    request.ContentType = "application/x-www-form-urlencoded";
-                    request.ContentLength = data.Length;
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = data.Length;
 
-                    Stream stream = request.GetRequestStream();
-                    stream.Write(data, 0, data.Length);
-                    stream.Close();
+            Stream stream = request.GetRequestStream();
+            stream.Write(data, 0, data.Length);
+            stream.Close();
 
-                    WebResponse response = request.GetResponse();
-                    stream = response.GetResponseStream();
+            WebResponse response = request.GetResponse();
+            stream = response.GetResponseStream();
 
-                    StreamReader sr = new StreamReader(stream);
+            StreamReader sr = new StreamReader(stream);
 
 
-                    var cs = sr.ReadToEnd().Trim();
-                    Debug.WriteLine("SMS Respond: " + cs);
+            var cs = sr.ReadToEnd().Trim();
+            Debug.WriteLine("SMS Respond: " + cs);
 
-                    sr.Close();
-                    stream.Close();
+            sr.Close();
+            stream.Close();
 
         }
 
