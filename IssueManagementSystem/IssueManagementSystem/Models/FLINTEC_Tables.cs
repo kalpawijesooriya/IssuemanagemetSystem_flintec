@@ -12,7 +12,6 @@ namespace IssueManagementSystem.Models
                             //it is important when table name and elated class name are different
     public class FLINTEC_Item
     {
-
         [Key]
         public string No_ { get; set; }
 
@@ -24,14 +23,32 @@ namespace IssueManagementSystem.Models
 
         [Column("Search Description")]
         public string Search_Description { get; set; }
-
-
     }
 
-    public class MaterialList
+    [Table("FLINTEC$Prod_ Order Line")] 
+    public class FLINTEC_Prod_Order_Line
     {
-        static FLINTEC_Item_dbContext materialContext = new FLINTEC_Item_dbContext();
-        List<FLINTEC_Item> mList = materialContext.FLINTEC_Items.ToList();
-        
+        [Key]
+        [Column("Prod_ Order No_")]
+        public string Prod_Order_No_ {get; set;}
+
+        [Column("Status")]
+        public int Status {get; set;}
+    }
+
+
+    [Table("FLINTEC$Prod_ Order Component")]
+    public class FLINTEC_Prod_Order_Component
+    {
+        [Column("Item No_")]
+        public string Item_No_ { get; set; }
+
+        [Column("Status")]
+        public int Status { get; set; }
+
+        [Key]
+        [Column("Prod_ Order No_")]
+        public string Prod_Order_No_ { get; set; }
+
     }
 }

@@ -63,22 +63,32 @@ namespace IssueManagementSystem.Controllers
 
             }
       
-            dynamic mat_List = new System.Dynamic.ExpandoObject();
+            dynamic jobCardsList_issue_occurrence = new System.Dynamic.ExpandoObject();
             
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
             {
-                mat_List.issue_occurrence = db.issue_occurrence;
+                jobCardsList_issue_occurrence.issue_occurrence = db.issue_occurrence;
                
             }
 
-
-            FLINTEC_Item_dbContext materialContext = new FLINTEC_Item_dbContext();
-            List<FLINTEC_Item> mList = materialContext.FLINTEC_Items.ToList();
-
-
-            mat_List.materialList = mList;
+            FLINTEC_Prod_Order_Line_Context jobCardContext = new FLINTEC_Prod_Order_Line_Context();
+            List<FLINTEC_Prod_Order_Line> jcList = jobCardContext.FLINTEC_Prod_Order_Line.Where(x => x.Status == 3).ToList();
+            jobCardsList_issue_occurrence.jobCards = jcList;
             ViewBag.lineid = lineid;
-            return View(mat_List);
+            return View(jobCardsList_issue_occurrence);
+
+        }
+
+
+        public ActionResult loadMaterialList(string selectedJobCard)
+        {
+
+            dynamic materials = new System.Dynamic.ExpandoObject();
+            FLINTEC_Prod_Order_Component_Context jobCardContext = new FLINTEC_Prod_Order_Component_Context();
+            List<FLINTEC_Prod_Order_Component> matList = jobCardContext.FLINTEC_Prod_Order_Component.Where(x => x.Status == 3 & x.Prod_Order_No_== selectedJobCard).ToList();
+            materials.materials = matList;
+
+            return Json(materials);
         }
 
 
@@ -88,7 +98,6 @@ namespace IssueManagementSystem.Controllers
             if ((Session["userID"] == null) || ((string)Session["Role"] != "CellEngineer"))
             {
                 return RedirectToAction("Index", "Login");
-
             }
 
             ViewBag.lineid = lineid;
@@ -99,7 +108,6 @@ namespace IssueManagementSystem.Controllers
             if ((Session["userID"] == null) || ((string)Session["Role"] != "CellEngineer"))
             {
                 return RedirectToAction("Index", "Login");
-
             }
 
             ViewBag.lineid = lineid;
@@ -108,25 +116,20 @@ namespace IssueManagementSystem.Controllers
         private class tempClass3
         {
             public int line_id { get; set; }
-            
         }
         [HttpPost]
         public ActionResult getCellEngLins(int empId)
         {
-         
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
                 string query = "SELECT line_id FROM line_cell_eng WHERE cell_eng_emp_id=" + empId;
-         
                 var chart1Data = db.Database.SqlQuery<tempClass3>(query).ToList();
                 return Json(chart1Data);
             }
-           
         }
         private class tempClass2
         {
             public string line_name { get; set; }
-
         }
 
         [HttpPost]
@@ -136,27 +139,19 @@ namespace IssueManagementSystem.Controllers
             {
                 string query = "SELECT line_name FROM lines WHERE line_id=" + lineid;
 
-            
                 var lineData = db.Database.SqlQuery<tempClass2>(query).ToList();
                 return Json(lineData);
             }
         }
-
 
         public ActionResult QualtyIssue()// Qualty Issue View
         {
             if ((Session["userID"] == null) || ((string)Session["Role"] != "CellEngineer"))
             {
                 return RedirectToAction("Index", "Login");
-
             }
-
-
             return View();
-
-
         }
-
 
         public ActionResult NotificationsManagement(int lineid)
         {

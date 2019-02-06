@@ -21,7 +21,7 @@ namespace IssueManagementSystem.Models
         internal static SqlCommand command = null;
         internal static SqlDependency dependency = null;
 
-        public static FLINTEC_Item_dbContext FLINTEC_Item_dbContext { get; private set; }
+        public static FLINTEC_Context FLINTEC_Item_dbContext { get; private set; }
 
         public static string GetIssue()
         {
@@ -71,7 +71,7 @@ namespace IssueManagementSystem.Models
                                     string issueName = null;
                                     if (material_id != "")
                                     {
-                                        using (FLINTEC_Item_dbContext context = new FLINTEC_Item_dbContext())
+                                        using (FLINTEC_Context context = new FLINTEC_Context())
                                         {
                                             var matirialInfo = context.FLINTEC_Items.Where(x => x.No_ == material_id).FirstOrDefault();
                                             matirialName = matirialInfo.Search_Description;

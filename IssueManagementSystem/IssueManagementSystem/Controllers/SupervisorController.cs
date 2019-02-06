@@ -85,11 +85,12 @@ namespace IssueManagementSystem.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-            dynamic mat_List = new System.Dynamic.ExpandoObject();
-            FLINTEC_Item_dbContext materialContext = new FLINTEC_Item_dbContext();
-            List<FLINTEC_Item> mList = materialContext.FLINTEC_Items.ToList();
-            mat_List.materialList = mList;
-            return View(mat_List);
+
+            dynamic jobCardsList = new System.Dynamic.ExpandoObject();
+            FLINTEC_Prod_Order_Line_Context jobCardContext = new FLINTEC_Prod_Order_Line_Context();
+            List<FLINTEC_Prod_Order_Line> jcList = jobCardContext.FLINTEC_Prod_Order_Line.Where(x => x.Status == 3).ToList();
+            jobCardsList.jobCards = jcList;
+            return View(jobCardsList);
         }
 
         public ActionResult ITIssue()//IT Issue view

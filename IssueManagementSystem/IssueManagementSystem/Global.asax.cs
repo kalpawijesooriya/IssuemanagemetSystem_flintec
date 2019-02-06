@@ -16,7 +16,7 @@ namespace IssueManagementSystem
         protected void Application_Start()
 
         {
-            Database.SetInitializer<Models.FLINTEC_Item_dbContext>(null);
+            Database.SetInitializer<Models.FLINTEC_Context>(null);
 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
