@@ -34,7 +34,7 @@ namespace IssueManagementSystem.Models
                    
                     connection.Open();
                     //// Sanjay : Alwasys use "dbo" prefix of database to trigger change event
-                    using (command = new SqlCommand(@"SELECT [issue_occurrence_id],[issue_date],[description],[machine_machine_id],[material_id],[line_line_id],[issue_issue_ID],[responsible_person_emp_id],[issue_satus],[location],[responsible_person_confirm_status],[responsible_person_confirm_feedback],[solved_date],[commented_date],[department],[buzzer_off_by] ,[solved_emp_id] FROM [dbo].[issue_occurrence]", connection))
+                    using (command = new SqlCommand(@"SELECT TOP 50 [issue_occurrence_id],[issue_date],[description],[machine_machine_id],[material_id],[line_line_id],[issue_issue_ID],[responsible_person_emp_id],[issue_satus],[location],[responsible_person_confirm_status],[responsible_person_confirm_feedback],[solved_date],[commented_date],[department],[buzzer_off_by] ,[solved_emp_id],[group] FROM [dbo].[issue_occurrence] ORDER BY [issue_date] DESC", connection))
                     {
                         command.Notification = null;
 
@@ -68,7 +68,7 @@ namespace IssueManagementSystem.Models
 
                                     var material_id = reader["material_id"] != DBNull.Value ? (string)reader["material_id"] : "";
                                     string matirialName = null;
-                                    string issueName = null;
+                               
                                     if (material_id != "")
                                     {
                                         using (FLINTEC_Item_dbContext context = new FLINTEC_Item_dbContext())
@@ -101,6 +101,7 @@ namespace IssueManagementSystem.Models
                                         lineName = lineinfo.line_name,
                                         buzzer_off_by = reader["buzzer_off_by"] == System.DBNull.Value ? default(int) : (int)reader["buzzer_off_by"],
                                         issueName = issueInfo.issue1,
+                                        group= reader["group"] == System.DBNull.Value ? default(int) : (int)reader["group"],
                                     });
                                 }
                             }

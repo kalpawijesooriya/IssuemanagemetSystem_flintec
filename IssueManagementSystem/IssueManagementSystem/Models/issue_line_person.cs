@@ -27,5 +27,6 @@ namespace IssueManagementSystem.Models
         public int issue_line_person_id { get; set; }
         public Nullable<int> level { get; set; }
         public Nullable<int> person_level { get; set; }
+        public int IssueLineperson_id { get; set; }
     }
 }

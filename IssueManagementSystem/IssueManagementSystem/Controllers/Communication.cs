@@ -38,70 +38,71 @@ namespace IssueManagementSystem.Controllers
         [MethodImpl(MethodImplOptions.Synchronized)]
         private  void doCommunicate()
         {
-      
 
-            if (gsm_status)
+            if (numberList.Count != 0)
             {
-                CommunicationData communicateData = (CommunicationData)numberList.Dequeue();
-                try
+                if (gsm_status)
                 {
-                    var time = DateTime.Now;
-                    string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
-                    var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-                    gsm_status = false;
-                    var msg = communicateData.getMsg();
-                    var emailAddress = communicateData.getEmailAddress();
-                    var mobileNumber = communicateData.getNumber();
-                    int empNo = communicateData.getEmployeeNumber();
-                    int issue_occor_id = communicateData.getissue_occour_id();
-                    int emailStatus = communicateData.getEmail();
-                    int callStatus = communicateData.getCall();
-                    int msgStatus = communicateData.getMessage();
-
-                    using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+                    CommunicationData communicateData = (CommunicationData)numberList.Dequeue();
+                    try
                     {
+                        var time = DateTime.Now;
+                        string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
+                        var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                        gsm_status = false;
+                        var msg = communicateData.getMsg();
+                        var emailAddress = communicateData.getEmailAddress();
+                        var mobileNumber = communicateData.getNumber();
+                        int empNo = communicateData.getEmployeeNumber();
+                        int issue_occor_id = communicateData.getissue_occour_id();
+                        int emailStatus = communicateData.getEmail();
+                        int callStatus = communicateData.getCall();
+                        int msgStatus = communicateData.getMessage();
 
-                        string query = "INSERT INTO tbl_issue_feedback (issue_occurrence_id,EmployeeNumber, call_send, call_answered, sms_send,email_send)VALUES(" + issue_occor_id + "," + empNo + ","+ callStatus + ", 0, " + msgStatus + ", "+emailStatus+");";
-                        db.Database.ExecuteSqlCommand(query);
+                        using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+                        {
+
+                            string query = "INSERT INTO tbl_issue_feedback (issue_occurrence_id,EmployeeNumber, call_send, call_answered, sms_send,email_send)VALUES(" + issue_occor_id + "," + empNo + "," + callStatus + ", 0, " + msgStatus + ", " + emailStatus + ");";
+                            db.Database.ExecuteSqlCommand(query);
+                        }
+
+                        if (emailStatus == 1 && emailAddress != null)
+                        {
+                            sendMail(emailAddress, msg, communicateData.getsubject());
+                            //using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+                            //{
+                            //    string query = "INSERT INTO tbl_Notifications ([Status],[Message],[Type],[EmployeeNumber],[Date]) VALUES( 1,'" + msg + "','email','" + communicateData.getEmployeeNumber() + "','" + date + "') ";
+                            //    db.Database.ExecuteSqlCommand(query);
+                            //}                                                 
+                        }
+
+                        if (msgStatus == 1 && mobileNumber != null)
+                            send_SMS(mobileNumber, msg);
+
+                        if (callStatus == 1 && mobileNumber != null)
+                            take_Call(mobileNumber, communicateData.getcallNote(), communicateData.getrepetCount(), communicateData.getdelay(), empNo, issue_occor_id);
+
+
+
+                        gsm_status = true;
+                        if (numberList.Count != 0)
+                        {
+                            doCommunicate();
+                        }
                     }
-
-                    if (emailStatus == 1 && emailAddress!= null)
+                    catch (Exception ex)
                     {
-                        sendMail(emailAddress, msg,communicateData.getsubject());
-                        //using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
-                        //{
-                        //    string query = "INSERT INTO tbl_Notifications ([Status],[Message],[Type],[EmployeeNumber],[Date]) VALUES( 1,'" + msg + "','email','" + communicateData.getEmployeeNumber() + "','" + date + "') ";
-                        //    db.Database.ExecuteSqlCommand(query);
-                        //}                                                 
-                    }
-
-                    if (msgStatus == 1 && mobileNumber != null)                    
-                        send_SMS(mobileNumber, msg);
-
-                    if (callStatus == 1 && mobileNumber != null)
-                        take_Call(mobileNumber, communicateData.getcallNote(), communicateData.getrepetCount(),communicateData.getdelay(), empNo, issue_occor_id);
-
-
-
-                    gsm_status = true;
-                    if (numberList.Count!= 0)
-                    {
-                        doCommunicate();
+                        Debug.WriteLine(ex);
+                        gsm_status = true;
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    Debug.WriteLine(ex);
-                    gsm_status = true;
+                    int milliseconds = 2000;
+                    Thread.Sleep(milliseconds);
+                    doCommunicate();
                 }
             }
-            else
-            {
-                int milliseconds = 2000;
-                Thread.Sleep(milliseconds);
-                doCommunicate();
-            }
-           
         }
 
         public void lightON(string light, string ip)
@@ -288,8 +289,10 @@ namespace IssueManagementSystem.Controllers
                 if (Int32.Parse(repetCount) <= callCount)
                 {
                     gsm_status = true;
-                    callCount = 0;
-                    doCommunicate();
+                    callCount = 0; if (numberList.Count != 0)
+                    {
+                        doCommunicate();
+                    }
                 }
 
             }

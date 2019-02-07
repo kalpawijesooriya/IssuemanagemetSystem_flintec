@@ -28,6 +28,7 @@ namespace IssueManagementSystem.Models
         public virtual DbSet<department> departments { get; set; }
         public virtual DbSet<display> displays { get; set; }
         public virtual DbSet<employee> employees { get; set; }
+        public virtual DbSet<issue_line_person> issue_line_person { get; set; }
         public virtual DbSet<issue_occurrence> issue_occurrence { get; set; }
         public virtual DbSet<issue> issues { get; set; }
         public virtual DbSet<line_cell_eng> line_cell_eng { get; set; }
@@ -39,7 +40,6 @@ namespace IssueManagementSystem.Models
         public virtual DbSet<tbl_issue_feedback> tbl_issue_feedback { get; set; }
         public virtual DbSet<tbl_Notifications> tbl_Notifications { get; set; }
         public virtual DbSet<User_tbl> User_tbl { get; set; }
-        public virtual DbSet<issue_line_person> issue_line_person { get; set; }
         public virtual DbSet<line_machine> line_machine { get; set; }
         public virtual DbSet<line> lines { get; set; }
         public virtual DbSet<machine> machines { get; set; }

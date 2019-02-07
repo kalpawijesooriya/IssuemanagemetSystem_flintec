@@ -8,8 +8,8 @@
 
 
     }
- }
-@{ 
+}
+@{
 
     int userID = (int)Session["userID"];// get current supervisorID
 
@@ -25,6 +25,7 @@
 }
 @using IssueManagementSystem.Models;
 @model List<IssueManagementSystem.Models.issue_occurrence>
+<link href="~/Content/test/jquery-confirm.min.css" rel="stylesheet" />
 <div class="page-content--bgf7">
     <section class="au-breadcrumb2">
         <div class="container">
@@ -82,9 +83,9 @@
 
 </div>
 
-<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Content/test/jquery-3.3.1.min.js"></script>
+<script src="~/Content/test/bootstrap.bundle.min.js"></script>
 <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
-<script src="~/Scripts/angular.min.js"></script>
 <script src="~/signalr/Hubs"></script>
 
 
@@ -96,17 +97,9 @@
         var hub = $.connection.issueHub;
         var issueCount = 0;
 
-        // Declare a function on the hub hub so the server can invoke it
-        hub.client.displayStatus = function () {
-            debugger
-            getData();
-        };
 
-        // Start the connection
-        $.connection.hub.start();
-        getData();
 
-        function getData()
+        window.getDataissue = function()
         {
 
             var divissue = $('#divIssue');
@@ -135,16 +128,17 @@
                                 var date = issuedata[i].issueDate.split(' ');
                                 var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
                                 var issue_occurrence_id = issuedata[i].issue_occurrence_id
+                                var group= issuedata[i].group
                                 var issue
                                 if (issueid == 1)//breakedown
                                 {
-                                    issue = '<div class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--red"><span class="desc" style="color:white">Machine Breakdown</span><div class="icon" ><i class="zmdi zmdi-settings zmdi-hc-spin"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><div style="display:none" id="check' + issue_occurrence_id +'"><i  class="fas fa-check" style="font-size:30px; color:green;float:right;"></i></div><p class="card-text"><strong>Issue Date : </strong>' + day + '</br><strong>Time : </strong> ' + date[1] + " " + date[2] + '</br><strong>Responsible Person :</strong> ' + issuedata[i].responciblepersonName + '</br><strong>Machine : </strong>' + issuedata[i].machine_machine_id+'</p> <div class="text-right"> <button  class="btn btn-success"   data-id="' + issue_occurrence_id + '"  data-issue_id="' + issueid +'" onclick="myfunction(this)">Solved </button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
+                                    issue = '<div id="card'+issue_occurrence_id+'" class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--red"><span class="desc" style="color:white">Machine Breakdown</span><div class="icon" ><i class="zmdi zmdi-settings zmdi-hc-spin"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><div style="display:none" id="check' + issue_occurrence_id +'"><i  class="fas fa-check" style="font-size:30px; color:green;float:right;"></i></div><p class="card-text"><strong>Issue Date : </strong>' + day + '</br><strong>Time : </strong> ' + date[1] + " " + date[2] + '</br><strong>Responsible Person :</strong> ' + issuedata[i].responciblepersonName + '</br><strong>Machine : </strong>' + issuedata[i].machine_machine_id+'</p> <div class="text-right"> <button  class="btn btn-success"   data-id="' + issue_occurrence_id + '"  data-issue_id="' + issueid +'" data-group="'+group+'" onclick="myfunction(this)">Solved </button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
 
                                 }
                                 if (issueid == 2)//Material Delay
                                 {
 
-                                    issue = '<div class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--orange"><span class="desc" style="color:white">Material Delay</span><div class="icon" ><i class="zmdi animated infinite wobble zmdi-shopping-cart"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><div style="display:none" id="check' + issue_occurrence_id +'"><i  class="fas fa-check" style="font-size:30px; color:green;float:right;"></i></div><p class="card-text"><strong>Issue Date : </strong>' + day + '</br><strong>Time : </strong> ' + date[1] + " " + date[2] + '</br><strong>Responsible Person :</strong> ' + issuedata[i].responciblepersonName + '</br><strong>Material : </strong>' + issuedata[i].matirial+'</p> <div class="text-right"><button  class="btn btn-success"  data-id="' + issue_occurrence_id + '" data-issue_id="' + issueid +'" onclick="myfunction(this)">Solved</button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
+                                    issue = '<div id="card'+issue_occurrence_id+'" class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--orange"><span class="desc" style="color:white">Material Delay</span><div class="icon" ><i class="zmdi animated infinite wobble zmdi-shopping-cart"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><div style="display:none" id="check' + issue_occurrence_id +'"><i  class="fas fa-check" style="font-size:30px; color:green;float:right;"></i></div><p class="card-text"><strong>Issue Date : </strong>' + day + '</br><strong>Time : </strong> ' + date[1] + " " + date[2] + '</br><strong>Responsible Person :</strong> ' + issuedata[i].responciblepersonName + '</br><strong>Material : </strong>' + issuedata[i].matirial+'</p> <div class="text-right"><button  class="btn btn-success"  data-id="' + issue_occurrence_id + '" data-issue_id="' + issueid +'" data-group="'+group+'" onclick="myfunction(this)">Solved</button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
 
 
                                 }
@@ -152,7 +146,7 @@
                                 {
 
 
-                                    issue = '<div class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--green"><span class="desc" style="color:white">Technical Issue</span><div class="icon" ><i class="fas fa-wrench"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><div style="display:none" id="check' + issue_occurrence_id +'"><i  class="fas fa-check" style="font-size:30px; color:green;float:right;"></i></div><p class="card-text"><strong>Issue Date : </strong>' + day + '</br><strong>Time : </strong>' + date[1] + " " + date[2] + '</br><strong>Responsible Person :</strong> ' + issuedata[i].responciblepersonName + '</p> <div class="text-right"> <button  class="btn btn-success"  data-id="' + issue_occurrence_id + '" data-issue_id="' + issueid +'" onclick="myfunction(this)">Solved</button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
+                                    issue = '<div id="card'+issue_occurrence_id+'" class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--green"><span class="desc" style="color:white">Technical Issue</span><div class="icon" ><i class="fas fa-wrench"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><div style="display:none" id="check' + issue_occurrence_id +'"><i  class="fas fa-check" style="font-size:30px; color:green;float:right;"></i></div><p class="card-text"><strong>Issue Date : </strong>' + day + '</br><strong>Time : </strong>' + date[1] + " " + date[2] + '</br><strong>Responsible Person :</strong> ' + issuedata[i].responciblepersonName + '</p> <div class="text-right"> <button  class="btn btn-success"  data-id="' + issue_occurrence_id + '" data-issue_id="' + issueid +'" data-group="'+group+'" onclick="myfunction(this)">Solved</button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
 
 
                                 }
@@ -160,26 +154,26 @@
                                 {
 
 
-                                    issue = '<div class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--blue"><span class="desc" style="color:white">Qulity Issue</span><div class="icon" ><i class="zmdi zmdi-brightness-auto"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><div style="display:none" id="check' + issue_occurrence_id +'"><i  class="fas fa-check" style="font-size:30px; color:green;float:right;"></i></div><p class="card-text"><strong>IssueDate : </strong>' + day + '</br><strong>Time : </strong>' + date[1] + " " + date[2] + '</br><strong>Responsible Person :</strong> ' + issuedata[i].responciblepersonName + '</p><div class="text-right"> <button  class="btn btn-success"  data-id="' + issue_occurrence_id + '" data-issue_id="' + issueid +'" onclick="myfunction(this)">Solved</button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
+                                    issue = '<div id="card'+issue_occurrence_id+'" class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--blue"><span class="desc" style="color:white">Qulity Issue</span><div class="icon" ><i class="zmdi zmdi-brightness-auto"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><div style="display:none" id="check' + issue_occurrence_id +'"><i  class="fas fa-check" style="font-size:30px; color:green;float:right;"></i></div><p class="card-text"><strong>IssueDate : </strong>' + day + '</br><strong>Time : </strong>' + date[1] + " " + date[2] + '</br><strong>Responsible Person :</strong> ' + issuedata[i].responciblepersonName + '</p><div class="text-right"> <button  class="btn btn-success"  data-id="' + issue_occurrence_id + '" data-issue_id="' + issueid +'" data-group="'+group+'" onclick="myfunction(this)">Solved</button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
 
 
                                 }
                                 if (issueid == 5)//IT/Software
                                 {
 
-                                    issue = '<div class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--blue"><span class="desc" style="color:white">IT/Software Issue</span><div class="icon" ><i class="zmdi zmdi-windows"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><div style="display:none" id="check' + issue_occurrence_id +'"><i  class="fas fa-check" style="font-size:30px; color:green;float:right;"></i></div><p class="card-text"><strong>Issue Date : </strong>' + day + '</br><strong>Time : </strong>' + date[1] + " " + date[2] + '</br><strong>Responsible Person :</strong> ' + issuedata[i].responciblepersonName + '</p> <div class="text-right"> <button  class="btn btn-success"  data-id="' + issue_occurrence_id + '" data-issue_id="' + issueid +'"onclick="myfunction(this)">Solved</button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
+                                    issue = '<div id="card'+issue_occurrence_id+'" class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--blue"><span class="desc" style="color:white">IT/Software Issue</span><div class="icon" ><i class="zmdi zmdi-windows"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><div style="display:none" id="check' + issue_occurrence_id +'"><i  class="fas fa-check" style="font-size:30px; color:green;float:right;"></i></div><p class="card-text"><strong>Issue Date : </strong>' + day + '</br><strong>Time : </strong>' + date[1] + " " + date[2] + '</br><strong>Responsible Person :</strong> ' + issuedata[i].responciblepersonName + '</p> <div class="text-right"> <button  class="btn btn-success"  data-id="' + issue_occurrence_id + '" data-issue_id="' + issueid +'"onclick="myfunction(this)">Solved</button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
 
 
 
                                 }
 
-                                
-                               
+
+
 
                                 divissue.append(issue)
                                 $('#loding_icon').hide();
                                 divissue.show('slow');
-                                      
+
                                 if (responce_comment != '') {
                                     document.getElementById("check" + issue_occurrence_id).style.display = "block"
                                 }
@@ -197,32 +191,49 @@
                 }
             });
         }
+           // Declare a function on the hub hub so the server can invoke it
+        hub.client.displayStatus = function () {
 
+            getDataissue();
+        };
+
+        // Start the connection
+        $.connection.hub.start();
+        getDataissue();
     })
-   
-        function myfunction(param) {
-            var id = $(param).data('id');
-            var issue_id = $(param).data('issue_id');
-           
-            var url = '@Url.Action("SolvedIssue", "Supervisor")?issueId=' + issue_id + '&issueOccourId=' + id+'&lineId='+'@ViewBag.LineId' ;
-        
-            $.ajax({
-                type: 'POST',
-                url: url, 
-               
-                success: function (issuedata) {
-     $.connection.hub.start()
-            .done(function () {
-                console.log("Worked")
-                $.connection.ismHub.server.announce();
-            })
-            .fail(function () { alert("ERROR!") });
+
+function myfunction(param)
+{
+    $.confirm({
+        title: 'Solved Issue?',
+        content: 'please confirm your action within 6 seconds',
+        autoClose: 'cancelAction|8000',
+        type: 'orange',
+        buttons: {
+            deleteUser: {
+                text: 'Confirm',
+                btnClass: 'btn-warning',
+                action: function () {
+                var group=$(param).data('group');
+                    var id = $(param).data('id');
+                    var issue_id = $(param).data('issue_id');
+                    var url = '@Url.Action("SolvedIssue", "Supervisor")?issueId=' + issue_id + '&issueOccourId=' + id+'&lineId='+'@ViewBag.lineId'+'&group='+group;
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        success: function (issuedata) {
+                            getDataissue();
+                            $.connection.hub.start().done(function () {$.connection.ismHub.server.announce();}).fail(function () { alert("Sorry, Can't Update your screen !")});
+                            $('#card'+id).fadeOut(2000);
+
+                        }
+                    });
                 }
-            });
-
+            },cancelAction: function () {
+                    $.alert('Action is canceled!');
+                }
         }
-
-
-       
-      
+    });
+}
 </script>
+<script src="~/Content/test/jquery-confirm.min.js"></script>
