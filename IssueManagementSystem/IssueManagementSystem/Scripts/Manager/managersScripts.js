@@ -5,7 +5,8 @@
 
 $(document).ready(function() {
 
-        google.charts.load("current",{packages: ['corechart']});
+        google.charts.load('43', {'packages':['corechart']});
+
         google.charts.setOnLoadCallback(drawChart1);
         google.charts.setOnLoadCallback(drawChart2);
         google.charts.setOnLoadCallback(drawChart3);
@@ -391,7 +392,7 @@ function createAccordionLine(accordion,date,id,issue,plant,line,status,desc,resp
     div_1_right.setAttribute("class","col-md-6");
     div_1_right.setAttribute("style","overflow-wrap: break-word;");
 
-console.log(document.getElementById('hidden_userID').innerHTML+"  - --  "+id);
+
         $.ajax({
         type:"POST",
         dataType:'text',
@@ -401,7 +402,6 @@ console.log(document.getElementById('hidden_userID').innerHTML+"  - --  "+id);
         success:function(flag){
 
             var flagVal = flag;
-            console.log(flagVal);
 
             if(flagVal == 'true'){
                     
@@ -418,8 +418,8 @@ console.log(document.getElementById('hidden_userID').innerHTML+"  - --  "+id);
                 notification_btn.setAttribute("class","myCheckbox");
                 notification_btn.dataset.toggle = "toggle";
                 notification_btn.setAttribute('checked',"true");
-                notification_btn.dataset.on = "<i class='fas fa-bell fa-2x'>&nbspon</i>";
-                notification_btn.dataset.off = "<i class='fas fa-bell-slash fa-2x'>&nbspoff&nbsp&nbsp</i>";
+                notification_btn.dataset.on = "<i class='fas fa-bell fa-1x' style='font-size:20px'>&nbspon</i>";
+                notification_btn.dataset.off = "<i class='fas fa-bell-slash fa-1x' style='font-size:20px'>&nbspoff&nbsp&nbsp</i>";
             }
 
         },
@@ -436,14 +436,14 @@ console.log(document.getElementById('hidden_userID').innerHTML+"  - --  "+id);
 
     if(respStatus!=null && respStatus== 0)
         {  
-            eye_span.setAttribute("class","glyphicon glyphicon-eye-open");
+            eye_span.setAttribute("class","fas fa-eye");
             eye_span.setAttribute("data-toggle","tooltip");
             eye_span.title = "Checked by responsible person";
             eye_span.style.color="#42c44d";
         }
         else{
 
-            eye_span.setAttribute("class","glyphicon glyphicon-eye-close");
+            eye_span.setAttribute("class","fas fa-eye-slash");
             eye_span.setAttribute("data-toggle","tooltip");
             eye_span.title = "To be checked by responsible person";
             eye_span.style.color="#e04c4c";
@@ -530,10 +530,6 @@ function drawChart1() {
         data: { barChart: '1',startDate:startDate,endDate:endDate,plantLocation:plantLocation},
         success: function (feedback) {
 
-            console.log("drawChart1@@@@@@@@@@@@@@@@@@@@@");
-            console.log(" startDate:"+startDate+" endDate:"+endDate+" plantLocation:"+plantLocation);
-            console.log(feedback);
-
             chartData1 = JSON.parse(feedback);
             var a1 = new Array(chartData1.length + 1);
             a1[0] = ["Element", "Frequency", { role: "style" }]
@@ -574,7 +570,12 @@ function drawChart1() {
         hAxis: {
             textStyle: {
                 fontSize: 9
-            }
+            },
+        animation:{
+          duration: 1000,
+          easing: 'out',
+          startup: true
+              }
         }
     };
     var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
@@ -605,9 +606,6 @@ function drawChart2() {
         url: "/Manager/fillChart1",
         data: { barChart: '2',startDate:startDate,endDate:endDate,plantLocation:plantLocation},
         success: function (feedback) {
-
-            console.log("drawChart2@@@@@@@@@@@@@@@@@@@@@");
-            console.log(feedback);
 
             chartData1 = JSON.parse(feedback);
             var a1 = new Array(chartData1.length + 1);
@@ -648,7 +646,12 @@ function drawChart2() {
         hAxis: {
             textStyle: {
                 fontSize: 9
-            }
+            },
+        animation:{
+          duration: 1000,
+          easing: 'out',
+          startup: true
+              }
         }
     };
     var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values1"));
@@ -668,9 +671,6 @@ function drawChart3() {
         url: "/Manager/fillChart3",
         data: { startDate:startDate,endDate:endDate,plantLocation:plantLocation },
         success: function (feedback) {
-
-            console.log("drawChart3@@@@@@@@@@@@@@@@@@@@@");
-            console.log(feedback);
 
             chartData1 = JSON.parse(feedback);
             var a1 = new Array(chartData1.length + 1);
@@ -695,6 +695,11 @@ function drawChart3() {
     var options = {
         title: 'Number of Issues by Type',
         is3D: true,
+        animation:{
+          duration: 1000,
+          easing: 'out',
+          startup: true
+              },
         chartArea: { 'width': '100%', 'height': '80%', 'top': '0' },
         legend: { position: "bottom" },
         slices: { 0: { color: '#f40000' }, 1: { color: '#ffcc00' }, 2: { color: '#1e63ce' }, 3: { color: '#31bc07' }, 4: { color: '#a80da3' } }
@@ -719,9 +724,6 @@ function createTable() {
         url: "/Manager/fillChart2",
         data: {startDate:startDate,endDate:endDate,plantLocation:plantLocation },
         success: function (feedback) {
-
-            console.log("myTable @@@@@@@@@@@@@@@@@@@@@");
-            console.log(feedback)
 
             chartData1 = JSON.parse(feedback);
 

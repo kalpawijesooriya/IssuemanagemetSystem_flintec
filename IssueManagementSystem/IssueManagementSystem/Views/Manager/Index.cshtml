@@ -15,7 +15,6 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <link href="~/Content/fontawesome-all.min.css" rel="stylesheet" />
 <link href="~/Content/SupervisorStyles/jquery-ui.css" rel="stylesheet" />
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 
 <p hidden id="hidden_userID">@Session["userID"]</p>
 <style>
@@ -166,7 +165,7 @@
             </div>
             <div class="row" style="margin:10px;display:flex !important">
 
-                <div class="col-lg-3" style="display:inline-flex">
+                <div class="col-lg-4" style="display:inline-flex">
                     <p style="margin-right:13px;">Plant</p>
                     <select class="js-example-placeholder-single js-states form-control" multiple="multiple" id="plantSelectBox" style="width:75%;float:right !important;" onchange="filterByDate()">
                         <option selected="selected" value="KOG">Koggala</option>
@@ -176,10 +175,10 @@
 
                 <div class="col-lg-2">
                     <div class="form-group">
-                        <div class='input-group date'>
-                            <input type='text' class="form-control" id='datetimepicker1' style="font-size:13px;" onchange="filterByDate()" />
+                        <div class='input-group date'  style="font-size:13px;height:30px;">
+                            <input type='text' class="form-control" id='datetimepicker1' onchange="filterByDate()" />
                             <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
+                                <span class="fas fa-calendar-alt fa-lg"></span>
                             </span>
                         </div>
                     </div>
@@ -187,20 +186,20 @@
                 <p>to</p>
                 <div class="col-lg-2">
                     <div class="form-group">
-                        <div class='input-group date'>
-                            <input type='text' class="form-control" id='datetimepicker2' style="font-size:13px;" onchange="filterByDate()" />
+                        <div class='input-group date'  style="font-size:13px;height:30px;">
+                            <input type='text' class="form-control" id='datetimepicker2' onchange="filterByDate()" />
                             <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
+                                <span class="fas fa-calendar-alt fa-lg"></span>
                             </span>
                         </div>
                     </div>
                 </div>
 
                 <!--
-        <button type="button" class="btn btn-primary" style="height:28px;width:80px; font-size:12px" onclick="filterByDate()">
-            <span class="glyphicon glyphicon-filter"></span> Filter
-        </button>
-          -->
+    <button type="button" class="btn btn-primary" style="height:28px;width:80px; font-size:12px" onclick="filterByDate()">
+        <span class="fas fa-calendar-alt"></span> Filter
+    </button>
+      -->
             </div>
             </br>
 
@@ -226,7 +225,7 @@
                 </div>
 
                 <div class="col-md-6 col-lg-4">
-                    <div class="top-campaign" style="padding-bottom:125px !important">
+                    <div class="top-campaign" style="padding-bottom:90px !important">
                         <h3 class="title-3 m-b-30">Top Dragged-out Issues</h3>
                         <p style="margin-top:-30px" class="title-7 m-xs-r-5 dateGap"></p>
                         <div class="table-responsive">
@@ -275,19 +274,19 @@
                         <div class="row">
                             <div class="form-group col-sm-6">
                                 <p style="">From</p>
-                                <div class='input-group date'>
-                                    <input type='text' class="form-control" id='datetimepicker3' style="font-size:13px;" onchange="filterTableData()" />
+                                <div class='input-group date'  style="font-size:13px;height:30px;">
+                                    <input type='text' class="form-control" id='datetimepicker3' onchange="filterTableData()" />
                                     <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
+                                        <span class="fas fa-calendar-alt fa-lg" style="margin-bottom:10px;"></span>
                                     </span>
                                 </div>
                             </div>
                             <div class="form-group col-sm-6">
                                 <p style="">To</p>
-                                <div class='input-group date'>
-                                    <input type='text' class="form-control" id='datetimepicker4' style="font-size:13px;" onchange="filterTableData()" />
+                                <div class='input-group date'  style="font-size:13px;height:30px;">
+                                    <input type='text' class="form-control" id='datetimepicker4'  onchange="filterTableData()" />
                                     <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
+                                        <span class="fas fa-calendar-alt fa-lg"></span>
                                     </span>
                                 </div>
                             </div>
