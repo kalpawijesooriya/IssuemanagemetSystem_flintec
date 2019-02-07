@@ -212,7 +212,7 @@
                             </div>
                             <div class="col-lg-8" style="">
                                 <label class="lableSet" style="float:left">Name</label>
-                                <select class="js-example-placeholder-single js-states form-control" id="Name" name="Name" style="width:100%" onchange="fillDepartmentDropDown(),fillUserDetails()">
+                                <select class="js-example-placeholder-single js-states form-control" id="Name" name="Name" style="width:100%" onchange="fillUserDetails()">
                                     <option></option>
                                     @foreach (var user in Model.users)
                                     {
@@ -304,7 +304,7 @@
                         </div>
                         <div class="col-lg-8" style="">
                             <label class="lableSet" style="float:left">Name</label>
-                            <select class="js-example-placeholder-single js-states form-control" id="managerName" name="managerName" style="width:100%" onchange="fillDepartmentmanagerDropDown(),fillmanagerDetails()">
+                            <select class="js-example-placeholder-single js-states form-control" id="managerName" name="managerName" style="width:100%" onchange="fillmanagerDetails()">
                                 <option></option>
                                 @foreach (var user in Model.users)
                                 {
@@ -454,51 +454,6 @@
                 }
           });
     });
-
-    function fillDepartmentDropDown() {
-
-    var name = document.getElementById("Name").value;
-    var url = '@Url.Action("fillDepartmentDropDown", "CellEngineer")';
-    $.ajax({
-            type: "POST",
-            dataType: 'text',
-            url: url,
-            data: { person_name:name},
-            success: function (itemNameArray) {
-                console.log(itemNameArray);
-                var obj = JSON.parse(itemNameArray);
-                console.log(obj);
-            },
-            error: function () {
-              alert("Error occurred");
-            }
-    });
-
-    }
-
-    function fillDepartmentmanagerDropDown() {
-
-    var name = document.getElementById("managerName").value;
-    var url = '@Url.Action("fillDepartmentDropDown", "CellEngineer")';
-
-        $.ajax({
-                type: "POST",
-                dataType: 'text',
-                url: url,
-                data: { person_name:name},
-                success: function (itemNameArray) {
-                console.log(itemNameArray);
-                var obj = JSON.parse(itemNameArray);
-                console.log(obj);
-            },
-                error: function ()
-            {
-                alert("Error occurred");
-            }
-
-        });
-
-    }
 
 
     function fillNameDropDown() {

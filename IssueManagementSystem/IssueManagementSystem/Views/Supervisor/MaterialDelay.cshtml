@@ -90,9 +90,13 @@
 <script src="~/Scripts/AdminScripts/jscolar.js"></script>
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
 <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
+<script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
 <script src="~/signalr/Hubs"></script>
 <script>
-
+     if('@Session["department"]'!='MachineShop')
+    {
+    $('#groupsdiv').hide()
+    }
     $(document).ready(function () {
         $("#materialSelectBox").prop("disabled", true);
     });
@@ -136,7 +140,10 @@
         placeholder: "Select.....",
         allowClear: false
     });
-
+     $('#groups').select2({
+        placeholder: "Select Group.....",
+        allowClear: false
+    });
       if('@Session["department"]'!='MachineShop')
     {
     $('#groupsdiv').hide()

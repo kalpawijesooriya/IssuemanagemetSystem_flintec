@@ -15,11 +15,10 @@
 @using IssueManagementSystem.Models
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
-<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
 <link href="~/Content/adminstyles/Settings.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
-
+<script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
 <h2>Material Delay</h2>
 <hr />
 <div class="container" style="margin-top:30px;">
@@ -83,8 +82,12 @@
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
 <script src="~/signalr/Hubs"></script>
 <script>
+      if('@Session["department"]'!='MachineShop')
+    {
+    $('#groupsdiv').hide()
+    }
     $('select').select2({
-        placeholder: "Select Material.....",
+        placeholder: "Select.....",
         allowClear: false
     });
 
@@ -127,11 +130,8 @@
         }
     }
 
-    $('select').select2({
-        placeholder: "Select Group.....",
-        allowClear: false
-    });
-        if('@Session["department"]'!='MachineShop')
+ 
+    if('@Session["department"]'!='MachineShop')
     {
     $('#groupsdiv').hide()
     }
@@ -169,6 +169,10 @@
             }
         });
     }
+     $('#groups').select2({
+        placeholder: "Select Group.....",
+        allowClear: false
+    });
 </script>
 
 

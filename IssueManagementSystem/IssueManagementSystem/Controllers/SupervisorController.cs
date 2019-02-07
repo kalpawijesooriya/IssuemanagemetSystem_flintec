@@ -1,15 +1,8 @@
 using IssueManagementSystem.Models;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using System.Net.Mail;
-using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Net.Mime;
 using Newtonsoft.Json.Linq;
@@ -152,7 +145,8 @@ namespace IssueManagementSystem.Controllers
                             issueModel.responsible_person_emp_id = resp_person.EmployeeNumber;
                             issueModel.location = item["location"].ToString();
                             issueModel.description = item["description"].ToString();
-                        
+                            if (group != "") { issueModel.group = Int32.Parse(item["group"].ToString()); }
+                            
                             issueModel.issue_date = date;
                             
 
@@ -174,8 +168,8 @@ namespace IssueManagementSystem.Controllers
                                 var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
                                
                                 //turn on the Light
-                                if (group == null) { com.lightON("1", displayInfo.raspberry_ip_address); }
-                                else if (group != null) { com.lightONMachineshop("1", displayInfo.raspberry_ip_address, group ); }
+                                if (group == "") { com.lightON("1", displayInfo.raspberry_ip_address); }
+                                else if (group != "") { com.lightONMachineshop("1", displayInfo.raspberry_ip_address, group ); }
 
 
                                 com.maintenancesbuzzerOn();
@@ -235,8 +229,9 @@ namespace IssueManagementSystem.Controllers
                             issueModel.responsible_person_emp_id = resp_person.EmployeeNumber;
                             issueModel.location = item["location"].ToString();
                             issueModel.description = item["description"].ToString();
-                    
+                        
                             issueModel.issue_date = date;
+                            if (group != "") { issueModel.group = Int32.Parse(item["group"].ToString()); }
                             db.issue_occurrence.Add(issueModel);
                             db.SaveChanges();// end of the save
 
@@ -248,8 +243,8 @@ namespace IssueManagementSystem.Controllers
                                 string msg = " Technical issue has occurred @@ Line : " + line.line_name + " Line @ Date" + day + " @ Time : " + HHMM[0] + ":" + HHMM[1] + "@ Special Note : " + issueModel.description;
                                 msg = msg.Replace("@", Environment.NewLine);
                                 string callNote = "Technical issue has occurred in " + line.line_name + " line at " + HHMM[0] + ":" + HHMM[1];
-                                if (group == null) { com.lightON("3", displayInfo.raspberry_ip_address); }
-                                else if (group != null) { com.lightONMachineshop("3", displayInfo.raspberry_ip_address, group); }
+                                if (group == "") { com.lightON("3", displayInfo.raspberry_ip_address); }
+                                else if (group != "") { com.lightONMachineshop("3", displayInfo.raspberry_ip_address, group); }
                                
                            
                                 ModelState.Clear();
@@ -308,7 +303,7 @@ namespace IssueManagementSystem.Controllers
                                 issueModel.responsible_person_emp_id = resp_person.EmployeeNumber;
                                 issueModel.location = item["location"].ToString();
                                 issueModel.description = item["description"].ToString();
-
+                               
                             db.issue_occurrence.Add(issueModel);
                             db.SaveChanges();// end of the save
                                              //send notifications
@@ -376,7 +371,7 @@ namespace IssueManagementSystem.Controllers
                             issueModel.responsible_person_emp_id = resp_person.EmployeeNumber;
                             issueModel.location = item["location"].ToString();
                             issueModel.description = item["description"].ToString();
-
+                            issueModel.group = Int32.Parse(item["group"].ToString());
                             issueModel.issue_date = date;
                             db.issue_occurrence.Add(issueModel);
                             db.SaveChanges();// end of the save
@@ -389,8 +384,8 @@ namespace IssueManagementSystem.Controllers
                                 string msg = " Quality issue has occurred @@ Area : "+ line.line_name + " @ Group : Group 0" + item["group"] + " @ Date" + day + " @ Time : " + HHMM[0] + ":" + HHMM[1] + "@ Special Note : " + issueModel.description;
                                 msg = msg.Replace("@", Environment.NewLine);
                                 string callNote = "Quality issue has occurred in " + line.line_name + "at " + HHMM[0] + ":" + HHMM[1];
-                                if (group == null) { com.lightON("4", displayInfo.raspberry_ip_address); }
-                                else if (group != null) { com.lightONMachineshop("4", displayInfo.raspberry_ip_address, group); }
+                              
+                                com.lightONMachineshop("4", displayInfo.raspberry_ip_address, group); 
                                 
                                 ModelState.Clear();
                                 sendCD(line_id, 4, msg, "Quality Issue has occered", callNote, issue_occour_id, notification_HandlingModel);
@@ -449,11 +444,11 @@ namespace IssueManagementSystem.Controllers
                             issueModel.responsible_person_emp_id = resp_person.EmployeeNumber;
                             issueModel.location = item["location"].ToString();
                             issueModel.description = item["description"].ToString();
-                            db.issue_occurrence.Add(issueModel);
+                            if (group != "") { issueModel.group = Int32.Parse(item["group"].ToString()); }
                             db.issue_occurrence.Add(issueModel);
                             db.SaveChanges();// end of the save
-
-                            db.SaveChanges();
+                     
+                       
                             var issue_occour_id = issueModel.issue_occurrence_id;
                             
                           System.Diagnostics.Debug.WriteLine("New Issue ID" + issue_occour_id);
@@ -465,8 +460,8 @@ namespace IssueManagementSystem.Controllers
                                 string msg = "MaterialDelay has occurred @@ Line : " + line.line_name + " Line @ Date :" + day + " @Time : " + time1 + " @ Material : " + item["material"] + " @ Note : " + item["description"];
                                 msg = msg.Replace("@", Environment.NewLine);
                                 string callNote = "MaterialDelay has occurred in " + line.line_name + " line at " + time1;
-                                if (group == null) { com.lightON("2", displayInfo.raspberry_ip_address); }
-                                else if (group != null) { com.lightONMachineshop("2", displayInfo.raspberry_ip_address, group); }
+                                if (group == "") { com.lightON("2", displayInfo.raspberry_ip_address); }
+                                else if (group != "") { com.lightONMachineshop("2", displayInfo.raspberry_ip_address, group); }
                                 com.storesbuzzerOn();
                                 sendCD(line_id, 2, msg, "MaterialDelay has occered", callNote, issue_occour_id, notification_HandlingModel);
                             
@@ -539,7 +534,7 @@ namespace IssueManagementSystem.Controllers
         }
 
         //solovedIssueMethod
-        public JsonResult SolvedIssue(int? issueId, int? issueOccourId ,int? lineId)
+        public JsonResult SolvedIssue(int? issueId, int? issueOccourId ,int? lineId,int? group)
         {
             System.Diagnostics.Debug.WriteLine("issueOccourId : " + issueOccourId);
             var time = DateTime.Now;
@@ -552,19 +547,31 @@ namespace IssueManagementSystem.Controllers
             issueoccourInfo.solved_date = date;
             db.SaveChanges();
 
-           
+
 
             //get the list of Issuueoccurrence table
-
-            var count = db.issue_occurrence.Where(x=>x.issue_issue_ID==issueId && x.line_line_id==lineId && x.issue_satus=="1").Count();
-   
-            if (count == 0)
+            var count = 0;
+            if (group == 0)
             {
-              
-            var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
-            com.lightOFF(issueId.ToString(), displayInfo.raspberry_ip_address);
-           
+                count = db.issue_occurrence.Where(x => x.issue_issue_ID == issueId && x.line_line_id == lineId && x.issue_satus == "1").Count();
+                if (count == 0)
+                {
+                    var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
+                    com.lightOFF(issueId.ToString(), displayInfo.raspberry_ip_address);
+                }
             }
+            else {
+                count = db.issue_occurrence.Where(x => x.issue_issue_ID == issueId && x.line_line_id == lineId && x.issue_satus == "1"&& x.group==group).Count();
+                if (count == 0)
+                {
+                    var displayInfo = db.displays.Where(x => x.line_id == lineId).FirstOrDefault();
+                    com.lightOFFMachineshop(issueId.ToString(), displayInfo.raspberry_ip_address,group.ToString());
+                }
+            }
+
+        
+
+           
 
            return Json(true);
         }

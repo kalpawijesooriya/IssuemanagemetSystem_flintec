@@ -43,6 +43,6 @@ namespace IssueManagementSystem.Models
         public string solved_by { get; set; }
         public String lineName { get; set; }
         public String issueName { get; set; }
-
+        public Nullable<int> group { get; set; }
     }
 }

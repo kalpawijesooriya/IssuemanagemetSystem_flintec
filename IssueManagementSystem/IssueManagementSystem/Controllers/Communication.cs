@@ -38,70 +38,71 @@ namespace IssueManagementSystem.Controllers
         [MethodImpl(MethodImplOptions.Synchronized)]
         private  void doCommunicate()
         {
-      
 
-            if (gsm_status)
+            if (numberList.Count != 0)
             {
-                CommunicationData communicateData = (CommunicationData)numberList.Dequeue();
-                try
+                if (gsm_status)
                 {
-                    var time = DateTime.Now;
-                    string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
-                    var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
-                    gsm_status = false;
-                    var msg = communicateData.getMsg();
-                    var emailAddress = communicateData.getEmailAddress();
-                    var mobileNumber = communicateData.getNumber();
-                    int empNo = communicateData.getEmployeeNumber();
-                    int issue_occor_id = communicateData.getissue_occour_id();
-                    int emailStatus = communicateData.getEmail();
-                    int callStatus = communicateData.getCall();
-                    int msgStatus = communicateData.getMessage();
-
-                    using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+                    CommunicationData communicateData = (CommunicationData)numberList.Dequeue();
+                    try
                     {
+                        var time = DateTime.Now;
+                        string current_time = time.ToString("yyyy-MM-dd HH:mm:ss");
+                        var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                        gsm_status = false;
+                        var msg = communicateData.getMsg();
+                        var emailAddress = communicateData.getEmailAddress();
+                        var mobileNumber = communicateData.getNumber();
+                        int empNo = communicateData.getEmployeeNumber();
+                        int issue_occor_id = communicateData.getissue_occour_id();
+                        int emailStatus = communicateData.getEmail();
+                        int callStatus = communicateData.getCall();
+                        int msgStatus = communicateData.getMessage();
 
-                        string query = "INSERT INTO tbl_issue_feedback (issue_occurrence_id,EmployeeNumber, call_send, call_answered, sms_send,email_send)VALUES(" + issue_occor_id + "," + empNo + ","+ callStatus + ", 0, " + msgStatus + ", "+emailStatus+");";
-                        db.Database.ExecuteSqlCommand(query);
+                        using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+                        {
+
+                            string query = "INSERT INTO tbl_issue_feedback (issue_occurrence_id,EmployeeNumber, call_send, call_answered, sms_send,email_send)VALUES(" + issue_occor_id + "," + empNo + "," + callStatus + ", 0, " + msgStatus + ", " + emailStatus + ");";
+                            db.Database.ExecuteSqlCommand(query);
+                        }
+
+                        if (emailStatus == 1 && emailAddress != null)
+                        {
+                            sendMail(emailAddress, msg, communicateData.getsubject());
+                            //using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+                            //{
+                            //    string query = "INSERT INTO tbl_Notifications ([Status],[Message],[Type],[EmployeeNumber],[Date]) VALUES( 1,'" + msg + "','email','" + communicateData.getEmployeeNumber() + "','" + date + "') ";
+                            //    db.Database.ExecuteSqlCommand(query);
+                            //}                                                 
+                        }
+
+                        if (msgStatus == 1 && mobileNumber != null)
+                            send_SMS(mobileNumber, msg);
+
+                        if (callStatus == 1 && mobileNumber != null)
+                            take_Call(mobileNumber, communicateData.getcallNote(), communicateData.getrepetCount(), communicateData.getdelay(), empNo, issue_occor_id);
+
+
+
+                        gsm_status = true;
+                        if (numberList.Count != 0)
+                        {
+                            doCommunicate();
+                        }
                     }
-
-                    if (emailStatus == 1 && emailAddress!= null)
+                    catch (Exception ex)
                     {
-                        sendMail(emailAddress, msg,communicateData.getsubject());
-                        //using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
-                        //{
-                        //    string query = "INSERT INTO tbl_Notifications ([Status],[Message],[Type],[EmployeeNumber],[Date]) VALUES( 1,'" + msg + "','email','" + communicateData.getEmployeeNumber() + "','" + date + "') ";
-                        //    db.Database.ExecuteSqlCommand(query);
-                        //}                                                 
-                    }
-
-                    if (msgStatus == 1 && mobileNumber != null)                    
-                        send_SMS(mobileNumber, msg);
-
-                    if (callStatus == 1 && mobileNumber != null)
-                        take_Call(mobileNumber, communicateData.getcallNote(), communicateData.getrepetCount(),communicateData.getdelay(), empNo, issue_occor_id);
-
-
-
-                    gsm_status = true;
-                    if (numberList.Count!= 0)
-                    {
-                        doCommunicate();
+                        Debug.WriteLine(ex);
+                        gsm_status = true;
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    Debug.WriteLine(ex);
-                    gsm_status = true;
+                    int milliseconds = 2000;
+                    Thread.Sleep(milliseconds);
+                    doCommunicate();
                 }
             }
-            else
-            {
-                int milliseconds = 2000;
-                Thread.Sleep(milliseconds);
-                doCommunicate();
-            }
-           
         }
 
         public void lightON(string light, string ip)
@@ -135,16 +136,16 @@ namespace IssueManagementSystem.Controllers
         }
         public void storesbuzzerOn()
         {
-            //string url = "http://192.168.40.246/led.php?on=1";
-            string url = "http://192.168.137.238/led.php?on=1";
+            string url = "http://192.168.40.246/led.php?on=1";
+            //string url = "http://192.168.137.238/led.php?on=1";
             HttpWebRequest webReq = (HttpWebRequest)WebRequest.Create(string.Format(url));
             webReq.Method = "GET";
             HttpWebResponse webResponse = (HttpWebResponse)webReq.GetResponse();
         }
         public void storesbuzzerOff()
         {
-            //string url = "http://192.168.40.246/led.php?off=1";
-            string url = "http://192.168.137.238/led.php?off=1";
+             string url = "http://192.168.40.246/led.php?off=1";
+            // string url = "http://192.168.137.238/led.php?off=1";
             HttpWebRequest webReq = (HttpWebRequest)WebRequest.Create(string.Format(url));
             webReq.Method = "GET";
             HttpWebResponse webResponse = (HttpWebResponse)webReq.GetResponse();
@@ -152,10 +153,10 @@ namespace IssueManagementSystem.Controllers
 
         public void maintenancesbuzzerOn()
         {
-            //  string url1 = "http://192.168.20.240/led.php?on=1";
-            //  string url2 = "http://192.168.20.240/led.php?on=2";
-            string url1 = "http://192.168.137.238/led.php?on=1";
-            string url2 = "http://192.168.137.238/led.php?on=2";
+            string url1 = "http://192.168.20.240/led.php?on=1";
+           string url2 = "http://192.168.20.240/led.php?on=2";
+            // string url1 = "http://192.168.137.238/led.php?on=1";
+            // string url2 = "http://192.168.137.238/led.php?on=2";
             HttpWebRequest webReq1 = (HttpWebRequest)WebRequest.Create(string.Format(url1));
             HttpWebRequest webReq2 = (HttpWebRequest)WebRequest.Create(string.Format(url2));
             webReq1.Method = "GET";
@@ -166,10 +167,10 @@ namespace IssueManagementSystem.Controllers
 
         public void maintenancesbuzzerOff()
         {
-            // string url1 = "http://192.168.20.240/led.php?off=1";
-            // string url2 = "http://192.168.20.240/led.php?off=2";
-            string url1 = "http://192.168.137.238/led.php?off=1";
-            string url2 = "http://192.168.137.238/led.php?off=2";
+            string url1 = "http://192.168.20.240/led.php?off=1";
+             string url2 = "http://192.168.20.240/led.php?off=2";
+            //  string url1 = "http://192.168.137.238/led.php?off=1";
+            // string url2 = "http://192.168.137.238/led.php?off=2";
             HttpWebRequest webReq1 = (HttpWebRequest)WebRequest.Create(string.Format(url1));
             HttpWebRequest webReq2 = (HttpWebRequest)WebRequest.Create(string.Format(url2));
             webReq1.Method = "GET";
@@ -288,8 +289,10 @@ namespace IssueManagementSystem.Controllers
                 if (Int32.Parse(repetCount) <= callCount)
                 {
                     gsm_status = true;
-                    callCount = 0;
-                    doCommunicate();
+                    callCount = 0; if (numberList.Count != 0)
+                    {
+                        doCommunicate();
+                    }
                 }
 
             }
