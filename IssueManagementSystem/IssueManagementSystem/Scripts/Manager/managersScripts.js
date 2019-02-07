@@ -5,11 +5,11 @@
 
 $(document).ready(function() {
 
-        google.charts.load('43', {'packages':['corechart']});
+        google.load("visualization", "1", {packages:["corechart"]});
 
-        google.charts.setOnLoadCallback(drawChart1);
-        google.charts.setOnLoadCallback(drawChart2);
-        google.charts.setOnLoadCallback(drawChart3);
+        google.setOnLoadCallback(drawChart1);
+        google.setOnLoadCallback(drawChart2);
+        google.setOnLoadCallback(drawChart3);
 
         $("#datetimepicker1").datepicker({
         });
@@ -564,20 +564,21 @@ function drawChart1() {
         }, 2]);
 
     var options = {
-        bar: { groupWidth: "95%" },
-        legend: { position: "none" },
-        chartArea: { 'width': '100%', 'height': '60%', 'top': '0' },
-        hAxis: {
-            textStyle: {
-                fontSize: 9
-            },
-        animation:{
-          duration: 1000,
-          easing: 'out',
-          startup: true
-              }
-        }
-    };
+                    bar: { groupWidth: "95%" },
+                    legend: { position: "none" },
+                    chartArea: { 'width': '100%', 'height': '60%', 'top': '0' },
+                    hAxis: {
+                        textStyle: {
+                            fontSize: 9
+                        }
+                    },
+                    animation:{
+                    duration: 2000,
+                    easing: 'out',
+                    startup: true
+                        }
+                };
+
     var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
     chart.draw(view, options);
 }
@@ -695,11 +696,6 @@ function drawChart3() {
     var options = {
         title: 'Number of Issues by Type',
         is3D: true,
-        animation:{
-          duration: 1000,
-          easing: 'out',
-          startup: true
-              },
         chartArea: { 'width': '100%', 'height': '80%', 'top': '0' },
         legend: { position: "bottom" },
         slices: { 0: { color: '#f40000' }, 1: { color: '#ffcc00' }, 2: { color: '#1e63ce' }, 3: { color: '#31bc07' }, 4: { color: '#a80da3' } }
@@ -709,6 +705,18 @@ function drawChart3() {
 
     var data = google.visualization.arrayToDataTable(dataArray2);
     chart.draw(data, options);
+
+    var percent = 0;
+
+    var handler = setInterval(function(){
+        percent += 3;
+        data.setValue(0, 1, percent);
+        data.setValue(1, 1, 100 - percent);
+        chart.draw(data, options);
+        if (percent > 74)
+            clearInterval(handler);
+    }, 2);
+
 }
 
 function createTable() {
@@ -800,9 +808,9 @@ function filterByDate()
                 {
                     i.innerHTML ="from "+ (new Date(document.getElementById('datetimepicker1').value+" 23:59 UTC")).toISOString().substring(0,10) +" to "+(new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString().substring(0,10) ;
                 });
-        google.charts.setOnLoadCallback(drawChart1);
-        google.charts.setOnLoadCallback(drawChart2);
-        google.charts.setOnLoadCallback(drawChart3);
+        google.setOnLoadCallback(drawChart1);
+        google.setOnLoadCallback(drawChart2);
+        google.setOnLoadCallback(drawChart3);
         numberOfIssues();
 
     }
