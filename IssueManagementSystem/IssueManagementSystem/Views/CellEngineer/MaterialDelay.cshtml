@@ -30,19 +30,17 @@
 
                 <label>Select job card</label>
 
-                <select class="js-example-placeholder-single js-states form-control" id="jobCardSelectBox" name="Material" style="width:100%" onchange="loadMaterialList()">
+                <select class="js-example-placeholder-single js-states form-control" id="jobCardSelectBox" style="width:100%" onchange="loadMaterialList()">
                     <option></option>
                     @foreach (var j in Model.jobCards)
                     {
-                        <option value="@j.Prod_Order_No_">@j.Prod_Order_No_</option>
+                    <option value="@j.Prod_Order_No_">@j.Prod_Order_No_    &nbsp;- &nbsp;&nbsp; @j.Description </option>
                     }
                 </select>
 
-                <label style="margin-top:20px;">Select material</label>
-
                 <div id="groupsdiv">
                     <label for="exampleFormControlTextarea1" style="margin-top:5%">Select Group</label>
-                    <select class="js-example-placeholder-single js-states form-control" id="groups" name="Material" style="width:100%;" onchange="">
+                    <select class="js-example-placeholder-single js-states form-control" id="groups" style="width:100%;" >
                         <option></option>
                         <option value="1">Group01</option>
                         <option value="2">Group02</option>
@@ -56,22 +54,17 @@
                         <option value="10">Group10</option>
                     </select>
                 </div>
+
                 <label style="margin-top:5%">Select material</label>
-                <select class="js-example-placeholder-single js-states form-control" id="materialSelectBox" name="Material" style="width:100%" onchange="">
-
+                <select class="js-example-placeholder-single js-states form-control" id="materialSelectBox" style="width:100%" >
                     <option></option>
-                    @foreach (var j in Model.jobCards)
-                    {
-                    <option value="@j.Prod_Order_No_">@j.Prod_Order_No_   -  @j.Description</option>
-                    }
                 </select>
-
 
                 <div style="padding-top:20px;">
                     <label for="exampleFormControlTextarea1">Description</label>
                     <textarea class="form-control" rows="5" id="description" style="resize: both;width:100%;"></textarea>
                 </div>
-                <div class="button-holder" style="display:block">
+                <div class="button-holder" style="display:block;margin-top:-50px;">
                     <div class="ajax-button">
                         <div class="fa fa-check done"></div>
                         <div class="fa fa-close failed"></div>
@@ -95,6 +88,10 @@
         allowClear: false
     });
 
+    $(document).ready(function(){
+            $("#materialSelectBox").prop("disabled", true);
+    });
+
     function loadMaterialList()
     {
         var selectedJobCard = document.getElementById("jobCardSelectBox").value;
@@ -105,8 +102,6 @@
             data: { selectedJobCard: selectedJobCard },
             success: function (feedback) {
                 feedback = JSON.parse(feedback);
-                console.log(feedback);
-
                 var materialSelectBox = document.getElementById("materialSelectBox");
                 materialSelectBox.options.length = 0;
                 var opt1 = document.createElement('option');
@@ -115,7 +110,6 @@
                 materialSelectBox.appendChild(opt1);
 
                 for (var i = 0; i < feedback[0].Value.length; i++) {
-                    console.log(feedback[0].Value[i]);
                     var opt = document.createElement('option');
                     opt.innerHTML = feedback[0].Value[i].Item_No_;
                     opt.value = feedback[0].Value[i].Item_No_;
@@ -127,8 +121,11 @@
                 alert("Error occurred");
             }
         });
-    }
 
+        if(selectedJobCard != null){
+            $("#materialSelectBox").prop("disabled", false);
+        }
+    }
 
     $('select').select2({
         placeholder: "Select Group.....",
@@ -144,7 +141,7 @@
         obj = new Object();
 
         obj.issue_date = new Date();
-        obj.material_id = document.getElementById("Material").value;
+        obj.material_id = document.getElementById("materialSelectBox").value;
         obj.description = document.getElementById("description").value;
         obj.line_line_id = @ViewBag.lineid;
         obj.issue_issue_ID = "2";
