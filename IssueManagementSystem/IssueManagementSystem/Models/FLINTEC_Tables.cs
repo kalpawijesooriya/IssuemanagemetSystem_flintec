@@ -34,21 +34,22 @@ namespace IssueManagementSystem.Models
 
         [Column("Status")]
         public int Status {get; set;}
+
+        [Column("Description")]
+        public string Description { get; set; }
     }
 
 
     [Table("FLINTEC$Prod_ Order Component")]
     public class FLINTEC_Prod_Order_Component
     {
+        [Key]
         [Column("Item No_")]
         public string Item_No_ { get; set; }
 
-        [Column("Status")]
-        public int Status { get; set; }
-
-        [Key]
         [Column("Prod_ Order No_")]
         public string Prod_Order_No_ { get; set; }
+
 
     }
 }

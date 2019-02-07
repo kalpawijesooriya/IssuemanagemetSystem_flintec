@@ -93,6 +93,17 @@ namespace IssueManagementSystem.Controllers
             return View(jobCardsList);
         }
 
+
+        public ActionResult loadMaterialList(string selectedJobCard)
+        {
+            dynamic materials = new System.Dynamic.ExpandoObject();
+            FLINTEC_Prod_Order_Component_Context jobCardContext = new FLINTEC_Prod_Order_Component_Context();
+            List<FLINTEC_Prod_Order_Component> matList = jobCardContext.FLINTEC_Prod_Order_Component.Where(x => (x.Prod_Order_No_.Equals(selectedJobCard))).ToList();
+            materials.materials = matList;
+            return Json(materials);
+        }
+
+
         public ActionResult ITIssue()//IT Issue view
         {
             if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))

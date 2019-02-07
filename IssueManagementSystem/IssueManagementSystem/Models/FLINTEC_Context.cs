@@ -28,7 +28,6 @@ namespace IssueManagementSystem.Models
         : base("name=FLINTEC_dbContext")
         {
         }
-        //Prod_ Order Line
         public virtual DbSet<FLINTEC_Prod_Order_Line> FLINTEC_Prod_Order_Line { get; set; }
 
     }
@@ -40,7 +39,6 @@ namespace IssueManagementSystem.Models
         : base("name=FLINTEC_dbContext")
         {
         }
-        //Prod_ Order Line
         public virtual DbSet<FLINTEC_Prod_Order_Component> FLINTEC_Prod_Order_Component { get; set; }
 
     }
