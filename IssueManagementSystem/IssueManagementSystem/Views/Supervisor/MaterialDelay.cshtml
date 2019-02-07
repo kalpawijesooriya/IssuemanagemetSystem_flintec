@@ -93,7 +93,10 @@
 <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
 <script src="~/signalr/Hubs"></script>
 <script>
-
+     if('@Session["department"]'!='MachineShop')
+    {
+    $('#groupsdiv').hide()
+    }
     $(document).ready(function () {
         $("#materialSelectBox").prop("disabled", true);
     });
@@ -137,7 +140,10 @@
         placeholder: "Select.....",
         allowClear: false
     });
-
+     $('#groups').select2({
+        placeholder: "Select Group.....",
+        allowClear: false
+    });
       if('@Session["department"]'!='MachineShop')
     {
     $('#groupsdiv').hide()

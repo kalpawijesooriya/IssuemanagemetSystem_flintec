@@ -82,8 +82,12 @@
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
 <script src="~/signalr/Hubs"></script>
 <script>
+      if('@Session["department"]'!='MachineShop')
+    {
+    $('#groupsdiv').hide()
+    }
     $('select').select2({
-        placeholder: "Select Material.....",
+        placeholder: "Select.....",
         allowClear: false
     });
 
@@ -126,11 +130,8 @@
         }
     }
 
-    $('select').select2({
-        placeholder: "Select Group.....",
-        allowClear: false
-    });
-        if('@Session["department"]'!='MachineShop')
+ 
+    if('@Session["department"]'!='MachineShop')
     {
     $('#groupsdiv').hide()
     }
@@ -168,6 +169,10 @@
             }
         });
     }
+     $('#groups').select2({
+        placeholder: "Select Group.....",
+        allowClear: false
+    });
 </script>
 
 

@@ -110,17 +110,9 @@ if (Session["userID"] == null)
 
         (issueCount != 1) ? ($('#span_x').text("s!")) : ($('#span_x').text("!"));
 
-        // Declare a function on the hub hub so the server can invoke it
-        hub.client.displayStatus = function () {
-           
-            getData();
-        };
-    
-        // Start the connection
-        $.connection.hub.start();
-        getData();
      
-        function getData()
+     
+      window.getDataissue = function()
         {
             var divissue = $('#divIssue');
               var url = '@Url.Action("GetIssues", "ResponsiblePerson")'
@@ -169,6 +161,15 @@ if (Session["userID"] == null)
             (issueCount != 1) ? ($('#span_x').text("s!")) : ($('#span_x').text("!"));
         }
 
+   // Declare a function on the hub hub so the server can invoke it
+        hub.client.displayStatus = function () {
+           
+           getDataissue();
+        };
+    
+        // Start the connection
+        $.connection.hub.start();
+        getDataissue();
 
         function get_line(line_id, issueid, divissue, issuedata, issueStstus, comment, index, matirial,bell_ststus) {
             issueCount = 0;
@@ -332,10 +333,12 @@ if (Session["userID"] == null)
                     if (response == 1) {
                         body.append('<P style="color:red" class="text-center">Your comment is saved. Waiting for the production line supervisors confirmation.</br>Thank You.</p>');
                         $("#savecomment").hide();
+                         getDataissue()
                     }
                     else {
                         body.append('<P style="color:green" class="text-center">Issue is Solved. Great work!</br>Thank You.</p>');
                         $("#savecomment").hide();
+                        getDataissue()
                     }
                 }).fail(function (response) {
                     console.log('Error: ' + response);
@@ -391,7 +394,7 @@ if (Session["userID"] == null)
             url: url,
             data: { issueJson: issueJson },
             success: function (feedback) {
-           
+            getDataissue()
             },
             error: function (feedback) {
                 alert(feedback);
