@@ -55,11 +55,20 @@
 
                 <span id="lineID" style="display:none">@lineId</span>
 
-                <select class="js-example-placeholder-single js-states form-control" id="Material" name="Material" style="width:100%;" onchange="">
+                <select class="js-example-placeholder-single js-states form-control" id="jobCardSelectBox" name="Material" style="width:100%;" onchange="">
                     <option></option>
-                    @foreach (var m in Model.materialList)
+                    @foreach (var j in Model.jobCards)
                     {
-                        <option value="@m.No_">@m.No_ - @m.Search_Description</option>
+                        <option value="@j.Prod_Order_No_"> @j.Prod_Order_No_</option>
+                    }
+                </select>
+
+
+                <select class="js-example-placeholder-single js-states form-control" id="materialSelectBox" name="Material" style="width:100%" onchange="">
+                    <option></option>
+                    @foreach (var j in Model.jobCards)
+                    {
+                        <option value="@j.Prod_Order_No_">@j.Prod_Order_No_</option>
                     }
                 </select>
 
@@ -86,14 +95,11 @@
 <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
 <script src="~/signalr/Hubs"></script>
 <script>
-    $('#Material').select2({
-        placeholder: "Select Material.....",
+    $('select').select2({
+        placeholder: "Select.....",
         allowClear: false
     });
-       $('#groups').select2({
-        placeholder: "Select Group.....",
-        allowClear: false
-    });
+
       if('@Session["department"]'!='MachineShop')
     {
     $('#groupsdiv').hide()

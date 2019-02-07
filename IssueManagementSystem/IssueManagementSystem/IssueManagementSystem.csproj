@@ -303,9 +303,9 @@
       <DependentUpon>BigRed.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\CommunicationData.cs" />
-    <Compile Include="Models\FLINTEC_Item.cs" />
+    <Compile Include="Models\FLINTEC_Tables.cs" />
     <Compile Include="Models\LineIssue.cs" />
-    <Compile Include="Models\FLINTEC_Item_dbContext.cs" />
+    <Compile Include="Models\FLINTEC_Context.cs" />
     <Compile Include="Models\SendIssues.cs" />
     <Compile Include="Models\SendNotifications.cs" />
     <Compile Include="Models\tblWorkstation_Config.cs">

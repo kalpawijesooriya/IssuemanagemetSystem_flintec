@@ -269,22 +269,22 @@ function loadAccordionTable(obj)
 
 }
 
-//location                            //5
-//description                         //6
-//Name                                //7
-//material_id                         //8
-//machine_name                        //9
-//line_line_id                        //10
-//issue_issue_ID                      //11
-//responsible_person_confirm_status   //12
-//responsible_person_confirm_feedback //13
-//solved_date                         //14
-//commented_date                      //15
-//department                          //16
-//solved_emp                          //17
-//buzzer_off_by                       //18
-//buzzer_off_time                     //19
-//dep_occured                         //20
+    //location                            //5
+    //description                         //6
+    //Name                                //7
+    //material_id                         //8
+    //machine_name                        //9
+    //line_line_id                        //10
+    //issue_issue_ID                      //11
+    //responsible_person_confirm_status   //12
+    //responsible_person_confirm_feedback //13
+    //solved_date                         //14
+    //commented_date                      //15
+    //department                          //16
+    //solved_emp                          //17
+    //buzzer_off_by                       //18
+    //buzzer_off_time                     //19
+    //dep_occured                         //20
 
 function createAccordionLine(accordion,date,id,issue,plant,line,status,desc,resp,matID,machID,linID,issID,respStatus,respFeed,solDate,comDate,dept,solEmp,buzOffBy,buzOffT,deptOccrd){
 

@@ -24,7 +24,7 @@ namespace IssueManagementSystem.Models
             internal static SqlCommand command = null;
             internal static SqlDependency dependency = null;
 
-            public static FLINTEC_Item_dbContext FLINTEC_Item_dbContext { get; private set; }
+            public static FLINTEC_Context FLINTEC_Item_dbContext { get; private set; }
 
             public static string GetBreakedown()
             {
