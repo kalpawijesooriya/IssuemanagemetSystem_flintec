@@ -56,19 +56,16 @@ namespace IssueManagementSystem.Controllers
 
         public ActionResult MaterialDelay(int lineid)//MaterialDelay View
         {
-
             if ((Session["userID"] == null) || ((string)Session["Role"] != "CellEngineer"))
             {
                 return RedirectToAction("Index", "Login");
-
             }
-      
+
             dynamic jobCardsList_issue_occurrence = new System.Dynamic.ExpandoObject();
-            
+
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
             {
-                jobCardsList_issue_occurrence.issue_occurrence = db.issue_occurrence;
-               
+                jobCardsList_issue_occurrence.issue_occurrence = db.issue_occurrence;  
             }
 
             FLINTEC_Prod_Order_Line_Context jobCardContext = new FLINTEC_Prod_Order_Line_Context();
@@ -76,21 +73,28 @@ namespace IssueManagementSystem.Controllers
             jobCardsList_issue_occurrence.jobCards = jcList;
             ViewBag.lineid = lineid;
             return View(jobCardsList_issue_occurrence);
-
         }
 
 
         public ActionResult loadMaterialList(string selectedJobCard)
         {
-
             dynamic materials = new System.Dynamic.ExpandoObject();
-            FLINTEC_Prod_Order_Component_Context jobCardContext = new FLINTEC_Prod_Order_Component_Context();
-            List<FLINTEC_Prod_Order_Component> matList = jobCardContext.FLINTEC_Prod_Order_Component.Where(x => x.Status == 3 & x.Prod_Order_No_== selectedJobCard).ToList();
-            materials.materials = matList;
 
+            //String sql_query = @"SELECT a.[Item No_] AS Item_No_, a.Status,a.[Prod_ Order No_] AS Prod_Order_No_
+            //                    FROM FLINTEC.dbo.[FLINTEC$Prod_ Order Component] a
+            //                    WHERE a.[Prod_ Order No_]='" + selectedJobCard + "'";
+
+            //using (FLINTEC_Prod_Order_Component_Context jobCardContext = new FLINTEC_Prod_Order_Component_Context())
+            //{
+            //    List<FLINTEC_Prod_Order_Component> matList = jobCardContext.Database.SqlQuery<FLINTEC_Prod_Order_Component>(sql_query).ToList();
+            //    materials.materials = matList;
+            //}
+
+            FLINTEC_Prod_Order_Component_Context jobCardContext = new FLINTEC_Prod_Order_Component_Context();
+            List<FLINTEC_Prod_Order_Component> matList = jobCardContext.FLINTEC_Prod_Order_Component.Where(x => (x.Prod_Order_No_.Equals(selectedJobCard))).ToList();
+            materials.materials = matList;
             return Json(materials);
         }
-
 
 
         public ActionResult ITIssue(int lineid)//IT ISSUE View
@@ -99,24 +103,28 @@ namespace IssueManagementSystem.Controllers
             {
                 return RedirectToAction("Index", "Login");
             }
-
             ViewBag.lineid = lineid;
             return View();
         }
+
+
         public ActionResult QualityIssue(int lineid)//qualityISSUE View
         {
             if ((Session["userID"] == null) || ((string)Session["Role"] != "CellEngineer"))
             {
                 return RedirectToAction("Index", "Login");
             }
-
             ViewBag.lineid = lineid;
             return View();
         }
+
+
         private class tempClass3
         {
             public int line_id { get; set; }
         }
+
+
         [HttpPost]
         public ActionResult getCellEngLins(int empId)
         {
@@ -138,7 +146,6 @@ namespace IssueManagementSystem.Controllers
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
                 string query = "SELECT line_name FROM lines WHERE line_id=" + lineid;
-
                 var lineData = db.Database.SqlQuery<tempClass2>(query).ToList();
                 return Json(lineData);
             }
@@ -160,7 +167,6 @@ namespace IssueManagementSystem.Controllers
             if ((Session["userID"] == null) || ((string)Session["Role"] != "CellEngineer"))
             {
                 return RedirectToAction("Index", "Login");
-
             }
             List<tbl_PPA_User> userList;
             using (BigRedEntities bigRed = new BigRedEntities())
@@ -169,7 +175,6 @@ namespace IssueManagementSystem.Controllers
             }
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
             {
-
                 List<department> departments = db.departments.ToList();
                 dynamic mymodel = new ExpandoObject();
                 mymodel.lineID = lineid;
@@ -188,7 +193,6 @@ namespace IssueManagementSystem.Controllers
                 var c = db.Database.SqlQuery<string>(query_1).ToList();
                 return Json(c, JsonRequestBehavior.AllowGet);
             }
-
         }
 
         [HttpPost]
@@ -228,34 +232,27 @@ namespace IssueManagementSystem.Controllers
 
         class user_temp
         {
-
             public string Name { get; set; }
             public string Department { get; set; }
             public string Role { get; set; }
             public string Phone { get; set; }
             public string EMail { get; set; }
             public int EmployeeNumber { get; set; }
-
         }
 
         [HttpPost]
         public ActionResult getUserDetails(string userID)
         {
-
             using (BigRedEntities db = new BigRedEntities()) //method for load the map acordinto the surevisor line
             {
                 string query_1 = "SELECT Name,Department,Role,Phone,EMail,EmployeeNumber FROM tbl_PPA_User WHERE tbl_PPA_User.EmployeeNumber ='" + userID + "'";
                 var c = db.Database.SqlQuery<user_temp>(query_1).ToList();
                 return Json(c, JsonRequestBehavior.AllowGet);
             }
-
         }
-
-
 
         class issue_line_person_temp
         {
-
             public string issue_id { get; set; }
             public string line_id { get; set; }
             public string EmployeeNumber { get; set; }
@@ -267,7 +264,6 @@ namespace IssueManagementSystem.Controllers
             public int sendAlertAfter { get; set; }
             public int levelOfResponsibility { get; set; }
             public int issue_line_person_id { get; set; }
-
         }
 
         [HttpPost]

@@ -40,8 +40,6 @@
 
                 <label style="margin-top:20px;">Select material</label>
 
-                <select class="js-example-placeholder-single js-states form-control" id="materialSelectBox" name="Material" style="width:100%" >
-
                 <div id="groupsdiv">
                     <label for="exampleFormControlTextarea1" style="margin-top:5%">Select Group</label>
                     <select class="js-example-placeholder-single js-states form-control" id="groups" name="Material" style="width:100%;" onchange="">
@@ -59,12 +57,12 @@
                     </select>
                 </div>
                 <label style="margin-top:5%">Select material</label>
-                <select class="js-example-placeholder-single js-states form-control" id="Material" name="Material" style="width:100%" onchange="">
+                <select class="js-example-placeholder-single js-states form-control" id="materialSelectBox" name="Material" style="width:100%" onchange="">
 
                     <option></option>
                     @foreach (var j in Model.jobCards)
                     {
-                        <option value="@j.Prod_Order_No_">@j.Prod_Order_No_</option>
+                    <option value="@j.Prod_Order_No_">@j.Prod_Order_No_   -  @j.Description</option>
                     }
                 </select>
 
@@ -97,7 +95,6 @@
         allowClear: false
     });
 
-
     function loadMaterialList()
     {
         var selectedJobCard = document.getElementById("jobCardSelectBox").value;
@@ -107,8 +104,24 @@
             url: "/CellEngineer/loadMaterialList",
             data: { selectedJobCard: selectedJobCard },
             success: function (feedback) {
+                feedback = JSON.parse(feedback);
                 console.log(feedback);
+
                 var materialSelectBox = document.getElementById("materialSelectBox");
+                materialSelectBox.options.length = 0;
+                var opt1 = document.createElement('option');
+                opt1.innerHTML = '';
+                opt1.value = '';
+                materialSelectBox.appendChild(opt1);
+
+                for (var i = 0; i < feedback[0].Value.length; i++) {
+                    console.log(feedback[0].Value[i]);
+                    var opt = document.createElement('option');
+                    opt.innerHTML = feedback[0].Value[i].Item_No_;
+                    opt.value = feedback[0].Value[i].Item_No_;
+                    materialSelectBox.appendChild(opt);
+                }
+
             },
             error: function () {
                 alert("Error occurred");
