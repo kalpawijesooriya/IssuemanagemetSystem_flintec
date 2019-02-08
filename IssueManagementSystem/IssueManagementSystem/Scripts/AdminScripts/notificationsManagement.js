@@ -15,21 +15,25 @@ $('#selectIssue').select2({
 
 $('#Name').select2({
     placeholder: "Search Name....",
+    dropdownParent: $('#modal1'),
     allowClear: false
 });
 
 $('#Department').select2({
     placeholder: "Search Department....",
+    dropdownParent: $('#modal1'),
     allowClear: false
 });
 
 $('#managerName').select2({
     placeholder: "Search Name....",
+    dropdownParent: $('#modalmanager'),
     allowClear: false
 });
 
 $('#managerDepartment').select2({
     placeholder: "Search Department....",
+    dropdownParent: $('#modalmanager'),
     allowClear: false
 });
 
