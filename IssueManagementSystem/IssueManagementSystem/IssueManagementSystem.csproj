@@ -708,6 +708,7 @@
     <Content Include="Views\Supervisor\QualityIssue.cshtml" />
     <Content Include="Views\Display\Stores.cshtml" />
     <Content Include="Views\Display\Maintenance.cshtml" />
+    <Content Include="Views\Display\test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

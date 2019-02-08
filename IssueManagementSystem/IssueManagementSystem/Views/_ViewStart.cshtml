@@ -1,1 +1,33 @@
-﻿
+﻿@{
+    var controller = HttpContext.Current.Request.RequestContext.RouteData.Values["Controller"].ToString();
+
+    string layout = "";
+    if (controller == "Admin")
+    {
+        layout = "~/Views/Shared/BranchSideNav.cshtml";
+    }
+
+    else if (controller == "CellEngineer")
+    {
+        layout = "~/Views/Shared/CellEngineerLayout.cshtml";
+    }
+    else if (controller == "ResponsiblePerson")
+    {
+        layout = "~/Views/Shared/ResponsiblepersonLayout.cshtml";
+    }
+    else if (controller == "Supervisor")
+    {
+        layout = "~/Views/Shared/supervisorsLayout.cshtml";
+    }
+    else if (controller == "Manager")
+    {
+        layout = "~/Views/Shared/ManagerLayout.cshtml";
+    }
+    else {
+        layout = null;
+    }
+
+
+
+    Layout = layout;
+}
