@@ -716,7 +716,6 @@ function drawChart3() {
         if (percent > 74)
             clearInterval(handler);
     }, 2);
-
 }
 
 function createTable() {
@@ -927,7 +926,15 @@ function numberOfIssues(){
         });
     
     var ttlIssues = document.getElementById("ttlIssues");
-    ttlIssues.innerHTML=count;
+   
+    countNew = 0;
+    var setIntervalFunc= setInterval(function(){ 
+         if(count>=countNew){
+                ttlIssues.innerHTML=countNew;
+                countNew++;
+            }
+        else{clearInterval(setIntervalFunc);}
+    }, 10);
 
 }
 
