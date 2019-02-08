@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "DashBord";
-    Layout = "~/Views/Shared/CellEngineerLayout.cshtml";
+
     if (Session["userID"] == null)
     {
         Response.Redirect("~/Login/Index");
@@ -210,7 +210,7 @@ function myfunction(param)
 {   
     $.confirm({
         title: 'Solved Issue?',
-        content: 'please confirm your action within 6 seconds',
+        content: 'Please confirm your action within 8 seconds',
         autoClose: 'cancelAction|8000',
         type: 'orange',
         buttons: {

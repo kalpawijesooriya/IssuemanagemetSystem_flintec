@@ -48,6 +48,12 @@ namespace IssueManagementSystem.Controllers
             return View();
 
         }
+        public ActionResult test()
+        {
+
+            return View();
+
+        }
         [HttpPost]//solvedIssueMethod
         public JsonResult updateScreen()
         {
