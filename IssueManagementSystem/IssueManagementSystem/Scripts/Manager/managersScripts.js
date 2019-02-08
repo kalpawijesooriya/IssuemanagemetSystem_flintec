@@ -5,10 +5,11 @@
 
 $(document).ready(function() {
 
-        google.charts.load("current",{packages: ['corechart']});
-        google.charts.setOnLoadCallback(drawChart1);
-        google.charts.setOnLoadCallback(drawChart2);
-        google.charts.setOnLoadCallback(drawChart3);
+        google.load("visualization", "1", {packages:["corechart"]});
+
+        google.setOnLoadCallback(drawChart1);
+        google.setOnLoadCallback(drawChart2);
+        google.setOnLoadCallback(drawChart3);
 
         $("#datetimepicker1").datepicker({
         });
@@ -391,7 +392,7 @@ function createAccordionLine(accordion,date,id,issue,plant,line,status,desc,resp
     div_1_right.setAttribute("class","col-md-6");
     div_1_right.setAttribute("style","overflow-wrap: break-word;");
 
-console.log(document.getElementById('hidden_userID').innerHTML+"  - --  "+id);
+
         $.ajax({
         type:"POST",
         dataType:'text',
@@ -401,7 +402,6 @@ console.log(document.getElementById('hidden_userID').innerHTML+"  - --  "+id);
         success:function(flag){
 
             var flagVal = flag;
-            console.log(flagVal);
 
             if(flagVal == 'true'){
                     
@@ -418,8 +418,8 @@ console.log(document.getElementById('hidden_userID').innerHTML+"  - --  "+id);
                 notification_btn.setAttribute("class","myCheckbox");
                 notification_btn.dataset.toggle = "toggle";
                 notification_btn.setAttribute('checked',"true");
-                notification_btn.dataset.on = "<i class='fas fa-bell fa-2x'>&nbspon</i>";
-                notification_btn.dataset.off = "<i class='fas fa-bell-slash fa-2x'>&nbspoff&nbsp&nbsp</i>";
+                notification_btn.dataset.on = "<i class='fas fa-bell fa-1x' style='font-size:20px'>&nbspon</i>";
+                notification_btn.dataset.off = "<i class='fas fa-bell-slash fa-1x' style='font-size:20px'>&nbspoff&nbsp&nbsp</i>";
             }
 
         },
@@ -436,14 +436,14 @@ console.log(document.getElementById('hidden_userID').innerHTML+"  - --  "+id);
 
     if(respStatus!=null && respStatus== 0)
         {  
-            eye_span.setAttribute("class","glyphicon glyphicon-eye-open");
+            eye_span.setAttribute("class","fas fa-eye");
             eye_span.setAttribute("data-toggle","tooltip");
             eye_span.title = "Checked by responsible person";
             eye_span.style.color="#42c44d";
         }
         else{
 
-            eye_span.setAttribute("class","glyphicon glyphicon-eye-close");
+            eye_span.setAttribute("class","fas fa-eye-slash");
             eye_span.setAttribute("data-toggle","tooltip");
             eye_span.title = "To be checked by responsible person";
             eye_span.style.color="#e04c4c";
@@ -530,10 +530,6 @@ function drawChart1() {
         data: { barChart: '1',startDate:startDate,endDate:endDate,plantLocation:plantLocation},
         success: function (feedback) {
 
-            console.log("drawChart1@@@@@@@@@@@@@@@@@@@@@");
-            console.log(" startDate:"+startDate+" endDate:"+endDate+" plantLocation:"+plantLocation);
-            console.log(feedback);
-
             chartData1 = JSON.parse(feedback);
             var a1 = new Array(chartData1.length + 1);
             a1[0] = ["Element", "Frequency", { role: "style" }]
@@ -568,15 +564,21 @@ function drawChart1() {
         }, 2]);
 
     var options = {
-        bar: { groupWidth: "95%" },
-        legend: { position: "none" },
-        chartArea: { 'width': '100%', 'height': '60%', 'top': '0' },
-        hAxis: {
-            textStyle: {
-                fontSize: 9
-            }
-        }
-    };
+                    bar: { groupWidth: "95%" },
+                    legend: { position: "none" },
+                    chartArea: { 'width': '100%', 'height': '60%', 'top': '0' },
+                    hAxis: {
+                        textStyle: {
+                            fontSize: 9
+                        }
+                    },
+                    animation:{
+                    duration: 2000,
+                    easing: 'out',
+                    startup: true
+                        }
+                };
+
     var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
     chart.draw(view, options);
 }
@@ -605,9 +607,6 @@ function drawChart2() {
         url: "/Manager/fillChart1",
         data: { barChart: '2',startDate:startDate,endDate:endDate,plantLocation:plantLocation},
         success: function (feedback) {
-
-            console.log("drawChart2@@@@@@@@@@@@@@@@@@@@@");
-            console.log(feedback);
 
             chartData1 = JSON.parse(feedback);
             var a1 = new Array(chartData1.length + 1);
@@ -648,7 +647,12 @@ function drawChart2() {
         hAxis: {
             textStyle: {
                 fontSize: 9
-            }
+            },
+        animation:{
+          duration: 1000,
+          easing: 'out',
+          startup: true
+              }
         }
     };
     var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values1"));
@@ -668,9 +672,6 @@ function drawChart3() {
         url: "/Manager/fillChart3",
         data: { startDate:startDate,endDate:endDate,plantLocation:plantLocation },
         success: function (feedback) {
-
-            console.log("drawChart3@@@@@@@@@@@@@@@@@@@@@");
-            console.log(feedback);
 
             chartData1 = JSON.parse(feedback);
             var a1 = new Array(chartData1.length + 1);
@@ -704,6 +705,18 @@ function drawChart3() {
 
     var data = google.visualization.arrayToDataTable(dataArray2);
     chart.draw(data, options);
+
+    var percent = 0;
+
+    var handler = setInterval(function(){
+        percent += 3;
+        data.setValue(0, 1, percent);
+        data.setValue(1, 1, 100 - percent);
+        chart.draw(data, options);
+        if (percent > 74)
+            clearInterval(handler);
+    }, 2);
+
 }
 
 function createTable() {
@@ -719,9 +732,6 @@ function createTable() {
         url: "/Manager/fillChart2",
         data: {startDate:startDate,endDate:endDate,plantLocation:plantLocation },
         success: function (feedback) {
-
-            console.log("myTable @@@@@@@@@@@@@@@@@@@@@");
-            console.log(feedback)
 
             chartData1 = JSON.parse(feedback);
 
@@ -798,9 +808,9 @@ function filterByDate()
                 {
                     i.innerHTML ="from "+ (new Date(document.getElementById('datetimepicker1').value+" 23:59 UTC")).toISOString().substring(0,10) +" to "+(new Date(document.getElementById('datetimepicker2').value+" 00:00 UTC")).toISOString().substring(0,10) ;
                 });
-        google.charts.setOnLoadCallback(drawChart1);
-        google.charts.setOnLoadCallback(drawChart2);
-        google.charts.setOnLoadCallback(drawChart3);
+        google.setOnLoadCallback(drawChart1);
+        google.setOnLoadCallback(drawChart2);
+        google.setOnLoadCallback(drawChart3);
         numberOfIssues();
 
     }
