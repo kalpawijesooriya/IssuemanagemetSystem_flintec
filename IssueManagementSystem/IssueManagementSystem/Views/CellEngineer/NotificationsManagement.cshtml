@@ -486,8 +486,8 @@
             nameBox.appendChild(opt);
         }
     },
-    error: function () {
-         alert("Error occurred");
+    error: function (error) {
+        alert("Error occurred ..." + error);
         }
     });
     }
@@ -519,8 +519,8 @@
                 nameBox.appendChild(opt);
             }
         },
-        error: function () {
-        alert("Error occurred");
+        error: function (error) {
+            alert("Error occurred ..." + error);
         }
     });
     }
@@ -559,9 +559,9 @@
                         email_text.innerHTML = obj[0].EMail;
 
                     },
-                    error: function () {
-                       alert("Error occurred");
-                    }
+                error: function (error) {
+                    alert("Error occurred ..." + error);
+                }
                 });
         }
     }
@@ -600,8 +600,8 @@
                         email_text.innerHTML = obj[0].EMail;
 
                 },
-                error: function () {
-                    alert("Error occurred");
+                error: function (error) {
+                    alert("Error occurred ..." + error);
                 }
              });
         }
@@ -688,9 +688,8 @@ function saveList() {
     setTimeout(function(){  location.reload();; }, 3000);
           
         },
-        error: function (response)
-        {
-           alert("Error occurred");
+        error: function (error) {
+            alert("Error occurred ..." + error);
         }
     });
 }

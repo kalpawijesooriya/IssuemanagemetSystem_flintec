@@ -64,65 +64,65 @@
 
     <section class="statistic statistic2">
         <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h3 class="title-5 m-b-35">Current Issues</h3>
-                </div>
-            </div>
-
-            <div class="row">
-
-                <div class="col">
-                    <a class="statistic__item statistic__item--red" onclick="topCardClick('mb')" href="#mainTableContainer" style="text-decoration: none;">
-                        <h2 class="number"> @ViewBag.BrakedownCount</h2>
-                        <span class="desc">Machine Breakdown</span>
-                        <div class="icon">
-                            <i class="zmdi zmdi-settings zmdi-hc-spin"></i>
-                        </div>
-                    </a>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="title-5 m-b-35">Current Issues</h3>
+                    </div>
                 </div>
 
-                <div class="col">
-                    <a class="statistic__item statistic__item--blue" onclick="topCardClick('it')" href="#mainTableContainer" style="text-decoration: none;">
-                        <h2 class="number">@ViewBag.ITIsuue</h2>
-                        <span class="desc">IT/SoftWare Issue</span>
-                        <div class="icon">
-                            <i class="zmdi  zmdi-windows"></i>
-                        </div>
-                    </a>
-                </div>
+                <div class="row" style="display:flex;">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2" style="">
+                        <a class="statistic__item statistic__item--red " onclick="topCardClick('mb')" href="#mainTableContainer" style="text-decoration: none;width:100%">
+                            <h2 class="number"> @ViewBag.BrakedownCount</h2>
+                            <span class="desc">Machine Breakdown</span>
+                            <div class="icon">
+                                <i class="zmdi zmdi-settings zmdi-hc-spin"></i>
+                            </div>
+                        </a>
+                    </div>
 
-                <div class="col">
-                    <a class="statistic__item statistic__item--green" onclick="topCardClick('ti')" href="#mainTableContainer" style="text-decoration: none;">
-                        <h2 class="number">@ViewBag.TechnicalIssue</h2>
-                        <span class="desc">Technical Issue</span>
-                        <div class="icon">
-                            <i class="fas fa-wrench"></i>
-                        </div>
-                    </a>
-                </div>
+                    <div class="col-md-2">
+                        <a class="statistic__item statistic__item--blue" onclick="topCardClick('it')" href="#mainTableContainer" style="text-decoration: none;width:100%">
+                            <h2 class="number">@ViewBag.ITIsuue</h2>
+                            <span class="desc">IT/SoftWare Issue</span>
+                            <div class="icon">
+                                <i class="zmdi  zmdi-windows"></i>
+                            </div>
+                        </a>
+                    </div>
 
-                <div class="col">
-                    <a class="statistic__item statistic__item--orange" onclick="topCardClick('md')" href="#mainTableContainer" style="text-decoration: none;">
-                        <h2 class="number">@ViewBag.MaterialDelayCount</h2>
-                        <span class="desc">Material Delay</span>
-                        <div class="icon">
-                            <i class="zmdi animated infinite wobble zmdi-shopping-cart"></i>
-                        </div>
-                    </a>
-                </div>
+                    <div class="col-md-2">
+                        <a class="statistic__item statistic__item--green" onclick="topCardClick('ti')" href="#mainTableContainer" style="text-decoration: none;width:100%">
+                            <h2 class="number">@ViewBag.TechnicalIssue</h2>
+                            <span class="desc">Technical Issue</span>
+                            <div class="icon">
+                                <i class="fas fa-wrench"></i>
+                            </div>
+                        </a>
+                    </div>
 
-                <div class="col">
-                    <a class="statistic__item statistic__item--blue" onclick="topCardClick('qi')" href="#mainTableContainer" style="text-decoration: none;">
-                        <h2 class="number">@ViewBag.QualityIsuue</h2>
-                        <span class="desc">Quality Isse</span>
-                        <div class="icon">
-                            <i class="zmdi zmdi-brightness-auto"></i>
-                        </div>
-                    </a>
-                </div>
+                    <div class="col-md-2">
+                        <a class="statistic__item statistic__item--orange" onclick="topCardClick('md')" href="#mainTableContainer" style="text-decoration: none;width:100%">
+                            <h2 class="number">@ViewBag.MaterialDelayCount</h2>
+                            <span class="desc">Material Delay</span>
+                            <div class="icon">
+                                <i class="zmdi animated infinite wobble zmdi-shopping-cart"></i>
+                            </div>
+                        </a>
+                    </div>
 
-            </div>
+                    <div class="col-md-2">
+                        <a class="statistic__item statistic__item--blue" onclick="topCardClick('qi')" href="#mainTableContainer" style="text-decoration: none;width:100%">
+                            <h2 class="number">@ViewBag.QualityIsuue</h2>
+                            <span class="desc">Quality Isse</span>
+                            <div class="icon">
+                                <i class="zmdi zmdi-brightness-auto"></i>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
         </div>
     </section>
     <!--
