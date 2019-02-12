@@ -250,9 +250,14 @@ function loadAccordionTable(obj)
 {
         var accordion  =  document.getElementById('accordion');
         var childElements = accordion.childNodes;
-
+        $("#no_IssuesDIV").empty();
          if(obj.length<1){
-             accordion.innerHTML="No Issues";
+             var no_IssuesDIV = document.createElement('p');
+             no_IssuesDIV.innerHTML= "NO ISSUES";
+             no_IssuesDIV.style.color="#d1d1d1";
+             no_IssuesDIV.style.fontSize ="70px";
+             no_IssuesDIV.style.textAlign = "center";
+             document.getElementById('no_IssuesDIV').appendChild(no_IssuesDIV);
           }    
 
         $("#accordion").empty();
@@ -941,3 +946,7 @@ function numberOfIssues(){
 }
 
 
+function topCardIconMovements(){
+
+
+}

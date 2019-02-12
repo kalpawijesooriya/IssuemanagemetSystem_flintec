@@ -7,6 +7,7 @@
         Response.Redirect("~/Login/Index");
     }
 }
+
 <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
 <link href="~/Content/adminstyles/Settings.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-3.3.1.js"></script>
@@ -77,7 +78,16 @@
                         <h2 class="number"> @ViewBag.BrakedownCount</h2>
                         <span class="desc">Machine Breakdown</span>
                         <div class="icon">
-                            <i class="zmdi zmdi-settings zmdi-hc-spin"></i>
+                            @{
+                                if (@ViewBag.BrakedownCount > 0)
+                                {
+                                    <i class="zmdi zmdi-settings zmdi-hc-spin"></i>
+                                }
+                                else{   
+                                    <i class="zmdi zmdi-settings"></i>
+                                }
+                            }
+
                         </div>
                     </a>
                 </div>
@@ -87,7 +97,16 @@
                         <h2 class="number">@ViewBag.ITIsuue</h2>
                         <span class="desc">IT/SoftWare Issue</span>
                         <div class="icon">
-                            <i class="zmdi  zmdi-windows"></i>
+                            @{
+                                if (@ViewBag.ITIsuue > 0)
+                                {
+                                    <i class="zmdi  zmdi-windows animated infinite wobble"></i>
+                                }
+                                else
+                                {
+                                    <i class="zmdi  zmdi-windows"></i>
+                                }
+                            }
                         </div>
                     </a>
                 </div>
@@ -97,7 +116,16 @@
                         <h2 class="number">@ViewBag.TechnicalIssue</h2>
                         <span class="desc">Technical Issue</span>
                         <div class="icon">
-                            <i class="fas fa-wrench"></i>
+                            @{
+                                if (@ViewBag.ITIsuue > 0)
+                                {
+                                    <i class="fas fa-wrench animated infinite wobble"></i>
+                                }
+                                else
+                                {
+                                    <i class="fas fa-wrench"></i>
+                                }
+                            }
                         </div>
                     </a>
                 </div>
@@ -107,7 +135,17 @@
                         <h2 class="number">@ViewBag.MaterialDelayCount</h2>
                         <span class="desc">Material Delay</span>
                         <div class="icon">
-                            <i class="zmdi animated infinite wobble zmdi-shopping-cart"></i>
+                            @{
+                                if (@ViewBag.MaterialDelayCount > 0)
+                                {
+                                    <i class="zmdi animated infinite wobble zmdi-shopping-cart"></i>
+                                }
+                                else
+                                {
+                                    <i class="zmdi zmdi-shopping-cart"></i>
+                                }
+                            }
+
                         </div>
                     </a>
                 </div>
@@ -117,7 +155,17 @@
                         <h2 class="number">@ViewBag.QualityIsuue</h2>
                         <span class="desc">Quality Isse</span>
                         <div class="icon">
-                            <i class="zmdi zmdi-brightness-auto"></i>
+                            @{
+                                if (@ViewBag.QualityIsuue > 0)
+                                {
+                                    <i class="zmdi animated infinite wobble zmdi-brightness-auto"></i>
+                                }
+                                else
+                                {
+                                    <i class="zmdi zmdi-brightness-auto"></i>
+                                }
+                            }
+
                         </div>
                     </a>
                 </div>
@@ -347,7 +395,7 @@
                 </div>
             </div>
 
-            <div class="container">
+            <div class="container" id="issue_table">
                 <h3 class="title-5 m-b-35"></h3>
                 <div class="row" style="width:100%; !important">
                     <div class="col-md-12" id="pagesContainer">
@@ -393,6 +441,7 @@
             </div>
         </div>
     </div>
+    <div id="no_IssuesDIV"></div>
 </section>
 
         <script>
