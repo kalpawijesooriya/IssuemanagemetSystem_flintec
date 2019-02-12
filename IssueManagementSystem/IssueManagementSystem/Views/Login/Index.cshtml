@@ -5,6 +5,7 @@
 }
 
 @model IssueManagementSystem.Models.tbl_PPA_User
+
 @{
     Layout = null;
 }
@@ -28,42 +29,59 @@
                 <h1 class="logo-caption"><span class="tweak">L</span>ogin</h1>
             </div><!-- /.logo -->
             <div class="controls">
-                @using (Html.BeginForm("Autherize", "Login", FormMethod.Post))
+
+                @using (Html.BeginForm("Authorize", "Login", FormMethod.Post))
                 {
-                <div class="row">
-                    <div class="col-lg-12">
-                        @Html.TextBoxFor(model => model.EmployeeNumber, new { @class = "form-control", @placeholder = "EmployeeNumber" })
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        @Html.ValidationMessageFor(model => model.UserName)
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @placeholder = "Password", @type = "password" })
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-10">
-                        @Html.ValidationMessageFor(model => model.Password)
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <lable>@Html.DisplayFor(model => model.LoginErrorMessage)</lable>
-                       
+                    HttpCookie cookies_clients = Request.Cookies["login_data"];
+                    if (cookies_clients != null)
+                    {
+                        @*<script>
+                            $(document).ready(function(){
+                                  alert(System.Convert.ToInt32(cookies_clients["uid"]));
+                                  alert(cookies_clients["pwd"]);
+                                  document.getElementById("uid_txt").value =  System.Convert.ToInt32(cookies_clients["uid"]);
+                                  document.getElementById("pwd_txt").value = cookies_clients["pwd"];
+                                  self.location.href = document.getElementById("submit_btn").href;
+                            });
+                            </script>*@
+                    IssueManagementSystem.Models.tbl_PPA_User obj = new IssueManagementSystem.Models.tbl_PPA_User();
+                    obj.EmployeeNumber = System.Convert.ToInt32(cookies_clients["uid"]);
+                    obj.Password = cookies_clients["pwd"];
+
+                    Html.Action("Authorize","Login", obj);
+
+                }
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            @Html.TextBoxFor(model => model.EmployeeNumber, new { @class = "form-control", @placeholder = "EmployeeNumber", @id = "uid_txt" })
                         </div>
-                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            @Html.ValidationMessageFor(model => model.UserName)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @placeholder = "Password", @type = "password", @id = "pwd_txt" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-10">
+                            @Html.ValidationMessageFor(model => model.Password)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <lable>@Html.DisplayFor(model => model.LoginErrorMessage)</lable>
+                        </div>
+                    </div>
 
-                    <button type="submit" class="btn btn-default btn-block btn-custom" value="Login">Login</button>
-                 }
+                    <button type="submit" id="submit_btn" class="btn btn-default btn-block btn-custom" value="Login">Login</button>
+                }
             </div><!-- /.controls -->
-
-
-    </div><!-- /#login-box -->
-
+     </div><!-- /#login-box -->
 </div><!-- /.container -->
 
 
