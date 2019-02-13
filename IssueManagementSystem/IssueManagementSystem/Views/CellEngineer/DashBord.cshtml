@@ -10,17 +10,13 @@
     {
         var lineInfo = db.lines.Where(x => x.line_id == lineid).FirstOrDefault();
         ViewBag.LineName = lineInfo.line_name;
-
     }
 }
 @using IssueManagementSystem.Models;
 @model List<IssueManagementSystem.Models.issue_occurrence>
 
-
-
 <link href="~/Content/test/jquery-confirm.min.css" rel="stylesheet" />
 <link href="~/Content/SupervisorStyles/voiceanimations.css" rel="stylesheet" />
-
 
 <div class="page-content--bgf7">
     <section class="au-breadcrumb2">
@@ -192,7 +188,7 @@
                 }
             });
         }
-        // Declare a function on the hub hub so the server can invoke it
+        // Declare a function on the  hub so the server can invoke it
         hub.client.displayStatus = function () {
             debugger
             getDataissue();
@@ -229,7 +225,6 @@ function myfunction(param)
                             getDataissue();
                             $.connection.hub.start().done(function () {$.connection.ismHub.server.announce();}).fail(function () { alert("Sorry, Can't Update your screen !")});
                             $('#card'+id).fadeOut(2000);
-                          
                         }
                     });
                 }
@@ -240,7 +235,8 @@ function myfunction(param)
     });
 }  
 
-var r = $('.search_input');
+    var r = $('.search_input');
+
    $(function(){
   if ('speechSynthesis' in window) {
     speechSynthesis.onvoiceschanged = function() {}
@@ -406,12 +402,12 @@ function showLastMonthIssues(issuedata)
  }
 
 $('.searchbar').click(function() {
-      $( '.search_input').css( "padding", "0 10px" );
-      $( '.search_input').css( "width", "450px" );
-      $( '.search_input').css( "caret-color", "red" );
-      $( '.search_input').css( "transition", "width 0.4s linear" );
-      $( '.search_icon').css( "background", "white" );
-      $( '.search_icon').css( "color", "#e74c3c" );
+      $( '.search_input').css("padding", "0 10px");
+      $( '.search_input').css("width", "450px");
+      $( '.search_input').css("caret-color", "red");
+      $( '.search_input').css("transition", "width 0.4s linear");
+      $( '.search_icon').css("background", "white");
+      $( '.search_icon').css("color", "#e74c3c");
     
 });
 </script>
