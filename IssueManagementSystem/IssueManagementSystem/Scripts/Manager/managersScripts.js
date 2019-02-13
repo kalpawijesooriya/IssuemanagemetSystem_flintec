@@ -4,7 +4,6 @@
 });
 
 $(document).ready(function() {
-
         google.load("visualization", "1", {packages:["corechart"]});
 
         google.setOnLoadCallback(drawChart1);
@@ -51,7 +50,7 @@ function loadTableData(){
             type:"POST",
             dataType:'text',
             async:false,
-            url:'/Manager/loadIssueList',
+            url:url_loadIssueList,
             data:{},
             success: function (data)
                 { 
@@ -75,19 +74,19 @@ function loadTableData(){
                                 tempArr.push(i.location);                              //7
                                 tempArr.push(i.description);                           //8
                                 tempArr.push(i.Name);                                  //9
-                                tempArr.push(i.material_id);                          //10
-                                tempArr.push(i.machine_machine_id);                   //11
-                                tempArr.push(i.line_line_id);                         //12
-                                tempArr.push(i.issue_issue_ID);                       //13
-                                tempArr.push(i.responsible_person_confirm_status);    //14
-                                tempArr.push(i.responsible_person_confirm_feedback);  //15
-                                tempArr.push(i.solved_date);                          //16
-                                tempArr.push(i.commented_date);                       //17
-                                tempArr.push(i.department);                           //18
-                                tempArr.push(i.solved_emp);                           //19
-                                tempArr.push(i.buzzer_off_by);                        //20
-                                tempArr.push(i.buzzer_off_time);                      //21
-                                tempArr.push(i.dep_occured);                          //22
+                                tempArr.push(i.material_id);                           //10
+                                tempArr.push(i.machine_machine_id);                    //11
+                                tempArr.push(i.line_line_id);                          //12
+                                tempArr.push(i.issue_issue_ID);                        //13
+                                tempArr.push(i.responsible_person_confirm_status);     //14
+                                tempArr.push(i.responsible_person_confirm_feedback);   //15
+                                tempArr.push(i.solved_date);                           //16
+                                tempArr.push(i.commented_date);                        //17
+                                tempArr.push(i.department);                            //18
+                                tempArr.push(i.solved_emp);                            //19
+                                tempArr.push(i.buzzer_off_by);                         //20
+                                tempArr.push(i.buzzer_off_time);                       //21
+                                tempArr.push(i.dep_occured);                           //22
                                 data_obj.push(tempArr);
                             });
                 },
@@ -251,9 +250,14 @@ function loadAccordionTable(obj)
 {
         var accordion  =  document.getElementById('accordion');
         var childElements = accordion.childNodes;
-
+        $("#no_IssuesDIV").empty();
          if(obj.length<1){
-             accordion.innerHTML="No Issues";
+             var no_IssuesDIV = document.createElement('p');
+             no_IssuesDIV.innerHTML= "NO ISSUES";
+             no_IssuesDIV.style.color="#d1d1d1";
+             no_IssuesDIV.style.fontSize ="70px";
+             no_IssuesDIV.style.textAlign = "center";
+             document.getElementById('no_IssuesDIV').appendChild(no_IssuesDIV);
           }    
 
         $("#accordion").empty();
@@ -397,7 +401,7 @@ function createAccordionLine(accordion,date,id,issue,plant,line,status,desc,resp
         type:"POST",
         dataType:'text',
         async:false,
-        url:'/Manager/checkNotificationList_formanagers',
+        url:url_checkNotificationList_formanagers,
         data:{empID:document.getElementById('hidden_userID').innerHTML,issueOccID:id},
         success:function(flag){
 
@@ -526,7 +530,7 @@ function drawChart1() {
         type: "POST",
         async: false,
         dataType: 'text',
-        url: "/Manager/fillChart1",
+        url:url_fillChart1,
         data: { barChart: '1',startDate:startDate,endDate:endDate,plantLocation:plantLocation},
         success: function (feedback) {
 
@@ -604,7 +608,7 @@ function drawChart2() {
         type: "POST",
         async: false,
         dataType: 'text',
-        url: "/Manager/fillChart1",
+        url:url_fillChart1,
         data: { barChart: '2',startDate:startDate,endDate:endDate,plantLocation:plantLocation},
         success: function (feedback) {
 
@@ -669,7 +673,7 @@ function drawChart3() {
         type: "POST",
         async: false,
         dataType: 'text',
-        url: "/Manager/fillChart3",
+        url:url_fillChart3,
         data: { startDate:startDate,endDate:endDate,plantLocation:plantLocation },
         success: function (feedback) {
 
@@ -708,14 +712,16 @@ function drawChart3() {
 
     var percent = 0;
 
-    var handler = setInterval(function(){
-        percent += 3;
-        data.setValue(0, 1, percent);
-        data.setValue(1, 1, 100 - percent);
-        chart.draw(data, options);
-        if (percent > 74)
-            clearInterval(handler);
-    }, 2);
+    if(dataArray2 != null){
+        var handler = setInterval(function(){
+            percent += 3;
+            data.setValue(0, 1, percent);
+            data.setValue(1, 1, 100 - percent);
+            chart.draw(data, options);
+            if (percent > 74)
+                clearInterval(handler);
+        }, 2);
+    }
 }
 
 function createTable() {
@@ -728,7 +734,7 @@ function createTable() {
         type: "POST",
         async: false,
         dataType: 'text',
-        url: "/Manager/fillChart2",
+        url:url_fillChart2,
         data: {startDate:startDate,endDate:endDate,plantLocation:plantLocation },
         success: function (feedback) {
 
@@ -891,8 +897,9 @@ function notificationOnOff(issue_occurrence_id){
 
         $.ajax({
             type: "POST",
+            async:false,
             dataType: 'text',
-            url: "/Manager/notificationOnOff",
+            url:url_notificationOnOff,
             data: { issue_line_person_id:issue_line_person_id,issue_occurrence_id:issue_occurrence_id,status:status},
             success: function (feedback) {
                    
@@ -915,7 +922,7 @@ function numberOfIssues(){
             type: "POST",
             dataType: 'text',
             async:false,
-            url: "/Manager/totalNumberOfIssues",
+            url:url_totalNumberOfIssues,
             data: {startDate:startDate,endDate:endDate },
             success: function (feedback) {
                 count = feedback;
@@ -939,3 +946,7 @@ function numberOfIssues(){
 }
 
 
+function topCardIconMovements(){
+
+
+}

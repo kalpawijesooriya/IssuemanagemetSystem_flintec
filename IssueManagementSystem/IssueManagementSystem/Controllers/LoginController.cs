@@ -9,17 +9,35 @@ namespace IssueManagementSystem.Controllers
 {
     public class LoginController : Controller
     {
+        tbl_PPA_User auhorized_user = new tbl_PPA_User();
+
         // GET: Login
         public ActionResult Index()
         {
-            return View();
+            HttpCookie cookies_clients = Request.Cookies["login_data"];
+            if (cookies_clients != null)
+            {
+                tbl_PPA_User obj = new tbl_PPA_User();
+                obj.EmployeeNumber = System.Convert.ToInt32(cookies_clients["uid"]);
+                obj.Password = cookies_clients["pwd"];
+
+                ActionResult ar = Authorize(obj);
+                return ar;
+            }
+            else
+                return View();
         }
 
-        [HttpPost]
-        public ActionResult Autherize(IssueManagementSystem.Models.tbl_PPA_User userModel)
+        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
+        public ActionResult Authorize(IssueManagementSystem.Models.tbl_PPA_User userModel)
         {
             using (BigRedEntities db =new BigRedEntities())
             {
+                HttpCookie cookie = new HttpCookie("login_data");
+                cookie["uid"] = userModel.EmployeeNumber.ToString();
+                cookie["pwd"] = userModel.Password;
+                cookie.Expires = DateTime.Now.AddDays(50);
+
                 var userDetails =db.tbl_PPA_User.Where(x => x.EmployeeNumber == userModel.EmployeeNumber && x.Password== userModel.Password).FirstOrDefault();
                 if (userDetails == null)
                 {
@@ -34,7 +52,9 @@ namespace IssueManagementSystem.Controllers
                     Session["location"] = userDetails.Location.Trim();
                     Session["department"] = userDetails.Department.Trim();
                     Session["Role"] = userDetails.Role.Trim();
-                  
+
+                    Response.Cookies.Add(cookie);
+
                     string username = Session["userName"].ToString();
                     string role = userDetails.Role.ToString().Trim();//retrive the user role
                     if (role.Equals("supervisor"))//if user is supervisor goto the supervisor page
@@ -45,6 +65,7 @@ namespace IssueManagementSystem.Controllers
                             Session["lineId"] = lineInfo.line_line_id;
                            
                         }
+
                         return RedirectToAction("selectIssue", "Supervisor");
                     } 
 
@@ -57,24 +78,15 @@ namespace IssueManagementSystem.Controllers
                           
                         }
                         return RedirectToAction("DashBord", "CellEngineer", new { lineid = Session["lineId"] });
-                    }
-                       
-
+                    } 
                     else if (role.Equals("display")) //if user is display goto the display page
-                        return RedirectToAction("Rasp", "Display");
-                    
+                        return RedirectToAction("Rasp", "Display");   
                     else if (role.Equals("admin"))
                         return RedirectToAction("Index", "Admin");
-
                     else if (role.Equals("manager"))
-                        return RedirectToAction("Index", "Manager");
-
-              
-
+                        return RedirectToAction("Index", "Manager",Response);
                     else if (role.Equals("responsiblePerson"))
                         return RedirectToAction("Index", "ResponsiblePerson");
-
-
                     else
                         return RedirectToAction("Index", "Login");
                 }
@@ -84,6 +96,7 @@ namespace IssueManagementSystem.Controllers
         public ActionResult LogOut()// logout methord
         {
             Session.Abandon();
+            Response.Cookies["login_data"].Expires = DateTime.Now.AddDays(-1);
             return RedirectToAction("Index","Login");
         }
     }
