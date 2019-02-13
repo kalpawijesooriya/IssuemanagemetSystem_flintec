@@ -32,55 +32,35 @@
 
                 @using (Html.BeginForm("Authorize", "Login", FormMethod.Post))
                 {
-                    HttpCookie cookies_clients = Request.Cookies["login_data"];
-                    if (cookies_clients != null)
-                    {
-                        @*<script>
-                            $(document).ready(function(){
-                                  alert(System.Convert.ToInt32(cookies_clients["uid"]));
-                                  alert(cookies_clients["pwd"]);
-                                  document.getElementById("uid_txt").value =  System.Convert.ToInt32(cookies_clients["uid"]);
-                                  document.getElementById("pwd_txt").value = cookies_clients["pwd"];
-                                  self.location.href = document.getElementById("submit_btn").href;
-                            });
-                            </script>*@
-                    IssueManagementSystem.Models.tbl_PPA_User obj = new IssueManagementSystem.Models.tbl_PPA_User();
-                    obj.EmployeeNumber = System.Convert.ToInt32(cookies_clients["uid"]);
-                    obj.Password = cookies_clients["pwd"];
+                        <div class="row">
+                            <div class="col-lg-12">
+                                @Html.TextBoxFor(model => model.EmployeeNumber, new { @class = "form-control", @placeholder = "EmployeeNumber", @id = "uid_txt" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                @Html.ValidationMessageFor(model => model.UserName)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @placeholder = "Password", @type = "password", @id = "pwd_txt" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-10">
+                                @Html.ValidationMessageFor(model => model.Password)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <lable>@Html.DisplayFor(model => model.LoginErrorMessage)</lable>
+                            </div>
+                        </div>
 
-                    Html.Action("Authorize","Login", obj);
-
+                        <button type="submit" id="submit_btn" class="btn btn-default btn-block btn-custom" value="Login">Login</button>    
                 }
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            @Html.TextBoxFor(model => model.EmployeeNumber, new { @class = "form-control", @placeholder = "EmployeeNumber", @id = "uid_txt" })
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            @Html.ValidationMessageFor(model => model.UserName)
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            @Html.TextBoxFor(model => model.Password, new { @class = "form-control", @placeholder = "Password", @type = "password", @id = "pwd_txt" })
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-10">
-                            @Html.ValidationMessageFor(model => model.Password)
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <lable>@Html.DisplayFor(model => model.LoginErrorMessage)</lable>
-                        </div>
-                    </div>
-
-                    <button type="submit" id="submit_btn" class="btn btn-default btn-block btn-custom" value="Login">Login</button>
-                }
-            </div><!-- /.controls -->
+                </div><!-- /.controls -->
      </div><!-- /#login-box -->
 </div><!-- /.container -->
 

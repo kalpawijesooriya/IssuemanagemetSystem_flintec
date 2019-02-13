@@ -9,13 +9,26 @@ namespace IssueManagementSystem.Controllers
 {
     public class LoginController : Controller
     {
+        tbl_PPA_User auhorized_user = new tbl_PPA_User();
+
         // GET: Login
         public ActionResult Index()
         {
-            return View();
+            HttpCookie cookies_clients = Request.Cookies["login_data"];
+            if (cookies_clients != null)
+            {
+                tbl_PPA_User obj = new tbl_PPA_User();
+                obj.EmployeeNumber = System.Convert.ToInt32(cookies_clients["uid"]);
+                obj.Password = cookies_clients["pwd"];
+
+                ActionResult ar = Authorize(obj);
+                return ar;
+            }
+            else
+                return View();
         }
 
-        [HttpPost]
+        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public ActionResult Authorize(IssueManagementSystem.Models.tbl_PPA_User userModel)
         {
             using (BigRedEntities db =new BigRedEntities())
@@ -66,19 +79,14 @@ namespace IssueManagementSystem.Controllers
                         }
                         return RedirectToAction("DashBord", "CellEngineer", new { lineid = Session["lineId"] });
                     } 
-
                     else if (role.Equals("display")) //if user is display goto the display page
-                        return RedirectToAction("Rasp", "Display");
-                    
+                        return RedirectToAction("Rasp", "Display");   
                     else if (role.Equals("admin"))
                         return RedirectToAction("Index", "Admin");
-
                     else if (role.Equals("manager"))
                         return RedirectToAction("Index", "Manager",Response);
-
                     else if (role.Equals("responsiblePerson"))
                         return RedirectToAction("Index", "ResponsiblePerson");
-
                     else
                         return RedirectToAction("Index", "Login");
                 }
@@ -88,6 +96,7 @@ namespace IssueManagementSystem.Controllers
         public ActionResult LogOut()// logout methord
         {
             Session.Abandon();
+            Response.Cookies["login_data"].Expires = DateTime.Now.AddDays(-1);
             return RedirectToAction("Index","Login");
         }
     }
