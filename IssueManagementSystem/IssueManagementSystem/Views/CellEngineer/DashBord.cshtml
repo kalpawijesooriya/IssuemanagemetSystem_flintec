@@ -154,7 +154,7 @@
                                 var issue_occurrence_id = issuedata[i].issue_occurrence_id
                                 var issue
                                 var group= issuedata[i].group
-                                if (issueid == 1)//breakedown
+                                if (issueid == 1)//breakdown
                                 {
                                     issue = '<div id="card'+issue_occurrence_id+'" class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--red"><span class="desc" style="color:white">Machine Breakdown</span><div class="icon" ><i class="zmdi zmdi-settings zmdi-hc-spin"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><div style="display:none" id="check' + issue_occurrence_id+'"><i  class="fas fa-check" style="font-size:30px; color:green;float:right;"></i></div><p class="card-text"><strong>Issue Date : </strong>' + day + '</br><strong>Time : </strong> ' + date[1] + " " + date[2] + '</br><strong>Responsible Person :</strong> ' + issuedata[i].responciblepersonName + '</br><strong>Machine : </strong>' + issuedata[i].machine_machine_id + '</p> <div class="text-right"> <button  class="btn btn-success"   data-id="' + issue_occurrence_id + '" data-group="'+group+'" data-issue_id="' + issueid + '" onclick="myfunction(this)">Solved </button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
                                 }

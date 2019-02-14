@@ -16,7 +16,7 @@
 <script src="~/Scripts/jquery-ui.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="~/Content/test/jquery-confirm.min.js"></script>
-
+<script src="~/Scripts/Voice/main.js"></script>
 
 <link href="~/Content/fontawesome-all.min.css" rel="stylesheet" />
 <link href="~/Content/SupervisorStyles/jquery-ui.css" rel="stylesheet" />
@@ -223,7 +223,6 @@
             </div>
         </div>
     -->
-
     <section class="statistic-chart">
 
         <div class="container">
@@ -263,12 +262,11 @@
                         </div>
                     </div>
                 </div>
-
                 <!--
-                <button type="button" class="btn btn-primary" style="height:28px;width:80px; font-size:12px" onclick="filterByDate()">
-                    <span class="fas fa-calendar-alt"></span> Filter
-                </button>
-                  -->
+                    <button type="button" class="btn btn-primary" style="height:28px;width:80px; font-size:12px" onclick="filterByDate()">
+                        <span class="fas fa-calendar-alt"></span> Filter
+                    </button>
+                -->
             </div>
             </br>
 
@@ -306,7 +304,6 @@
                 </div>
 
                 <div class="col-md-6 col-lg-4">
-
                     <div class="chart-percent-2">
                         <h3 class="title-3 m-b-30">Issue Occurrences </h3>
                         <p style="margin-top:-30px" class="title-7 m-xs-r-5 dateGap"> </p>
@@ -318,21 +315,18 @@
                         <p style="margin-top:-30px" class="title-7 m-xs-r-5 dateGap"> </p>
                         <h1 id="ttlIssues" style="font-size:85px;margin-bottom:-20px;margin-top:5px;text-align:center;color:#808080;letter-spacing:10px;">000</h1>
                     </div>
-
                 </div>
                 <!--
-                                <div class="statistic-chart-1">
-                                    <h3 class="title-3 m-b-30">All Issues with year</h3>
-                                    <p style="margin-top:-30px" class="title-7 m-xs-r-5 dateGap"> </p>
+                    <div class="statistic-chart-1">
+                        <h3 class="title-3 m-b-30">All Issues with year</h3>
+                        <p style="margin-top:-30px" class="title-7 m-xs-r-5 dateGap"> </p>
 
-                                </div>
+                    </div>
                 -->
             </div>
         </div>
     </section>
 </div>
-
-
 
 <section class="statistic-chart-1">
     <div class="container" id="mainTableContainer">
@@ -585,29 +579,48 @@ function startConverting ()
    {
        console.log(keyWord);
        var voice_string_array = keyWord.split(" ");
+
        var commands = [
            { cmd: [""], action: "func0" },
            { cmd: ["what", "are", "the", "material", "materials", "delay", "delays"], action: "func1"},
            { cmd: ["what", "are", "the", "it", "software", "issues","issue"], action: "func2"},
            { cmd: ["what", "are", "the", "quality", "issues", "issue"], action: "func3"},
            { cmd: ["what", "are", "the", "machine", "breakdown", "machines", "breakdowns"],  action: "func4"},
-           { cmd: ["what", "are", "the", "technical", "issue", "issues", "technic", "tech"], action: "func5" }
+           { cmd: ["what", "are", "the", "technical", "issue", "issues","tech"], action: "func5" }
        ];
-       
-       var matching_level_array = new Array(commands.length).fill(0.00);
 
-       for (var i = 0; i < commands.length; i++)    //Take command y from command array
-         {
-            voice_string_array.forEach(function (word_searching) {  //Take word x from voice transcript
-                   var matching = 0;
-                   commands[i].cmd.forEach(function (word_current)  //Compare x with each word of command y
+       var commands_lvl2 = [
+           { cmd: [""], action: "none" },
+           { cmd: ["today", "today's"], action: "today" },
+           { cmd: ["yesterday", "yesterdays"], action: "yesterday" },
+           { cmd: ["this", "month", "months"], action: "this_month" },
+           { cmd: ["last", "month", "months"], action: "last_month" }
+       ];
+
+       var matching_level_array = new Array(commands.length).fill(0.00);
+       var keywords_not_found = new Array();
+      
+
+       for (var i = 0; i < commands.length; i++)
+       {
+           var obj = new Array();
+            voice_string_array.forEach(function (word_searching) { 
+                var matching = 0;
+                var flag = 0;
+                   commands[i].cmd.forEach(function (word_current)  
                    {
-                       if (word_searching == word_current) { matching++;}
+                       if (word_searching == word_current) { matching++; flag = 1;}
                    });
+
+                if (flag == 0) {
+                    obj.push(word_searching);
+                }
                 if (matching > 0) { matching_level_array[i] = matching_level_array[i] + 1 }
            });
-
+           keywords_not_found.push(obj);
        }
+          console.log("################");
+          console.log(keywords_not_found);
 
            var number_of_words_in_voice_transcript = voice_string_array.length;
            matching_level_array.forEach(function (amount, index, theArray)
@@ -618,6 +631,26 @@ function startConverting ()
 
             var maxval = Math.max(...matching_level_array);
             var command_index = matching_level_array.indexOf(maxval);
+            var lvl2_command_ = "";
+            if (maxval < 100) {
+                //ckeck "keywords_not_found" array with "commands_lvl2" array
+
+                for (var i = 0; i < keywords_not_found.length; i++) {
+                    keywords_not_found[i].forEach(function (ele) {
+
+                        var matching = 0;
+                        commands_lvl2.forEach(function (ele_com, index, theArray) {
+
+                            ele_com.cmd.forEach(function (x) {
+                                if (x == ele) {
+                                    lvl2_command_ = ele_com.action;
+                                }
+                            });
+
+                        });
+                    });
+                }
+            }
 
             var count = 0;
             for (var i = 0; i < matching_level_array.length; ++i)
@@ -626,27 +659,20 @@ function startConverting ()
                        count++;
                 }
 
-            console.log("execute command : " + commands[command_index].action);
+            console.log("cmd lvl1 : " + commands[command_index].action+" lvl2 : "+lvl2_command_);
             console.log(matching_level_array);
 
-            var set_functions = {
-                   func0: function () { getVoice("command not found"); },
-                   func1: function () { alert("Material");},
-                   func2: function () { alert("IT");},
-                   func3: function () { alert("Quality");},
-                   func4: function () { alert("Machine");},
-                   func5: function () { alert("Technical");}
-               };
+               var thresholdVal = 50;
 
-               var thresholdVal = 60;
-
-           if (count == 1 && maxval > thresholdVal) {
+           if (count == 1 && maxval >= thresholdVal) {
                var func_name = commands[command_index].action;
-               set_functions[func_name]();
+               set_functions[func_name](lvl2_command_);
            }
            else {
                getVoice("command is not clear..........please try again"); 
            }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
        setTimeout(function () { $('.search_input').val(''); $("#listening").show();  } , 3000);
   }

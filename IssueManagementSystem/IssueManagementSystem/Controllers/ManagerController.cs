@@ -7,7 +7,6 @@ using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
-
 namespace IssueManagementSystem.Controllers
 {
     public class ManagerController : Controller
@@ -41,7 +40,6 @@ namespace IssueManagementSystem.Controllers
         public JsonResult GetNotification()
         {
             return Json(NotificaionService.GetNotification(), JsonRequestBehavior.AllowGet);
-
         }
 
         public JsonResult hideNotification(int? notificationId)
@@ -50,8 +48,6 @@ namespace IssueManagementSystem.Controllers
             {
                 string query = "UPDATE tbl_Notifications SET Status = 0 WHERE NotificationId = " + notificationId;
                 db.Database.ExecuteSqlCommand(query);
-
-
             }
             return Json(true);
         }
@@ -90,7 +86,6 @@ namespace IssueManagementSystem.Controllers
                     chart2Data = db.Database.SqlQuery<TempClasses.tempClass4>(query).ToList();
                     return Json(chart2Data, JsonRequestBehavior.AllowGet);
                 }
-
                 return Json(chart1Data, JsonRequestBehavior.AllowGet);
             }
         }
@@ -116,9 +111,6 @@ namespace IssueManagementSystem.Controllers
                                 ORDER BY DateDiff DESC";
 
                 var chart1Data = db.Database.SqlQuery<TempClasses.tempClass2>(query).ToList();
-
-               
-
                 return Json(chart1Data, JsonRequestBehavior.AllowGet);
             }
         }
@@ -188,7 +180,6 @@ namespace IssueManagementSystem.Controllers
         [HttpPost]
         public JsonResult notificationOnOff(string issue_line_person_id, string issue_occurrence_id, string status)
         {
-
             /*
               String query = @"UPDATE c SET  c.email = 0,c.call = 0,c.message = 0 FROM issue_line_person AS c ,issues,lines
                   WHERE c.assigned_date = (
@@ -199,7 +190,6 @@ namespace IssueManagementSystem.Controllers
                   AND lines.line_name ='"+line+@"' AND issues.issue = '"+issue+ @"' AND d.issue_line_person_id='"+issue_line_person_id+@"'
                   )AND lines.line_name ='" + line+@"' AND issues.issue ='"+issue+ @"' AND c.issue_line_person_id='"+issue_line_person_id+@"'";
             */
-
             String query = @"UPDATE notification_handling 
                             SET 
                             notification_handling.notification_status="+status+@"
@@ -227,7 +217,6 @@ namespace IssueManagementSystem.Controllers
                                   AND notification_handling.notification_status=1))
                             THEN CAST(1 AS BIT)
                             ELSE CAST(0 AS BIT) END";
-            
             Boolean resultVar;
                  
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
@@ -254,8 +243,5 @@ namespace IssueManagementSystem.Controllers
 
             return Json(resultVar, JsonRequestBehavior.AllowGet);
         }
-
-
     }
-
 }
