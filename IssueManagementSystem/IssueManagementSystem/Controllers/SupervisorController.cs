@@ -169,7 +169,12 @@ namespace IssueManagementSystem.Controllers
                                
                                 //turn on the Light
                                 if (group == "") { com.lightON("1", displayInfo.raspberry_ip_address); }
-                                else if (group != "") { com.lightONMachineshop("1", displayInfo.raspberry_ip_address, group ); }
+                                else if (group != "") {
+                                    com.lightONMachineshop("1", displayInfo.raspberry_ip_address, group );
+                                    callNote = line.line_name + " Breakdown has occurred at " + time1;
+                                    msg = " Breakdown has occurred.@@  Area : " + line.line_name + " @ Date : " + day + " @ Time : " + time1 + " @ Machine : " + machine + " @ Note : " + issueModel.description;
+
+                                }
 
 
                                 com.maintenancesbuzzerOn();
@@ -244,7 +249,11 @@ namespace IssueManagementSystem.Controllers
                                 msg = msg.Replace("@", Environment.NewLine);
                                 string callNote = "Technical issue has occurred in " + line.line_name + " line at " + HHMM[0] + ":" + HHMM[1];
                                 if (group == "") { com.lightON("3", displayInfo.raspberry_ip_address); }
-                                else if (group != "") { com.lightONMachineshop("3", displayInfo.raspberry_ip_address, group); }
+                                else if (group != "") {
+                                    com.lightONMachineshop("3", displayInfo.raspberry_ip_address, group);
+                                    msg = " Technical issue has occurred @@ Area  : " + line.line_name + " @ Date" + day + " @ Time : " + HHMM[0] + ":" + HHMM[1] + "@ Special Note : " + issueModel.description;
+                                    callNote = "Technical issue has occurred in " + line.line_name + " at " + HHMM[0] + ":" + HHMM[1];
+                                }
                                
                            
                                 ModelState.Clear();
@@ -381,7 +390,7 @@ namespace IssueManagementSystem.Controllers
                                 var issue_occour_id = issueModel.issue_occurrence_id;
                                 var line = db.lines.Where(x => x.line_id == line_id).FirstOrDefault();
                                 var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
-                                string msg = " Quality issue has occurred @@ Area : "+ line.line_name + " @ Group : Group 0" + item["group"] + " @ Date" + day + " @ Time : " + HHMM[0] + ":" + HHMM[1] + "@ Special Note : " + issueModel.description;
+                                string msg = " Quality issue has occurred @@ Area : "+ line.line_name + " @ Date : " + day + " @ Time : " + HHMM[0] + ":" + HHMM[1] + "@ Special Note : " + issueModel.description;
                                 msg = msg.Replace("@", Environment.NewLine);
                                 string callNote = "Quality issue has occurred in " + line.line_name + "at " + HHMM[0] + ":" + HHMM[1];
                               
@@ -461,7 +470,12 @@ namespace IssueManagementSystem.Controllers
                                 msg = msg.Replace("@", Environment.NewLine);
                                 string callNote = "MaterialDelay has occurred in " + line.line_name + " line at " + time1;
                                 if (group == "") { com.lightON("2", displayInfo.raspberry_ip_address); }
-                                else if (group != "") { com.lightONMachineshop("2", displayInfo.raspberry_ip_address, group); }
+                                else if (group != "") {
+                                    com.lightONMachineshop("2", displayInfo.raspberry_ip_address, group);
+                                    callNote = "MaterialDelay has occurred in " + line.line_name + " at " + time1;
+                                    msg = "MaterialDelay has occurred @@  Area : " + line.line_name + " @ Date :" + day + " @Time : " + time1 + " @ Material : " + item["material"] + " @ Note : " + item["description"];
+
+                                }
                                 com.storesbuzzerOn();
                                 sendCD(line_id, 2, msg, "MaterialDelay has occered", callNote, issue_occour_id, notification_HandlingModel);
                             

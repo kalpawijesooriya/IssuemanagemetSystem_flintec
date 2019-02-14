@@ -51,16 +51,6 @@
                 <label for="exampleFormControlTextarea1" style="margin-top:5%">Select Group</label>
                 <select class="js-example-placeholder-single js-states form-control" id="groups" name="Material" style="width:100%;" onchange="">
                     <option></option>
-                    <option value="1">Group01</option>
-                    <option value="2">Group02</option>
-                    <option value="3">Group03</option>
-                    <option value="4">Group04</option>
-                    <option value="5">Group05</option>
-                    <option value="6">Group06</option>
-                    <option value="7">Group07</option>
-                    <option value="8">Group08</option>
-                    <option value="9">Group09</option>
-                    <option value="10">Group10</option>
                 </select>
             </div>
             <div class="form-group machine" style="margin-top:8%">
@@ -99,9 +89,24 @@
     <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
     <script src="~/Scripts/AdminScripts/select2-min.js"></script>
     <script>
-      if('@Session["department"]'!='MachineShop')
+      $('#groupsdiv').hide()
+    if('@Session["department"]'=='MachineShop')
     {
-    $('#groupsdiv').hide()
+      for(var i=1;i<=10;i++)
+        {
+           $('#groups').append('<option value="'+i+'">Group'+i+'</option>')
+        }
+     
+    $('#groupsdiv').show()
+    }
+    if(('@Session["department"]'=='HeatTreatment')||('@Session["department"]'=='Accessories'))
+    {
+     
+           $('#groups').append('<option value="1">Heat treatment</option>')
+           $('#groups').append('<option value="2">Accessories</option>')
+      
+     
+    $('#groupsdiv').show()
     }
    $("#submit").click(function () {
 
