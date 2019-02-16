@@ -64,7 +64,7 @@ namespace IssueManagementSystem.Controllers
                     String query = @"SELECT TOP 10 issue_occurrence.machine_machine_id,
                                     count(issue_occurrence.machine_machine_id) AS count FROM issue_occurrence 
                                     WHERE issue_occurrence.issue_issue_ID = 1 AND issue_occurrence.location IN ('"+plantLocation+@"')
-                                    AND  issue_occurrence.issue_date BETWEEN '" + startDate + @"' AND '" + endDate + @"' 
+                                    AND  issue_occurrence.issue_date BETWEEN '"+startDate+@"' AND '"+endDate+@"' 
                                     GROUP BY issue_occurrence.machine_machine_id  ORDER BY count Desc";
 
                     System.Diagnostics.Debug.Print(query);
@@ -77,9 +77,9 @@ namespace IssueManagementSystem.Controllers
                                     count(issue_management_system.dbo.issue_occurrence.material_id) AS count 
                                     FROM issue_management_system.dbo.issue_occurrence,FLINTEC.dbo.FLINTEC$Item
                                     WHERE issue_occurrence.issue_issue_ID = 2
-                                    AND issue_occurrence.location IN ('" + plantLocation + @"') AND 
+                                    AND issue_occurrence.location IN ('"+plantLocation+@"') AND 
                                     issue_management_system.dbo.issue_occurrence.material_id  COLLATE SQL_Latin1_General_CP1_CS_AS LIKE FLINTEC.dbo.FLINTEC$Item.No_ COLLATE SQL_Latin1_General_CP1_CS_AS
-                                    AND issue_occurrence.issue_date BETWEEN '" + startDate +@"' AND '"+ endDate +@"' 
+                                    AND issue_occurrence.issue_date BETWEEN '"+startDate+@"' AND '"+endDate+@"' 
                                     GROUP BY FLINTEC.dbo.FLINTEC$Item.[Search Description]
                                     ORDER BY count Desc";
 
@@ -211,9 +211,9 @@ namespace IssueManagementSystem.Controllers
 
 
             String query = @"SELECT CASE WHEN
-                            (" + empID + @" IN(SELECT notification_handling.EmployeeNumber 
+                            ("+empID+@" IN(SELECT notification_handling.EmployeeNumber 
                                   FROM notification_handling 
-                                  WHERE notification_handling.issue_occurrence_id = " + issueOccID + @"  
+                                  WHERE notification_handling.issue_occurrence_id = "+issueOccID+@"  
                                   AND notification_handling.notification_status=1))
                             THEN CAST(1 AS BIT)
                             ELSE CAST(0 AS BIT) END";
@@ -239,6 +239,21 @@ namespace IssueManagementSystem.Controllers
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
                 resultVar = db.Database.SqlQuery<int>(query).Single();
+            }
+            return Json(resultVar, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult voiceDataFilter(String issue, String date) {
+
+            String query = @"";
+            List<String> resultVar;
+
+            System.Diagnostics.Debug.Print("issue:"+issue+" date:"+date);
+
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+            {
+                resultVar = db.Database.SqlQuery<String>(query).ToList();
             }
 
             return Json(resultVar, JsonRequestBehavior.AllowGet);

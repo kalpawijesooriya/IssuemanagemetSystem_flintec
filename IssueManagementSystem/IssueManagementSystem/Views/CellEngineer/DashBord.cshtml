@@ -205,14 +205,14 @@
 function myfunction(param)
 {   
     $.confirm({
-        title: 'Solved Issue?',
-        content: 'Please confirm your action within 8 seconds',
-        autoClose: 'cancelAction|8000',
-        type: 'orange',
+        title:'Solved Issue?',
+        content:'Please confirm your action within 8 seconds',
+        autoClose:'cancelAction|8000',
+        type:'orange',
         buttons: {
             deleteUser: {
-                text: 'Confirm',
-                btnClass: 'btn-warning',
+                text:'Confirm',
+                btnClass:'btn-warning',
                 action: function () {
                 var group=$(param).data('group');
                     var id = $(param).data('id');

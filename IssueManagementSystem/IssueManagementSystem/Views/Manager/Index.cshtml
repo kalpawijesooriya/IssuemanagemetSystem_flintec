@@ -473,7 +473,6 @@
         }
         // Declare a function on the  hub so the server can invoke it
         hub.client.displayStatus = function () {
-            debugger
             getDataissue();
         };
         // Start the connection
@@ -581,26 +580,23 @@ function startConverting ()
        var voice_string_array = keyWord.split(" ");
 
        var commands = [
-           { cmd: [""], action: "func0" },
-           { cmd: ["what", "are", "the", "material", "materials", "delay", "delays"], action: "func1"},
-           { cmd: ["what", "are", "the", "it", "software", "issues","issue"], action: "func2"},
-           { cmd: ["what", "are", "the", "quality", "issues", "issue"], action: "func3"},
-           { cmd: ["what", "are", "the", "machine", "breakdown", "machines", "breakdowns"],  action: "func4"},
-           { cmd: ["what", "are", "the", "technical", "issue", "issues","tech"], action: "func5" }
+           { cmd: [""],action: "func0"},
+           { cmd: ["material", "materials", "delay", "delays"],action: "func1"},
+           { cmd: ["it", "software", "issues","issue","id","ID","shoes","shoe","show","shows"],action: "func2"},
+           { cmd: ["quality", "issues", "issue"],action: "func3"},
+           { cmd: ["machine", "breakdown", "machines", "breakdowns"],action: "func4"},
+           { cmd: ["technical","issue","issues","tech"],action: "func5"}
        ];
 
        var commands_lvl2 = [
-           { cmd: [""], action: "none" },
-           { cmd: ["today", "today's"], action: "today" },
-           { cmd: ["yesterday", "yesterdays"], action: "yesterday" },
-           { cmd: ["this", "month", "months"], action: "this_month" },
-           { cmd: ["last", "month", "months"], action: "last_month" }
+           { cmd: [""],action:"none"},
+           { cmd: ["cartoon","nayak","nayaka","kathanayaka","sathanayaka"],action:"KTY"},
+           { cmd: ["Google","kakara","cooker","kaggle","single","singer","Kolkata","Singh"],action:"KOG"}
        ];
 
        var matching_level_array = new Array(commands.length).fill(0.00);
        var keywords_not_found = new Array();
       
-
        for (var i = 0; i < commands.length; i++)
        {
            var obj = new Array();
@@ -609,13 +605,13 @@ function startConverting ()
                 var flag = 0;
                    commands[i].cmd.forEach(function (word_current)  
                    {
-                       if (word_searching == word_current) { matching++; flag = 1;}
+                       if (word_searching == word_current){matching++;flag = 1;}
                    });
 
                 if (flag == 0) {
                     obj.push(word_searching);
                 }
-                if (matching > 0) { matching_level_array[i] = matching_level_array[i] + 1 }
+                if (matching > 0){ matching_level_array[i] = matching_level_array[i] + 1 }
            });
            keywords_not_found.push(obj);
        }
@@ -646,7 +642,6 @@ function startConverting ()
                                     lvl2_command_ = ele_com.action;
                                 }
                             });
-
                         });
                     });
                 }
@@ -662,7 +657,7 @@ function startConverting ()
             console.log("cmd lvl1 : " + commands[command_index].action+" lvl2 : "+lvl2_command_);
             console.log(matching_level_array);
 
-               var thresholdVal = 50;
+               var thresholdVal = 30;
 
            if (count == 1 && maxval >= thresholdVal) {
                var func_name = commands[command_index].action;
@@ -697,6 +692,7 @@ $('.searchbar').click(function() {
          url_fillChart3 = '@Url.Action("fillChart3","Manager")';
          url_notificationOnOff = '@Url.Action("notificationOnOff","Manager")';
          url_totalNumberOfIssues = '@Url.Action("totalNumberOfIssues","Manager")';
+         url_voiceDataFilter = '@Url.Action("voiceDataFilter", "Manager")';
 
 </script>
 
