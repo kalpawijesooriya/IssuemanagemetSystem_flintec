@@ -330,6 +330,7 @@
     <Content Include="Content\animsition.min.css" />
     <Content Include="Content\bootstrap-glyphicons.css" />
     <Content Include="Content\bootstrap-progressbar-3.3.4.min.css" />
+    <Content Include="Content\bootstrap-toggle.min.css" />
     <Content Include="Content\css\all.css" />
     <Content Include="Content\css\all.min.css" />
     <Content Include="Content\css\brands.css" />
@@ -368,6 +369,7 @@
       <DependentUpon>IssueManagementSystem.edmx</DependentUpon>
       <LastGenOutput>IssueManagementSystem.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\bootstrap-toggle.min.js" />
     <Content Include="Scripts\flipclock.js" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\font-face.css" />

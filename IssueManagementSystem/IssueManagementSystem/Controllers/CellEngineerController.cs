@@ -30,7 +30,7 @@ namespace IssueManagementSystem.Controllers
             ViewBag.lineId = lineid;
             return View(); 
         }
-        public ActionResult MachinBreakdown(int lineid)//machine breakedown view
+        public ActionResult MachinBreakdown(int lineid)//Machine Breakedown view
         {
 
             if ((Session["userID"] == null) || ((string)Session["Role"] != "CellEngineer"))
@@ -54,7 +54,7 @@ namespace IssueManagementSystem.Controllers
             return View();
         }
 
-        public ActionResult MaterialDelay(int lineid)//MaterialDelay View
+        public ActionResult MaterialDelay(int lineid)//Material Delay View
         {
             if ((Session["userID"] == null) || ((string)Session["Role"] != "CellEngineer"))
             {
@@ -75,10 +75,10 @@ namespace IssueManagementSystem.Controllers
             return View(jobCardsList_issue_occurrence);
         }
 
-
+        [HttpPost]
         public ActionResult loadMaterialList(string selectedJobCard)
         {
-            dynamic materials = new System.Dynamic.ExpandoObject();
+            dynamic materials = new  ExpandoObject();
 
             //String sql_query = @"SELECT a.[Item No_] AS Item_No_, a.Status,a.[Prod_ Order No_] AS Prod_Order_No_
             //                    FROM FLINTEC.dbo.[FLINTEC$Prod_ Order Component] a
@@ -96,6 +96,15 @@ namespace IssueManagementSystem.Controllers
             return Json(materials);
         }
 
+        [HttpPost]
+        public ActionResult loadNonBOMMaterials()
+        {
+            dynamic materials = new ExpandoObject();
+            FLINTEC_Context itemContext = new FLINTEC_Context();
+            List<FLINTEC_Item> matList = itemContext.FLINTEC_Items.Where(x => (x.Major_Prod_Component.Equals(0))).ToList();
+            materials.materials = matList;
+            return Json(materials);
+        }
 
         public ActionResult ITIssue(int lineid)//IT ISSUE View
         {
