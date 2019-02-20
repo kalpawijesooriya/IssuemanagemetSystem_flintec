@@ -23,6 +23,9 @@ namespace IssueManagementSystem.Models
 
         [Column("Search Description")]
         public string Search_Description { get; set; }
+
+        [Column("Major Prod_ Component")]
+        public Byte Major_Prod_Component { get; set; }
     }
 
     [Table("FLINTEC$Prod_ Order Line")] 

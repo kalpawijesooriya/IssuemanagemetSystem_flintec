@@ -9,16 +9,19 @@
     int userID = (int)Session["userID"];// get current supervisorID
     dynamic mat_List = new System.Dynamic.ExpandoObject();
 
-
 }
 
 @using IssueManagementSystem.Models
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
 <link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
 <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
 <link href="~/Content/adminstyles/Settings.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-toggle.min.css" rel="stylesheet" />
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
+
 <h2>Material Delay</h2>
 <hr />
 <div class="container" style="margin-top:30px;">
@@ -27,7 +30,7 @@
 
             <div class="form-group" style="width:100%;margin:auto">
                 <div id="groupsdiv">
-                    <label for="exampleFormControlTextarea1" >Select Group</label>
+                    <label for="exampleFormControlTextarea1">Select Group</label>
                     <select class="js-example-placeholder-single js-states form-control" id="groups" style="width:100%;">
                         <option></option>
 
@@ -44,12 +47,22 @@
                     }
                 </select>
 
-
-
                 <label style="margin-top:5%">Select material</label>
-                <select class="js-example-placeholder-single js-states form-control" id="materialSelectBox" style="width:100%">
-                    <option></option>
-                </select>
+
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <input id="chk_box" type="checkbox" onChange="checkBoxOnChange()" data-toggle="toggle" checked data-on="BOM material" data-off="non-BOM material" data-onstyle="success" data-offstyle="info" data-size="small" />
+                    </div>
+                    <div class="col-md-9" style="margin:auto">
+                        <select class="js-example-placeholder-single js-states form-control" id="materialSelectBox" style="width:100%">
+                            <option></option>
+                        </select>
+                    </div>
+
+                </div>
+
+
 
                 <div style="padding-top:20px;">
                     <label for="exampleFormControlTextarea1">Description</label>
@@ -67,11 +80,11 @@
     </div>
 </div>
 
-
 <script src="~/Scripts/AdminScripts/jscolar.js"></script>
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
 <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
+<script src="~/Scripts/bootstrap-toggle.min.js"></script>
 <script src="~/signalr/Hubs"></script>
 <script>
      $('#groupsdiv').hide()
@@ -134,10 +147,49 @@
 
         if(selectedJobCard != null){
             $("#materialSelectBox").prop("disabled", false);
+            $("#chk_box").attr("disabled", false);
         }
     }
 
- 
+
+    function load_nonBOMMaterialList() {
+
+        $.ajax({
+            type: "POST",
+            dataType: 'text',
+            async: true,
+            url: "/CellEngineer/loadNonBOMMaterials",
+            success: function (feedback) {
+                feedback = JSON.parse(feedback);
+                var materialSelectBox = document.getElementById("materialSelectBox");
+                materialSelectBox.options.length = 0;
+                var opt1 = document.createElement('option');
+                opt1.innerHTML = '';
+                opt1.value = '';
+                materialSelectBox.appendChild(opt1);
+                for (var i = 0; i < feedback[0].Value.length; i++) {
+                    var opt = document.createElement('option');
+                    opt.innerHTML = feedback[0].Value[i].No_ + " - " + feedback[0].Value[i].Description;
+                    opt.value = feedback[0].Value[i].Item_No_;
+                    materialSelectBox.appendChild(opt);
+                }
+            },
+            error: function () {
+                alert("Error occurred");
+            }
+        });
+
+    }
+
+    function checkBoxOnChange() {
+
+        if (document.getElementById('chk_box').checked) {
+            loadMaterialList();
+        }
+        else {
+            load_nonBOMMaterialList();
+        }
+    }
 
     function SubmitMaterialDelay() {
 

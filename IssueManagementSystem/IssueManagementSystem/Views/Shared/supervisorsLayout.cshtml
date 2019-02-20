@@ -8,31 +8,32 @@
     <meta name="description" content="au theme template">
     <meta name="author" content="Hau Nguyen">
     <meta name="keywords" content="au theme template">
+
     <!-- Fontfaces CSS-->
     <link href="~/Content/font-face.css" rel="stylesheet" />
-
     <link href="~/Content/fontawesome-all.min.css" rel="stylesheet" />
     <link href="~/Content/material-design-iconic-font.min.css" rel="stylesheet" />
 
     <!-- Bootstrap CSS-->
 
     <link href="~/Content/Manager/bootstrap.min.css" rel="stylesheet" />
-
     <link href="~/Content/animsition.min.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" />
     <link href="~/Content/animate.css" rel="stylesheet" />
     <link href="~/Content/hamburgers.min.css" rel="stylesheet" />
     <link href="~/Content/slick.css" rel="stylesheet" />
-    <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
     <link href="~/Content/perfect-scrollbar.css" rel="stylesheet" />
     <link href="~/Content/material-design-iconic-font.min.css" rel="stylesheet" />
+
     <!-- Main CSS-->
     <link href="~/Content/theme.css" rel="stylesheet" />
     <link href="~/Content/fontawesome.css" rel="stylesheet" />
     <link href="~/Content/css/all.css" rel="stylesheet" />
+    <link href="~/Content/googlegrafics.css" rel="stylesheet" />
+    <link href="~/Content/adminstyles/Settings.css" rel="stylesheet" />
+    <link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
 
 </head>
-
 
 <body class="animsition">
     <div class="page-wrapper">
@@ -52,7 +53,6 @@
                                     <i class="fas fa-tachometer-alt"></i>Dashboard
                                     <span class="bot-line"></span>
                                 </a>
-
                             </li>
                             <li class="has-sub">
                                 <a href="#">
@@ -61,7 +61,7 @@
                                 </a>
                                 <ul class="header3-sub-list list-unstyled">
                                     <li>
-                                        <a href="@Url.Action("MachinBreakdown", "Supervisor")">Machine Breakedown</a>
+                                        <a href="@Url.Action("MachinBreakdown", "Supervisor")">Machine Breakdown</a>
                                     </li>
                                     <li>
                                         <a href="@Url.Action("TechnicalIssue", "Supervisor")">Technical Issue</a>
@@ -77,7 +77,7 @@
                                     </li>
                                 </ul>
                             </li>
-                           
+
                         </ul>
                     </div>
                     <div class="header__tool">
@@ -89,7 +89,7 @@
 
                             </div>
                         </div>
-                      
+
                         <div class="account-wrap">
                             <div class="account-item account-item--style2 clearfix js-item-menu">
                                 <div class="image">
@@ -112,7 +112,7 @@
                                             <span class="email">@Session["email"]</span>
                                         </div>
                                     </div>
-                                 
+
                                     <div class="account-dropdown__footer">
                                         <a href="@Url.Action("LogOut","Login")">
                                             <i class="zmdi zmdi-power"></i>Logout
@@ -150,20 +150,20 @@
                                 <i class="fas fa-tachometer-alt"></i>Dashboard
                             </a>
 
-                        
+
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-copy"></i>New Issue
                             </a>
                             <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                                 <li>
-                                    <a href="@Url.Action("MachinBreakdown", "Supervisor")">Machine BarekeDown </a>
+                                    <a href="@Url.Action("MachinBreakdown", "Supervisor")">Machine BreakDown </a>
                                 </li>
                                 <li>
-                                    <a href="@Url.Action("TechnicalIssue", "Supervisor")">Technival Issue</a>
+                                    <a href="@Url.Action("TechnicalIssue", "Supervisor")">Technical Issue</a>
                                 </li>
                                 <li>
-                                    <a href="@Url.Action("MaterialDelay", "Supervisor")">Matirial Delay</a>
+                                    <a href="@Url.Action("MaterialDelay", "Supervisor")">Material Delay</a>
                                 </li>
                                 <li id="itmobile">
                                     <a href="@Url.Action("ITIssue", "Supervisor")">Software/IT Issue</a>
@@ -171,11 +171,11 @@
                                 <li id="qtymobile">
                                     <a href="@Url.Action("QualityIssue", "Supervisor")">Quality Issue</a>
                                 </li>
-                                
+
 
                             </ul>
                         </li>
-                        
+
                     </ul>
                 </div>
             </nav>
@@ -192,7 +192,7 @@
 
                     </div>
                 </div>
-              
+
                 <div class="account-wrap">
                     <div class="account-item account-item--style2 clearfix js-item-menu">
                         <div class="image">
@@ -215,7 +215,7 @@
                                     <span class="email">@Session["email"]</span>
                                 </div>
                             </div>
-                          
+
                             <div class="account-dropdown__footer">
                                 <a href="@Url.Action("LogOut","Login")">
                                     <i class="zmdi zmdi-power"></i>Logout
@@ -243,8 +243,8 @@
         <!-- END COPYRIGHT-->
     </div>
 
-
-
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
     <script src="~/Scripts/Manager/popper.min.js"></script>
     <script src="~/Scripts/Manager/bootstrap.min.js"></script>
     <script src="~/Scripts/slick.min.js"></script>
@@ -259,36 +259,39 @@
     <script src="~/Scripts/circle-progress.min.js"></script>
     <script src="~/Scripts/perfect-scrollbar.min.js"></script>
     <script src="~/Scripts/Chart.bundle.min.js"></script>
-    <script src="~/Scripts/AdminScripts/select2-min.js"></script>
-    <script src="~/Scripts/main.js"></script>
-    <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
 
+    <script src="~/Scripts/main.js"></script>
+
+    <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
     <script src="~/signalr/Hubs"></script>
+
+    <script src="~/Scripts/AdminScripts/jscolar.js"></script>
+    <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
 
     <script>
         if('@Session["department"]'!='MachineShop'){$('#qtymobile').hide();$('#qtyweb').hide();}
         else{$('#itmobile').hide();$('#itweb').hide();}
         $(document).ready(function () {
-           
+
             // Proxy created on the fly
             var hub = $.connection.myHub;
-      
+
 
 
             // Declare a function on the hub hub so the server can invoke it
             hub.client.displayStatus = function () {
-               
+
                 getData();
             };
-    
-           
-            
+
+
+
             // Start the connection
             $.connection.hub.start();
-          
-           
+
+
             getData();
-           
+
             function getData()
             {   var url = '@Url.Action("GetNotification", "Manager")';
                 var divNotificaion = $('#divNotificaion');
@@ -298,7 +301,7 @@
                     type: 'GET',
                     datatype: 'json',
                     success: function (data) {
-                      
+
                         data = $.parseJSON(data);
                         if (data.length > 0) {
                             divNotificaion.empty();
@@ -343,7 +346,7 @@
         })
         function getData2() {
              var url = '@Url.Action("GetBreakedown", "Supervisor")';
-               
+
                 $.ajax({
                     url: url,
                     type: 'GET',
