@@ -294,13 +294,14 @@
     <script src="~/Scripts/jquery-ui.js"></script>
 
     <script>
-        if('@Session["department"]'!='MachineShop')
-        {
          $('#qulity_drop').hide();
          $('#qulity_drop_mob').hide();
-        }else {
+        if(('@Session["department"]'=='MachineShop')||('@Session["department"]'=='HeatTreatment')||('@Session["department"]'=='Accessories'))
+        {
         $('#it_drop').hide();
         $('#it_drop_mob').hide();
+        $('#qulity_drop').show();
+         $('#qulity_drop_mob').show();
         }
         $(document).ready(function () {
 

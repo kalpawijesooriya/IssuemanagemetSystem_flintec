@@ -163,7 +163,7 @@ namespace IssueManagementSystem.Controllers
                             {
                                 var line = db.lines.Where(x => x.line_id == line_id).FirstOrDefault();
                                 string msg = " Breakdown has occurred.@@ Line : " + line.line_name + " Line @ Date : " + day + " @ Time : " + time1 + " @ Machine : " + machine + " @ Note : " + issueModel.description;
-                                msg = msg.Replace("@", Environment.NewLine);
+                              
                                 string callNote = line.line_name + " line Breakdown has occurred at " + time1;
                                 var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
                                
@@ -172,13 +172,13 @@ namespace IssueManagementSystem.Controllers
                                 else if (group != "") {
                                     com.lightONMachineshop("1", displayInfo.raspberry_ip_address, group );
                                     callNote = line.line_name + " Breakdown has occurred at " + time1;
-                                    msg = " Breakdown has occurred.@@  Area : " + line.line_name + " @ Date : " + day + " @ Time : " + time1 + " @ Machine : " + machine + " @ Note : " + issueModel.description;
+                                    msg = " Breakdown has occurred.@@ Area : " + line.line_name + " @ Date : " + day + " @ Time : " + time1 + " @ Machine : " + machine + " @ Note : " + issueModel.description;
 
                                 }
 
 
-                                com.maintenancesbuzzerOn();
-                               
+                              //  com.maintenancesbuzzerOn();
+                                msg = msg.Replace("@", Environment.NewLine);
                                 ModelState.Clear();
                                 sendCD(line_id, 1, msg, "Machine Breakdown has occurred", callNote, issue_occour_id, notification_HandlingModel);
                                
@@ -245,17 +245,17 @@ namespace IssueManagementSystem.Controllers
                                 var issue_occour_id = issueModel.issue_occurrence_id;
                                 var line = db.lines.Where(x => x.line_id == line_id).FirstOrDefault();
                                 var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
-                                string msg = " Technical issue has occurred @@ Line : " + line.line_name + " Line @ Date" + day + " @ Time : " + HHMM[0] + ":" + HHMM[1] + "@ Special Note : " + issueModel.description;
-                                msg = msg.Replace("@", Environment.NewLine);
+                                string msg = " Technical issue has occurred @@ Line : " + line.line_name + " Line @ Date : " + day + " @ Time : " + HHMM[0] + ":" + HHMM[1] + "@ Special Note : " + issueModel.description;
                                 string callNote = "Technical issue has occurred in " + line.line_name + " line at " + HHMM[0] + ":" + HHMM[1];
                                 if (group == "") { com.lightON("3", displayInfo.raspberry_ip_address); }
                                 else if (group != "") {
                                     com.lightONMachineshop("3", displayInfo.raspberry_ip_address, group);
-                                    msg = " Technical issue has occurred @@ Area  : " + line.line_name + " @ Date" + day + " @ Time : " + HHMM[0] + ":" + HHMM[1] + "@ Special Note : " + issueModel.description;
+                                    msg = " Technical issue has occurred @@ Area  : " + line.line_name + " @ Date : " + day + " @ Time : " + HHMM[0] + ":" + HHMM[1] + "@ Special Note : " + issueModel.description;
                                     callNote = "Technical issue has occurred in " + line.line_name + " at " + HHMM[0] + ":" + HHMM[1];
                                 }
-                               
-                           
+
+                                msg = msg.Replace("@", Environment.NewLine);
+
                                 ModelState.Clear();
                                 sendCD(line_id, 3, msg, "Tecnical Issue has occered", callNote, issue_occour_id, notification_HandlingModel);
                                
@@ -321,12 +321,12 @@ namespace IssueManagementSystem.Controllers
                                 {
                                     var line = db.lines.Where(x => x.line_id == line_id).FirstOrDefault();
                                     string msg = "IT/SoftWare issue has occurred @@ Line : " + line.line_name + " Line @ Date : " + day + "@ Time : " + time1 + "@ Note : " + issueModel.description;
-                                    msg = msg.Replace("@", Environment.NewLine);
                                     string callNote = "IT/Software issue has occurred in " + line.line_name + " line at " + time1;
                                     var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
                                     com.lightON("5", displayInfo.raspberry_ip_address);//turn on the Light
-                                   
-                                    ModelState.Clear();
+                                    msg = msg.Replace("@", Environment.NewLine);
+
+                                ModelState.Clear();
                                     sendCD(line_id, 5, msg, "IT/Software Issue has occered", callNote, issue_occour_id, notification_HandlingModel);
                                 }
                             
@@ -466,17 +466,18 @@ namespace IssueManagementSystem.Controllers
                             {
                                 var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
                                 var line = db.lines.Where(x => x.line_id == line_id).FirstOrDefault();
-                                string msg = "MaterialDelay has occurred @@ Line : " + line.line_name + " Line @ Date :" + day + " @Time : " + time1 + " @ Material : " + item["material"] + " @ Note : " + item["description"];
-                                msg = msg.Replace("@", Environment.NewLine);
+                                string msg = "MaterialDelay has occurred @@ Line : " + line.line_name + " Line @ Date :" + day + " @ Time : " + time1 + " @ JobCard :" + item["jobcard"] + " @ Material : " + item["material"] + " @ Note : " + item["description"];
                                 string callNote = "MaterialDelay has occurred in " + line.line_name + " line at " + time1;
                                 if (group == "") { com.lightON("2", displayInfo.raspberry_ip_address); }
                                 else if (group != "") {
                                     com.lightONMachineshop("2", displayInfo.raspberry_ip_address, group);
                                     callNote = "MaterialDelay has occurred in " + line.line_name + " at " + time1;
-                                    msg = "MaterialDelay has occurred @@  Area : " + line.line_name + " @ Date :" + day + " @Time : " + time1 + " @ Material : " + item["material"] + " @ Note : " + item["description"];
+                                    msg = "MaterialDelay has occurred @@ Area : " + line.line_name + " @ Date :" + day + " @ Time : " + time1 + " @ JobCard :"+ item["jobcard"] + " @ Material : " + item["material"] + " @ Note : " + item["description"];
 
                                 }
-                                com.storesbuzzerOn();
+                                msg = msg.Replace("@", Environment.NewLine);
+
+                                //com.storesbuzzerOn();
                                 sendCD(line_id, 2, msg, "MaterialDelay has occered", callNote, issue_occour_id, notification_HandlingModel);
                             
                               
