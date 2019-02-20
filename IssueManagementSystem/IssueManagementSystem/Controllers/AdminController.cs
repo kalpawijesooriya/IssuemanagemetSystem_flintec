@@ -24,6 +24,7 @@ namespace IssueManagementSystem.Controllers
 
         public ActionResult Index()
         {
+          
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
 
@@ -33,7 +34,8 @@ namespace IssueManagementSystem.Controllers
                 ViewBag.TechnicalIssue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 3 && x.location == location).Count();
                 ViewBag.QualityIsuue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 4 && x.location == location).Count();
                 ViewBag.ITIsuue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 5 && x.location == location).Count();
-
+               
+         
             }
             return View();
         }
@@ -57,10 +59,11 @@ namespace IssueManagementSystem.Controllers
 
             BigRedEntities imsDbContext = new BigRedEntities();
             List<tblWorkstation_Config> mList = imsDbContext.tblWorkstation_Config.ToList();
-
+            issue_management_systemEntities1 db = new issue_management_systemEntities1();
             dynamic machine_list = new ExpandoObject();
             machine_list.machine_list = mList;
-
+            List<line>  lineList = db.lines.ToList();
+            ViewBag.lineList= lineList;
             return View(machine_list);
         }
 

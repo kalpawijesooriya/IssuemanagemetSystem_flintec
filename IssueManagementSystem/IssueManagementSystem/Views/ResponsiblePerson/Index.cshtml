@@ -369,7 +369,7 @@ if (Session["userID"] == null)
             url: url,
             data: { issueJson: issueJson },
             success: function (feedback) {
-           
+                  getDataissue()
             },
             error: function (feedback) {
                 alert(feedback);
