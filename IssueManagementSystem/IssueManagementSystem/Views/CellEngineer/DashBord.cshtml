@@ -10,17 +10,13 @@
     {
         var lineInfo = db.lines.Where(x => x.line_id == lineid).FirstOrDefault();
         ViewBag.LineName = lineInfo.line_name;
-
     }
 }
 @using IssueManagementSystem.Models;
 @model List<IssueManagementSystem.Models.issue_occurrence>
 
-
-
 <link href="~/Content/test/jquery-confirm.min.css" rel="stylesheet" />
 <link href="~/Content/SupervisorStyles/voiceanimations.css" rel="stylesheet" />
-
 
 <div class="page-content--bgf7">
     <section class="au-breadcrumb2">
@@ -158,7 +154,7 @@
                                 var issue_occurrence_id = issuedata[i].issue_occurrence_id
                                 var issue
                                 var group= issuedata[i].group
-                                if (issueid == 1)//breakedown
+                                if (issueid == 1)//breakdown
                                 {
                                     issue = '<div id="card'+issue_occurrence_id+'" class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--red"><span class="desc" style="color:white">Machine Breakdown</span><div class="icon" ><i class="zmdi zmdi-settings zmdi-hc-spin"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><div style="display:none" id="check' + issue_occurrence_id+'"><i  class="fas fa-check" style="font-size:30px; color:green;float:right;"></i></div><p class="card-text"><strong>Issue Date : </strong>' + day + '</br><strong>Time : </strong> ' + date[1] + " " + date[2] + '</br><strong>Responsible Person :</strong> ' + issuedata[i].responciblepersonName + '</br><strong>Machine : </strong>' + issuedata[i].machine_machine_id + '</p> <div class="text-right"> <button  class="btn btn-success"   data-id="' + issue_occurrence_id + '" data-group="'+group+'" data-issue_id="' + issueid + '" onclick="myfunction(this)">Solved </button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
                                     if(( issuedata[i].lineName=='MachineShop 1')||(issuedata[i].lineName=='MachineShop 2'))
@@ -207,7 +203,7 @@
                 }
             });
         }
-        // Declare a function on the hub hub so the server can invoke it
+        // Declare a function on the  hub so the server can invoke it
         hub.client.displayStatus = function () {
             debugger
             getDataissue();
@@ -224,14 +220,14 @@
 function myfunction(param)
 {   
     $.confirm({
-        title: 'Solved Issue?',
-        content: 'Please confirm your action within 8 seconds',
-        autoClose: 'cancelAction|8000',
-        type: 'orange',
+        title:'Solved Issue?',
+        content:'Please confirm your action within 8 seconds',
+        autoClose:'cancelAction|8000',
+        type:'orange',
         buttons: {
             deleteUser: {
-                text: 'Confirm',
-                btnClass: 'btn-warning',
+                text:'Confirm',
+                btnClass:'btn-warning',
                 action: function () {
                 var group=$(param).data('group');
                     var id = $(param).data('id');
@@ -244,7 +240,6 @@ function myfunction(param)
                             getDataissue();
                             $.connection.hub.start().done(function () {$.connection.ismHub.server.announce();}).fail(function () { alert("Sorry, Can't Update your screen !")});
                             $('#card'+id).fadeOut(2000);
-                          
                         }
                     });
                 }
@@ -255,7 +250,8 @@ function myfunction(param)
     });
 }  
 
-var r = $('.search_input');
+    var r = $('.search_input');
+
    $(function(){
   if ('speechSynthesis' in window) {
     speechSynthesis.onvoiceschanged = function() {}
@@ -421,12 +417,12 @@ function showLastMonthIssues(issuedata)
  }
 
 $('.searchbar').click(function() {
-      $( '.search_input').css( "padding", "0 10px" );
-      $( '.search_input').css( "width", "450px" );
-      $( '.search_input').css( "caret-color", "red" );
-      $( '.search_input').css( "transition", "width 0.4s linear" );
-      $( '.search_icon').css( "background", "white" );
-      $( '.search_icon').css( "color", "#e74c3c" );
+      $( '.search_input').css("padding", "0 10px");
+      $( '.search_input').css("width", "450px");
+      $( '.search_input').css("caret-color", "red");
+      $( '.search_input').css("transition", "width 0.4s linear");
+      $( '.search_icon').css("background", "white");
+      $( '.search_icon').css("color", "#e74c3c");
     
 });
 </script>
