@@ -48,13 +48,17 @@
             </div>
             <label id="map" style="display: none;">@ViewData["map"]</label>
             <div id="groupsdiv">
-                <label for="exampleFormControlTextarea1" style="margin-top:5%">Select Group</label>
+                <label for="exampleFormControlTextarea1" style="margin-top:5%">Select Area</label>
                 <select class="js-example-placeholder-single js-states form-control" id="groups" name="Material" style="width:100%;" onchange="">
                     <option></option>
                 </select>
             </div>
+            <div id="machineshopdiv">
+                <label for="exampleFormControlTextarea1" style="margin-top:5%">Group</label>
+                <input type="text" class="form-control" id="grouptext" disabled>
+            </div>
             <div class="form-group machine" style="margin-top:8%">
-                <label for="exampleFormControlTextarea1" >Extra Information</label>
+                <label for="exampleFormControlTextarea1">Extra Information</label>
                 <textarea class="form-control" rows="5" id="description"></textarea>
             </div>
 
@@ -90,14 +94,11 @@
     <script src="~/Scripts/AdminScripts/select2-min.js"></script>
     <script>
       $('#groupsdiv').hide()
+      $('#machineshopdiv').hide()
+       
     if('@Session["department"]'=='MachineShop')
     {
-      for(var i=1;i<=10;i++)
-        {
-           $('#groups').append('<option value="'+i+'">Group'+i+'</option>')
-        }
-     
-    $('#groupsdiv').show()
+      $('#machineshopdiv').show()
     }
     if(('@Session["department"]'=='HeatTreatment')||('@Session["department"]'=='Accessories'))
     {
@@ -115,7 +116,13 @@
         obj.machine = document.getElementById("machine").value;
         obj.line_line_id = '@ViewBag.lineid';
         obj.location =  '@Session["location"]';
-          obj.group=document.getElementById("groups").value
+        var grouparry=document.getElementById("grouptext").value.split(" ")
+         if(grouparry=="")
+        {
+         obj.group=""
+        }else{
+        obj.group=grouparry[1];
+        }
         var obj_array = new Array();
         obj_array.push(obj);
 
@@ -171,6 +178,29 @@
     placeholder: "Select Group.....",
     allowClear: false
     });
+
+    function  getMachineGroup(machine)
+    { 
+      if('@Session["department"]'=='MachineShop')
+        { 
+        var url = '@Url.Action("getMachine", "Supervisor")'
+          
+        $.ajax({
+            type: "POST",
+            dataType: 'text',
+            url: url,
+            data: {machine},
+            success: function (feedback) {
+            
+               document.getElementById("grouptext").value=feedback
+             
+            },
+            error: function (feedback) {
+                alert(feedback);
+             }
+          });
+        }
+    }
     </script>
 
 </div>

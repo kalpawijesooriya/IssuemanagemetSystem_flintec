@@ -130,6 +130,11 @@
                                     {
                                         <option value="@m.Machine_ID">@m.Machine_ID</option>
                                     }
+                                    @foreach (var m in ViewBag.location)
+                                    {
+                                        <option value="@m.LocationName">@m.LocationName</option>
+                                    }
+                               
                                 </select>
                             </div>
                         </div>

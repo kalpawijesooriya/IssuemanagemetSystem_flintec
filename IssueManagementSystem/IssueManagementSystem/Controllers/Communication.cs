@@ -153,16 +153,16 @@ namespace IssueManagementSystem.Controllers
 
         public void maintenancesbuzzerOn()
         {
-             string url1 = "http://192.168.20.240/led.php?on=1";
-             string url2 = "http://192.168.20.240/led.php?on=2";
-            // string url1 = "http://192.168.137.238/led.php?on=1";
-            //  string url2 = "http://192.168.137.238/led.php?on=2";
-            HttpWebRequest webReq1 = (HttpWebRequest)WebRequest.Create(string.Format(url1));
-            HttpWebRequest webReq2 = (HttpWebRequest)WebRequest.Create(string.Format(url2));
-            webReq1.Method = "GET";
-            webReq2.Method = "GET";
-            HttpWebResponse webResponse1 = (HttpWebResponse)webReq1.GetResponse();
-            HttpWebResponse webResponse2 = (HttpWebResponse)webReq2.GetResponse();
+            // string url1 = "http://192.168.20.240/led.php?on=1";
+            // string url2 = "http://192.168.20.240/led.php?on=2";
+            //// string url1 = "http://192.168.137.238/led.php?on=1";
+            ////  string url2 = "http://192.168.137.238/led.php?on=2";
+            //HttpWebRequest webReq1 = (HttpWebRequest)WebRequest.Create(string.Format(url1));
+            //HttpWebRequest webReq2 = (HttpWebRequest)WebRequest.Create(string.Format(url2));
+            //webReq1.Method = "GET";
+            //webReq2.Method = "GET";
+            //HttpWebResponse webResponse1 = (HttpWebResponse)webReq1.GetResponse();
+            //HttpWebResponse webResponse2 = (HttpWebResponse)webReq2.GetResponse();
         }
 
         public void maintenancesbuzzerOff()

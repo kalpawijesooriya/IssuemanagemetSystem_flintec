@@ -64,6 +64,9 @@ namespace IssueManagementSystem.Controllers
             machine_list.machine_list = mList;
             List<line>  lineList = db.lines.ToList();
             ViewBag.lineList= lineList;
+            schedulingEntities se = new schedulingEntities();
+            List<Location> locationList = se.Locations.Where(x=>x.ParentId!=null).ToList();
+            ViewBag.location = locationList;
             return View(machine_list);
         }
 

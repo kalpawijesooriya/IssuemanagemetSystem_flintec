@@ -257,6 +257,9 @@
     <Compile Include="Models\line_supervisor.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Location.cs">
+      <DependentUpon>scheduling.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\machine.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
     </Compile>
@@ -265,6 +268,21 @@
     </Compile>
     <Compile Include="Models\notification_handling.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\scheduling.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>scheduling.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\scheduling.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>scheduling.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\scheduling.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>scheduling.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>IssueManagementSystem.tt</DependentUpon>
@@ -367,6 +385,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>IssueManagementSystem.edmx</DependentUpon>
       <LastGenOutput>IssueManagementSystem.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\scheduling.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>scheduling.edmx</DependentUpon>
+      <LastGenOutput>scheduling.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\scheduling.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>scheduling.edmx</DependentUpon>
+      <LastGenOutput>scheduling.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\flipclock.js" />
     <Content Include="Content\font-awesome.min.css" />
@@ -609,6 +637,13 @@
     </EntityDeploy>
     <Content Include="Models\IssueManagementSystem.edmx.diagram">
       <DependentUpon>IssueManagementSystem.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\scheduling.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>scheduling.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\scheduling.edmx.diagram">
+      <DependentUpon>scheduling.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />

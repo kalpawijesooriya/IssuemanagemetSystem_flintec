@@ -71,6 +71,7 @@ function CanvasState(canvas) {
                 myState.selection = mySel;
                 myState.valid = false;
                 document.getElementById("machine").value = mySel.machine;
+                getMachineGroup(mySel.machine)
                 return;
             }
         }
