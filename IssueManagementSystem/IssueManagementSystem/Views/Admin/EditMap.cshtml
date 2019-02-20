@@ -7,6 +7,7 @@
     {
         Response.Redirect("~/Login/Index");
     }
+
 }
 
 @using IssueManagementSystem.Models
@@ -85,12 +86,10 @@
                     <div class="col-lg-8">
                         <select class="js-example-placeholder-single js-states form-control" id="selectline" name="selectline">
                             <option></option>
-                            <option value="1">Potted</option>
-                            <option value="2">Welded</option>
-                            <option value="5">SM</option>
-                            <option value="3">Guaging</option>
-                            <option value="6">Rocker</option>
-                            <option value="4">MD2</option>
+                            @foreach (var item in ViewBag.lineList)
+                            {
+                                <option value="@item.line_id">@item.line_name</option>
+                            }
                         </select>
                     </div>
                 </div>
@@ -102,6 +101,7 @@
                     <div class="col-lg-8">
                         <select class="js-example-placeholder-basic-multiple-limit js-states form-control" id="selectlineIssues" name="selectlineIssues" multiple="true">
                             <option></option>
+                          
                             <option>Machine Breakdown</option>
                             <option>Material Delay</option>
                             <option>Technical Issue</option>

@@ -6,18 +6,11 @@
         Response.Redirect("~/Login/Index");
     }
 
-
-    ViewBag.rol = Session["Role"];
-    int userID = (int)Session["userID"];// get current supervisorID
     dynamic mat_List = new System.Dynamic.ExpandoObject();
 
-    using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
-    {
-        mat_List.issue_occurrence = db.issue_occurrence;
-        var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
-        ViewBag.lineID = lineInfo.line_line_id;
-    }
-    int lineId = ViewBag.lineID;
+ 
+
+    int lineId = (int)Session["lineId"];
 }
 
 @using IssueManagementSystem.Models
@@ -96,9 +89,8 @@
     }
     if(('@Session["department"]'=='HeatTreatment')||('@Session["department"]'=='Accessories'))
     {
-     
-           $('#groups').append('<option value="'1'">Heat treatment</option>')
-           $('#groups').append('<option value="'2'">Accessories</option>')
+          $('#groups').append('<option value="1">Heat treatment</option>')
+           $('#groups').append('<option value="2">Accessories</option>')
       
      
     $('#groupsdiv').show()
@@ -149,10 +141,7 @@
         placeholder: "Select Group.....",
         allowClear: false
     });
-      if('@Session["department"]'!='MachineShop')
-    {
-    $('#groupsdiv').hide()
-    }
+     
     function SubmitMaterialDelay() {
 
         obj = new Object();
@@ -160,7 +149,7 @@
         obj.issue_date = new Date();
         obj.material_id = document.getElementById("materialSelectBox").value;
         obj.description = document.getElementById("description").value;
-        obj.line_line_id = document.getElementById("lineID").innerText;
+        obj.line_line_id = @Session["lineId"];
         obj.issue_issue_ID = "2";
         obj.responsible_person_emp_id = "";
         obj.issue_satus = "0";
@@ -198,7 +187,3 @@
 
 
 
-<script>
-   
-
-</script>

@@ -177,7 +177,7 @@ namespace IssueManagementSystem.Controllers
                                 }
 
 
-                              //  com.maintenancesbuzzerOn();
+                               com.maintenancesbuzzerOn();
                                 msg = msg.Replace("@", Environment.NewLine);
                                 ModelState.Clear();
                                 sendCD(line_id, 1, msg, "Machine Breakdown has occurred", callNote, issue_occour_id, notification_HandlingModel);
@@ -477,7 +477,7 @@ namespace IssueManagementSystem.Controllers
                                 }
                                 msg = msg.Replace("@", Environment.NewLine);
 
-                                //com.storesbuzzerOn();
+                                com.storesbuzzerOn();
                                 sendCD(line_id, 2, msg, "MaterialDelay has occered", callNote, issue_occour_id, notification_HandlingModel);
                             
                               
