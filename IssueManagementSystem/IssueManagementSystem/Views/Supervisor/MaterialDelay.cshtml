@@ -22,11 +22,10 @@
 
 @using IssueManagementSystem.Models
 
-<link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
-<link href="~/Content/googlegrafics.css" rel="stylesheet" />
+
 <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
-<link href="~/Content/adminstyles/Settings.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-toggle.min.css" rel="stylesheet" />
 
 <h2>Material Delay</h2>
 <hr />
@@ -61,7 +60,7 @@
                     <div class="col-md-3">
                         <input id="chk_box" type="checkbox" onChange="checkBoxOnChange()" data-toggle="toggle" checked data-on="BOM material" data-off="non-BOM material" data-onstyle="success" data-offstyle="info" data-size="small" />
                     </div>
-                    <div  class="col-md-9" style="margin:auto">
+                    <div class="col-md-9" style="margin:auto">
                         <select class="js-example-placeholder-single js-states form-control" id="materialSelectBox" style="width:100%">
                             <option></option>
                         </select>
@@ -87,13 +86,15 @@
         </div>
     </div>
 </div>
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
 
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/bootstrap-toggle.min.js"></script>
 <script src="~/Scripts/AdminScripts/jscolar.js"></script>
-<script src="~/Scripts/AdminScripts/select2-min.js"></script>
 <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
-<script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
+<script src="~/Scripts/AdminScripts/select2-min.js"></script>
 <script src="~/signalr/Hubs"></script>
+<script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
+
 <script>
    $('#groupsdiv').hide()
     if('@Session["department"]'=='MachineShop')
@@ -102,21 +103,22 @@
         {
            $('#groups').append('<option value="'+i+'">Group'+i+'</option>')
         }
-     
+
     $('#groupsdiv').show()
     }
     if(('@Session["department"]'=='HeatTreatment')||('@Session["department"]'=='Accessories'))
     {
-     
+
            $('#groups').append('<option value="1">Heat treatment</option>')
            $('#groups').append('<option value="2">Accessories</option>')
-      
-     
+
+
     $('#groupsdiv').show()
     }
     $(document).ready(function () {
         $("#materialSelectBox").prop("disabled", true);
-        $("#chk_box").prop("disabled", true);
+        //$("#chk_box").attr("disabled", true);
+        document.getElementById("chk_box").setAttribute("disabled", "disabled");
     });
 
     function loadMaterialList() {
@@ -125,7 +127,7 @@
         $.ajax({
             type: "POST",
             dataType: 'text',
-            async: false,
+            async:true,
             url: "/CellEngineer/loadMaterialList",
             data: { selectedJobCard: selectedJobCard },
             success: function (feedback) {
@@ -151,7 +153,7 @@
 
         if (selectedJobCard != null) {
             $("#materialSelectBox").prop("disabled", false);
-            $("#chk_box").prop("disabled", false);
+            $("#chk_box").attr("disabled", false);
         }
     }
 
@@ -160,6 +162,7 @@
         $.ajax({
             type: "POST",
             dataType: 'text',
+            async: true,
             url: "/CellEngineer/loadNonBOMMaterials",
             success: function (feedback) {
                 feedback = JSON.parse(feedback);
@@ -237,7 +240,7 @@
     }
 
     function checkBoxOnChange() {
- 
+
         if (document.getElementById('chk_box').checked) {
                 loadMaterialList();
         }

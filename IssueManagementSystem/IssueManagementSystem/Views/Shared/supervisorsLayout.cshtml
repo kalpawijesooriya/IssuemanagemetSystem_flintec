@@ -8,34 +8,32 @@
     <meta name="description" content="au theme template">
     <meta name="author" content="Hau Nguyen">
     <meta name="keywords" content="au theme template">
+
     <!-- Fontfaces CSS-->
     <link href="~/Content/font-face.css" rel="stylesheet" />
-
     <link href="~/Content/fontawesome-all.min.css" rel="stylesheet" />
     <link href="~/Content/material-design-iconic-font.min.css" rel="stylesheet" />
 
     <!-- Bootstrap CSS-->
 
     <link href="~/Content/Manager/bootstrap.min.css" rel="stylesheet" />
-
     <link href="~/Content/animsition.min.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" />
     <link href="~/Content/animate.css" rel="stylesheet" />
     <link href="~/Content/hamburgers.min.css" rel="stylesheet" />
     <link href="~/Content/slick.css" rel="stylesheet" />
-
-    <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
     <link href="~/Content/perfect-scrollbar.css" rel="stylesheet" />
     <link href="~/Content/material-design-iconic-font.min.css" rel="stylesheet" />
+
     <!-- Main CSS-->
     <link href="~/Content/theme.css" rel="stylesheet" />
     <link href="~/Content/fontawesome.css" rel="stylesheet" />
     <link href="~/Content/css/all.css" rel="stylesheet" />
-    <link href="~/Content/SupervisorStyles/jquery-ui.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap-toggle.min.css" rel="stylesheet" />
+    <link href="~/Content/googlegrafics.css" rel="stylesheet" />
+    <link href="~/Content/adminstyles/Settings.css" rel="stylesheet" />
+    <link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
 
 </head>
-
 
 <body class="animsition">
     <div class="page-wrapper">
@@ -246,8 +244,8 @@
         <!-- END COPYRIGHT-->
     </div>
 
-
-
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
     <script src="~/Scripts/Manager/popper.min.js"></script>
     <script src="~/Scripts/Manager/bootstrap.min.js"></script>
     <script src="~/Scripts/slick.min.js"></script>
@@ -262,13 +260,14 @@
     <script src="~/Scripts/circle-progress.min.js"></script>
     <script src="~/Scripts/perfect-scrollbar.min.js"></script>
     <script src="~/Scripts/Chart.bundle.min.js"></script>
-    <script src="~/Scripts/AdminScripts/select2-min.js"></script>
-    <script src="~/Scripts/main.js"></script>
-    <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
 
+    <script src="~/Scripts/main.js"></script>
+
+    <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
     <script src="~/signalr/Hubs"></script>
-    <script src="~/Scripts/jquery-ui.js"></script>
-    <script src="~/Scripts/bootstrap-toggle.min.js"></script>
+
+    <script src="~/Scripts/AdminScripts/jscolar.js"></script>
+    <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
 
     <script>
         if('@Session["department"]'!='MachineShop'){$('#qtymobile').hide();$('#qtyweb').hide();}
