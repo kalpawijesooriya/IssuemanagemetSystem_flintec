@@ -7,7 +7,6 @@ using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
-
 namespace IssueManagementSystem.Controllers
 {
     public class ManagerController : Controller
@@ -41,7 +40,6 @@ namespace IssueManagementSystem.Controllers
         public JsonResult GetNotification()
         {
             return Json(NotificaionService.GetNotification(), JsonRequestBehavior.AllowGet);
-
         }
 
         public JsonResult hideNotification(int? notificationId)
@@ -50,8 +48,6 @@ namespace IssueManagementSystem.Controllers
             {
                 string query = "UPDATE tbl_Notifications SET Status = 0 WHERE NotificationId = " + notificationId;
                 db.Database.ExecuteSqlCommand(query);
-
-
             }
             return Json(true);
         }
@@ -68,7 +64,7 @@ namespace IssueManagementSystem.Controllers
                     String query = @"SELECT TOP 10 issue_occurrence.machine_machine_id,
                                     count(issue_occurrence.machine_machine_id) AS count FROM issue_occurrence 
                                     WHERE issue_occurrence.issue_issue_ID = 1 AND issue_occurrence.location IN ('"+plantLocation+@"')
-                                    AND  issue_occurrence.issue_date BETWEEN '" + startDate + @"' AND '" + endDate + @"' 
+                                    AND  issue_occurrence.issue_date BETWEEN '"+startDate+@"' AND '"+endDate+@"' 
                                     GROUP BY issue_occurrence.machine_machine_id  ORDER BY count Desc";
 
                     System.Diagnostics.Debug.Print(query);
@@ -81,16 +77,15 @@ namespace IssueManagementSystem.Controllers
                                     count(issue_management_system.dbo.issue_occurrence.material_id) AS count 
                                     FROM issue_management_system.dbo.issue_occurrence,FLINTEC.dbo.FLINTEC$Item
                                     WHERE issue_occurrence.issue_issue_ID = 2
-                                    AND issue_occurrence.location IN ('" + plantLocation + @"') AND 
+                                    AND issue_occurrence.location IN ('"+plantLocation+@"') AND 
                                     issue_management_system.dbo.issue_occurrence.material_id  COLLATE SQL_Latin1_General_CP1_CS_AS LIKE FLINTEC.dbo.FLINTEC$Item.No_ COLLATE SQL_Latin1_General_CP1_CS_AS
-                                    AND issue_occurrence.issue_date BETWEEN '" + startDate +@"' AND '"+ endDate +@"' 
+                                    AND issue_occurrence.issue_date BETWEEN '"+startDate+@"' AND '"+endDate+@"' 
                                     GROUP BY FLINTEC.dbo.FLINTEC$Item.[Search Description]
                                     ORDER BY count Desc";
 
                     chart2Data = db.Database.SqlQuery<TempClasses.tempClass4>(query).ToList();
                     return Json(chart2Data, JsonRequestBehavior.AllowGet);
                 }
-
                 return Json(chart1Data, JsonRequestBehavior.AllowGet);
             }
         }
@@ -116,9 +111,6 @@ namespace IssueManagementSystem.Controllers
                                 ORDER BY DateDiff DESC";
 
                 var chart1Data = db.Database.SqlQuery<TempClasses.tempClass2>(query).ToList();
-
-               
-
                 return Json(chart1Data, JsonRequestBehavior.AllowGet);
             }
         }
@@ -188,7 +180,6 @@ namespace IssueManagementSystem.Controllers
         [HttpPost]
         public JsonResult notificationOnOff(string issue_line_person_id, string issue_occurrence_id, string status)
         {
-
             /*
               String query = @"UPDATE c SET  c.email = 0,c.call = 0,c.message = 0 FROM issue_line_person AS c ,issues,lines
                   WHERE c.assigned_date = (
@@ -199,7 +190,6 @@ namespace IssueManagementSystem.Controllers
                   AND lines.line_name ='"+line+@"' AND issues.issue = '"+issue+ @"' AND d.issue_line_person_id='"+issue_line_person_id+@"'
                   )AND lines.line_name ='" + line+@"' AND issues.issue ='"+issue+ @"' AND c.issue_line_person_id='"+issue_line_person_id+@"'";
             */
-
             String query = @"UPDATE notification_handling 
                             SET 
                             notification_handling.notification_status="+status+@"
@@ -221,13 +211,12 @@ namespace IssueManagementSystem.Controllers
 
 
             String query = @"SELECT CASE WHEN
-                            (" + empID + @" IN(SELECT notification_handling.EmployeeNumber 
+                            ("+empID+@" IN(SELECT notification_handling.EmployeeNumber 
                                   FROM notification_handling 
-                                  WHERE notification_handling.issue_occurrence_id = " + issueOccID + @"  
+                                  WHERE notification_handling.issue_occurrence_id = "+issueOccID+@"  
                                   AND notification_handling.notification_status=1))
                             THEN CAST(1 AS BIT)
                             ELSE CAST(0 AS BIT) END";
-            
             Boolean resultVar;
                  
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
@@ -251,11 +240,23 @@ namespace IssueManagementSystem.Controllers
             {
                 resultVar = db.Database.SqlQuery<int>(query).Single();
             }
-
             return Json(resultVar, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public JsonResult voiceDataFilter(String issue, String date) {
 
+            String query = @"";
+            List<String> resultVar;
+
+            System.Diagnostics.Debug.Print("issue:"+issue+" date:"+date);
+
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+            {
+                resultVar = db.Database.SqlQuery<String>(query).ToList();
+            }
+
+            return Json(resultVar, JsonRequestBehavior.AllowGet);
+        }
     }
-
 }

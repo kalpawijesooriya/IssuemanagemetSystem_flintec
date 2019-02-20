@@ -57,7 +57,8 @@ function loadTableData(){
                         var dataArray = JSON.parse(data);
 
                         raw_data = dataArray;
-
+                        console.log(raw_data);
+                        console.log(data_obj);
                         dataArray.forEach(function (i) 
                             {
                                 var tempArr = new Array();
@@ -113,11 +114,11 @@ function filterTableData(){
 
         var o= ""; var m= ""; var b= ""; var nq="";var de="";
 
-        (Issue_select == "") ? (nq="*0"):(nq="*1"); //Issue_select
-        (Line_select  == "") ? (m="*0"):(m="*1");  //Line_select
-        (Status_select== "") ? (o="*0"):(o="*1") ; //Status_select
-        (Plant_select  == "") ? (b="*0"):(b="*1");  //Plant_select
-        (Department_select == "") ? (de="*0"):(de="*1"); //Department_select
+        (Issue_select  == "") ? (nq="*0"):(nq="*1"); //Issue_select
+        (Line_select   == "") ? (m="*0"):(m="*1");  //Line_select
+        (Status_select == "") ? (o="*0"):(o="*1") ;  //Status_select
+        (Plant_select  == "")? (b="*0"):(b="*1");    //Plant_select
+        (Department_select == "")? (de="*0"):(de="*1"); //Department_select
 
         var comparing_string = b+nq+m+o+de;
 
@@ -942,11 +943,5 @@ function numberOfIssues(){
             }
         else{clearInterval(setIntervalFunc);}
     }, 10);
-
-}
-
-
-function topCardIconMovements(){
-
 
 }

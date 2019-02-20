@@ -36,7 +36,7 @@ namespace IssueManagementSystem.Controllers
                 HttpCookie cookie = new HttpCookie("login_data");
                 cookie["uid"] = userModel.EmployeeNumber.ToString();
                 cookie["pwd"] = userModel.Password;
-                cookie.Expires = DateTime.Now.AddDays(50);
+                cookie.Expires = DateTime.Now.AddDays(30);
 
                 var userDetails =db.tbl_PPA_User.Where(x => x.EmployeeNumber == userModel.EmployeeNumber && x.Password== userModel.Password).FirstOrDefault();
                 if (userDetails == null)
@@ -65,9 +65,8 @@ namespace IssueManagementSystem.Controllers
                             Session["lineId"] = lineInfo.line_line_id;
                            
                         }
-
                         return RedirectToAction("selectIssue", "Supervisor");
-                    } 
+                    }
 
                     else if (role.Equals("CellEngineer"))
                     {
@@ -78,7 +77,7 @@ namespace IssueManagementSystem.Controllers
                           
                         }
                         return RedirectToAction("DashBord", "CellEngineer", new { lineid = Session["lineId"] });
-                    } 
+                    }
                     else if (role.Equals("display")) //if user is display goto the display page
                         return RedirectToAction("Rasp", "Display");   
                     else if (role.Equals("admin"))
@@ -90,10 +89,10 @@ namespace IssueManagementSystem.Controllers
                     else
                         return RedirectToAction("Index", "Login");
                 }
-            }         
+            }
         }
 
-        public ActionResult LogOut()// logout methord
+        public ActionResult LogOut()
         {
             Session.Abandon();
             Response.Cookies["login_data"].Expires = DateTime.Now.AddDays(-1);

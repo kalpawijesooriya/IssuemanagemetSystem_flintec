@@ -25,7 +25,7 @@ namespace IssueManagementSystem
             var connectionString = ConfigurationManager.ConnectionStrings["issue_management_systemEntities2"];
             var connectionString2 = ConfigurationManager.ConnectionStrings["BigRedEntities2"];
             SqlDependency.Start(@connectionString.ToString());
-            //SqlDependency.Start(@connectionString2.ToString());
+          //SqlDependency.Start(@connectionString2.ToString());
             JobScheduler.Start();
         }
     }

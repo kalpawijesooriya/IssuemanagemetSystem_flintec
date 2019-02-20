@@ -10,12 +10,18 @@
 
 <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
 <link href="~/Content/adminstyles/Settings.css" rel="stylesheet" />
+
 <script src="~/Scripts/jquery-3.3.1.js"></script>
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
 <script src="~/Scripts/jquery-ui.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="~/Content/test/jquery-confirm.min.js"></script>
+<script src="~/Scripts/Voice/main.js"></script>
+
 <link href="~/Content/fontawesome-all.min.css" rel="stylesheet" />
 <link href="~/Content/SupervisorStyles/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/test/jquery-confirm.min.css" rel="stylesheet" />
+<link href="~/Content/SupervisorStyles/voiceanimations.css" rel="stylesheet" />
 
 <p hidden id="hidden_userID">@Session["userID"]</p>
 <style>
@@ -28,8 +34,8 @@
 
     <section class="au-breadcrumb2">
         <div class="container">
-            <div class="row">
-                <div class="col-md-12">
+            <div class="row justify-content-between">
+                <div class="col-md-4">
                     <div class="au-breadcrumb-content">
                         <div class="au-breadcrumb-left">
                             <span class="au-breadcrumb-span">You are here:</span>
@@ -45,6 +51,16 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-8">
+                    <div class="container">
+                        <div style="float:right;" >
+                            <div class="searchbar">
+                                <img id="listening" src="~/Content/images/Ripple-1.8s-34px.svg"><input class="search_input" type="text" name="" placeholder="Listening....">
+                                <button onclick="startConverting()" class="search_icon"><i class="fa fa-microphone"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -53,10 +69,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="title-4">
-                        Hi
-                        <span>@Session["name"]!</span>
-                    </h1>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h1 class="title-4">
+                                Hi
+                                <span>@Session["name"]!</span>
+                            </h1>
+                        </div>
+                    </div>
                     <hr class="line-seprate">
                 </div>
             </div>
@@ -83,7 +103,8 @@
                                 {
                                     <i class="zmdi zmdi-settings zmdi-hc-spin"></i>
                                 }
-                                else{   
+                                else
+                                {
                                     <i class="zmdi zmdi-settings"></i>
                                 }
                             }
@@ -202,7 +223,6 @@
             </div>
         </div>
     -->
-
     <section class="statistic-chart">
 
         <div class="container">
@@ -242,12 +262,11 @@
                         </div>
                     </div>
                 </div>
-
                 <!--
-                <button type="button" class="btn btn-primary" style="height:28px;width:80px; font-size:12px" onclick="filterByDate()">
-                    <span class="fas fa-calendar-alt"></span> Filter
-                </button>
-                  -->
+                    <button type="button" class="btn btn-primary" style="height:28px;width:80px; font-size:12px" onclick="filterByDate()">
+                        <span class="fas fa-calendar-alt"></span> Filter
+                    </button>
+                -->
             </div>
             </br>
 
@@ -285,7 +304,6 @@
                 </div>
 
                 <div class="col-md-6 col-lg-4">
-
                     <div class="chart-percent-2">
                         <h3 class="title-3 m-b-30">Issue Occurrences </h3>
                         <p style="margin-top:-30px" class="title-7 m-xs-r-5 dateGap"> </p>
@@ -297,21 +315,18 @@
                         <p style="margin-top:-30px" class="title-7 m-xs-r-5 dateGap"> </p>
                         <h1 id="ttlIssues" style="font-size:85px;margin-bottom:-20px;margin-top:5px;text-align:center;color:#808080;letter-spacing:10px;">000</h1>
                     </div>
-
                 </div>
                 <!--
-                                <div class="statistic-chart-1">
-                                    <h3 class="title-3 m-b-30">All Issues with year</h3>
-                                    <p style="margin-top:-30px" class="title-7 m-xs-r-5 dateGap"> </p>
+                    <div class="statistic-chart-1">
+                        <h3 class="title-3 m-b-30">All Issues with year</h3>
+                        <p style="margin-top:-30px" class="title-7 m-xs-r-5 dateGap"> </p>
 
-                                </div>
+                    </div>
                 -->
             </div>
         </div>
     </section>
 </div>
-
-
 
 <section class="statistic-chart-1">
     <div class="container" id="mainTableContainer">
@@ -443,8 +458,232 @@
     </div>
     <div id="no_IssuesDIV"></div>
 </section>
+<script>
+     $("#listening").hide()
 
-        <script>
+    $(document).ready(function () {
+        // Proxy created on the fly
+        var hub = $.connection.issueHub;
+        var issueCount = 0;
+
+
+       window.getDataissue = function()
+        {
+            
+        }
+        // Declare a function on the  hub so the server can invoke it
+        hub.client.displayStatus = function () {
+            getDataissue();
+        };
+        // Start the connection
+        $.connection.hub.start();
+        getDataissue();
+    })
+</script>
+
+
+<script type="text/javascript">
+
+function myfunction(param)
+{
+    $.confirm({
+        title: 'Solved Issue?',
+        content: 'Please confirm your action within 8 seconds',
+        autoClose: 'cancelAction|8000',
+        type: 'orange',
+        buttons: {
+            deleteUser: {
+                text: 'Confirm',
+                btnClass: 'btn-warning',
+                action: function () {
+                var group=$(param).data('group');
+                    var id = $(param).data('id');
+                    var issue_id = $(param).data('issue_id');
+                    var url = '@Url.Action("SolvedIssue", "Supervisor")?issueId=' + issue_id + '&issueOccourId=' + id+'&lineId='+'@ViewBag.lineId'+'&group='+group;
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        success: function (issuedata) {
+                            getDataissue();
+                            $.connection.hub.start().done(function () {$.connection.ismHub.server.announce();}).fail(function () { alert("Sorry, Can't Update your screen !")});
+                            $('#card'+id).fadeOut(2000);
+                        }
+                    });
+                }
+            },cancelAction: function () {
+                    $.alert('Action is canceled!');
+                }
+        }
+    });
+}
+
+    var r = $('.search_input');
+
+$(function(){
+  if ('speechSynthesis' in window) {
+    speechSynthesis.onvoiceschanged = function() {}
+    window.getVoice = function(voicemsg) {
+      var msg = new SpeechSynthesisUtterance();
+      var voices = window.speechSynthesis.getVoices();
+      msg.voice = voices[1];
+      msg.rate = 1;
+      msg.pitch = 1;
+      msg.text = voicemsg;
+      msg.onend = function(e) {
+      console.log('Finished in ' + event.elapsedTime + ' seconds.');
+    };
+      speechSynthesis.speak(msg);
+     }
+    }
+  });
+
+function startConverting ()
+    {    $("#listening").show();
+        getVoice("Hello "+ '@Session["name"]' +" I'm listening to you!");
+		if('webkitSpeechRecognition' in window){
+			var speechRecognizer = new webkitSpeechRecognition();
+			speechRecognizer.continuous = true;
+			speechRecognizer.interimResults = true;
+			speechRecognizer.lang = 'en-IN';
+			speechRecognizer.start();
+			var finalTranscripts = '';
+			speechRecognizer.onresult = function(event){
+				var interimTranscripts = '';
+				for(var i = event.resultIndex; i < event.results.length; i++){
+					var transcript = event.results[i][0].transcript;
+					if(event.results[i].isFinal){
+						finalTranscripts += transcript.trim();
+                        $("#listening").hide();
+                        r.val(transcript.trim());
+                         VoiceAction( transcript.trim() )
+					}else{
+                        interimTranscripts += transcript;
+					}
+				}
+			};
+			speechRecognizer.onerror = function (event) {
+			};
+		}else{
+			r.value = 'Your browser is not supported. If google chrome, please upgrade!';
+		}
+	}
+
+    function playVoice() {
+			var msg = new SpeechSynthesisUtterance('Hello World');
+			window.speechSynthesis.speak(msg);
+			speechSynthesis.speak(new SpeechSynthesisUtterance('Hello World'));
+		}
+
+   function VoiceAction(keyWord)
+   {
+       console.log(keyWord);
+       var voice_string_array = keyWord.split(" ");
+
+       var commands = [
+           { cmd: [""],action: "func0"},
+           { cmd: ["material", "materials", "delay", "delays"],action: "func1"},
+           { cmd: ["it", "software", "issues","issue","id","ID","shoes","shoe","show","shows"],action: "func2"},
+           { cmd: ["quality", "issues", "issue"],action: "func3"},
+           { cmd: ["machine", "breakdown", "machines", "breakdowns"],action: "func4"},
+           { cmd: ["technical","issue","issues","tech"],action: "func5"}
+       ];
+
+       var commands_lvl2 = [
+           { cmd: [""],action:"none"},
+           { cmd: ["cartoon","nayak","nayaka","kathanayaka","sathanayaka"],action:"KTY"},
+           { cmd: ["Google","kakara","cooker","kaggle","single","singer","Kolkata","Singh"],action:"KOG"}
+       ];
+
+       var matching_level_array = new Array(commands.length).fill(0.00);
+       var keywords_not_found = new Array();
+      
+       for (var i = 0; i < commands.length; i++)
+       {
+           var obj = new Array();
+            voice_string_array.forEach(function (word_searching) { 
+                var matching = 0;
+                var flag = 0;
+                   commands[i].cmd.forEach(function (word_current)  
+                   {
+                       if (word_searching == word_current){matching++;flag = 1;}
+                   });
+
+                if (flag == 0) {
+                    obj.push(word_searching);
+                }
+                if (matching > 0){ matching_level_array[i] = matching_level_array[i] + 1 }
+           });
+           keywords_not_found.push(obj);
+       }
+          console.log("################");
+          console.log(keywords_not_found);
+
+           var number_of_words_in_voice_transcript = voice_string_array.length;
+           matching_level_array.forEach(function (amount, index, theArray)
+           {
+                var percentage = (amount / number_of_words_in_voice_transcript) * 100;
+                theArray[index] = percentage;
+           });
+
+            var maxval = Math.max(...matching_level_array);
+            var command_index = matching_level_array.indexOf(maxval);
+            var lvl2_command_ = "";
+            if (maxval < 100) {
+                //ckeck "keywords_not_found" array with "commands_lvl2" array
+
+                for (var i = 0; i < keywords_not_found.length; i++) {
+                    keywords_not_found[i].forEach(function (ele) {
+
+                        var matching = 0;
+                        commands_lvl2.forEach(function (ele_com, index, theArray) {
+
+                            ele_com.cmd.forEach(function (x) {
+                                if (x == ele) {
+                                    lvl2_command_ = ele_com.action;
+                                }
+                            });
+                        });
+                    });
+                }
+            }
+
+            var count = 0;
+            for (var i = 0; i < matching_level_array.length; ++i)
+                {
+                if (matching_level_array[i] == maxval)
+                       count++;
+                }
+
+            console.log("cmd lvl1 : " + commands[command_index].action+" lvl2 : "+lvl2_command_);
+            console.log(matching_level_array);
+
+               var thresholdVal = 30;
+
+           if (count == 1 && maxval >= thresholdVal) {
+               var func_name = commands[command_index].action;
+               set_functions[func_name](lvl2_command_);
+           }
+           else {
+               getVoice("command is not clear..........please try again"); 
+           }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+       setTimeout(function () { $('.search_input').val(''); $("#listening").show();  } , 3000);
+  }
+
+
+$('.searchbar').click(function() {
+      $( '.search_input').css("padding", "0 10px");
+      $('.search_input').css("width", "12em");
+      $( '.search_input').css("caret-color", "red");
+      $( '.search_input').css("transition", "width 0.4s linear");
+      $( '.search_icon').css("background", "white");
+      $( '.search_icon').css("color", "#e74c3c");
+});
+</script>
+
+<script>
 
          url_loadIssueList = '@Url.Action("loadIssueList", "Manager")';
          url_checkNotificationList_formanagers = '@Url.Action("checkNotificationList_formanagers", "Manager")';
@@ -453,8 +692,9 @@
          url_fillChart3 = '@Url.Action("fillChart3","Manager")';
          url_notificationOnOff = '@Url.Action("notificationOnOff","Manager")';
          url_totalNumberOfIssues = '@Url.Action("totalNumberOfIssues","Manager")';
+         url_voiceDataFilter = '@Url.Action("voiceDataFilter", "Manager")';
 
-        </script>
-    
-    <script src="~/Scripts/AdminScripts/jscolar.js"></script>
-    <script src="~/Scripts/Manager/managersScripts.js"></script>
+</script>
+
+<script src="~/Scripts/AdminScripts/jscolar.js"></script>
+<script src="~/Scripts/Manager/managersScripts.js"></script>
