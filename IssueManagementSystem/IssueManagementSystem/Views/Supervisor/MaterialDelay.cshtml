@@ -8,8 +8,6 @@
 
     dynamic mat_List = new System.Dynamic.ExpandoObject();
 
- 
-
     int lineId = (int)Session["lineId"];
 }
 
@@ -81,6 +79,7 @@
 </div>
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/Manager/bootstrap.min.js"></script>
 <script src="~/Scripts/bootstrap-toggle.min.js"></script>
 <script src="~/Scripts/AdminScripts/jscolar.js"></script>
 <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
@@ -104,7 +103,7 @@
 
           $('#groups').append('<option value="1">Heat treatment</option>')
           $('#groups').append('<option value="2">Accessories</option>')
-      
+
     $('#groupsdiv').show()
     }
     $(document).ready(function () {
@@ -187,7 +186,7 @@
         placeholder: "Select Group.....",
         allowClear: false
     });
-     
+
     function SubmitMaterialDelay() {
 
         obj = new Object();
