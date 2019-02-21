@@ -11,7 +11,7 @@ namespace IssueManagementSystem.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class issue_line_person
     {
         public Nullable<int> issue_id { get; set; }

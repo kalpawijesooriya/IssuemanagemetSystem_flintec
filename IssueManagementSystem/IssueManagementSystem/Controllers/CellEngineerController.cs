@@ -97,7 +97,7 @@ namespace IssueManagementSystem.Controllers
         }
 
         [HttpPost]
-        public ActionResult loadNonBOMMaterials()
+        public JsonResult loadNonBOMMaterials()
         {
             dynamic materials = new ExpandoObject();
             FLINTEC_Context itemContext = new FLINTEC_Context();

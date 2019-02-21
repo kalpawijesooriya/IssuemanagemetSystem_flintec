@@ -10,15 +10,15 @@
 
     ViewBag.rol = Session["Role"];
     int userID = (int)Session["userID"];// get current supervisorID
+    int lineId = (int)Session["lineId"];
     using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
     {
-        var lineInfo = db.line_supervisor.Where(x => x.supervisor_emp_id == userID).FirstOrDefault();
-        ViewBag.lineID = lineInfo.line_line_id;
-        var mapInfo = db.line_map.Where(y => y.line_id == lineInfo.line_line_id).FirstOrDefault();
+       
+        var mapInfo = db.line_map.Where(y => y.line_id == lineId).FirstOrDefault();
         ViewData["map"] = mapInfo.map.ToString().Trim();//get the map arry to ViewData
 
     }
-    ViewBag.id = Session["lineId"];
+
 }
 
 
@@ -114,7 +114,7 @@
         obj = new Object();
         obj.description = document.getElementById("description").value;
         obj.machine = document.getElementById("machine").value;
-        obj.line_line_id = '@ViewBag.id';
+        obj.line_line_id = @Session["lineId"];
         obj.location =  '@Session["location"]';
         var grouparry=document.getElementById("grouptext").value.split(" ")
         if(grouparry=="")
@@ -150,7 +150,7 @@
     });
 
 
-    var id=@ViewBag.id.ToString();
+    var id=@Session["lineId"];
     var inputPath="../Content/images/"+id+".jpg"
     var url = '@Url.Action("loadBase64Image", "Admin")';
     $.ajax({
