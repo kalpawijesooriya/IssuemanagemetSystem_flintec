@@ -44,5 +44,8 @@ namespace IssueManagementSystem.Models
         public String lineName { get; set; }
         public String issueName { get; set; }
         public Nullable<int> group { get; set; }
+        public string job_card { get; set; }
     }
 }
+
+

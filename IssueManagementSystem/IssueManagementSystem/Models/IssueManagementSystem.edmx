@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="issue_management_systemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="issue_management_systemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="departments">
           <Key>
             <PropertyRef Name="department_id" />
@@ -73,6 +73,7 @@
           <Property Name="buzzer_off_by" Type="int" />
           <Property Name="buzzer_off_time" Type="datetime" />
           <Property Name="group" Type="int" />
+          <Property Name="job_card" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="issues">
           <Key>
@@ -332,8 +333,7 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
             <End Role="issue_occurrence" EntitySet="issue_occurrence" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="issue_management_systemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -407,6 +407,7 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <Property Name="buzzer_off_time" Type="DateTime" Precision="3" />
           <Property Name="group" Type="Int32" />
           <NavigationProperty Name="issue" Relationship="Self.FK_issue_occurrence_issues" FromRole="issue_occurrence" ToRole="issues" />
+          <Property Name="job_card" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="issue">
           <Key>
@@ -684,6 +685,7 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <EntitySetMapping Name="issue_occurrence">
             <EntityTypeMapping TypeName="issue_management_systemModel.issue_occurrence">
               <MappingFragment StoreEntitySet="issue_occurrence">
+                <ScalarProperty Name="job_card" ColumnName="job_card" />
                 <ScalarProperty Name="issue_occurrence_id" ColumnName="issue_occurrence_id" />
                 <ScalarProperty Name="issue_date" ColumnName="issue_date" />
                 <ScalarProperty Name="material_id" ColumnName="material_id" />
