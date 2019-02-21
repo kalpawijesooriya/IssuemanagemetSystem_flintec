@@ -96,17 +96,12 @@ namespace IssueManagementSystem.Controllers
             return Json(materials);
         }
 
-
-
-
         public ActionResult ITIssue()//IT Issue view
         {
             if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
             {
                 return RedirectToAction("Index", "Login");
-
             }
-
             return View();
         }
 

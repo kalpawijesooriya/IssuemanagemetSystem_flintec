@@ -667,14 +667,13 @@ function startConverting ()
            }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
        setTimeout(function () { $('.search_input').val(''); $("#listening").show();  } , 3000);
   }
 
 
 $('.searchbar').click(function() {
       $( '.search_input').css("padding", "0 10px");
-      $('.search_input').css("width", "12em");
+      $( '.search_input').css("width", "12em");
       $( '.search_input').css("caret-color", "red");
       $( '.search_input').css("transition", "width 0.4s linear");
       $( '.search_icon').css("background", "white");
