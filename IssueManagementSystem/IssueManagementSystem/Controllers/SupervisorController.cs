@@ -457,6 +457,7 @@ namespace IssueManagementSystem.Controllers
                             issueModel.issue_issue_ID = 2;
                             issueModel.issue_date = date;
                             issueModel.department = "Stores";
+                            issueModel.job_card = item["jobcard"].ToString(); ;
                             issueModel.material_id = item["material_id"].ToString();
                             issueModel.responsible_person_emp_id = resp_person.EmployeeNumber;
                             issueModel.location = item["location"].ToString();

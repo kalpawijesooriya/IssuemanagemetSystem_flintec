@@ -58,6 +58,7 @@ namespace IssueManagementSystem.Models
             public String buzzer_off_by { get; set; }
             public Nullable<DateTime> buzzer_off_time { get; set; }
             public int dep_occured { get; set; }
+            public String job_card { get; set; }
         }
 
 

@@ -88,6 +88,7 @@ function loadTableData(){
                                 tempArr.push(i.buzzer_off_by);                         //20
                                 tempArr.push(i.buzzer_off_time);                       //21
                                 tempArr.push(i.dep_occured);                           //22
+                                tempArr.push(i.job_card);                              //23
                                 data_obj.push(tempArr);
                             });
                 },
@@ -211,7 +212,7 @@ function filterTableData(){
                                 tempArr.push(i.buzzer_off_by);
                                 tempArr.push(i.buzzer_off_time);
                                 tempArr.push(i.dep_occured);
-
+                                tempArr.push(i.job_card);
                                 data_obj.push(tempArr);
                                 flag = 1;
 
@@ -265,7 +266,7 @@ function loadAccordionTable(obj)
         for(var i=0;i<obj.length;i++){
             createAccordionLine(accordion,obj[i][0],obj[i][1],obj[i][2],obj[i][5],obj[i][3],obj[i][4],obj[i][6],
             obj[i][7],obj[i][8],obj[i][9],obj[i][10],obj[i][11],obj[i][12],obj[i][13],obj[i][14],obj[i][15],
-            obj[i][16],obj[i][17],obj[i][18],obj[i][19],obj[i][20]);
+            obj[i][16],obj[i][17],obj[i][18],obj[i][19],obj[i][20],obj[i][21]);
         }
 
         $( function() {
@@ -292,7 +293,7 @@ function loadAccordionTable(obj)
     //buzzer_off_time                     //19
     //dep_occured                         //20
 
-function createAccordionLine(accordion,date,id,issue,plant,line,status,desc,resp,matID,machID,linID,issID,respStatus,respFeed,solDate,comDate,dept,solEmp,buzOffBy,buzOffT,deptOccrd){
+function createAccordionLine(accordion,date,id,issue,plant,line,status,desc,resp,matID,machID,linID,issID,respStatus,respFeed,solDate,comDate,dept,solEmp,buzOffBy,buzOffT,deptOccrd,jbcrd){
 
     var dateDIV  =  document.createElement('div');
     var idDIV    =  document.createElement('div');
@@ -371,6 +372,7 @@ function createAccordionLine(accordion,date,id,issue,plant,line,status,desc,resp
     div_1_left.appendChild(p2);
     div_1_left.appendChild(eye_span);
     div_1_left.appendChild(p3);
+    div_1_left.appendChild(p16);
     div_1_left.appendChild(p4);
     div_1_left.appendChild(p5);
     div_1_left.appendChild(p6);
@@ -384,7 +386,7 @@ function createAccordionLine(accordion,date,id,issue,plant,line,status,desc,resp
     div_1_right.appendChild(p13);
     div_1_right.appendChild(p14);
     div_1_right.appendChild(p15);
-    div_1_right.appendChild(p16);
+
 
     div_1_container.appendChild(div_1_row);
     div_1_row.appendChild(div_1_left);
@@ -454,8 +456,10 @@ function createAccordionLine(accordion,date,id,issue,plant,line,status,desc,resp
             eye_span.style.color="#e04c4c";
         }
  
+
     (machID!=null)?(p4.innerHTML       ="<span style='color:#5b5a5a;font-weight: bold'>Machine </span>:<span  style='font-size:16px'>"+machID+"</span>"):(p4.innerHTML ="");
     (matID!=null)?(p3.innerHTML        ="<span style='color:#5b5a5a;font-weight: bold'>Material  </span>:<span  style='font-size:16px'>"+matID+"</span>"):(p3.innerHTML ="");
+    (jbcrd!=null)?(p16.innerHTML        ="<span style='color:#5b5a5a;font-weight: bold'>Job Card  </span>:<span  style='font-size:16px'>"+jbcrd+"</span>"):(p16.innerHTML ="");
     //(linID!=null)?(p5.innerHTML      ="<span style='color:#5b5a5a;font-weight: bold'>Line Id </span>:<span  style='font-size:16px'>"+linID+"</span>"):(p5.innerHTML ="");
     //(issID!=null)?(p6.innerHTML      ="<span style='color:#5b5a5a;font-weight: bold'>Issue Id </span>:<span  style='font-size:16px'>"+issID+"</span>"):(p6.innerHTML ="");
     (respFeed!=null)?(p8.innerHTML     ="<span style='color:#5b5a5a;font-weight: bold'>Responsible Person Feedback </span>:<span  style='font-size:16px'>"+respFeed+"</span>"):(p8.innerHTML ="");

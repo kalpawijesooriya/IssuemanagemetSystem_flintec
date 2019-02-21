@@ -117,10 +117,10 @@ $.ajax({
         type: 'GET',
         datatype: 'json',
         success: function (issuedata) {
-        issuedata = $.parseJSON(issuedata);
+            issuedata = $.parseJSON(issuedata);
+            console.log(issuedata);
         if (issuedata.length > 0)
         {
-
              var seconds=[]
              for (var i = 0; i < issuedata.length; i++) {
 
@@ -139,16 +139,22 @@ $.ajax({
                     var today= d.getTime();
                     var milliseconds = startDate.getTime();
 
-                   var gap = Math.round(Math.abs(today - milliseconds)/1000);
-
-
+                    var gap = Math.round(Math.abs(today - milliseconds)/1000);
 
                     if (issueid == 2)//material
                     {   seconds.push(gap)
                         count++
                         $('#brakediv').show()
                         var divissue = $('#breake_body');
-                        var issue = '<tr><td>' + day + '</td><td>'+time+'</td><td>'+issuedata[i].lineName+'</td><td>' + issuedata[i].matirial+'</td><td>' + issuedata[i].description+'</td><td>' + issuedata[i].responciblepersonName+'</td><td><span id="countdown'+count+'" class="timer"></span></td></tr>'
+                        var issue = '<tr><td>'
+                            + day + '</td><td>'
+                            + time + '</td><td>'
+                            + issuedata[i].lineName + '</td><td>'
+                            + issuedata[i].matirial +'<span style="color:#7a3617;font-style: italic"> &nbsp;('+ issuedata[i].job_card+')</span></td><td>'
+                            + issuedata[i].description + '</td><td>'
+                            + issuedata[i].responciblepersonName +'</td><td><span id="countdown'
+                            + count + '" class="timer"></span></td></tr>'
+
                         divissue.append(issue)
                         divissue.show('slow');
                         $('#loding_icon').hide();
@@ -161,9 +167,7 @@ $.ajax({
         }
 
        setTimmer(seconds, count)
-
-        var countdownTimer = setInterval('timer()', 1000);
-
+       var countdownTimer = setInterval('timer()', 1000);
     }
 
     }, error: function (r, e, w) {
@@ -197,18 +201,15 @@ $.ajax({
         seconds[j]++;
        }
     }
-
   }
 </script>
 
 
-            <script>
+<script>
    setTimeout(function(){
-
-     location.reload();
-
+         location.reload();
     },3600000);
-            </script>
+</script>
         </div>
     </div>
 </div>
