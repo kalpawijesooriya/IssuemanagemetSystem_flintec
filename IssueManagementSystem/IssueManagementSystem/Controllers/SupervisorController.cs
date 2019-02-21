@@ -409,7 +409,18 @@ namespace IssueManagementSystem.Controllers
             }
             return Content("Qulity Issue Recorded", MediaTypeNames.Text.Plain);
         }
-
+        [HttpPost]
+        public string getMachine(string machine)
+        {
+           
+            using (schedulingEntities db = new schedulingEntities())
+            {
+                var location = db.Locations.Where(x => x.LocationName == machine).FirstOrDefault();
+                var group = db.Locations.Where(x => x.LocationId == location.ParentId).FirstOrDefault();
+                return group.LocationName;
+            }
+            
+        }
 
         [HttpPost]//add Material Delay to database
         public ActionResult AddMaterialDelay(string issueJson, issue_occurrence issueModel ,notification_handling notification_HandlingModel)
