@@ -231,6 +231,7 @@ namespace IssueManagementSystem.Controllers
                             issueModel.line_line_id = line_id;
                             issueModel.responsible_person_confirm_status = 1;
                             issueModel.department = "Engineering";
+                            issueModel.machine_machine_id = item["machine"].ToString();
                             issueModel.issue_satus = "1";
                             issueModel.issue_issue_ID = 3;//Issue id is 3 for Tecnical
                             issueModel.responsible_person_emp_id = resp_person.EmployeeNumber;
@@ -378,6 +379,7 @@ namespace IssueManagementSystem.Controllers
                             issueModel.responsible_person_confirm_status = 1;
                             issueModel.department = "Quality";
                             issueModel.issue_satus = "1";
+                            issueModel.machine_machine_id = item["machine"].ToString();
                             issueModel.issue_issue_ID = 4;//Issue id is 4 for quality
                             issueModel.responsible_person_emp_id = resp_person.EmployeeNumber;
                             issueModel.location = item["location"].ToString();
@@ -462,6 +464,7 @@ namespace IssueManagementSystem.Controllers
                             issueModel.issue_issue_ID = 2;
                             issueModel.issue_date = date;
                             issueModel.department = "Stores";
+                            issueModel.machine_machine_id = item["machine"].ToString();
                             issueModel.material_id = item["material_id"].ToString();
                             issueModel.responsible_person_emp_id = resp_person.EmployeeNumber;
                             issueModel.location = item["location"].ToString();

@@ -47,7 +47,7 @@
             <div class="form-group" style="width:100%;">
 
                 <div id="groupsdiv">
-                    <label for="exampleFormControlTextarea1" style="margin-top:5%">Select Group</label>
+                    <label for="exampleFormControlTextarea1" style="margin-top:5%">Select Area</label>
                     <select class="js-example-placeholder-single js-states form-control" id="groups" name="Material" style="width:100%;" onchange="">
                         <option></option>
 
@@ -88,7 +88,7 @@
      $('#groupsdiv').hide()
      $('#mapdiv').hide()
      $('#machineshopdiv').hide()
-    $('#machinediv').hide()
+     $('#machinediv').hide()
     
     if('@Session["department"]'=='MachineShop')
     {
@@ -111,10 +111,11 @@
         obj.description = document.getElementById("description").value;
         obj.line_line_id = '@ViewBag.lineid';
         obj.location =  '@Session["location"]';
+        obj.machine = document.getElementById("machine").value;
         var grouparry=document.getElementById("grouptext").value.split(" ")
         if(grouparry=="")
         {
-         obj.group=""
+          obj.group=document.getElementById("groups").value
         }else{
         obj.group=grouparry[1];
         }

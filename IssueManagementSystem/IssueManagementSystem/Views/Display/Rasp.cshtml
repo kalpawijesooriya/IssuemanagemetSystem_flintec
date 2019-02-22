@@ -35,8 +35,6 @@
         </div>
         <label id="map" style="display: none;"> @map</label>
     </div>
-
-
     <div class="container-fluid margin">
         <div class="displayhedding" style="margin-top:-20pt">
             <div class="row">
@@ -48,7 +46,7 @@
                     </div>
                 </div>
                 <div class="col-lg-7 text-left">
-                    <h3>@lineName Manufacturing Cell</h3>
+                    <h3>@lineName <span id="hedding">Manufacturing Cell</span></h3>
                 </div>
 
             </div>
@@ -90,7 +88,7 @@
                                             <tr>
                                                 <th scope="col">Date</th>
                                                 <th scope="col">Time</th>
-                                                <th scope="col" >Material</th>
+                                                <th scope="col">Material</th>
                                                 <th scope="col">Description</th>
                                                 <th scope="col">Responsible Person</th>
                                                 <th scope="col">Countdown</th>
@@ -139,6 +137,25 @@
                                 </div>
                             </div>
                         </li>
+                        <li id="QTY_list" hidden>
+                            <div class="card text-white bg-primary mb-3" style="max-width: 120rem;" id="qtydiv">
+                                <div class="card-header">Quality Issue</div>
+                                <div class="card-body">
+                                    <table class="table" style="max-width:120rem;color:white;">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Time</th>
+                                                <th scope="col">Description</th>
+                                                <th scope="col">Responsible Person</th>
+                                                <th scope="col">Countdown</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="qty_body"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -147,11 +164,13 @@
     $('#brakediv').hide();
     $('#maririaldiv').hide();
     $('#Softwarediv').hide();
+    $('#qtydiv').hide();
     $('#tecnicaldiv').hide();
     $('#breake_body').empty();
     $('#matirial_body').empty();
     $('#technical_body').empty();
     $('#it_body').empty();
+    $('#qty_body').empty();
     </script>
 
     <script src="~/Scripts/3.30bootstrap.min.js"></script>
@@ -159,7 +178,10 @@
     <script src="~/Scripts/moment.min.js"></script>
     <script src="~/signalr/Hubs"></script>
     <script>
-
+    if(('@lineName'=='Machine Shop 2')||('@lineName'=='Machine Shop 1')||('@lineName'=='Heat Treatment')||('@lineName'=='Accessories'))
+        {
+         $('#hedding').hide();
+        }
 
     $.connection.hub.start()
                 .done(function(){console.log("Its Works")
@@ -254,13 +276,15 @@ $.ajax({
                        
                        
                     }
-                    //if (issueid == 4)//Quility
-                    //{
-                    //    var divissue = $('#qu');
-                    //    issue = '<div class="col-md-6 col-lg-4" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--blue"><span class="desc" style="color:white">Qulity Issue</span><div class="icon" ><i class="zmdi zmdi-brightness-auto"></i></div></div><div class="card-body"><h5 class="card-title" ></h5><p class="card-text"><strong>IssueDate : </strong>' + day + '</br><strong>Time : </strong>' + date[1] + " " + date[2] + '</p><div class="text-right"> <button  class="btn btn-success"  data-id="' + issue_occurrence_id + '" data-issue_id="' + issueid +'" onclick="myfunction(this)">Solved</button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
-                    //    divissue.append(issue)
-                    //    divissue.show('slow');
-                    //}
+                    if (issueid == 4)//Quility
+                    {
+                       $('#qtydiv').show();
+                        var divissue = $('#qty_body');
+                        var issue = '<tr><td>' + day + '</td><td>'+time+'</td><td>' + issuedata[i].description + '</td><td>' + issuedata[i].responciblepersonName + '</td><td><span id="countdown'+count+'" class="timer"></span></td></tr>'
+                        divissue.append(issue)
+                        divissue.show('slow');
+                        $('#loding_icon').hide();
+                   }
                     if (issueid == 5)//IT/Software
                     {
                         $('#Softwarediv').show();

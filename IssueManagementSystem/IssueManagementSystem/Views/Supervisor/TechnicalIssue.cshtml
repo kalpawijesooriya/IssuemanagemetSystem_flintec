@@ -121,10 +121,11 @@
         obj.description = document.getElementById("description").value;
         obj.line_line_id = @Session["lineId"];
         obj.location =  '@Session["location"]';
+        obj.machine = document.getElementById("machine").value;
          var grouparry=document.getElementById("grouptext").value.split(" ")
         if(grouparry=="")
         {
-         obj.group=""
+        obj.group=document.getElementById("groups").value
         }else{
         obj.group=grouparry[1];
         }
