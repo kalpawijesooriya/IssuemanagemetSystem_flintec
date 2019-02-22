@@ -130,7 +130,6 @@ namespace IssueManagementSystem.Controllers
             }
         }
 
-
         [HttpPost]
         public JsonResult loadIssueList() {
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
@@ -141,7 +140,7 @@ namespace IssueManagementSystem.Controllers
                                 responsible_person_confirm_feedback,solved_date,commented_date,f.department,
                                 (SELECT  a.Name FROM BigRed.dbo.tbl_PPA_User a  WHERE a.UserName LIKE f.solved_emp_id ) AS solved_emp,
                                 (SELECT  i.Name FROM BigRed.dbo.tbl_PPA_User i WHERE i.UserName LIKE f.buzzer_off_by  ) AS buzzer_off_by
-                                ,buzzer_off_time 
+                                ,buzzer_off_time,job_card
 
                                 FROM 
 
@@ -161,7 +160,7 @@ namespace IssueManagementSystem.Controllers
                                 e.department,
                                 (SELECT  c.Name FROM BigRed.dbo.tbl_PPA_User c WHERE c.UserName LIKE e.solved_emp_id  ) AS solved_emp,
                                 (SELECT  i.Name FROM BigRed.dbo.tbl_PPA_User i WHERE i.UserName LIKE e.buzzer_off_by  ) AS buzzer_off_by
-                                ,buzzer_off_time 
+                                ,buzzer_off_time,job_card
 
                                 FROM
 

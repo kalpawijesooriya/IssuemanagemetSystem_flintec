@@ -667,14 +667,13 @@ function startConverting ()
            }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
        setTimeout(function () { $('.search_input').val(''); $("#listening").show();  } , 3000);
   }
 
 
 $('.searchbar').click(function() {
       $( '.search_input').css("padding", "0 10px");
-      $('.search_input').css("width", "12em");
+      $( '.search_input').css("width", "12em");
       $( '.search_input').css("caret-color", "red");
       $( '.search_input').css("transition", "width 0.4s linear");
       $( '.search_icon').css("background", "white");
@@ -683,7 +682,6 @@ $('.searchbar').click(function() {
 </script>
 
 <script>
-
          url_loadIssueList = '@Url.Action("loadIssueList", "Manager")';
          url_checkNotificationList_formanagers = '@Url.Action("checkNotificationList_formanagers", "Manager")';
          url_fillChart1 = '@Url.Action("fillChart1", "Manager")';
@@ -692,7 +690,6 @@ $('.searchbar').click(function() {
          url_notificationOnOff = '@Url.Action("notificationOnOff","Manager")';
          url_totalNumberOfIssues = '@Url.Action("totalNumberOfIssues","Manager")';
          url_voiceDataFilter = '@Url.Action("voiceDataFilter", "Manager")';
-
 </script>
 
 <script src="~/Scripts/AdminScripts/jscolar.js"></script>

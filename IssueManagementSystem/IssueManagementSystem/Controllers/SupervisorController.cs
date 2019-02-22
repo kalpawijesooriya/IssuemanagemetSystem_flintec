@@ -96,17 +96,12 @@ namespace IssueManagementSystem.Controllers
             return Json(materials);
         }
 
-
-
-
         public ActionResult ITIssue()//IT Issue view
         {
             if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
             {
                 return RedirectToAction("Index", "Login");
-
             }
-
             return View();
         }
 
@@ -465,6 +460,7 @@ namespace IssueManagementSystem.Controllers
                             issueModel.issue_date = date;
                             issueModel.department = "Stores";
                             issueModel.machine_machine_id = item["machine"].ToString();
+                            issueModel.job_card = item["jobcard"].ToString(); ;
                             issueModel.material_id = item["material_id"].ToString();
                             issueModel.responsible_person_emp_id = resp_person.EmployeeNumber;
                             issueModel.location = item["location"].ToString();

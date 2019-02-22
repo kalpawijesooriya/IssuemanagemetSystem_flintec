@@ -21,7 +21,7 @@ var set_functions = {
                 }
 };
 
-function search_issue_data(issue,lvl2_command_){ //search issue data in previously recieved JSON data set ""
+function search_issue_data(issue,lvl2_command_){ //search issue data in previously recieved JSON data set
         /*
         Name: "bbb"
         buzzer_off_by: "bbb"
@@ -107,7 +107,23 @@ function voice_response(ap,data)
 
         if(voice_line_1!=""){ getVoice(voice_line_1); }
        
-        //what are the issues today?
-        //There are 3 machine breakdowns, 2 Material delays in koggala and 2 technical issues in katunayaka
-        //There is an usolved material delay for two days in potted line in katunayaka
+        // what are the issues today?
+        // There are 3 machine breakdowns, 2 Material delays in koggala and 2 technical issues in katunayaka
+        // There is an usolved material delay for two days in potted line in katunayaka
+    }
+
+function voice_response_2(ap,data)
+    {  
+        var loc = (data[0].location=="KTY"?"Kaatunaayaka":"Koggala");
+        var iss = data[0].issue;
+        var voice_line_1 = "";
+
+
+        if(data.length>1)
+        {voice_line_1 = (ap==true?"there are ":"")+data.length+" "+iss+"s in "+loc}
+        if(data.length<=1)
+        {voice_line_1 = (ap==true?"there is ":"")+ data.length+" "+iss+ " in "+loc}
+
+        if(voice_line_1!=""){ getVoice(voice_line_1); }
+       
     }
