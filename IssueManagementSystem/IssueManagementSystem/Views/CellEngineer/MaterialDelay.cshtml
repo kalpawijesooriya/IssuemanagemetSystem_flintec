@@ -142,6 +142,7 @@
 
     $(document).ready(function(){
             $("#materialSelectBox").prop("disabled", true);
+            $("#chk_box").attr("disabled", true);
     });
 
     function loadMaterialList()
@@ -149,6 +150,7 @@
         var selectedJobCard = document.getElementById("jobCardSelectBox").value;
         $.ajax({
             type: "POST",
+            async: true,
             dataType: 'text',
             url: "/CellEngineer/loadMaterialList",
             data: { selectedJobCard: selectedJobCard },
@@ -199,7 +201,7 @@
                 for (var i = 0; i < feedback[0].Value.length; i++) {
                     var opt = document.createElement('option');
                     opt.innerHTML = feedback[0].Value[i].No_ + " - " + feedback[0].Value[i].Description;
-                    opt.value = feedback[0].Value[i].Item_No_;
+                    opt.value = feedback[0].Value[i].No_;
                     materialSelectBox.appendChild(opt);
                 }
             },

@@ -61,6 +61,16 @@ namespace IssueManagementSystem.Models
             public String job_card { get; set; }
         }
 
+        public class tempClass6
+        {
+            public int line_id { get; set; }
+        }
+
+
+        public class tempClass7
+        {
+            public string line_name { get; set; }
+        }
 
     }
 }

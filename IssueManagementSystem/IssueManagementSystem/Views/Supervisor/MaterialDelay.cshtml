@@ -137,8 +137,7 @@
     }
     $(document).ready(function () {
         $("#materialSelectBox").prop("disabled", true);
-        //$("#chk_box").attr("disabled", true);
-        document.getElementById("chk_box").setAttribute("disabled", "disabled");
+         $("#chk_box").attr("disabled", true);
     });
 
     function loadMaterialList() {
@@ -195,7 +194,7 @@
                 for (var i = 0; i < feedback[0].Value.length; i++) {
                     var opt = document.createElement('option');
                     opt.innerHTML = feedback[0].Value[i].No_ +" - "+feedback[0].Value[i].Description;
-                    opt.value = feedback[0].Value[i].Item_No_;
+                    opt.value = feedback[0].Value[i].No_;
                     materialSelectBox.appendChild(opt);
                 }
             },
