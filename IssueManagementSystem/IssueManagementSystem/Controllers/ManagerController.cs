@@ -1,7 +1,11 @@
 ﻿using IssueManagementSystem.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
+using System.Data.Common;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Web;
@@ -52,6 +56,8 @@ namespace IssueManagementSystem.Controllers
             return Json(true);
         }
 
+
+        //fill 
         [HttpPost]
         public JsonResult fillChart1(string barChart, string startDate, string endDate, string plantLocation)
         {
@@ -171,8 +177,140 @@ namespace IssueManagementSystem.Controllers
                                 h.UserName LIKE e.responsible_person_emp_id AND
                                 e.material_id IS NULL ORDER BY issue_date DESC";
 
-                var data = db.Database.SqlQuery<TempClasses.tempClass5>(query).ToList();
-                return Json(data, JsonRequestBehavior.AllowGet);
+                String query1 = @"SELECT
+                                issue_date,f.issue_occurrence_id,
+                                issues.issue,lines.line_name,
+                                issue_satus,f.location,
+                                description,g.Name,
+                                ''+material_id AS material_id,machine_machine_id,
+                                line_line_id,issue_issue_ID,
+                                responsible_person_confirm_status,responsible_person_confirm_feedback,
+                                solved_date,commented_date,
+                                f.department,(SELECT  a.Name FROM BigRed.dbo.tbl_PPA_User a  WHERE a.UserName LIKE f.solved_emp_id ) AS solved_emp,
+                                (SELECT  i.Name FROM BigRed.dbo.tbl_PPA_User i WHERE i.UserName LIKE f.buzzer_off_by  ) AS buzzer_off_by,buzzer_off_time,
+                                (lines.department_id)AS dep_occured,job_card
+
+                                FROM 
+
+                                issue_occurrence f,lines,issues,BigRed.dbo.tbl_PPA_User g
+
+                                WHERE
+
+                                lines.line_id = f.line_line_id AND issues.issue_id = f.issue_issue_ID
+                                AND g.UserName LIKE f.responsible_person_emp_id AND f.issue_issue_ID = 2";
+
+
+
+               String query2 = @"SELECT
+                                issue_date,e.issue_occurrence_id,
+                                issues.issue,lines.line_name,
+                                issue_satus,e.location,
+                                description,h.Name,
+                                ''+material_id AS material_id,machine_machine_id,
+                                line_line_id,issue_issue_ID,
+                                responsible_person_confirm_status,responsible_person_confirm_feedback,
+                                solved_date,commented_date,
+                                e.department,(SELECT  a.Name FROM BigRed.dbo.tbl_PPA_User a  WHERE a.UserName LIKE e.solved_emp_id ) AS solved_emp,
+                                (SELECT  i.Name FROM BigRed.dbo.tbl_PPA_User i WHERE i.UserName LIKE e.buzzer_off_by  ) AS buzzer_off_by,buzzer_off_time,
+                                (lines.department_id)AS dep_occured,job_card
+
+                                FROM
+
+                                issue_occurrence e,lines,issues,BigRed.dbo.tbl_PPA_User h
+                                WHERE
+
+                                lines.line_id = e.line_line_id AND issues.issue_id = e.issue_issue_ID AND 
+                                h.UserName LIKE e.responsible_person_emp_id AND
+                                e.material_id IS NULL ORDER BY issue_date DESC";
+
+                List<TempClasses.tempClass5> data = db.Database.SqlQuery<TempClasses.tempClass5>(query).ToList();
+                var cmd = db.Database.Connection.CreateCommand();
+                cmd.Connection.Open();
+
+                cmd.CommandText = query1;
+                DataTable dt1 = new DataTable();
+                dt1.Load(cmd.ExecuteReader());
+
+                cmd.CommandText = query2;
+                DataTable dt2 = new DataTable();
+                dt2.Load(cmd.ExecuteReader());
+
+                //DataRow[] check_val = dt1.Select("issue_occurrence_id = '"+5610+"'");
+
+                dt1.Columns["material_id"].ReadOnly = false;
+                dt1.Columns["material_id"].MaxLength = 100;
+                List<TempClasses.tempClass5> dt1_data = new List<TempClasses.tempClass5>();
+
+                foreach (DataRow row in dt1.Rows)
+                {
+                    String query3 = "SELECT FLINTEC.dbo.FLINTEC$Item.Description FROM  FLINTEC.dbo.FLINTEC$Item WHERE FLINTEC.dbo.FLINTEC$Item.No_ = '" + (string)row["material_id"] + "'";
+                    var cmd1 = db.Database.Connection.CreateCommand();
+                    cmd1.CommandText = query3;
+                    System.Diagnostics.Debug.Print("@@@@@@@@@@@@@@@@@@@@@@@"+ query3);
+                    DbDataReader reader = cmd1.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        row.SetField("material_id", (string)row["material_id"] + " - " + reader[0]);
+                    }
+
+                    var data_object = new TempClasses.tempClass5();
+                    data_object.issue_date = (DateTime)row["issue_date"];//"issue_date"
+                    data_object.issue_occurrence_id = (int)row["issue_occurrence_id"];//"issue_occurrence_id"
+                    data_object.issue = (string)row["issue"];//"issue"
+                    data_object.line_name = (string)row["line_name"];//"line_name"
+                    data_object.issue_satus = (string)row["issue_satus"];//"issue_satus"
+                    data_object.location = (string)row["location"];//"location"
+                    data_object.description = DBNull.Value.Equals(row["description"]) ? null : (string)row["description"];//"description"
+                    data_object.Name = (string)row["Name"];//"Name"
+                    data_object.material_id = DBNull.Value.Equals(row["material_id"]) ? null : (string)row["material_id"];//"material_id"
+                    data_object.machine_machine_id = DBNull.Value.Equals(row["machine_machine_id"]) ? null : (string)row["machine_machine_id"];//"machine_machine_id"
+                    data_object.line_line_id = (int)row["line_line_id"];//"line_line_id"
+                    data_object.issue_issue_ID = (int)row["issue_issue_ID"];//"issue_issue_ID"
+                    data_object.responsible_person_confirm_status = (int)row["responsible_person_confirm_status"];//"responsible_person_confirm_status"
+                    data_object.responsible_person_confirm_feedback = DBNull.Value.Equals(row["responsible_person_confirm_feedback"]) ? null : (string)row["responsible_person_confirm_feedback"];//"responsible_person_confirm_feedback"
+                    data_object.solved_date = DBNull.Value.Equals(row["solved_date"]) ? (DateTime?)null : (DateTime)row["solved_date"];//"solved_date"
+                    data_object.commented_date = DBNull.Value.Equals(row["commented_date"])? (DateTime?)null : (DateTime)row["commented_date"];//"commented_date"
+                    data_object.department = (string)row["department"];//"department"
+                    data_object.solved_emp = DBNull.Value.Equals(row["solved_emp"]) ?  null : (string)row["solved_emp"];//"solved_emp"
+                    data_object.buzzer_off_by = DBNull.Value.Equals(row["buzzer_off_by"]) ?  null : (string)row["buzzer_off_by"];//"buzzer_off_by"
+                    data_object.buzzer_off_time = DBNull.Value.Equals(row["buzzer_off_time"]) ? (DateTime?)null : (DateTime)row["buzzer_off_time"];//"buzzer_off_time"
+                    data_object.dep_occured = (int)row["dep_occured"];//"dep_occured"
+                    data_object.job_card = DBNull.Value.Equals(row["job_card"]) ? null :(string)row["job_card"];//"job_card"
+                        
+                    dt1_data.Add(data_object);
+                }
+
+                foreach (DataRow row in dt2.Rows)
+                {
+                   
+                    var data_object = new TempClasses.tempClass5();
+                    data_object.issue_date = (DateTime)row["issue_date"];//"issue_date"
+                    data_object.issue_occurrence_id = (int)row["issue_occurrence_id"];//"issue_occurrence_id"
+                    data_object.issue = (string)row["issue"];//"issue"
+                    data_object.line_name = (string)row["line_name"];//"line_name"
+                    data_object.issue_satus = (string)row["issue_satus"];//"issue_satus"
+                    data_object.location = (string)row["location"];//"location"
+                    data_object.description = DBNull.Value.Equals(row["description"]) ? null : (string)row["description"];//"description"
+                    data_object.Name = (string)row["Name"];//"Name"
+                    data_object.material_id = DBNull.Value.Equals(row["material_id"]) ? null : (string)row["material_id"];//"material_id"
+                    data_object.machine_machine_id = DBNull.Value.Equals(row["machine_machine_id"]) ? null : (string)row["machine_machine_id"];//"machine_machine_id"
+                    data_object.line_line_id = (int)row["line_line_id"];//"line_line_id"
+                    data_object.issue_issue_ID = (int)row["issue_issue_ID"];//"issue_issue_ID"
+                    data_object.responsible_person_confirm_status = (int)row["responsible_person_confirm_status"];//"responsible_person_confirm_status"
+                    data_object.responsible_person_confirm_feedback = DBNull.Value.Equals(row["responsible_person_confirm_feedback"]) ? null : (string)row["responsible_person_confirm_feedback"];//"responsible_person_confirm_feedback"
+                    data_object.solved_date = DBNull.Value.Equals(row["solved_date"]) ? (DateTime?)null : (DateTime)row["solved_date"];//"solved_date"
+                    data_object.commented_date = DBNull.Value.Equals(row["commented_date"]) ? (DateTime?)null : (DateTime)row["commented_date"];//"commented_date"
+                    data_object.department = (string)row["department"];//"department"
+                    data_object.solved_emp = DBNull.Value.Equals(row["solved_emp"]) ? null : (string)row["solved_emp"];//"solved_emp"
+                    data_object.buzzer_off_by = DBNull.Value.Equals(row["buzzer_off_by"]) ? null : (string)row["buzzer_off_by"];//"buzzer_off_by"
+                    data_object.buzzer_off_time = DBNull.Value.Equals(row["buzzer_off_time"]) ? (DateTime?)null : (DateTime)row["buzzer_off_time"];//"buzzer_off_time"
+                    data_object.dep_occured = (int)row["dep_occured"];//"dep_occured"
+                    data_object.job_card = DBNull.Value.Equals(row["job_card"]) ? null : (string)row["job_card"];//"job_card"
+
+                    dt1_data.Add(data_object);
+                }
+                //dt1_data.Sort("Column_name desc");
+                return Json(dt1_data, JsonRequestBehavior.AllowGet);
             }
         }
 
