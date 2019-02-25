@@ -13,12 +13,13 @@
     int lineId = (int)Session["lineId"];
     using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
     {
-       
+
         var mapInfo = db.line_map.Where(y => y.line_id == lineId).FirstOrDefault();
         ViewData["map"] = mapInfo.map.ToString().Trim();//get the map arry to ViewData
 
     }
-
+    BigRedEntities imsDbContext = new BigRedEntities();
+    List<tblWorkstation_Config> mList = imsDbContext.tblWorkstation_Config.ToList();
 }
 
 
@@ -47,19 +48,29 @@
             </div>
         </div>
         <div class="col-md-6 machine">
-
-            <div class="form-group machine">
-                <label for="exampleFormControlTextarea1">Machine</label>
-                <input type="text" class="form-control" id="machine" disabled>
-            </div>
-            <label id="map" style="display: none;">@ViewData["map"]</label>
             <div id="groupsdiv">
-                <label for="exampleFormControlTextarea1" style="margin-top:5%">Select Group</label>
+                <label for="exampleFormControlTextarea1" style="margin-top:5%">Select Area</label>
                 <select class="js-example-placeholder-single js-states form-control" id="groups" name="Material" style="width:100%;" onchange="">
                     <option></option>
 
                 </select>
             </div>
+            <div class="form-group machine" id="machineText">
+                <label for="exampleFormControlTextarea1">Machine</label>
+                <input type="text" class="form-control" id="machine" disabled>
+            </div>
+            <div id="machinediv">
+                <label for="exampleFormControlTextarea1" style="margin-top:5%">Select Area</label>
+                <select class="js-example-placeholder-single js-states form-control" id="machineSelect" name="Material" style="width:100%;" onchange="">
+                    <option></option>
+                    @foreach (var item in mList)
+                    {
+                        <option value="@item.Machine_ID">@item.Machine_ID</option>
+                    }
+                </select>
+            </div>
+            <label id="map" style="display: none;">@ViewData["map"]</label>
+
             <div id="machineshopdiv">
                 <label for="exampleFormControlTextarea1" style="margin-top:5%">Group</label>
                 <input type="text" class="form-control" id="grouptext" disabled>
@@ -95,7 +106,8 @@
     <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
     <script>
        $('#groupsdiv').hide()
-           $('#machineshopdiv').hide()
+       $('#machineshopdiv').hide()
+       $('#machinediv').hide()
     if('@Session["department"]'=='MachineShop')
     {
       $('#machineshopdiv').show()
@@ -175,10 +187,14 @@
     }
     });
           $('#groups').select2({
-        placeholder: "Select Group.....",
+        placeholder: "Select Area.....",
         allowClear: false
     });
-
+  
+    $('#machineSelect').select2({
+    placeholder: "Select Machine.....",
+   
+    });
         
     function  getMachineGroup(machine)
     { 

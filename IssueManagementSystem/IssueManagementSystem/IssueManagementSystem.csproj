@@ -745,6 +745,7 @@
     <Content Include="Views\Display\Stores.cshtml" />
     <Content Include="Views\Display\Maintenance.cshtml" />
     <Content Include="Views\Display\test.cshtml" />
+    <Content Include="Views\Display\machineshop.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
