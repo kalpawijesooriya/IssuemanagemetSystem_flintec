@@ -42,6 +42,11 @@ namespace IssueManagementSystem.Controllers
             return View();
 
         }
+        public ActionResult machineshop(int id)
+        {
+            ViewBag.id = id;
+            return View();
+        }
         public ActionResult Maintenance()
         {
 

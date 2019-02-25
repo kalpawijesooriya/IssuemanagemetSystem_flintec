@@ -426,8 +426,8 @@ namespace IssueManagementSystem.Controllers
 
         [HttpPost]//add Material Delay to database
         public ActionResult AddMaterialDelay(string issueJson, issue_occurrence issueModel ,notification_handling notification_HandlingModel)
-        {
-            
+         {
+   
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) 
             {
                 JArray issueData = JArray.Parse(issueJson) as JArray;
@@ -460,7 +460,7 @@ namespace IssueManagementSystem.Controllers
                             issueModel.issue_date = date;
                             issueModel.department = "Stores";
                             issueModel.machine_machine_id = item["machine"].ToString();
-                            issueModel.job_card = item["jobcard"].ToString(); ;
+                            issueModel.job_card = item["jobcard"].ToString();
                             issueModel.material_id = item["material_id"].ToString();
                             issueModel.responsible_person_emp_id = resp_person.EmployeeNumber;
                             issueModel.location = item["location"].ToString();
