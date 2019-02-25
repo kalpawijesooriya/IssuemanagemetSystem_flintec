@@ -396,6 +396,7 @@
       <DependentUpon>scheduling.edmx</DependentUpon>
       <LastGenOutput>scheduling.cs</LastGenOutput>
     </Content>
+    <Content Include="Scripts\bootstrap-toggle.min.js" />
     <Content Include="Scripts\flipclock.js" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\font-face.css" />

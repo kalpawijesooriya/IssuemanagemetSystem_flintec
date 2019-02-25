@@ -1,4 +1,5 @@
-﻿@{
+﻿@using IssueManagementSystem.Models
+@{
     /**/
     ViewBag.Title = "ITIssue";
     Layout = "~/Views/Shared/supervisorsLayout.cshtml";
@@ -6,8 +7,15 @@
     {
         Response.Redirect("~/Login/Index");
     }
+    int lineId = (int)Session["lineId"];
+    using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
+    {
 
-   
+        var mapInfo = db.line_map.Where(y => y.line_id == lineId).FirstOrDefault();
+        ViewData["map"] = mapInfo.map.ToString().Trim();//get the map arry to ViewData
+
+    }
+
 }
 
 @model IssueManagementSystem.Models.issue_occurrence
@@ -18,15 +26,35 @@
     <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
     <h2>Quality Issue</h2>
     <hr />
+    <label id="map" style="display: none;">@ViewData["map"]</label>
     <div class="row">
+        <div class="col-sm-4">
+            <div class="container-liquid" id="mapdiv">
+                <div style="display:inline-grid;grid-template-columns: 90%  50%">
+                    <div id="container">
+                        <canvas id="canvas1" style="border: 1px solid black;margin-left:8.2em;background-size: 100% 100%;" width="250" height="750">
+                            <br>This text is displayed if your browser does not support HTML5 Canvas.<br>
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="" style="width:50%;margin:auto;">
             <div class="form-group" style="width:100%;margin:auto">
                 <div id="groupsdiv">
                     <label for="exampleFormControlTextarea1" style="margin-top:5%">Select Group</label>
                     <select class="js-example-placeholder-single js-states form-control" id="groups" name="Material" style="width:100%;" onchange="">
                         <option></option>
-                       
+
                     </select>
+                </div>
+                <div class="form-group machine" id="machinediv">
+                    <label for="exampleFormControlTextarea1">Machine</label>
+                    <input type="text" class="form-control" id="machine" disabled>
+                </div>
+                <div id="machineshopdiv">
+                    <label for="exampleFormControlTextarea1" style="margin-top:5%">Group</label>
+                    <input type="text" class="form-control" id="grouptext" disabled>
                 </div>
                 <div style="padding-top:20px;margin-top:5%">
                     <label for="exampleFormControlTextarea1">Description</label>
@@ -48,7 +76,7 @@
 
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-
+<script src="~/Scripts/SupervisorScripts/showmap.js"></script>
 <script src="~/Scripts/AdminScripts/jscolar.js"></script>
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
 <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
@@ -56,22 +84,22 @@
 
 <script>
        $('#groupsdiv').hide()
+     $('#mapdiv').hide()
+     $('#machineshopdiv').hide()
+    $('#machinediv').hide()
     if('@Session["department"]'=='MachineShop')
     {
-      for(var i=1;i<=10;i++)
-        {
-           $('#groups').append('<option value="'+i+'">Group'+i+'</option>')
-        }
-     
-    $('#groupsdiv').show()
+      $('#mapdiv').show()
+      $('#machineshopdiv').show()
+      $('#machinediv').show()
     }
     if(('@Session["department"]'=='HeatTreatment')||('@Session["department"]'=='Accessories'))
     {
-     
+
              $('#groups').append('<option value="1">Heat treatment</option>')
            $('#groups').append('<option value="2">Accessories</option>')
-      
-     
+
+
     $('#groupsdiv').show()
     }
   $("#submit").click(function () {
@@ -79,7 +107,15 @@
         obj.description = document.getElementById("description").value;
         obj.line_line_id = @Session["lineId"];
         obj.location =  '@Session["location"]';
-        obj.group=document.getElementById("groups").value
+        obj.machine = document.getElementById("machine").value;
+       var grouparry=document.getElementById("grouptext").value.split(" ")
+        if(grouparry=="")
+        {
+          obj.group=document.getElementById("groups").value
+        }else{
+        obj.group=grouparry[1];
+        }
+      
         var obj_array = new Array();
         obj_array.push(obj);
 
@@ -113,5 +149,54 @@
         placeholder: "Select Group.....",
         allowClear: false
     });
+
+       var id=@Session["lineId"];
+    var inputPath="../Content/images/"+id+".jpg"
+    var url = '@Url.Action("loadBase64Image", "Admin")';
+    $.ajax({
+    type: "POST",
+    dataType: 'text',
+    url: url,
+    data: {inputPath},
+    success: function (mapData) {
+
+    if (mapData.length > 0) {
+    document.getElementById('canvas1').style.background = "url(data:image/jpeg;base64," + mapData + ")";
+    }
+    else {
+    document.getElementById('canvas1').style.background = "";
+    }
+
+    document.getElementById('canvas1').style.backgroundSize = "250px 750px";
+
+    },
+    error: function () {
+    alert("Error");
+    }
+    });
+  
+
+    function  getMachineGroup(machine)
+    { 
+      if('@Session["department"]'=='MachineShop')
+        { 
+        var url = '@Url.Action("getMachine", "Supervisor")'
+          
+        $.ajax({
+            type: "POST",
+            dataType: 'text',
+            url: url,
+            data: {machine},
+            success: function (feedback) {
+            
+               document.getElementById("grouptext").value=feedback
+             
+            },
+            error: function (feedback) {
+                alert(feedback);
+             }
+          });
+        }
+    }
 </script>
 
