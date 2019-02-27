@@ -197,6 +197,7 @@
     <Compile Include="Controllers\CellEngineerController.cs" />
     <Compile Include="Controllers\Communication.cs" />
     <Compile Include="Controllers\DisplayController.cs" />
+    <Compile Include="Controllers\LocationAdapter.cs" />
     <Compile Include="Controllers\ManagerController.cs" />
     <Compile Include="Controllers\ResponsiblePersonController.cs" />
     <Compile Include="Controllers\AdminController.cs" />

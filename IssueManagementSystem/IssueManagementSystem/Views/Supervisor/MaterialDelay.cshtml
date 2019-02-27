@@ -65,19 +65,9 @@
 
                 <span id="lineID" style="display:none">@lineId</span>
 
-                <label style="margin-top:5%">Select job card</label>
-
-                <select class="js-example-placeholder-single js-states form-control" id="jobCardSelectBox" style="width:100%" onchange="loadMaterialList()">
-                    <option></option>
-                    @foreach (var j in Model.jobCards)
-                    {
-                        <option value="@j.Prod_Order_No_">@j.Prod_Order_No_  &nbsp;- &nbsp;&nbsp; @j.Description </option>
-                    }
-                </select>
-
                 <label style="margin-top:5%">Select material</label>
 
-                <div class="row" onclick="popUpAlert()">
+                <div class="row">
                     <div class="col-md-3">
                         <input id="chk_box" type="checkbox" onChange="checkBoxOnChange()" data-toggle="toggle" checked data-on="BOM material" data-off="non-BOM material" data-onstyle="success" data-offstyle="info" data-size="small" />
                     </div>
@@ -87,9 +77,10 @@
                         </select>
                     </div>
                 </div>
-                <div class="row" >
+
+                <div class="row">
                     <div class="col-md-3"></div>
-                    <div  class="col-md-9" style="margin:auto;">
+                    <div class="col-md-9" style="margin:auto;">
                         <div class="progress" style="height:5px;">
                             <div id="prog_bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
                         </div>
@@ -97,6 +88,16 @@
                 </div>
 
 
+                <label style="margin-top:5%">Select job card</label>
+                <div onclick="popUpAlert()">
+                    <select class="js-example-placeholder-single js-states form-control" id="jobCardSelectBox" style="width:100%" onchange="loadMaterialList()">
+                        <option></option>
+                        @foreach (var j in Model.jobCards)
+                        {
+                            <option value="@j.Prod_Order_No_">@j.Prod_Order_No_  &nbsp;- &nbsp;&nbsp; @j.Description </option>
+                        }
+                    </select>
+                </div>
 
                 <div style="padding-top:20px;">
                     <label for="exampleFormControlTextarea1">Description</label>
@@ -110,6 +111,7 @@
                         <input id="submit" class="submit" type="button" value="Submit" onclick="SubmitMaterialDelay()" />
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -153,40 +155,40 @@
     $('#groupsdiv').show()
     }
     $(document).ready(function () {
-        $("#materialSelectBox").prop("disabled", true);
-         $("#chk_box").attr("disabled", true);
+        $("#jobCardSelectBox").prop("disabled", true);
     });
 
     function popUpAlert() {
 
-        var selectedJobCard = document.getElementById("jobCardSelectBox").value;
-        if (selectedJobCard == '' ) {
+        var selectedMaterial = document.getElementById("materialSelectBox").value;
+        if (selectedMaterial == '' ) {
             $.alert({
                 title: '',
-                content: 'Please select the job card first !'
+                content: 'Please select the material first !'
             });
         }
-
     }
+
+    var prog_bar = document.getElementById('prog_bar');
+
     function load_prog_bar(fill){
-        var prog_bar = document.getElementById('prog_bar');
         prog_bar.style.width = +fill+"%";
     }
 
-
     function loadMaterialList() {
-        var selectedJobCard = document.getElementById("jobCardSelectBox").value;
+
+        setTimeout(function(){
+            load_prog_bar(0);
+        }, 1);
 
         $.ajax({
             type: "POST",
             dataType: 'text',
             async:true,
             url: "/CellEngineer/loadMaterialList",
-            data: { selectedJobCard: selectedJobCard },
+            data: { lineID:@Session["lineId"] },
             success: function (feedback) {
-
                 feedback = JSON.parse(feedback);
-                // alert(feedback[0].length);
                 var materialSelectBox = document.getElementById("materialSelectBox");
                 materialSelectBox.options.length = 0;
                 var opt1 = document.createElement('option');
@@ -199,30 +201,36 @@
                     opt.innerHTML = feedback[0].Value[i].Item_No_;
                     opt.value = feedback[0].Value[i].Item_No_;
                     materialSelectBox.appendChild(opt);
-                   // load_prog_bar( (2000/feedback.length)*100 );
-                }
 
+                    setTimeout(function(){
+                        load_prog_bar( ($('#materialSelectBox option').length/feedback[0].Value.length)*100 );
+                    },1);
+                }
             },
             error: function () {
                 alert("Error occurred");
             }
         });
-
-        if (selectedJobCard != null) {
+       
+        var selectedMaterial = document.getElementById("materialSelectBox").value;       
+        if (selectedMaterial != null) {
             $("#materialSelectBox").prop("disabled", false);
-            $("#chk_box").attr("disabled", false);
         }
     }
 
     function load_nonBOMMaterialList() {
       var url = '@Url.Action("loadNonBOMMaterials", "CellEngineer")'
+
+        setTimeout(function(){
+            load_prog_bar(0);
+        }, 1);
+
         $.ajax({
             type: "POST",
             dataType: 'text',
             async: true,
             url:url,
             success: function (feedback) {
-                //alert(feedback.length);
                 feedback = JSON.parse(feedback);
                 var materialSelectBox = document.getElementById("materialSelectBox");
                 materialSelectBox.options.length = 0;
@@ -235,9 +243,10 @@
                     opt.innerHTML = feedback[0].Value[i].No_ +" - "+feedback[0].Value[i].Description;
                     opt.value = feedback[0].Value[i].No_;
                     materialSelectBox.appendChild(opt);
-                }
-
-                
+                    setTimeout(function(){
+                        load_prog_bar( ($('#materialSelectBox option').length/feedback[0].Value.length)*100 );
+                    }, 1);
+                } 
             },
             error: function () {
                 alert("Error occurred");
