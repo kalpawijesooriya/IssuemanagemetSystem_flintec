@@ -26,7 +26,7 @@ namespace IssueManagementSystem.Controllers
         public ActionResult DashBord(int lineid)
         {
             ViewBag.lineId = lineid;
-            return View(); 
+            return View();
         }
         public ActionResult MachinBreakdown(int lineid)//Machine Breakedown view
         {
@@ -63,19 +63,8 @@ namespace IssueManagementSystem.Controllers
 
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) //method for load the map acordinto the surevisor line
             {
-                jobCardsList_issue_occurrence.issue_occurrence = db.issue_occurrence;  
+                jobCardsList_issue_occurrence.issue_occurrence = db.issue_occurrence;
             }
-
-
-            var query2 = @"SELECT DISTINCT
-            pol.[Prod_ Order No_]
-            FROM
-            FLINTEC.dbo.[FLINTEC$Prod_ Order Line] pol,
-            FLINTEC.dbo.[FLINTEC$Prod_ Order Component] poc
-            WHERE 
-            poc.[Item No_] LIKE '15-ORC3-0030-BA' AND
-            poc.[Prod_ Order No_] = pol.[Prod_ Order No_] AND
-            poc.Status = 3 ORDER BY pol.[Prod_ Order No_]";
 
             FLINTEC_Prod_Order_Line_Context jobCardContext = new FLINTEC_Prod_Order_Line_Context();
             List<FLINTEC_Prod_Order_Line> jcList = jobCardContext.FLINTEC_Prod_Order_Line.Where(x => x.Status == 3).ToList();
@@ -85,23 +74,23 @@ namespace IssueManagementSystem.Controllers
         }
 
         [HttpPost]
-        public ActionResult loadMaterialList(string lineID)
+        public ActionResult loadMaterialList(String lineID)
         {
-            dynamic materials = new  ExpandoObject();
-
+            dynamic materials = new ExpandoObject();
+            String location = new LocationAdapter(System.Convert.ToInt32(lineID)).get_NAV_Location();
             var sql_query = @"SELECT DISTINCT
-                            poc.[Item No_] AS Item_No_
-                            FROM
-                            FLINTEC.dbo.[FLINTEC$Prod_ Order Line] pol,
-                            FLINTEC.dbo.[FLINTEC$Prod_ Order Component] poc
-                            WHERE
-                            poc.[Location Code] LIKE 'KT-ARC' AND
-                            poc.[Prod_ Order No_] = pol.[Prod_ Order No_] AND
-                            poc.Status = 3 ORDER BY pol.[Prod_ Order No_]";
+                                poc.[Item No_] AS Item_No_ , '' AS Prod_Order_No_, poc.Description
+                                FROM
+                                FLINTEC.dbo.[FLINTEC$Prod_ Order Line] pol,
+                                FLINTEC.dbo.[FLINTEC$Prod_ Order Component] poc
+                                WHERE
+                                poc.[Location Code] LIKE '" + location + @"' AND
+                                poc.[Prod_ Order No_] = pol.[Prod_ Order No_] AND
+                                poc.Status = 3 ORDER BY Item_No_";
 
-            using (FLINTEC_Prod_Order_Component_Context jobCardContext = new FLINTEC_Prod_Order_Component_Context())
+            using (FLINTEC_Prod_Order_Component_Context Context = new FLINTEC_Prod_Order_Component_Context())
             {
-                List<FLINTEC_Prod_Order_Component> matList = jobCardContext.Database.SqlQuery<FLINTEC_Prod_Order_Component>(sql_query).ToList();
+                List<FLINTEC_Prod_Order_Component> matList = Context.Database.SqlQuery<FLINTEC_Prod_Order_Component>(sql_query).ToList();
                 materials.materials = matList;
             }
 
@@ -109,6 +98,30 @@ namespace IssueManagementSystem.Controllers
             //List<FLINTEC_Prod_Order_Component> matList = jobCardContext.FLINTEC_Prod_Order_Component.Where(x => (x.Prod_Order_No_.Equals(selectedJobCard))).ToList();
             //materials.materials = matList;
             return Json(materials);
+        }
+
+        [HttpPost]
+        public ActionResult loadJobCardList(String item_No)
+        {
+            var sql_query = @"SELECT DISTINCT
+            pol.[Prod_ Order No_] AS Prod_Order_No_,pol.Status, pol.Description
+            FROM
+            FLINTEC.dbo.[FLINTEC$Prod_ Order Line] pol,
+            FLINTEC.dbo.[FLINTEC$Prod_ Order Component] poc
+            WHERE
+            poc.[Item No_] LIKE '"+item_No+@"' AND
+            poc.[Prod_ Order No_] = pol.[Prod_ Order No_] AND
+            poc.Status = 3 ORDER BY Prod_Order_No_";
+
+            dynamic jobCards = new ExpandoObject();
+
+            using (FLINTEC_Prod_Order_Line_Context jobCardContext = new FLINTEC_Prod_Order_Line_Context())
+            {
+                List<FLINTEC_Prod_Order_Line> jobCardList = jobCardContext.Database.SqlQuery<FLINTEC_Prod_Order_Line>(sql_query).ToList();
+                jobCards.jobCards = jobCardList;
+            }
+
+            return Json(jobCards);
         }
 
         [HttpPost]
