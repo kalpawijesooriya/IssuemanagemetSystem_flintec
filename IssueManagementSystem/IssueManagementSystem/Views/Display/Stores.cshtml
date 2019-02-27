@@ -56,7 +56,7 @@
                                                 <th scope="col">Material</th>
                                                 <th scope="col">Description</th>
                                                 <th scope="col">Responsible Person</th>
-                                                <th scope="col">CountUp</th>
+                                                <th scope="col">Countdown</th>
                                             </tr>
                                         </thead>
                                         <tbody id="breake_body"></tbody>
@@ -131,7 +131,6 @@ $.ajax({
 
                     var date = issuedata[i].issueDate.split(' ');
                     var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
-                  var standedDate=moment(date[0], 'M/D/Y/').format('Y MMM D ');
                     var time=date[1] +" "+ date[2]
                     var issue_occurrence_id = issuedata[i].issue_occurrence_id
                     var d = new Date();
@@ -148,7 +147,7 @@ $.ajax({
                         $('#brakediv').show()
                         var divissue = $('#breake_body');
                         var issue = '<tr><td>'
-                            + standedDate + '</td><td>'
+                            + day + '</td><td>'
                             + time + '</td><td>'
                             + issuedata[i].lineName + '</td><td>'
                             + issuedata[i].matirial +'<span style="color:#7a3617;font-style: italic"> &nbsp;('+ issuedata[i].job_card+')</span></td><td>'
