@@ -49,7 +49,7 @@
                     <div class="header__navbar">
                         <ul class="list-unstyled">
                             <li class="has-sub">
-                                <a href="@Url.Action("selectIssue", "Supervisor")">
+                                <a href="@Url.Action("selectIssue", "Supervisor")?lineid=@ViewBag.lineId">
                                     <i class="fas fa-tachometer-alt"></i>Dashboard
                                     <span class="bot-line"></span>
                                 </a>
@@ -61,23 +61,29 @@
                                 </a>
                                 <ul class="header3-sub-list list-unstyled">
                                     <li>
-                                        <a href="@Url.Action("MachinBreakdown", "Supervisor")">Machine Breakdown</a>
+                                        <a href="@Url.Action("MachinBreakdown", "Supervisor")?lineid=@ViewBag.lineId">Machine Breakdown</a>
                                     </li>
                                     <li>
-                                        <a href="@Url.Action("TechnicalIssue", "Supervisor")">Technical Issue</a>
+                                        <a href="@Url.Action("TechnicalIssue", "Supervisor")?lineid=@ViewBag.lineId">Technical Issue</a>
                                     </li>
                                     <li>
-                                        <a href="@Url.Action("MaterialDelay", "Supervisor")">Material Delay</a>
+                                        <a href="@Url.Action("MaterialDelay", "Supervisor")?lineid=@ViewBag.lineId">Material Delay</a>
                                     </li>
                                     <li id="itweb">
-                                        <a href="@Url.Action("ITIssue", "Supervisor")">Software/IT Issue</a>
+                                        <a href="@Url.Action("ITIssue", "Supervisor")?lineid=@ViewBag.lineId">Software/IT Issue</a>
                                     </li>
                                     <li id="qtyweb">
-                                        <a href="@Url.Action("QualityIssue", "Supervisor")">Quality Issue</a>
+                                        <a href="@Url.Action("QualityIssue", "Supervisor")?lineid=@ViewBag.lineId">Quality Issue</a>
                                     </li>
                                 </ul>
                             </li>
-
+                            <li class="has-sub" id="switch">
+                                <a href="#">
+                                    <i class="fas fa-exchange-alt"></i>Switch Lines
+                                    <span class="bot-line"></span>
+                                </a>
+                                <ul class="header3-sub-list list-unstyled"></ul>
+                            </li>
                         </ul>
                     </div>
                     <div class="header__tool">
@@ -146,7 +152,7 @@
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
                         <li class="has-sub">
-                            <a class="js-arrow" href="@Url.Action("selectIssue", "Supervisor")">
+                            <a class="js-arrow" href="@Url.Action("selectIssue", "Supervisor")?lineid=@ViewBag.lineId">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard
                             </a>
 
@@ -157,25 +163,30 @@
                             </a>
                             <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                                 <li>
-                                    <a href="@Url.Action("MachinBreakdown", "Supervisor")">Machine BreakDown </a>
+                                    <a href="@Url.Action("MachinBreakdown", "Supervisor")?lineid=@ViewBag.lineId">Machine BreakDown </a>
                                 </li>
                                 <li>
-                                    <a href="@Url.Action("TechnicalIssue", "Supervisor")">Technical Issue</a>
+                                    <a href="@Url.Action("TechnicalIssue", "Supervisor")?lineid=@ViewBag.lineId">Technical Issue</a>
                                 </li>
                                 <li>
-                                    <a href="@Url.Action("MaterialDelay", "Supervisor")">Material Delay</a>
+                                    <a href="@Url.Action("MaterialDelay", "Supervisor")?lineid=@ViewBag.lineId">Material Delay</a>
                                 </li>
                                 <li id="itmobile">
-                                    <a href="@Url.Action("ITIssue", "Supervisor")">Software/IT Issue</a>
+                                    <a href="@Url.Action("ITIssue", "Supervisor")?lineid=@ViewBag.lineId">Software/IT Issue</a>
                                 </li>
                                 <li id="qtymobile">
-                                    <a href="@Url.Action("QualityIssue", "Supervisor")">Quality Issue</a>
+                                    <a href="@Url.Action("QualityIssue", "Supervisor")?lineid=@ViewBag.lineId">Quality Issue</a>
                                 </li>
 
 
                             </ul>
                         </li>
-
+                        <li class="has-sub" id="switchMobile">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-exchange-alt"></i>Switch Lines
+                            </a>
+                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list"></ul>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -272,26 +283,15 @@
         if('@Session["department"]'!='MachineShop'){$('#qtymobile').hide();$('#qtyweb').hide();}
         else{$('#itmobile').hide();$('#itweb').hide();}
         $(document).ready(function () {
-
             // Proxy created on the fly
             var hub = $.connection.myHub;
-
-
-
             // Declare a function on the hub hub so the server can invoke it
             hub.client.displayStatus = function () {
-
                 getData();
             };
-
-
-
             // Start the connection
             $.connection.hub.start();
-
-
             getData();
-
             function getData()
             {   var url = '@Url.Action("GetNotification", "Manager")';
                 var divNotificaion = $('#divNotificaion');
@@ -301,18 +301,15 @@
                     type: 'GET',
                     datatype: 'json',
                     success: function (data) {
-
                         data = $.parseJSON(data);
                         if (data.length > 0) {
                             divNotificaion.empty();
                             //// set Count
                             var notiCount = 0;
-
                             for (var i = 0; i < data.length; i++) {
                                 if (data[i].EmployeeNumber ==@Session["userID"] && data[i].Status==1) {
                                     var date = data[i].Dates.split(' ');
                                     var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
-
                                     if (data[i].Type == 'email') {
                                         var notification = ' <div class="notifi__item" id="' + data[i].NotificationId +'"  onclick="deleteFunction(this)"><div class="bg-c1 img-cir img-40"><i class="zmdi zmdi-email-open"></i></div>' +
                                             ' <div class="content"><p>You have a new email'
@@ -325,7 +322,6 @@
                                             + data[i].Message +
                                             '</p> <span class="date">' + day + ' ' + date[1] + ' ' + date[2] + '</span></div></div>'
                                     }
-
                                     divNotificaion.append(notification);
                                     divNotificaionmobile.append(notification);
                                     notiCount++
@@ -346,7 +342,6 @@
         })
         function getData2() {
              var url = '@Url.Action("GetBreakedown", "Supervisor")';
-
                 $.ajax({
                     url: url,
                     type: 'GET',
@@ -360,11 +355,53 @@
         {
             var data = { Issueoccour_Id: $(this).data('issue-occorid'), Issue_Id: $(this).data('issueid') };
             var url = '@Url.Action("hideNotification", "Manager")?notificationId=' + div.id ;
-
             $.post(url)
         }
+             var Empid=@Session["userID"]
+              var url = '@Url.Action("getServisorLins", "Supervisor")';
+              var url2 = '@Url.Action("getServisorLinName", "Supervisor")';
+              var switchLine=document.getElementById("switch");
+              var switchMobile=document.getElementById("switchMobile");
+              var id=[];
+              var lineid;
+        $.ajax({
+            async:false,
+            type: "POST",
+            dataType: 'text',
+            url: url,
+            data: { Empid},
+            success: function (linedata) {
+             var obj=JSON.parse(linedata);
+             for(var i=0;i<obj.length;i++)
+             {
+                lineid=obj[i].line_line_id;
+                id.push(lineid)
+                $.ajax({
+                async:false,
+                type: "POST",
+                dataType: 'text',
+                url: url2,
+                data: { lineid},
+            success: function (linename) {
+               setTimeout(function(){
+               var obj2=JSON.parse(linename);
+               var lineName= obj2[0].line_name
+               var idline=id.shift();
+                 var urldash ='@Url.Action("selectIssue", "Supervisor")?lineid=' +idline
+                 $("#switch ul").append('<li><a id="'+idline+'" href="'+urldash+'"><span class="tab">'+lineName+' Manufacturing Line</span></a></li>');
+                 $("#switchMobile ul").append('<li><a id="'+idline+'" href="'+urldash+'"><span class="tab">'+lineName+' Manufacturing Line</span></a></li>');
+              }, 1000);
+             },
+            error: function () {
+                alert("Error when get line Name");
+            }
+            });
+            }
+            },
+            error: function () {
+                alert("Error when get Line ID");
+            }
+            });
     </script>
 </body>
 </html>
-
-

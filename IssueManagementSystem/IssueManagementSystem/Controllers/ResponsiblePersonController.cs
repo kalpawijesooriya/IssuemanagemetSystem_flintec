@@ -81,14 +81,14 @@ namespace IssueManagementSystem.Controllers
                 var issueoccourInfo = db.issue_occurrence.Where(x => x.issue_occurrence_id == issueid).FirstOrDefault();
                 issueoccourInfo.buzzer_off_by = emp_id;
                 issueoccourInfo.buzzer_off_time = date;
-
+                var location = item["location"].ToString();
                 db.SaveChanges();
 
                 var count = db.issue_occurrence.Where(x => x.issue_issue_ID == 2 && x.buzzer_off_by == null).Count();
 
                 if (count == 0)
                 {
-                    com.storesbuzzerOff();
+                    com.storesbuzzerOff(location);
                 }
             }
             return Json(true);
@@ -109,14 +109,14 @@ namespace IssueManagementSystem.Controllers
                 var issueoccourInfo = db.issue_occurrence.Where(x => x.issue_occurrence_id == issueid).FirstOrDefault();
                 issueoccourInfo.buzzer_off_by = emp_id;
                 issueoccourInfo.buzzer_off_time = date;
-
+                var location = item["location"].ToString();
                 db.SaveChanges();
 
                 var count = db.issue_occurrence.Where(x => x.issue_issue_ID == 1 && x.buzzer_off_by == null).Count();
 
                 if (count == 0)
                 {
-                    com.maintenancesbuzzerOff();
+                    com.maintenancesbuzzerOff(location);
                 }
             }
 

@@ -259,6 +259,7 @@
         obj.line_line_id = @ViewBag.lineid;
         obj.issue_issue_ID = "2";
         obj.responsible_person_emp_id = "";
+        obj.empId=@Session["userID"]
         obj.machine = document.getElementById("machine").value;
         obj.issue_satus = "0";
         obj.location = "KTY";
