@@ -52,9 +52,9 @@ namespace IssueManagementSystem.Controllers
             ViewBag.id = id;
             return View();
         }
-        public ActionResult Maintenance()
+        public ActionResult Maintenance(string location)
         {
-
+            ViewBag.location = location;
             return View();
 
         }
