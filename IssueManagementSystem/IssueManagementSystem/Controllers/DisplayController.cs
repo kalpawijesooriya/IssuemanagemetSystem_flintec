@@ -47,9 +47,18 @@ namespace IssueManagementSystem.Controllers
             ViewBag.id = id;
             return View();
         }
-        public ActionResult Maintenance()
-        {
 
+        public ActionResult accersariesHeatTreatment(int id)
+        {
+            ViewBag.id = id;
+            return View();
+        }
+        public ActionResult Maintenance(string location)
+
+        public ActionResult Maintenance()
+
+        {
+            ViewBag.location = location;
             return View();
 
         }

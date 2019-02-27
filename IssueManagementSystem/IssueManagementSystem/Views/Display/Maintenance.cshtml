@@ -124,7 +124,7 @@ $.ajax({
              var seconds=[]
              for (var i = 0; i < issuedata.length; i++) {
 
-                if (issuedata[i].issue_satus=="1" )
+                if ((issuedata[i].issue_satus=="1" )&&('@ViewBag.location'==issuedata[i].location))
                 {
                     var responcibleperson_ststus= issuedata[i].responsible_person_confirm_status
                     var issueid = issuedata[i].issue_issue_ID

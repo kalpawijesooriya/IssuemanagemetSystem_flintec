@@ -141,7 +141,7 @@ $.ajax({
 
                     var gap = Math.round(Math.abs(today - milliseconds)/1000);
 
-                    if (issueid == 2)//material
+                  if ((issuedata[i].issue_satus=="2" )&&('@ViewBag.location'==issuedata[i].location))
                     {   seconds.push(gap)
                         count++
                         $('#brakediv').show()
