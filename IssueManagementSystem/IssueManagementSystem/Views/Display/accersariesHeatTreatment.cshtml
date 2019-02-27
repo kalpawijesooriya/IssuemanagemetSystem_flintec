@@ -72,7 +72,7 @@
                                                 <th scope="col">Description</th>
                                                 <th scope="col">Responsible Person</th>
                                                 <th scope="col">Area</th>
-                                                <th scope="col">CountUp</th>
+                                                <th scope="col">Countdown</th>
                                             </tr>
                                         </thead>
                                         <tbody id="breake_body"></tbody>
@@ -93,7 +93,7 @@
                                                 <th scope="col">Description</th>
                                                 <th scope="col">Responsible Person</th>
                                                 <th scope="col">Area</th>
-                                                <th scope="col">CountUp</th>
+                                                <th scope="col">Countdown</th>
                                             </tr>
                                         </thead>
                                         <tbody id="matirial_body"></tbody>
@@ -113,7 +113,7 @@
                                                 <th scope="col">Description</th>
                                                 <th scope="col">Responsible Person</th>
                                                 <th scope="col">Area</th>
-                                                <th scope="col">CountUp</th>
+                                                <th scope="col">Countdown</th>
                                             </tr>
                                         </thead>
                                         <tbody id="technical_body"></tbody>
@@ -133,7 +133,7 @@
                                                 <th scope="col">Description</th>
                                                 <th scope="col">Responsible Person</th>
                                                 <th scope="col">Area</th>
-                                                <th scope="col">CountUp</th>
+                                                <th scope="col">Countdown</th>
                                             </tr>
                                         </thead>
                                         <tbody id="it_body"></tbody>
@@ -141,7 +141,7 @@
                                 </div>
                             </div>
                         </li>
-                        <li id="QTY_list" >
+                        <li id="QTY_list">
                             <div class="card text-white bg-primary mb-3" style="max-width: 120rem;" id="qtydiv">
                                 <div class="card-header">Quality Issue</div>
                                 <div class="card-body">
@@ -153,7 +153,7 @@
                                                 <th scope="col">Description</th>
                                                 <th scope="col">Responsible Person</th>
                                                 <th scope="col">Area</th>
-                                                <th scope="col">CountUp</th>
+                                                <th scope="col">Countdown</th>
                                             </tr>
                                         </thead>
                                         <tbody id="qty_body"></tbody>
@@ -174,7 +174,7 @@
     $('#breake_body').empty();
     $('#matirial_body').empty();
     $('#technical_body').empty();
- 
+
             </script>
 
             <script src="~/Scripts/3.30bootstrap.min.js"></script>
@@ -182,7 +182,12 @@
             <script src="~/Scripts/moment.min.js"></script>
             <script src="~/signalr/Hubs"></script>
             <script>
- 
+
+       if(@ViewBag.id==10)
+        {
+                 $('#canvas1').hide();
+          
+        }
 
     $.connection.hub.start()
                 .done(function(){console.log("Its Works")
@@ -229,7 +234,7 @@ $.ajax({
                     count++
                     var date = issuedata[i].issueDate.split(' ');
                     var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
-                    var standedDate=moment(date[0], 'M/D/Y/').format('Y MMM D ');
+                   var standedDate=moment(date[0], 'M/D/Y/').format('Y MMM D ');
                     var time=date[1] +" "+ date[2]
                     var issue_occurrence_id = issuedata[i].issue_occurrence_id
                     var d = new Date();
@@ -239,8 +244,13 @@ $.ajax({
                     var milliseconds = startDate.getTime();
 
                    var gap = Math.round(Math.abs(today - milliseconds)/1000);
-                   var group= "Group "+issuedata[i].group
-
+                   var group= issuedata[i].group
+                   if(group==1)
+                   {
+                   group="Heat Treatment"
+                   }else{
+                   group="Accessories"
+                  }
                    seconds.push(gap)
                     if (issueid == 1)//breakedown
                     {
@@ -287,7 +297,7 @@ $.ajax({
                         divissue.show('slow');
                         $('#loding_icon').hide();
                    }
-                   
+
 
 
             }
@@ -338,8 +348,8 @@ $.ajax({
     }
 
   }
-  </script>
-<script type="text/javascript">
+            </script>
+            <script type="text/javascript">
 function init() {
 var s = new CanvasState(document.getElementById('canvas1'));
 
@@ -426,12 +436,17 @@ $.ajax({
     }
     });
 
-        @*setTimeout(function(){
-        if(@ViewBag.id==3)
+        setTimeout(function(){
+        if(@ViewBag.id==9)
         {
-           window.location.href = "http://192.168.1.30:84/Report/GagingD1/"+'@ViewBag.id'
+           window.location.href = "http://localhost:12675/Display/accersariesHeatTreatment/10"
         }
-    },120000);*@
+        if(@ViewBag.id==10)
+        {
+               
+           window.location.href = "http://localhost:12675/Display/accersariesHeatTreatment/9"
+        }
+    },10000);
         setTimeout(function(){
 
           location.reload();

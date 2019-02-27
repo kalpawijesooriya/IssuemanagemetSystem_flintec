@@ -10,7 +10,7 @@
 
     ViewBag.rol = Session["Role"];
     int userID = (int)Session["userID"];// get current supervisorID
-    int lineId = (int)Session["lineId"];
+    int lineId = ViewBag.lineid;
     using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
     {
 
@@ -26,41 +26,39 @@
 
 
 <link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
+<link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
 
 
-<div class="container margin ">
+<div class="container" style="margin-top:20px">
     <h2>Machine Breakdown</h2>
     <hr />
-    <h3>Select the machine</h3>
+    <h5 id="selectMachine">Select the machine</h5>
 
     <input type="hidden" value="@Session["userID"]" id="userId" />
     <div class="row">
 
-        <div class="col-md-4">
-            <div class="container-liquid">
+        <div class="col-md-3">
+            <div class="container-liquid" id="mapdiv">
                 <div style="display:inline-grid;grid-template-columns: 90%  50%">
                     <div id="container">
-                        <canvas id="canvas1" style="border: 1px solid black;margin-left:8.2em;background-size: 100% 100%;" width="250" height="750">
-                            <br/>This text is displayed if your browser does not support HTML5 Canvas.
+                        <canvas id="canvas1" style="border: 1px solid black;background-size: 100% 100%;" width="250" height="750">
+                            <br />This text is displayed if your browser does not support HTML5 Canvas.
                         </canvas>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6 machine">
-            <div id="groupsdiv">
+        <div class="col-sm-6 machine">
+            <div id="groupsdiv" style="margin-top:5%">
                 <label for="exampleFormControlTextarea1" style="margin-top:5%">Select Area</label>
-                <select class="js-example-placeholder-single js-states form-control" id="groups" name="Material" style="width:100%;" onchange="">
+                <select class="js-example-placeholder-single js-states form-control" id="groups" name="Material" style="width:100%;">
                     <option></option>
 
                 </select>
             </div>
-            <div class="form-group machine" id="machineText">
-                <label for="exampleFormControlTextarea1">Machine</label>
-                <input type="text" class="form-control" id="machine" disabled>
-            </div>
-            <div id="machinediv">
-                <label for="exampleFormControlTextarea1" style="margin-top:5%">Select Area</label>
+
+            <div id="machinediv" style="margin-top:5%">
+                <label for="exampleFormControlTextarea1">Select Area</label>
                 <select class="js-example-placeholder-single js-states form-control" id="machineSelect" name="Material" style="width:100%;" onchange="">
                     <option></option>
                     @foreach (var item in mList)
@@ -68,6 +66,10 @@
                         <option value="@item.Machine_ID">@item.Machine_ID</option>
                     }
                 </select>
+            </div>
+            <div class="form-group machine" id="machineText" style="margin-top:5%">
+                <label for="exampleFormControlTextarea1">Machine</label>
+                <input type="text" class="form-control" id="machine" disabled>
             </div>
             <label id="map" style="display: none;">@ViewData["map"]</label>
 
@@ -77,7 +79,7 @@
             </div>
             <div class="form-group machine" style="margin-top:5%">
                 <label for="exampleFormControlTextarea1">Extra Information</label>
-                <textarea class="form-control" rows="4" id="description"></textarea>
+                <textarea class="form-control" rows="4" id="description" spellcheck="true"></textarea>
             </div>
             <div class="container-fluid row">
                 <div class="container">
@@ -97,14 +99,21 @@
 
 
     <script src="~/Scripts/SupervisorScripts/showmap.js"></script>
-    <script src="~/Scripts/jquery.min.js"></script>
-    <script src="~/Scripts/AdminScripts/select2-min.js"></script>
-    <link href="~/Content/SupervisorStyles/jquery-ui.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/Manager/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-toggle.min.js"></script>
+    <script src="~/Scripts/AdminScripts/jscolar.js"></script>
     <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
+    <script src="~/Scripts/AdminScripts/select2-min.js"></script>
     <script src="~/signalr/Hubs"></script>
     <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
+
     <script>
+      $('#groups').select2({
+        placeholder: "Select Group.....",
+        allowClear: false
+    });
+
        $('#groupsdiv').hide()
        $('#machineshopdiv').hide()
        $('#machinediv').hide()
@@ -114,19 +123,26 @@
     }
     if(('@Session["department"]'=='HeatTreatment')||('@Session["department"]'=='Accessories'))
     {
-     
-              $('#groups').append('<option value="1">Heat treatment</option>')
-           $('#groups').append('<option value="2">Accessories</option>')
-      
-     
+
+        $('#groups').append('<option value="1">Heat treatment</option>')
+        $('#groups').append('<option value="2">Accessories</option>')
+
+
     $('#groupsdiv').show()
     }
    $("#submit").click(function () {
-
+         var selectedDep = $('#groups').find(":selected").text();
+       
+        
         obj = new Object();
         obj.description = document.getElementById("description").value;
-        obj.machine = document.getElementById("machine").value;
-        obj.line_line_id = @Session["lineId"];
+          if(selectedDep=='Accessories')//if selected department is Accessories
+          { 
+          obj.machine = document.getElementById("machineSelect").value;
+          }else{
+         obj.machine = document.getElementById("machine").value;
+          }
+        obj.line_line_id = @ViewBag.lineid;
         obj.location =  '@Session["location"]';
         var grouparry=document.getElementById("grouptext").value.split(" ")
         if(grouparry=="")
@@ -135,7 +151,7 @@
         }else{
         obj.group=grouparry[1];
         }
-        
+
         var obj_array = new Array();
         obj_array.push(obj);
 
@@ -153,7 +169,7 @@
                  $.connection.ismHub.server.announce();
               }).fail(function () { alert("Can't Refresh Your Line Screen! Plese Inform IT Department!") });//return to dashbord
 
-              window.location.href = '@Url.Action("selectIssue", "Supervisor")'; //return to dashbord
+              window.location.href = '@Url.Action("selectIssue", "Supervisor")?lineid=@ViewBag.lineId'; //return to dashbord
             },
             error: function (feedback) {
                 alert(feedback);
@@ -161,7 +177,24 @@
         });
     });
 
+    $(function() {
+      $('#groups').change(function(){
+       if( $(this).val()=='2')
+        {
+         $('#mapdiv').hide()
+         $('#machineText').hide()
+         $('#machinediv').show()
+         $('#selectMachine').hide()
 
+        }else{
+        $('#mapdiv').show()
+        $('#machineText').show()
+         $('#machinediv').hide()
+        $('#selectMachine').show()
+        }
+
+      });
+    });
     var id=@Session["lineId"];
     var inputPath="../Content/images/"+id+".jpg"
     var url = '@Url.Action("loadBase64Image", "Admin")';
@@ -186,31 +219,26 @@
     alert("Error");
     }
     });
-          $('#groups').select2({
-        placeholder: "Select Area.....",
-        allowClear: false
-    });
-  
+
+
     $('#machineSelect').select2({
     placeholder: "Select Machine.....",
-   
+
     });
-        
+
     function  getMachineGroup(machine)
-    { 
+    {
       if('@Session["department"]'=='MachineShop')
-        { 
+        {
         var url = '@Url.Action("getMachine", "Supervisor")'
-          
+
         $.ajax({
             type: "POST",
             dataType: 'text',
             url: url,
             data: {machine},
             success: function (feedback) {
-            
-               document.getElementById("grouptext").value=feedback
-             
+             document.getElementById("grouptext").value=feedback
             },
             error: function (feedback) {
                 alert(feedback);

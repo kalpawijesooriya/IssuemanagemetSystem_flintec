@@ -74,6 +74,7 @@
           <Property Name="buzzer_off_time" Type="datetime" />
           <Property Name="group" Type="int" />
           <Property Name="job_card" Type="nvarchar(max)" />
+          <Property Name="loged_by" Type="int" />
         </EntityType>
         <EntityType Name="issues">
           <Key>
@@ -138,6 +139,7 @@ warning 6002: The table/view 'issue_management_system.dbo.lines' does not have a
           <Property Name="department_id" Type="int" Nullable="false" />
           <Property Name="line_id" Type="int" Nullable="false" />
           <Property Name="line_name" Type="varchar" MaxLength="50" />
+          <Property Name="location" Type="varchar" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'issue_management_system.dbo.machines' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -296,7 +298,8 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
             <DefiningQuery>SELECT 
     [lines].[department_id] AS [department_id], 
     [lines].[line_id] AS [line_id], 
-    [lines].[line_name] AS [line_name]
+    [lines].[line_name] AS [line_name], 
+    [lines].[location] AS [location]
     FROM [dbo].[lines] AS [lines]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="machines" EntityType="Self.machines" store:Type="Tables" store:Schema="dbo">
@@ -408,6 +411,7 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <Property Name="group" Type="Int32" />
           <NavigationProperty Name="issue" Relationship="Self.FK_issue_occurrence_issues" FromRole="issue_occurrence" ToRole="issues" />
           <Property Name="job_card" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="loged_by" Type="Int32" />
         </EntityType>
         <EntityType Name="issue">
           <Key>
@@ -542,6 +546,7 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <Property Name="line_id" Type="Int32" Nullable="false" />
           <Property Name="line_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="department" Relationship="Self.FK_department_lines_departments" FromRole="lines" ToRole="departments" />
+          <Property Name="location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="machine">
           <Key>
@@ -685,6 +690,7 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <EntitySetMapping Name="issue_occurrence">
             <EntityTypeMapping TypeName="issue_management_systemModel.issue_occurrence">
               <MappingFragment StoreEntitySet="issue_occurrence">
+                <ScalarProperty Name="loged_by" ColumnName="loged_by" />
                 <ScalarProperty Name="job_card" ColumnName="job_card" />
                 <ScalarProperty Name="issue_occurrence_id" ColumnName="issue_occurrence_id" />
                 <ScalarProperty Name="issue_date" ColumnName="issue_date" />
@@ -843,6 +849,7 @@ warning 6002: The table/view 'issue_management_system.dbo.material' does not hav
           <EntitySetMapping Name="lines">
             <EntityTypeMapping TypeName="issue_management_systemModel.line">
               <MappingFragment StoreEntitySet="lines">
+                <ScalarProperty Name="location" ColumnName="location" />
                 <ScalarProperty Name="department_id" ColumnName="department_id" />
                 <ScalarProperty Name="line_id" ColumnName="line_id" />
                 <ScalarProperty Name="line_name" ColumnName="line_name" />
