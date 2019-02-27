@@ -43,8 +43,19 @@ namespace IssueManagementSystem.Controllers
             }
         }
 
-        public String get_NAV_Location() {
+        public String get_NAV_Location()
+        {
              return (ln.location);
+        }
+
+        public String get_LineName()
+        {
+            return (ln.line_name);
+        }
+
+        public int get_departmentID()
+        {
+            return (ln.department_id);
         }
     }
 }

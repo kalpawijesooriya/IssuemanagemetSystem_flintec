@@ -48,7 +48,7 @@
             <div class="form-group" style="width:100%;">
                 <div id="groupsdiv">
                     <label for="exampleFormControlTextarea1" style="margin-top:5%">Select Area</label>
-                    <select class="js-example-placeholder-single js-states form-control" id="groups" name="Material" style="width:100%;" onchange="">
+                    <select class="js-example-placeholder-single js-states form-control" id="groups" name="Material" style="width:100%;" >
                         <option></option>
 
                     </select>
@@ -81,13 +81,24 @@
                         <input id="chk_box" type="checkbox" onChange="checkBoxOnChange()" data-toggle="toggle" checked data-on="BOM material" data-off="non-BOM material" data-onstyle="success" data-offstyle="info" data-size="small" />
                     </div>
                     <div class="col-md-9" style="margin:auto">
-                        <select class="js-example-placeholder-single js-states form-control" id="materialSelectBox" style="width:100%">
+                        <select class="js-example-placeholder-single js-states form-control" id="materialSelectBox" style="width:100%" onchange="load_JobCardList()">
                             <option></option>
                         </select>
                     </div>
 
                 </div>
 
+
+                <label style="margin-top:5%">Select job card</label>
+                <div onclick="popUpAlert()">
+                    <select class="js-example-placeholder-single js-states form-control" id="jobCardSelectBox" style="width:100%" onchange="">
+                        <option></option>
+                        @foreach (var j in Model.jobCards)
+                        {
+                            <option value="@j.Prod_Order_No_">@j.Prod_Order_No_    &nbsp;- &nbsp;&nbsp; @j.Description </option>
+                        }
+                    </select>
+                </div>
 
 
                 <div style="padding-top:20px;">
@@ -116,6 +127,16 @@
 <script src="~/signalr/Hubs"></script>
 <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
 
+<script src="~/Content/test/jquery-confirm.min.js"></script>
+
+<style>
+    .jconfirm-box {
+        position: absolute !important;
+        margin-left: -50% !important;
+    }
+</style>
+
+
 <script>
      $('#groupsdiv').hide()
      $('#mapdiv').hide()
@@ -134,11 +155,26 @@
     $('#groupsdiv').show()
     }
     $(document).ready(function () {
+
         $("#materialSelectBox").prop("disabled", true);
          $("#chk_box").attr("disabled", true);
+
+        $("#jobCardSelectBox").prop("disabled", true);
+        loadMaterialList();
+
     });
     function loadMaterialList() {
+
         var selectedJobCard = document.getElementById("jobCardSelectBox").value;
+
+
+        $("#jobCardSelectBox").prop("disabled", true);
+
+        setTimeout(function(){
+            load_prog_bar(0);
+        }, 1);
+
+
         $.ajax({
             type: "POST",
             dataType: 'text',
@@ -155,8 +191,8 @@
                 materialSelectBox.appendChild(opt1);
                 for (var i = 0; i < feedback[0].Value.length; i++) {
                     var opt = document.createElement('option');
-                    opt.innerHTML = feedback[0].Value[i].Item_No_;
-                    opt.value = feedback[0].Value[i].Item_No_;
+                    opt.innerHTML = feedback[0].Value[i].Item_No_ + " -- " + feedback[0].Value[i].Description;
+                    opt.value = feedback[0].Value[i].Item_No_ ;
                     materialSelectBox.appendChild(opt);
                 }
             },
@@ -164,13 +200,26 @@
                 alert("Error occurred");
             }
         });
+
         if (selectedJobCard != null) {
             $("#materialSelectBox").prop("disabled", false);
             $("#chk_box").attr("disabled", false);
         }
+
     }
     function load_nonBOMMaterialList() {
+
       var url = '@Url.Action("loadNonBOMMaterials", "CellEngineer")'
+
+        var url = '@Url.Action("loadNonBOMMaterials", "CellEngineer")'
+
+        $("#jobCardSelectBox").prop("disabled", true);
+
+        setTimeout(function(){
+            load_prog_bar(0);
+        }, 1);
+
+
         $.ajax({
             type: "POST",
             dataType: 'text',
@@ -195,6 +244,47 @@
                 alert("Error occurred");
             }
         });
+
+    }
+
+    function load_JobCardList() {
+
+        $("#jobCardSelectBox").prop("disabled", false);
+
+        var url = '@Url.Action("loadJobCardList", "CellEngineer")'
+        var item_No = document.getElementById("materialSelectBox").value;
+
+        if (document.getElementById('chk_box').checked) {
+
+            $.ajax({
+                type: "POST",
+                dataType: 'text',
+                async: true,
+                url: url,
+                data: { item_No: item_No },
+                success: function (feedback) {
+                    console.log(feedback);
+                    feedback = JSON.parse(feedback);
+                    var jobCardSelectBox = document.getElementById("jobCardSelectBox");
+                    jobCardSelectBox.options.length = 0;
+                    var opt1 = document.createElement('option');
+                    opt1.innerHTML = '';
+                    opt1.value = '';
+                    jobCardSelectBox.appendChild(opt1);
+                    for (var i = 0; i < feedback[0].Value.length; i++) {
+                        var opt = document.createElement('option');
+                        opt.innerHTML = feedback[0].Value[i].Prod_Order_No_;
+                        opt.value = feedback[0].Value[i].Prod_Order_No_;
+                        jobCardSelectBox.appendChild(opt);
+                    }
+                },
+                error: function () {
+                    alert("Error occurred");
+                }
+
+            });
+        }
+
     }
     $('select').select2({
         placeholder: "Select.....",

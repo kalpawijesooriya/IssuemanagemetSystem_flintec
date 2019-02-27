@@ -53,6 +53,8 @@ namespace IssueManagementSystem.Models
         [Column("Prod_ Order No_")]
         public string Prod_Order_No_ { get; set; }
 
+        [Column("Description")]
+        public string Description { get; set; }
 
     }
 }
