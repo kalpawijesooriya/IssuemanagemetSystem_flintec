@@ -14,8 +14,8 @@
     int userID = (int)Session["userID"];// get current supervisorID
 
 
-   
-    int line = ViewBag.lineid;
+    ViewBag.LineId = Session["lineId"];
+    int line = ViewBag.LineId;
     using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
     {
         var lineInfo = db.lines.Where(x => x.line_id == line).FirstOrDefault();

@@ -17,7 +17,6 @@ namespace IssueManagementSystem.Models
         public int department_id { get; set; }
         public int line_id { get; set; }
         public string line_name { get; set; }
-        public string location { get; set; }
     
         public virtual department department { get; set; }
     }

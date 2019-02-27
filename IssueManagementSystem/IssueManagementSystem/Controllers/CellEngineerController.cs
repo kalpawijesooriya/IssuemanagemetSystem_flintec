@@ -66,6 +66,17 @@ namespace IssueManagementSystem.Controllers
                 jobCardsList_issue_occurrence.issue_occurrence = db.issue_occurrence;  
             }
 
+
+            var query2 = @"SELECT DISTINCT
+            pol.[Prod_ Order No_]
+            FROM
+            FLINTEC.dbo.[FLINTEC$Prod_ Order Line] pol,
+            FLINTEC.dbo.[FLINTEC$Prod_ Order Component] poc
+            WHERE 
+            poc.[Item No_] LIKE '15-ORC3-0030-BA' AND
+            poc.[Prod_ Order No_] = pol.[Prod_ Order No_] AND
+            poc.Status = 3 ORDER BY pol.[Prod_ Order No_]";
+
             FLINTEC_Prod_Order_Line_Context jobCardContext = new FLINTEC_Prod_Order_Line_Context();
             List<FLINTEC_Prod_Order_Line> jcList = jobCardContext.FLINTEC_Prod_Order_Line.Where(x => x.Status == 3).ToList();
             jobCardsList_issue_occurrence.jobCards = jcList;
@@ -74,23 +85,29 @@ namespace IssueManagementSystem.Controllers
         }
 
         [HttpPost]
-        public ActionResult loadMaterialList(string selectedJobCard)
+        public ActionResult loadMaterialList(string lineID)
         {
             dynamic materials = new  ExpandoObject();
 
-            //String sql_query = @"SELECT a.[Item No_] AS Item_No_, a.Status,a.[Prod_ Order No_] AS Prod_Order_No_
-            //                    FROM FLINTEC.dbo.[FLINTEC$Prod_ Order Component] a
-            //                    WHERE a.[Prod_ Order No_]='" + selectedJobCard + "'";
+            var sql_query = @"SELECT DISTINCT
+                            poc.[Item No_] AS Item_No_
+                            FROM
+                            FLINTEC.dbo.[FLINTEC$Prod_ Order Line] pol,
+                            FLINTEC.dbo.[FLINTEC$Prod_ Order Component] poc
+                            WHERE
+                            poc.[Location Code] LIKE 'KT-ARC' AND
+                            poc.[Prod_ Order No_] = pol.[Prod_ Order No_] AND
+                            poc.Status = 3 ORDER BY pol.[Prod_ Order No_]";
 
-            //using (FLINTEC_Prod_Order_Component_Context jobCardContext = new FLINTEC_Prod_Order_Component_Context())
-            //{
-            //    List<FLINTEC_Prod_Order_Component> matList = jobCardContext.Database.SqlQuery<FLINTEC_Prod_Order_Component>(sql_query).ToList();
-            //    materials.materials = matList;
-            //}
+            using (FLINTEC_Prod_Order_Component_Context jobCardContext = new FLINTEC_Prod_Order_Component_Context())
+            {
+                List<FLINTEC_Prod_Order_Component> matList = jobCardContext.Database.SqlQuery<FLINTEC_Prod_Order_Component>(sql_query).ToList();
+                materials.materials = matList;
+            }
 
-            FLINTEC_Prod_Order_Component_Context jobCardContext = new FLINTEC_Prod_Order_Component_Context();
-            List<FLINTEC_Prod_Order_Component> matList = jobCardContext.FLINTEC_Prod_Order_Component.Where(x => (x.Prod_Order_No_.Equals(selectedJobCard))).ToList();
-            materials.materials = matList;
+            //FLINTEC_Prod_Order_Component_Context jobCardContext = new FLINTEC_Prod_Order_Component_Context();
+            //List<FLINTEC_Prod_Order_Component> matList = jobCardContext.FLINTEC_Prod_Order_Component.Where(x => (x.Prod_Order_No_.Equals(selectedJobCard))).ToList();
+            //materials.materials = matList;
             return Json(materials);
         }
 

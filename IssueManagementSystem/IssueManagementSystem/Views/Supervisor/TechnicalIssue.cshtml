@@ -10,7 +10,7 @@
 
     ViewBag.rol = Session["Role"];
     int userID = (int)Session["userID"];// get current supervisorID
-    int lineId = ViewBag.lineid;
+    int lineId = (int)Session["lineId"];
     using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
     {
        
@@ -65,7 +65,7 @@
 
                 <div style="padding-top:20px;">
                     <label for="exampleFormControlTextarea1">Description</label>
-                    <textarea class="form-control" rows="5" id="description" spellcheck="true"></textarea>
+                    <textarea class="form-control" rows="5" id="description"></textarea>
 
 
                     <div class="button-holder" style="display:block">
@@ -119,7 +119,7 @@
 
         obj = new Object();
         obj.description = document.getElementById("description").value;
-        obj.line_line_id = @ViewBag.lineid;
+        obj.line_line_id = @Session["lineId"];
         obj.location =  '@Session["location"]';
         obj.machine = document.getElementById("machine").value;
          var grouparry=document.getElementById("grouptext").value.split(" ")
@@ -147,7 +147,7 @@
                  $.connection.ismHub.server.announce();
               }).fail(function () { alert("Can't Refresh Your Line Screen! Plese Inform IT Department!") });//return to dashbord
 
-              window.location.href = '@Url.Action("selectIssue", "Supervisor")?lineid=@ViewBag.lineId';
+              window.location.href = '@Url.Action("selectIssue", "Supervisor")';
             },
             error: function (feedback) {
                 alert(feedback);
@@ -159,7 +159,7 @@
         allowClear: false
     });
 
-      var id=@ViewBag.lineid;
+      var id=@Session["lineId"];
     var inputPath="../Content/images/"+id+".jpg"
     var url = '@Url.Action("loadBase64Image", "Admin")';
     $.ajax({
