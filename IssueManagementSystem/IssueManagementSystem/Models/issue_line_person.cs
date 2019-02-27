@@ -11,20 +11,20 @@ namespace IssueManagementSystem.Models
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class issue_line_person
     {
         public Nullable<int> issue_id { get; set; }
         public Nullable<int> line_id { get; set; }
         public Nullable<int> EmployeeNumber { get; set; }
-        public Nullable<System.DateTime> assigned_date { get; set; }
+        public System.DateTime assigned_date { get; set; }
         public int email { get; set; }
         public int call { get; set; }
         public int message { get; set; }
         public string callRepetitionTime { get; set; }
         public string sendAlertAfter { get; set; }
         public Nullable<int> levelOfResponsibility { get; set; }
-        public Nullable<int> issue_line_person_id { get; set; }
+        public int issue_line_person_id { get; set; }
         public Nullable<int> level { get; set; }
         public Nullable<int> person_level { get; set; }
         public int IssueLineperson_id { get; set; }

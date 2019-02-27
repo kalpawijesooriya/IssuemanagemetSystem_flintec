@@ -10,7 +10,7 @@
     int userID = (int)Session["userID"];// get current supervisorID
 
 
-    int lineId = ViewBag.lineid;
+    int lineId = (int)Session["lineId"];
 }
 @using IssueManagementSystem.Models
 @model IssueManagementSystem.Models.issue_occurrence
@@ -35,7 +35,7 @@
 
                 <div style="padding-top:20px;margin-top:5%">
                     <label for="exampleFormControlTextarea1">Description</label>
-                    <textarea class="form-control" rows="5" id="description" spellcheck="true"></textarea>
+                    <textarea class="form-control" rows="5" id="description"></textarea>
                 </div>
 
                 <div class="button-holder" style="display:block">
@@ -64,7 +64,7 @@
 
         obj = new Object();
         obj.description = document.getElementById("description").value;
-        obj.line_line_id = @ViewBag.lineid;
+        obj.line_line_id = @Session["lineId"];
         obj.location =  '@Session["location"]';
   
         var obj_array = new Array();
@@ -84,7 +84,7 @@
                  $.connection.ismHub.server.announce();
               }).fail(function () { alert("Can't Refresh Your Line Screen! Plese Inform IT Department!") });//return to dashbord
 
-              window.location.href = '@Url.Action("selectIssue", "Supervisor")?lineid=@ViewBag.lineId';
+              window.location.href = '@Url.Action("selectIssue", "Supervisor")';
             },
             error: function (feedback) {
                 alert(feedback);

@@ -36,18 +36,13 @@ namespace IssueManagementSystem.Controllers
 
            
         }
-        public ActionResult Stores(string location)
+        public ActionResult Stores()
         {
-            ViewBag.location = location;
+
             return View();
 
         }
         public ActionResult machineshop(int id)
-        {
-            ViewBag.id = id;
-            return View();
-        }
-        public ActionResult accersariesHeatTreatment(int id)
         {
             ViewBag.id = id;
             return View();

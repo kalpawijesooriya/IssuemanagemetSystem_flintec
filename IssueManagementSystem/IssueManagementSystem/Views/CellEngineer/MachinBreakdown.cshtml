@@ -26,33 +26,33 @@
 
 <link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
 
-<div class="container">
-    <h2 style="margin-top:20px">Machine Breakdown</h2>
+<div class="container margin ">
+    <h2>Machine Breakdown</h2>
     <hr />
-    <h5 id="selectMachine">Select the machine</h5>
+    <h3>Select the machine</h3>
 
     <input type="hidden" value="@Session["userID"]" id="userId" />
     <div class="row">
-        <div class="col-sm-4">
-            <div class="container-liquid" id="mapdiv">
+        <div class="col-sm-6">
+            <div class="container-liquid">
                 <div style="display:inline-grid;grid-template-columns: 90%  50%">
                     <div id="container">
-                        <canvas id="canvas1" style="border: 1px solid black;background-size: 100% 100%;" width="250" height="750">
+                        <canvas id="canvas1" style="border: 1px solid black;margin-left:8.2em;background-size: 100% 100%;" width="250" height="750">
                             <br>This text is displayed if your browser does not support HTML5 Canvas.<br>
                         </canvas>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 machine">
-            <div id="groupsdiv" style="margin-top:5%">
+        <div class="col-sm-3 machine">
+            <div id="groupsdiv">
                 <label for="exampleFormControlTextarea1" style="margin-top:5%">Select Area</label>
                 <select class="js-example-placeholder-single js-states form-control" id="groups" name="Material" style="width:100%;" onchange="">
                     <option></option>
                 </select>
             </div>
-            <div id="machinediv" style="margin-top:5%">
-                <label for="exampleFormControlTextarea1" >Select Machine</label>
+            <div id="machinediv">
+                <label for="exampleFormControlTextarea1" style="margin-top:5%">Select Machine</label>
                 <select class="js-example-placeholder-single js-states form-control" id="machineSelect" name="Material" style="width:100%;" onchange="">
                     <option></option>
                     @foreach (var item in mList)
@@ -61,7 +61,7 @@
                     }
                 </select>
             </div>
-            <div class="form-group machine" id="machineText" style="margin-top:5%">
+            <div class="form-group machine" id="machineText">
                 <label for="exampleFormControlTextarea1">Machine</label>
                 <input type="text" class="form-control" id="machine" disabled>
             </div>
@@ -71,9 +71,9 @@
                 <label for="exampleFormControlTextarea1" style="margin-top:5%">Group</label>
                 <input type="text" class="form-control" id="grouptext" disabled>
             </div>
-            <div class="form-group machine" style="margin-top:5%">
+            <div class="form-group machine" style="margin-top:8%">
                 <label for="exampleFormControlTextarea1">Extra Information</label>
-                <textarea class="form-control" rows="5" id="description" spellcheck="true"></textarea>
+                <textarea class="form-control" rows="5" id="description"></textarea>
             </div>
 
 
@@ -117,24 +117,17 @@
     if(('@Session["department"]'=='HeatTreatment')||('@Session["department"]'=='Accessories'))
     {
      
-    $('#groups').append('<option value="1">Heat treatment</option>')
-    $('#groups').append('<option value="2">Accessories</option>')
+           $('#groups').append('<option value="1">Heat treatment</option>')
+           $('#groups').append('<option value="2">Accessories</option>')
       
      
     $('#groupsdiv').show()
     }
    $("#submit").click(function () {
-         var selectedDep = $('#groups').find(":selected").text();
 
         obj = new Object();
         obj.description = document.getElementById("description").value;
-             if(selectedDep=='Accessories')//if selected department is Accessories
-          { 
-         obj.machine = document.getElementById("machineSelect").value;
-          }else{
-         obj.machine = document.getElementById("machine").value;
-          }
-       
+        obj.machine = document.getElementById("machine").value;
         obj.line_line_id = '@ViewBag.lineid';
         obj.location =  '@Session["location"]';
         var grouparry=document.getElementById("grouptext").value.split(" ")
@@ -170,24 +163,7 @@
     });
 
 
-    $(function() {
-      $('#groups').change(function(){
-       if( $(this).val()=='2')
-        {
-         $('#mapdiv').hide()
-         $('#machineText').hide()
-         $('#machinediv').show()
-         $('#selectMachine').hide()
-       
-        }else{
-        $('#mapdiv').show()
-        $('#machineText').show()
-         $('#machinediv').hide()
-        $('#selectMachine').show()
-        }
-        
-      });
-    });
+
     var id=@ViewBag.lineid.ToString();
     var inputPath="../Content/images/"+id+".jpg"
     var url = '@Url.Action("loadBase64Image", "Admin")';

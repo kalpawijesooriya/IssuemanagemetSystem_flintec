@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IssueManagementSystem.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -20,7 +21,6 @@ namespace IssueManagementSystem.Controllers
         //KT-MCS KT - MACHINE SHOP
 
         //--------------------------------------
-        //KG-AMT KG - ASSEMBLY - MOTOROLA
         //KG-APB KG - ASSEMBLY - PB
         //KG-ASP KG - ASSEMBLY - SP
         //KT-ASP KT - ASSEMBLY - SP 
@@ -35,21 +35,16 @@ namespace IssueManagementSystem.Controllers
         //KG-FL5 KG - ASSEMBLY - FAST LANE 5
         //KG-ASV KG - ASSEMBLY - SAVANNAH
 
-        //-----------------MD1-----------------------
-        //KG-AMD1 KG - ASSEMBLY - MEDICAL DEVICE
-
-
-        public String get_NAV_Location(String ims_Location ) {
-
-
-            switch(ims_Location)
-            {   
-
-
-                default:
-                    break;
+        line ln = new line();
+        public LocationAdapter(int ims_Location) {
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+            {
+                ln = db.lines.Where(x => x.line_id == ims_Location).SingleOrDefault();
             }
-            return ("test Location");
+        }
+
+        public String get_NAV_Location() {
+             return (ln.location);
         }
     }
 }

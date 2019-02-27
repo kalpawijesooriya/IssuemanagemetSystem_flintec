@@ -8,7 +8,7 @@
 
     dynamic mat_List = new System.Dynamic.ExpandoObject();
 
-    int lineId = ViewBag.lineid;
+    int lineId = (int)Session["lineId"];
 
     using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
     {
@@ -101,7 +101,7 @@
 
                 <div style="padding-top:20px;">
                     <label for="exampleFormControlTextarea1">Description</label>
-                    <textarea class="form-control" rows="5" id="description" style="resize: both;width:100%;" spellcheck="true"></textarea>
+                    <textarea class="form-control" rows="5" id="description" style="resize: both;width:100%;"></textarea>
                 </div>
 
                 <div class="button-holder" style="display:block;margin-top:-50px;">
@@ -272,7 +272,7 @@
         obj.issue_date = new Date();
         obj.material_id = document.getElementById("materialSelectBox").value;
         obj.description = document.getElementById("description").value;
-        obj.line_line_id = @ViewBag.lineid;
+        obj.line_line_id = @Session["lineId"];
         obj.issue_issue_ID = "2";
         obj.responsible_person_emp_id = "";
         obj.issue_satus = "0";
@@ -305,7 +305,7 @@
                  $.connection.ismHub.server.announce();
               }).fail(function () { alert("Can't Refresh Your Line Screen! Plese Inform IT Department!") });
 
-              window.location.href = '@Url.Action("selectIssue", "Supervisor")?lineid=@ViewBag.lineId'; //return to dashbord
+              window.location.href = '@Url.Action("selectIssue", "Supervisor")'; //return to dashbord
             },
             error: function (feedback) {
                 alert(feedback);
