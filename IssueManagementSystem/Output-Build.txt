@@ -1,0 +1,7 @@
+﻿1>------ Build started: Project: IssueManagementSystem, Configuration: Debug Any CPU ------
+1>G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\Controllers\CellEngineerController.cs(70,17,70,23): warning CS0219: The variable 'query2' is assigned but its value is never used
+1>G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\Controllers\AdminController.cs(131,30,131,32): warning CS0168: The variable 'ex' is declared but never used
+1>G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\Controllers\AdminController.cs(204,30,204,32): warning CS0168: The variable 'ex' is declared but never used
+1>G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\Controllers\CellEngineerController.cs(309,42,309,44): warning CS0168: The variable 'ex' is declared but never used
+1>  IssueManagementSystem -> G:\projects\IMS\IssuemanagemetSystem_flintec\IssueManagementSystem\IssueManagementSystem\bin\IssueManagementSystem.dll
+========== Build: 1 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========

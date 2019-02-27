@@ -48,14 +48,13 @@ namespace IssueManagementSystem.Controllers
             return View();
         }
 
-        public ActionResult accersariesHeatTreatment(int id)
+        public ActionResult accessoriesHeatTreatment(int id)
         {
             ViewBag.id = id;
             return View();
         }
         public ActionResult Maintenance(string location)
 
-        public ActionResult Maintenance()
 
         {
             ViewBag.location = location;
