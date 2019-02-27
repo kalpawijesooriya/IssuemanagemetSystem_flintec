@@ -26,6 +26,7 @@
 <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
 <link href="~/Content/bootstrap-toggle.min.css" rel="stylesheet" />
+<link href="~/Content/test/jquery-confirm.min.css" rel="stylesheet" />
 
 <h2>Material Delay</h2>
 <hr />
@@ -76,7 +77,7 @@
 
                 <label style="margin-top:5%">Select material</label>
 
-                <div class="row">
+                <div class="row" onclick="popUpAlert()">
                     <div class="col-md-3">
                         <input id="chk_box" type="checkbox" onChange="checkBoxOnChange()" data-toggle="toggle" checked data-on="BOM material" data-off="non-BOM material" data-onstyle="success" data-offstyle="info" data-size="small" />
                     </div>
@@ -85,7 +86,14 @@
                             <option></option>
                         </select>
                     </div>
-
+                </div>
+                <div class="row" >
+                    <div class="col-md-3"></div>
+                    <div  class="col-md-9" style="margin:auto;">
+                        <div class="progress" style="height:5px;">
+                            <div id="prog_bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                        </div>
+                    </div>
                 </div>
 
 
@@ -115,6 +123,15 @@
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
 <script src="~/signalr/Hubs"></script>
 <script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
+<script src="~/Content/test/jquery-confirm.min.js"></script>
+
+<style>
+
+    .jconfirm-box {
+        position: absolute !important;
+        margin-left: -50% !important;
+    }
+</style>
 
 <script>
      $('#groupsdiv').hide()
@@ -140,6 +157,23 @@
          $("#chk_box").attr("disabled", true);
     });
 
+    function popUpAlert() {
+
+        var selectedJobCard = document.getElementById("jobCardSelectBox").value;
+        if (selectedJobCard == '' ) {
+            $.alert({
+                title: '',
+                content: 'Please select the job card first !'
+            });
+        }
+
+    }
+    function load_prog_bar(fill){
+        var prog_bar = document.getElementById('prog_bar');
+        prog_bar.style.width = +fill+"%";
+    }
+
+
     function loadMaterialList() {
         var selectedJobCard = document.getElementById("jobCardSelectBox").value;
 
@@ -150,18 +184,22 @@
             url: "/CellEngineer/loadMaterialList",
             data: { selectedJobCard: selectedJobCard },
             success: function (feedback) {
+
                 feedback = JSON.parse(feedback);
+                // alert(feedback[0].length);
                 var materialSelectBox = document.getElementById("materialSelectBox");
                 materialSelectBox.options.length = 0;
                 var opt1 = document.createElement('option');
                 opt1.innerHTML = '';
                 opt1.value = '';
                 materialSelectBox.appendChild(opt1);
+
                 for (var i = 0; i < feedback[0].Value.length; i++) {
                     var opt = document.createElement('option');
                     opt.innerHTML = feedback[0].Value[i].Item_No_;
                     opt.value = feedback[0].Value[i].Item_No_;
                     materialSelectBox.appendChild(opt);
+                   // load_prog_bar( (2000/feedback.length)*100 );
                 }
 
             },
@@ -184,6 +222,7 @@
             async: true,
             url:url,
             success: function (feedback) {
+                //alert(feedback.length);
                 feedback = JSON.parse(feedback);
                 var materialSelectBox = document.getElementById("materialSelectBox");
                 materialSelectBox.options.length = 0;
@@ -197,6 +236,8 @@
                     opt.value = feedback[0].Value[i].No_;
                     materialSelectBox.appendChild(opt);
                 }
+
+                
             },
             error: function () {
                 alert("Error occurred");
