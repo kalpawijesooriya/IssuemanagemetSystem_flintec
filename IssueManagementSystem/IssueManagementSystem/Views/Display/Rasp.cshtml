@@ -71,7 +71,7 @@
                                                 <th scope="col">Machine</th>
                                                 <th scope="col">Description</th>
                                                 <th scope="col">Responsible Person</th>
-                                                <th scope="col">Countdown</th>
+                                                <th scope="col">CountUp</th>
                                             </tr>
                                         </thead>
                                         <tbody id="breake_body"></tbody>
@@ -91,7 +91,7 @@
                                                 <th scope="col">Material</th>
                                                 <th scope="col">Description</th>
                                                 <th scope="col">Responsible Person</th>
-                                                <th scope="col">Countdown</th>
+                                                <th scope="col">CountUp</th>
                                             </tr>
                                         </thead>
                                         <tbody id="matirial_body"></tbody>
@@ -110,7 +110,7 @@
                                                 <th scope="col">Time</th>
                                                 <th scope="col">Description</th>
                                                 <th scope="col">Responsible Person</th>
-                                                <th scope="col">Countdown</th>
+                                                <th scope="col">CountUp</th>
                                             </tr>
                                         </thead>
                                         <tbody id="technical_body"></tbody>
@@ -129,7 +129,7 @@
                                                 <th scope="col">Time</th>
                                                 <th scope="col">Description</th>
                                                 <th scope="col">Responsible Person</th>
-                                                <th scope="col">Countdown</th>
+                                                <th scope="col">CountUp</th>
                                             </tr>
                                         </thead>
                                         <tbody id="it_body"></tbody>
@@ -206,6 +206,7 @@ $.ajax({
                     count++
                     var date = issuedata[i].issueDate.split(' ');
                     var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
+                    var standedDate=moment(date[0], 'M/D/Y/').format('Y MMM D ');
                     var time=date[1] +" "+ date[2]
                     var issue_occurrence_id = issuedata[i].issue_occurrence_id
                     var d = new Date();
@@ -222,7 +223,7 @@ $.ajax({
                     {
                         $('#brakediv').show()
                         var divissue = $('#breake_body');
-                        var issue = '<tr><td>' + day + '</td><td>'+time+'</td><td>' + issuedata[i].machine_machine_id+'</td><td>' + issuedata[i].description+'</td><td>' + issuedata[i].responciblepersonName+'</td><td><span id="countdown'+count+'" class="timer"></span></td></tr>'
+                        var issue = '<tr><td>' + standedDate + '</td><td>'+time+'</td><td>' + issuedata[i].machine_machine_id+'</td><td>' + issuedata[i].description+'</td><td>' + issuedata[i].responciblepersonName+'</td><td><span id="countdown'+count+'" class="timer"></span></td></tr>'
                         divissue.append(issue)
                         divissue.show('slow');
                         $('#loding_icon').hide();
@@ -235,7 +236,7 @@ $.ajax({
                     {
                         $('#maririaldiv').show()
                         var divissue = $('#matirial_body');
-                        var issue = '<tr><td>' + day + '</td><td>'+time+'</td><td>' + issuedata[i].matirial + '</td><td>' + issuedata[i].description + '</td><td>' + issuedata[i].responciblepersonName + '</td><td><span id="countdown'+count+'"class="timer"></span></td></tr>'
+                        var issue = '<tr><td>' + standedDate + '</td><td>'+time+'</td><td>' + issuedata[i].matirial + '</td><td>' + issuedata[i].description + '</td><td>' + issuedata[i].responciblepersonName + '</td><td><span id="countdown'+count+'"class="timer"></span></td></tr>'
                         divissue.append(issue)
                         divissue.show('slow');
                         $('#loding_icon').hide();
@@ -247,7 +248,7 @@ $.ajax({
                     {
                         $('#tecnicaldiv').show();
                         var divissue = $('#technical_body');
-                        var issue = '<tr><td>' + day + '</td><td>'+time+'</td><td>' + issuedata[i].description + '</td><td>' + issuedata[i].responciblepersonName + '</td><td><span id="countdown'+count+'" class="timer"></span></td></tr>'
+                        var issue = '<tr><td>' + standedDate + '</td><td>'+time+'</td><td>' + issuedata[i].description + '</td><td>' + issuedata[i].responciblepersonName + '</td><td><span id="countdown'+count+'" class="timer"></span></td></tr>'
                         divissue.append(issue)
                         divissue.show('slow');
                         $('#loding_icon').hide();
@@ -258,7 +259,7 @@ $.ajax({
                     {
                        $('#qtydiv').show();
                         var divissue = $('#qty_body');
-                        var issue = '<tr><td>' + day + '</td><td>'+time+'</td><td>' + issuedata[i].description + '</td><td>' + issuedata[i].responciblepersonName + '</td><td><span id="countdown'+count+'" class="timer"></span></td></tr>'
+                        var issue = '<tr><td>' + standedDate + '</td><td>'+time+'</td><td>' + issuedata[i].description + '</td><td>' + issuedata[i].responciblepersonName + '</td><td><span id="countdown'+count+'" class="timer"></span></td></tr>'
                         divissue.append(issue)
                         divissue.show('slow');
                         $('#loding_icon').hide();
@@ -267,7 +268,7 @@ $.ajax({
                     {
                         $('#Softwarediv').show();
                         var divissue = $('#it_body');
-                        var issue = '<tr><td>' + day + '</td><td>'+time+'</td><td>' + issuedata[i].description + '</td><td>' + issuedata[i].responciblepersonName + '</td><td><span id="countdown'+count+'" class="timer"></span></td></tr>'
+                        var issue = '<tr><td>' + standedDate + '</td><td>'+time+'</td><td>' + issuedata[i].description + '</td><td>' + issuedata[i].responciblepersonName + '</td><td><span id="countdown'+count+'" class="timer"></span></td></tr>'
                         divissue.append(issue)
                         divissue.show('slow');
                         $('#loding_icon').hide();

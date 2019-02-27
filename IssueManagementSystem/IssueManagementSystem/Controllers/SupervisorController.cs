@@ -16,8 +16,9 @@ namespace IssueManagementSystem.Controllers
 
         Communication com = new Communication();
         // GET: Supervisor
-        public ActionResult selectIssue()// select issue view
+        public ActionResult selectIssue(int lineid)// select issue view
         {
+            ViewBag.lineid = lineid;
 
             if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
             {
@@ -41,8 +42,9 @@ namespace IssueManagementSystem.Controllers
 
        }
 
-        public ActionResult MachinBreakdown()//machine breakedown view
+        public ActionResult MachinBreakdown(int lineid)//machine breakedown view
         {
+            ViewBag.lineid = lineid;
             if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
             {
                 return RedirectToAction("Index", "Login");
@@ -51,8 +53,9 @@ namespace IssueManagementSystem.Controllers
          
             return View();
         }
-        public ActionResult QualityIssue()//Qulity view
+        public ActionResult QualityIssue(int lineid)//Qulity view
         {
+            ViewBag.lineid = lineid;
             if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
             {
                 return RedirectToAction("Index", "Login");
@@ -61,8 +64,9 @@ namespace IssueManagementSystem.Controllers
             return View();
         }
 
-        public ActionResult TechnicalIssue()//Technical Issue View
+        public ActionResult TechnicalIssue(int lineid)//Technical Issue View
         {
+            ViewBag.lineid = lineid;
             if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
             {
                 return RedirectToAction("Index", "Login");
@@ -72,8 +76,9 @@ namespace IssueManagementSystem.Controllers
             return View();
         }
 
-        public ActionResult MaterialDelay()//MaterialDelay View
+        public ActionResult MaterialDelay(int lineid)//MaterialDelay View
         {
+            ViewBag.lineid = lineid;
             if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
             {
                 return RedirectToAction("Index", "Login");
@@ -96,8 +101,9 @@ namespace IssueManagementSystem.Controllers
             return Json(materials);
         }
 
-        public ActionResult ITIssue()//IT Issue view
+        public ActionResult ITIssue(int lineid)//IT Issue view
         {
+            ViewBag.lineid = lineid;
             if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
             {
                 return RedirectToAction("Index", "Login");
@@ -105,6 +111,27 @@ namespace IssueManagementSystem.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult getServisorLins(int empId)
+        {
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+            {
+                var lineData = db.line_supervisor.Where(x => x.supervisor_emp_id == empId).ToList();
+              
+      
+                return Json(lineData);
+            }
+        }
+        [HttpPost]
+        public ActionResult getServisorLinName(int lineid)
+        {
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+            {
+                string query = "SELECT line_name FROM lines WHERE line_id=" + lineid;
+                var lineData = db.Database.SqlQuery<TempClasses.tempClass7>(query).ToList();
+                return Json(lineData);
+            }
+        }
         [HttpPost] //add Breakedown to database
         public ActionResult AddIssueBreakedown(issue_occurrence issueModel, string issueJson, notification_handling notification_HandlingModel)
         {

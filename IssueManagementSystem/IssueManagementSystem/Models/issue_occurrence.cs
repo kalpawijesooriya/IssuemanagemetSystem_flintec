@@ -45,7 +45,6 @@ namespace IssueManagementSystem.Models
         public String issueName { get; set; }
         public Nullable<int> group { get; set; }
         public string job_card { get; set; }
+        public Nullable<int> loged_by { get; set; }
     }
 }
-
-

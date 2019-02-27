@@ -5,11 +5,11 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="b24a6675d33f41f19da338615a091e45" Name="Diagram1">
-        <EntityTypeShape EntityType="issue_management_systemModel.department" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="issue_management_systemModel.department" Width="1.5" PointX="0.5" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="issue_management_systemModel.display" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="issue_management_systemModel.employee" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="issue_management_systemModel.issue_line_person" Width="1.5" PointX="5.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="issue_management_systemModel.issue_occurrence" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="issue_management_systemModel.issue_occurrence" Width="1.5" PointX="3.625" PointY="4.125" IsExpanded="true" />
         <EntityTypeShape EntityType="issue_management_systemModel.issue" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="issue_management_systemModel.line_cell_eng" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="issue_management_systemModel.line_computer" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
@@ -21,7 +21,7 @@
         <EntityTypeShape EntityType="issue_management_systemModel.tbl_Notifications" Width="1.5" PointX="9.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="issue_management_systemModel.User_tbl" Width="1.5" PointX="7.75" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="issue_management_systemModel.line_machine" Width="1.5" PointX="9.75" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="issue_management_systemModel.line" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="issue_management_systemModel.line" Width="1.5" PointX="3.5" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="issue_management_systemModel.machine" Width="1.5" PointX="11.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="issue_management_systemModel.material" Width="1.5" PointX="4.75" PointY="11.75" IsExpanded="true" />
         <AssociationConnector Association="issue_management_systemModel.FK_department_lines_departments" ManuallyRouted="false" />
