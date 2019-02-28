@@ -223,7 +223,7 @@ namespace IssueManagementSystem.Controllers
                                 h.UserName LIKE e.responsible_person_emp_id AND
                                 e.material_id IS NULL ORDER BY issue_date DESC";
 
-                List<TempClasses.tempClass5> data = db.Database.SqlQuery<TempClasses.tempClass5>(query).ToList();
+                //List<TempClasses.tempClass5> data = db.Database.SqlQuery<TempClasses.tempClass5>(query).ToList();
                 var cmd = db.Database.Connection.CreateCommand();
                 cmd.Connection.Open();
 
@@ -241,16 +241,21 @@ namespace IssueManagementSystem.Controllers
                 dt1.Columns["material_id"].MaxLength = 100;
                 List<TempClasses.tempClass5> dt1_data = new List<TempClasses.tempClass5>();
 
+
                 foreach (DataRow row in dt1.Rows)
                 {
-                    String query3 = "SELECT FLINTEC.dbo.FLINTEC$Item.Description FROM  FLINTEC.dbo.FLINTEC$Item WHERE FLINTEC.dbo.FLINTEC$Item.No_ = '" + (string)row["material_id"] + "'";
-                    var cmd1 = db.Database.Connection.CreateCommand();
-                    cmd1.CommandText = query3;
-                    System.Diagnostics.Debug.Print("@@@@@@@@@@@@@@@@@@@@@@@"+ query3);
-                    DbDataReader reader = cmd1.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        row.SetField("material_id", (string)row["material_id"] + " - " + reader[0]);
+                    using (FLINTEC_Context db1 = new FLINTEC_Context()) {
+                        String query3 = "SELECT FLINTEC.dbo.FLINTEC$Item.Description FROM  FLINTEC.dbo.FLINTEC$Item WHERE FLINTEC.dbo.FLINTEC$Item.No_ = '" + (string)row["material_id"] + "'";
+                        var cmd1 = db1.Database.Connection.CreateCommand();
+                        cmd1.CommandText = query3;
+                        cmd1.Connection.Open();
+                        DbDataReader reader = cmd1.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            row.SetField("material_id", (string)row["material_id"] + " - " + reader[0]);
+                        }
+
+                        cmd1.Connection.Close();
                     }
 
                     var data_object = new TempClasses.tempClass5();
@@ -310,6 +315,7 @@ namespace IssueManagementSystem.Controllers
                     dt1_data.Add(data_object);
                 }
                 //dt1_data.Sort("Column_name desc");
+                cmd.Connection.Close();
                 return Json(dt1_data, JsonRequestBehavior.AllowGet);
             }
         }
