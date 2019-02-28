@@ -1,38 +1,44 @@
 ﻿@{
     ViewBag.Title = "MaterialDelay";
-    Layout = "~/Views/Shared/supervisorsLayout.cshtml";
+
     if (Session["userID"] == null)
     {
         Response.Redirect("~/Login/Index");
     }
 
+    int userID = (int)Session["userID"];// get current supervisorID
     dynamic mat_List = new System.Dynamic.ExpandoObject();
-
-    int lineId = ViewBag.lineid;
 
     using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
     {
 
-
-        var mapInfo = db.line_map.Where(y => y.line_id == lineId).FirstOrDefault();
+        int lineid = ViewBag.lineid;
+        var mapInfo = db.line_map.Where(y => y.line_id == lineid).FirstOrDefault();
         ViewData["map"] = mapInfo.map.ToString().Trim();//get the map arry to ViewData
-
     }
+
 }
 
 @using IssueManagementSystem.Models
 
-
+<link href="~/Content/SupervisorStyles/supervisorStyle.css" rel="stylesheet" />
 <link href="~/Content/adminstyles/select2-min.css" rel="stylesheet" />
+<link href="~/Content/adminstyles/Settings.css" rel="stylesheet" />
 <link href="~/Content/bootstrap.css" rel="stylesheet" />
 <link href="~/Content/bootstrap-toggle.min.css" rel="stylesheet" />
+<link href="~/Content/test/jquery-confirm.min.css" rel="stylesheet" />
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
 
 <h2>Material Delay</h2>
+
 <hr />
 <label id="map" style="display: none;">@ViewData["map"]</label>
 <div class="container" style="margin-top:30px;">
     <div class="row">
-        <div class="col-mg-4">
+
+        <div class="col-sm-3">
             <div class="container-liquid" id="mapdiv">
                 <div style="display:inline-grid;grid-template-columns: 90%  50%">
                     <div id="container">
@@ -43,12 +49,13 @@
                 </div>
             </div>
         </div>
-        <div class="" style="width:50%;margin:auto">
+
+        <div class="" style="width:50%;">
 
             <div class="form-group" style="width:100%;">
                 <div id="groupsdiv">
-                    <label for="exampleFormControlTextarea1" style="margin-top:5%">Select Area</label>
-                    <select class="js-example-placeholder-single js-states form-control" id="groups" name="Material" style="width:100%;" >
+                    <label for="exampleFormControlTextarea1">Select Area</label>
+                    <select class="js-example-placeholder-single js-states form-control" id="groups" style="width:100%;">
                         <option></option>
 
                     </select>
@@ -61,18 +68,6 @@
                     <label for="exampleFormControlTextarea1" style="margin-top:5%">Group</label>
                     <input type="text" class="form-control" id="grouptext" disabled>
                 </div>
-
-                <span id="lineID" style="display:none">@lineId</span>
-
-                <label style="margin-top:5%">Select job card</label>
-
-                <select class="js-example-placeholder-single js-states form-control" id="jobCardSelectBox" style="width:100%" onchange="loadMaterialList()">
-                    <option></option>
-                    @foreach (var j in Model.jobCards)
-                    {
-                        <option value="@j.Prod_Order_No_">@j.Prod_Order_No_  &nbsp;- &nbsp;&nbsp; @j.Description </option>
-                    }
-                </select>
 
                 <label style="margin-top:5%">Select material</label>
 
@@ -88,10 +83,19 @@
 
                 </div>
 
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-9" style="margin:auto;">
+                        <div class="progress" style="height:5px;">
+                            <div id="prog_bar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
 
                 <label style="margin-top:5%">Select job card</label>
                 <div onclick="popUpAlert()">
-                    <select class="js-example-placeholder-single js-states form-control" id="jobCardSelectBox" style="width:100%" onchange="">
+                    <select class="js-example-placeholder-single js-states form-control" id="jobCardSelectBox" style="width:100%" onchange="loadMaterialList()">
                         <option></option>
                         @foreach (var j in Model.jobCards)
                         {
@@ -99,13 +103,10 @@
                         }
                     </select>
                 </div>
-
-
                 <div style="padding-top:20px;">
                     <label for="exampleFormControlTextarea1">Description</label>
-                    <textarea class="form-control" rows="5" id="description" style="resize: both;width:100%;" spellcheck="true"></textarea>
+                    <textarea class="form-control" rows="5" id="description" style="resize: both;width:100%;"></textarea>
                 </div>
-
                 <div class="button-holder" style="display:block;margin-top:-50px;">
                     <div class="ajax-button">
                         <div class="fa fa-check done"></div>
@@ -117,16 +118,14 @@
         </div>
     </div>
 </div>
-<script src="~/Scripts/SupervisorScripts/showmap.js"></script>
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-<script src="~/Scripts/Manager/bootstrap.min.js"></script>
-<script src="~/Scripts/bootstrap-toggle.min.js"></script>
+<script src="~/Scripts/SupervisorScripts/showmap.js"></script>
 <script src="~/Scripts/AdminScripts/jscolar.js"></script>
+<script src="~/Scripts/AdminScripts/select2-min.js"></script>
 <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
 <script src="~/Scripts/AdminScripts/select2-min.js"></script>
+<script src="~/Scripts/bootstrap-toggle.min.js"></script>
 <script src="~/signalr/Hubs"></script>
-<script src="~/Scripts/SupervisorScripts/machineBrakedown.js"></script>
-
 <script src="~/Content/test/jquery-confirm.min.js"></script>
 
 <style>
@@ -135,7 +134,6 @@
         margin-left: -50% !important;
     }
 </style>
-
 
 <script>
      $('#groupsdiv').hide()
@@ -148,39 +146,45 @@
       $('#machineshopdiv').show()
       $('#machinediv').show()
     }
-    if(('@Session["department"]'=='HeatTreatment')||('@Session["department"]'=='Accessories'))
+       if(('@Session["department"]'=='HeatTreatment')||('@Session["department"]'=='Accessories'))
     {
-          $('#groups').append('<option value="1">Heat treatment</option>')
-          $('#groups').append('<option value="2">Accessories</option>')
+           $('#groups').append('<option value="1">Heat treatment</option>')
+           $('#groups').append('<option value="2">Accessories</option>')
     $('#groupsdiv').show()
     }
-    $(document).ready(function () {
-
-        $("#materialSelectBox").prop("disabled", true);
-         $("#chk_box").attr("disabled", true);
-
+    $('select').select2({
+        placeholder: "Select.....",
+        allowClear: false
+    });
+    $(document).ready(function(){
         $("#jobCardSelectBox").prop("disabled", true);
         loadMaterialList();
-
     });
-    function loadMaterialList() {
-
-        var selectedJobCard = document.getElementById("jobCardSelectBox").value;
-
-
+    function popUpAlert() {
+        var selectedMaterial = document.getElementById("materialSelectBox").value;
+        if (selectedMaterial == '' ) {
+            $.alert({
+                title: '',
+                content: 'Please select the material first !'
+            });
+        }
+    }
+   var prog_bar = document.getElementById('prog_bar');
+    function load_prog_bar(fill){
+        prog_bar.style.width = +fill+"%";
+    }
+    function loadMaterialList()
+    {
         $("#jobCardSelectBox").prop("disabled", true);
-
         setTimeout(function(){
             load_prog_bar(0);
         }, 1);
-
-
         $.ajax({
             type: "POST",
+            async: true,
             dataType: 'text',
-            async:true,
             url: "/CellEngineer/loadMaterialList",
-            data: { selectedJobCard: selectedJobCard },
+            data: { lineID:@Session["lineId"]},
             success: function (feedback) {
                 feedback = JSON.parse(feedback);
                 var materialSelectBox = document.getElementById("materialSelectBox");
@@ -191,35 +195,22 @@
                 materialSelectBox.appendChild(opt1);
                 for (var i = 0; i < feedback[0].Value.length; i++) {
                     var opt = document.createElement('option');
-                    opt.innerHTML = feedback[0].Value[i].Item_No_ + " -- " + feedback[0].Value[i].Description;
-                    opt.value = feedback[0].Value[i].Item_No_ ;
+                    opt.innerHTML = feedback[0].Value[i].Item_No_ + " -- " + feedback[0].Value[i].Description;;
+                    opt.value = feedback[0].Value[i].Item_No_;
                     materialSelectBox.appendChild(opt);
+                   setTimeout(function(){
+                        load_prog_bar( ($('#materialSelectBox option').length/feedback[0].Value.length)*100 );
+                    },1);
                 }
             },
             error: function () {
                 alert("Error occurred");
             }
         });
-
-        if (selectedJobCard != null) {
-            $("#materialSelectBox").prop("disabled", false);
-            $("#chk_box").attr("disabled", false);
-        }
-
     }
     function load_nonBOMMaterialList() {
-
-      var url = '@Url.Action("loadNonBOMMaterials", "CellEngineer")'
-
         var url = '@Url.Action("loadNonBOMMaterials", "CellEngineer")'
-
         $("#jobCardSelectBox").prop("disabled", true);
-
-        setTimeout(function(){
-            load_prog_bar(0);
-        }, 1);
-
-
         $.ajax({
             type: "POST",
             dataType: 'text',
@@ -235,27 +226,24 @@
                 materialSelectBox.appendChild(opt1);
                 for (var i = 0; i < feedback[0].Value.length; i++) {
                     var opt = document.createElement('option');
-                    opt.innerHTML = feedback[0].Value[i].No_ +" - "+feedback[0].Value[i].Description;
+                    opt.innerHTML = feedback[0].Value[i].No_ + " - " + feedback[0].Value[i].Description;
                     opt.value = feedback[0].Value[i].No_;
                     materialSelectBox.appendChild(opt);
+                    setTimeout(function(){
+                        load_prog_bar( ($('#materialSelectBox option').length/feedback[0].Value.length)*100 );
+                    }, 1);
                 }
             },
             error: function () {
                 alert("Error occurred");
             }
         });
-
     }
-
-    function load_JobCardList() {
-
+        function load_JobCardList() {
         $("#jobCardSelectBox").prop("disabled", false);
-
         var url = '@Url.Action("loadJobCardList", "CellEngineer")'
         var item_No = document.getElementById("materialSelectBox").value;
-
         if (document.getElementById('chk_box').checked) {
-
             $.ajax({
                 type: "POST",
                 dataType: 'text',
@@ -281,19 +269,17 @@
                 error: function () {
                     alert("Error occurred");
                 }
-
             });
         }
-
     }
-    $('select').select2({
-        placeholder: "Select.....",
-        allowClear: false
-    });
-     $('#groups').select2({
-        placeholder: "Select Group.....",
-        allowClear: false
-    });
+    function checkBoxOnChange() {
+        if (document.getElementById('chk_box').checked) {
+            loadMaterialList();
+        }
+        else {
+            load_nonBOMMaterialList();
+        }
+    }
     function SubmitMaterialDelay() {
         obj = new Object();
         obj.issue_date = new Date();
@@ -301,21 +287,20 @@
         obj.description = document.getElementById("description").value;
         obj.line_line_id = @ViewBag.lineid;
         obj.issue_issue_ID = "2";
-        obj.empId=@Session["userID"]
         obj.responsible_person_emp_id = "";
-        obj.issue_satus = "0";
         obj.machine = document.getElementById("machine").value;
-        obj.jobcard=document.getElementById("jobCardSelectBox").value;
-        obj.location =  '@Session["location"]';
+        obj.issue_satus = "0";
+        obj.location = "KTY";
         obj.responsible_person_confirm_status = "0";
-       var grouparry=document.getElementById("grouptext").value.split(" ")
-       if(grouparry=="")
+         var grouparry=document.getElementById("grouptext").value.split(" ")
+        if(grouparry=="")
         {
-         obj.group=document.getElementById("groups").value
+          obj.group=document.getElementById("groups").value
         }else{
         obj.group=grouparry[1];
         }
         obj.material = $('#materialSelectBox').find(":selected").text();
+        obj.jobcard=document.getElementById("jobCardSelectBox").value;
         var obj_array = new Array();
         obj_array.push(obj);
         var issueJson = JSON.stringify(obj_array);
@@ -326,27 +311,31 @@
             url: url,
             data: { issueJson: issueJson },
             success: function (feedback) {
-            $.connection.hub.start()//Refresh Screen
-                .done(function () {
-                 console.log("Worked")
-                 $.connection.ismHub.server.announce();
-              }).fail(function () { alert("Can't Refresh Your Line Screen! Plese Inform IT Department!") });
-              window.location.href = '@Url.Action("selectIssue", "Supervisor")?lineid=@ViewBag.lineId'; //return to dashbord
+                window.location.href = '@Url.Action("DashBord", "CellEngineer")?lineid=' +obj.line_line_id;
             },
-            error: function (feedback) {
-                alert(feedback);
+            error: function () {
+                alert("Error occurred");
             }
         });
     }
-    function checkBoxOnChange() {
-        if (document.getElementById('chk_box').checked) {
-                loadMaterialList();
-        }
-        else {
-                load_nonBOMMaterialList();
-        }
-    }
-   var id=@Session["lineId"];
+     $('#groups').select2({
+        placeholder: "Select Area.....",
+        allowClear: false
+    });
+</script>
+
+
+
+<script>
+    $("#submit").click(function () {
+        $.connection.hub.start()
+            .done(function () {
+                console.log("Worked")
+                $.connection.ismHub.server.announce();
+            })
+            .fail(function () { alert("ERROR!") });
+    });
+     var id=@ViewBag.lineid.ToString();
     var inputPath="../Content/images/"+id+".jpg"
     var url = '@Url.Action("loadBase64Image", "Admin")';
     $.ajax({
