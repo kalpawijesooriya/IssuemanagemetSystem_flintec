@@ -95,7 +95,7 @@
 
                 <label style="margin-top:5%">Select job card</label>
                 <div onclick="popUpAlert()">
-                    <select class="js-example-placeholder-single js-states form-control" id="jobCardSelectBox" style="width:100%" onchange="loadMaterialList()">
+                    <select class="js-example-placeholder-single js-states form-control" id="jobCardSelectBox" style="width:100%" onchange="" multiple="multiple">
                         <option></option>
                         @foreach (var j in Model.jobCards)
                         {
@@ -300,7 +300,20 @@
         obj.group=grouparry[1];
         }
         obj.material = $('#materialSelectBox').find(":selected").text();
-        obj.jobcard=document.getElementById("jobCardSelectBox").value;
+
+        obj.jobcard = "";
+
+        var jc = $('#jobCardSelectBox').val();
+
+        if (jc.length > 0) {
+
+            jc.forEach(function (ele, i) {
+
+                obj.jobcard = ((i > 0) ? (obj.jobcard + ",") : ("")) + ele;
+
+            });
+        }
+
         var obj_array = new Array();
         obj_array.push(obj);
         var issueJson = JSON.stringify(obj_array);

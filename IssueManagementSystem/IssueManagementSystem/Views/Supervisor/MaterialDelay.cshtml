@@ -87,10 +87,9 @@
                     </div>
                 </div>
 
-
                 <label style="margin-top:5%">Select job card</label>
                 <div onclick="popUpAlert()">
-                    <select class="js-example-placeholder-single js-states form-control" id="jobCardSelectBox" style="width:100%" onchange="">
+                    <select class="js-example-placeholder-single js-states form-control" id="jobCardSelectBox" style="width:100%" onchange="" multiple="multiple">
                         <option></option>
                         @foreach (var j in Model.jobCards)
                         {
@@ -273,10 +272,13 @@
         placeholder: "Select.....",
         allowClear: false
     });
+
+
      $('#groups').select2({
         placeholder: "Select Group.....",
         allowClear: false
     });
+
     function SubmitMaterialDelay() {
         obj = new Object();
         obj.issue_date = new Date();
@@ -288,8 +290,20 @@
         obj.issue_satus = "0";
         obj.empId=@Session["userID"]
         obj.machine = document.getElementById("machine").value;
-        obj.jobcard=document.getElementById("jobCardSelectBox").value;
-        obj.location =  '@Session["location"]';
+        obj.jobcard = ""; 
+
+        var jc = $('#jobCardSelectBox').val();
+
+        if (jc.length > 0) {
+
+            jc.forEach(function (ele, i) {
+
+                obj.jobcard = ((i > 0) ? (obj.jobcard + ",") : (""))  + ele;
+
+            });
+        }
+        
+        obj.location = '@Session["location"]';
         obj.responsible_person_confirm_status = "0";
        var grouparry=document.getElementById("grouptext").value.split(" ")
        if(grouparry=="")
@@ -302,6 +316,7 @@
         var obj_array = new Array();
         obj_array.push(obj);
         var issueJson = JSON.stringify(obj_array);
+        console.log(issueJson);
          var url = '@Url.Action("AddMaterialDelay", "Supervisor")'
         $.ajax({
             type: "POST",
