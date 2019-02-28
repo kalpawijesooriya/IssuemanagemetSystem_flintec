@@ -1,7 +1,6 @@
 ﻿
 var jsonText = document.getElementById("map").textContent;
 
-
 function Shape(x, y, w, h, fill, machine) {
     this.x = x || 0;
     this.y = y || 0;
@@ -11,13 +10,10 @@ function Shape(x, y, w, h, fill, machine) {
     this.machine = machine || 'NULL*';
 }
 
-
 Shape.prototype.draw = function (ctx1) {
     ctx1.fillStyle = this.fill;
     ctx1.fillRect(this.x, this.y, this.w, this.h);
-
 }
-
 
 Shape.prototype.contains = function (mx, my) {
     return (this.x <= mx) && (this.x + this.w >= mx) &&
@@ -25,7 +21,6 @@ Shape.prototype.contains = function (mx, my) {
 }
 
 function CanvasState(canvas) {
-
     this.canvas = canvas;
     this.width = canvas.width;
     this.height = canvas.height;
@@ -43,8 +38,6 @@ function CanvasState(canvas) {
     this.htmlTop = html.offsetTop;
     this.htmlLeft = html.offsetLeft;
 
-
-
     this.valid = false; // when set to false, the canvas will redraw everything
     this.shapes = [];  // the collection of things to be drawn
     this.shapes = createObjectArray(jsonText);
@@ -58,6 +51,7 @@ function CanvasState(canvas) {
 
     //fixes a problem where double clicking causes text to get selected on the canvas
     canvas.addEventListener('selectstart', function (e) { e.preventDefault(); return false; }, false);
+
     // Up, down, and move are for dragging
     canvas.addEventListener('mousedown', function (e) {
         var mouse = myState.getMouse(e);
@@ -83,6 +77,25 @@ function CanvasState(canvas) {
     }, true);
 
     canvas.addEventListener('mousemove', function (e) {
+        var mouse = myState.getMouse(e);
+        var mx = mouse.x;
+        var my = mouse.y;
+      //  console.log(my);
+        var shapes = myState.shapes; // hovering over a shape
+        var l = shapes.length;
+        for (var i = l - 1; i >= 0; i--) {
+            if (shapes[i].contains(mx, my)) {
+               // console.log(shapes[i].machine);
+                createToolTip(shapes[i].machine,mx,my);
+                return;
+            }
+            else {
+                if($('#tt').length){ // if exist
+                    $( "#tt" ).remove();
+                }
+            }
+        }
+
         if (myState.dragging) {
             var mouse = myState.getMouse(e);
             myState.selection.x = mouse.x - myState.dragoffx;
@@ -92,14 +105,9 @@ function CanvasState(canvas) {
         }
     }, true);
 
-
     canvas.addEventListener('mouseup', function (e) {
         myState.dragging = false;
     }, true);
-
-
-    
-
 
     this.selectionColor = '#f4dc42';
     this.selectionWidth = 5;
@@ -139,14 +147,12 @@ CanvasState.prototype.draw = function () {
             ctx.strokeRect(mySel.x, mySel.y, mySel.w, mySel.h);
         }
 
-
-
         this.valid = true;
     }
 }
 
 
-CanvasState.prototype.getMouse = function (e) {
+CanvasState.prototype.getMouse = function (e){
     var element = this.canvas, offsetX = 0, offsetY = 0, mx, my;
     // Compute the total offset
     if (element.offsetParent !== undefined) {
@@ -170,7 +176,6 @@ function init() {
 
 }
 
-
 function createObjectArray(jsonText) {
 
     console.log(jsonText);
@@ -188,3 +193,23 @@ function createObjectArray(jsonText) {
 }
 
 window.onload = init;
+
+function createToolTip(toolTipText,x,y){
+//<div title="regular tooltip">Hover me</div>
+
+if($('#tt').length){ // if exist
+    $( "#tt" ).remove();
+}
+var div = document.createElement('div');
+div.setAttribute("id","tt");
+div.style.top = (y) +'px';
+div.style.left = (x) +20 +'px';
+div.style.background = "#f2f2f2";
+div.style.background = "#f2f2f2";
+div.style.position = 'absolute';
+div.style.padding = "3px 10px 3px 10px";
+div.style.borderRadius = "5px";
+div.innerHTML=toolTipText;
+document.getElementById('container').appendChild(div);
+
+}
