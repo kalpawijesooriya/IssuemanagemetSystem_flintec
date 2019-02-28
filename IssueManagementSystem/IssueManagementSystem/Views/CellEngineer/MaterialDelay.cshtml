@@ -103,6 +103,15 @@
                         }
                     </select>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-12" style="margin:auto;">
+                        <div class="progress" style="height:5px;">
+                            <div id="prog_bar2" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
                 <div style="padding-top:20px;">
                     <label for="exampleFormControlTextarea1">Description</label>
                     <textarea class="form-control" rows="5" id="description" style="resize: both;width:100%;"></textarea>
@@ -169,10 +178,19 @@
             });
         }
     }
-   var prog_bar = document.getElementById('prog_bar');
+
+    var prog_bar = document.getElementById('prog_bar');
     function load_prog_bar(fill){
         prog_bar.style.width = +fill+"%";
     }
+
+    var prog_bar2 = document.getElementById('prog_bar2');
+    function load_prog_bar2(fill){
+        prog_bar2.style.width = +fill + "%";
+    }
+
+
+
     function loadMaterialList()
     {
         $("#jobCardSelectBox").prop("disabled", true);
@@ -244,6 +262,13 @@
         var url = '@Url.Action("loadJobCardList", "CellEngineer")'
         var item_No = document.getElementById("materialSelectBox").value;
         if (document.getElementById('chk_box').checked) {
+
+            setTimeout(function () {
+                load_prog_bar2(0);
+            }, 1);
+
+            load_prog_bar2(20);
+
             $.ajax({
                 type: "POST",
                 dataType: 'text',
@@ -264,6 +289,11 @@
                         opt.innerHTML = feedback[0].Value[i].Prod_Order_No_;
                         opt.value = feedback[0].Value[i].Prod_Order_No_;
                         jobCardSelectBox.appendChild(opt);
+
+                        setTimeout(function () {
+                            load_prog_bar2(($('#jobCardSelectBox option').length / feedback[0].Value.length) * 100);
+                        }, 1);
+
                     }
                 },
                 error: function () {
