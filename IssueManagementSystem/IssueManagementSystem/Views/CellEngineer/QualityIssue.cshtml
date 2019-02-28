@@ -105,7 +105,8 @@
     $("#submit").click(function () {
        obj = new Object();
         obj.description = document.getElementById("description").value;
-        obj.line_line_id = '@ViewBag.lineid';
+         obj.line_line_id = '@ViewBag.lineid';
+         obj.empId=@Session["userID"]
         obj.location =  '@Session["location"]';
         obj.machine = document.getElementById("machine").value;
         var grouparry=document.getElementById("grouptext").value.split(" ")

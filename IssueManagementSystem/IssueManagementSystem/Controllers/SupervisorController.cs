@@ -16,8 +16,9 @@ namespace IssueManagementSystem.Controllers
 
         Communication com = new Communication();
         // GET: Supervisor
-        public ActionResult selectIssue()// select issue view
+        public ActionResult selectIssue(int lineid)// select issue view
         {
+            ViewBag.lineid = lineid;
 
             if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
             {
@@ -41,8 +42,9 @@ namespace IssueManagementSystem.Controllers
 
        }
 
-        public ActionResult MachinBreakdown()//machine breakedown view
+        public ActionResult MachinBreakdown(int lineid)//machine breakedown view
         {
+            ViewBag.lineid = lineid;
             if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
             {
                 return RedirectToAction("Index", "Login");
@@ -51,8 +53,9 @@ namespace IssueManagementSystem.Controllers
          
             return View();
         }
-        public ActionResult QualityIssue()//Qulity view
+        public ActionResult QualityIssue(int lineid)//Qulity view
         {
+            ViewBag.lineid = lineid;
             if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
             {
                 return RedirectToAction("Index", "Login");
@@ -61,8 +64,9 @@ namespace IssueManagementSystem.Controllers
             return View();
         }
 
-        public ActionResult TechnicalIssue()//Technical Issue View
+        public ActionResult TechnicalIssue(int lineid)//Technical Issue View
         {
+            ViewBag.lineid = lineid;
             if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
             {
                 return RedirectToAction("Index", "Login");
@@ -72,8 +76,9 @@ namespace IssueManagementSystem.Controllers
             return View();
         }
 
-        public ActionResult MaterialDelay()//MaterialDelay View
+        public ActionResult MaterialDelay(int lineid)//MaterialDelay View
         {
+            ViewBag.lineid = lineid;
             if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
             {
                 return RedirectToAction("Index", "Login");
@@ -95,9 +100,9 @@ namespace IssueManagementSystem.Controllers
             materials.materials = matList;
             return Json(materials);
         }
-
-        public ActionResult ITIssue()//IT Issue view
+        public ActionResult ITIssue(int lineid)//IT Issue view
         {
+            ViewBag.lineid = lineid;
             if ((Session["userID"] == null) || ((string)Session["Role"] != "supervisor"))
             {
                 return RedirectToAction("Index", "Login");
@@ -138,6 +143,8 @@ namespace IssueManagementSystem.Controllers
                             issueModel.responsible_person_confirm_status = 1;
                             issueModel.department = "Maintenance";
                             issueModel.issue_satus = "1";
+                            issueModel.loged_by = Int32.Parse(item["empId"].ToString());
+                               
                             issueModel.issue_issue_ID = 1;//Issue id is 1 for Breakdown
                             issueModel.responsible_person_emp_id = resp_person.EmployeeNumber;
                             issueModel.location = item["location"].ToString();
@@ -165,7 +172,8 @@ namespace IssueManagementSystem.Controllers
                                 var displayInfo = db.displays.Where(x => x.line_id == line_id).FirstOrDefault();
                                
                                 //turn on the Light
-                                if (group == "") { com.lightON("1", displayInfo.raspberry_ip_address); }
+                                if (group == "") { com.lightON("1", displayInfo.raspberry_ip_address); 
+                                }
                                 else if (group != "") {
                                     com.lightONMachineshop("1", displayInfo.raspberry_ip_address, group );
                                     callNote = line.line_name + " Breakdown has occurred at " + time1;
@@ -174,7 +182,7 @@ namespace IssueManagementSystem.Controllers
                                 }
 
 
-                               com.maintenancesbuzzerOn();
+                               com.maintenancesbuzzerOn(item["location"].ToString());
                                 msg = msg.Replace("@", Environment.NewLine);
                                 ModelState.Clear();
                                 sendCD(line_id, 1, msg, "Machine Breakdown has occurred", callNote, issue_occour_id, notification_HandlingModel);
@@ -232,7 +240,7 @@ namespace IssueManagementSystem.Controllers
                             issueModel.responsible_person_emp_id = resp_person.EmployeeNumber;
                             issueModel.location = item["location"].ToString();
                             issueModel.description = item["description"].ToString();
-                        
+                            issueModel.loged_by = Int32.Parse(item["empId"].ToString());
                             issueModel.issue_date = date;
                             if (group != "") { issueModel.group = Int32.Parse(item["group"].ToString()); }
                             db.issue_occurrence.Add(issueModel);
@@ -272,6 +280,27 @@ namespace IssueManagementSystem.Controllers
             }
             return Content("Technical Issue Recorded", MediaTypeNames.Text.Plain);
         }
+        [HttpPost]
+        public ActionResult getServisorLins(int empId)
+        {
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+            {
+                var lineData = db.line_supervisor.Where(x => x.supervisor_emp_id == empId).ToList();
+
+
+                return Json(lineData);
+            }
+        }
+        [HttpPost]
+        public ActionResult getServisorLinName(int lineid)
+        {
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+            {
+                string query = "SELECT line_name FROM lines WHERE line_id=" + lineid;
+                var lineData = db.Database.SqlQuery<TempClasses.tempClass7>(query).ToList();
+                return Json(lineData);
+            }
+        }
         [HttpPost]//add IT Issues to database
         public ActionResult AddIssueIT(string issueJson, issue_occurrence issueModel, notification_handling notification_HandlingModel)
         {
@@ -310,7 +339,7 @@ namespace IssueManagementSystem.Controllers
                                 issueModel.responsible_person_emp_id = resp_person.EmployeeNumber;
                                 issueModel.location = item["location"].ToString();
                                 issueModel.description = item["description"].ToString();
-                               
+                                issueModel.loged_by = Int32.Parse(item["empId"].ToString());
                             db.issue_occurrence.Add(issueModel);
                             db.SaveChanges();// end of the save
                                              //send notifications
@@ -381,6 +410,7 @@ namespace IssueManagementSystem.Controllers
                             issueModel.description = item["description"].ToString();
                             issueModel.group = Int32.Parse(item["group"].ToString());
                             issueModel.issue_date = date;
+                            issueModel.loged_by = Int32.Parse(item["empId"].ToString());
                             db.issue_occurrence.Add(issueModel);
                             db.SaveChanges();// end of the save
 
@@ -464,6 +494,7 @@ namespace IssueManagementSystem.Controllers
                             issueModel.material_id = item["material_id"].ToString();
                             issueModel.responsible_person_emp_id = resp_person.EmployeeNumber;
                             issueModel.location = item["location"].ToString();
+                            issueModel.loged_by = Int32.Parse(item["empId"].ToString());
                             issueModel.description = item["description"].ToString();
                             if (group != "") { issueModel.group = Int32.Parse(item["group"].ToString()); }
                             db.issue_occurrence.Add(issueModel);
@@ -489,7 +520,7 @@ namespace IssueManagementSystem.Controllers
                                 }
                                 msg = msg.Replace("@", Environment.NewLine);
 
-                                com.storesbuzzerOn();
+                                com.storesbuzzerOn(item["location"].ToString());
                                 sendCD(line_id, 2, msg, "MaterialDelay has occered", callNote, issue_occour_id, notification_HandlingModel);
                             
                               

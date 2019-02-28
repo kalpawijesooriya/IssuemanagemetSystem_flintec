@@ -10,10 +10,10 @@
 
     ViewBag.rol = Session["Role"];
     int userID = (int)Session["userID"];// get current supervisorID
-    int lineId = (int)Session["lineId"];
+    int lineId = ViewBag.lineid;
     using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
     {
-       
+
         var mapInfo = db.line_map.Where(y => y.line_id == lineId).FirstOrDefault();
         ViewData["map"] = mapInfo.map.ToString().Trim();//get the map arry to ViewData
 
@@ -65,7 +65,7 @@
 
                 <div style="padding-top:20px;">
                     <label for="exampleFormControlTextarea1">Description</label>
-                    <textarea class="form-control" rows="5" id="description"></textarea>
+                    <textarea class="form-control" rows="5" id="description" spellcheck="true"></textarea>
 
 
                     <div class="button-holder" style="display:block">
@@ -104,11 +104,11 @@
     }
     if(('@Session["department"]'=='HeatTreatment')||('@Session["department"]'=='Accessories'))
     {
-     
+
            $('#groups').append('<option value="1">Heat treatment</option>')
            $('#groups').append('<option value="2">Accessories</option>')
-      
-     
+
+
     $('#groupsdiv').show()
     }
      if('@Session["department"]'!='MachineShop')
@@ -116,12 +116,12 @@
     $('#groupsdiv').hide()
     }
     $("#submit").click(function () {
-
         obj = new Object();
         obj.description = document.getElementById("description").value;
-        obj.line_line_id = @Session["lineId"];
+        obj.line_line_id = @ViewBag.lineid;
         obj.location =  '@Session["location"]';
         obj.machine = document.getElementById("machine").value;
+        obj.empId=@Session["userID"]
          var grouparry=document.getElementById("grouptext").value.split(" ")
         if(grouparry=="")
         {
@@ -129,10 +129,9 @@
         }else{
         obj.group=grouparry[1];
         }
- 
+
         var obj_array = new Array();
         obj_array.push(obj);
-
         var issueJson = JSON.stringify(obj_array);
          var url = '@Url.Action("AddIssueTechnical", "Supervisor")'
         $.ajax({
@@ -146,8 +145,7 @@
                  console.log("Worked")
                  $.connection.ismHub.server.announce();
               }).fail(function () { alert("Can't Refresh Your Line Screen! Plese Inform IT Department!") });//return to dashbord
-
-              window.location.href = '@Url.Action("selectIssue", "Supervisor")';
+              window.location.href = '@Url.Action("selectIssue", "Supervisor")?lineid=@ViewBag.lineId';
             },
             error: function (feedback) {
                 alert(feedback);
@@ -158,8 +156,7 @@
         placeholder: "Select Area.....",
         allowClear: false
     });
-
-      var id=@Session["lineId"];
+      var id=@ViewBag.lineid;
     var inputPath="../Content/images/"+id+".jpg"
     var url = '@Url.Action("loadBase64Image", "Admin")';
     $.ajax({
@@ -168,38 +165,34 @@
     url: url,
     data: {inputPath},
     success: function (mapData) {
-
     if (mapData.length > 0) {
     document.getElementById('canvas1').style.background = "url(data:image/jpeg;base64," + mapData + ")";
     }
     else {
     document.getElementById('canvas1').style.background = "";
     }
-
     document.getElementById('canvas1').style.backgroundSize = "250px 750px";
-
     },
     error: function () {
     alert("Error");
     }
     });
-  
 
     function  getMachineGroup(machine)
-    { 
+    {
       if('@Session["department"]'=='MachineShop')
-        { 
+        {
         var url = '@Url.Action("getMachine", "Supervisor")'
-          
+
         $.ajax({
             type: "POST",
             dataType: 'text',
             url: url,
             data: {machine},
             success: function (feedback) {
-            
+
                document.getElementById("grouptext").value=feedback
-             
+
             },
             error: function (feedback) {
                 alert(feedback);
@@ -208,6 +201,3 @@
         }
     }
 </script>
-
-
-

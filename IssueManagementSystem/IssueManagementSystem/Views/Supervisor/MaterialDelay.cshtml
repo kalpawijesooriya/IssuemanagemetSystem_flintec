@@ -8,12 +8,12 @@
 
     dynamic mat_List = new System.Dynamic.ExpandoObject();
 
-    int lineId = (int)Session["lineId"];
+    int lineId = ViewBag.lineid;
 
     using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
     {
-       
-       
+
+
         var mapInfo = db.line_map.Where(y => y.line_id == lineId).FirstOrDefault();
         ViewData["map"] = mapInfo.map.ToString().Trim();//get the map arry to ViewData
 
@@ -49,7 +49,7 @@
             <div class="form-group" style="width:100%;">
                 <div id="groupsdiv">
                     <label for="exampleFormControlTextarea1" style="margin-top:5%">Select Area</label>
-                    <select class="js-example-placeholder-single js-states form-control" id="groups" name="Material" style="width:100%;" >
+                    <select class="js-example-placeholder-single js-states form-control" id="groups" name="Material" style="width:100%;">
                         <option></option>
 
                     </select>
@@ -147,19 +147,15 @@
     }
     if(('@Session["department"]'=='HeatTreatment')||('@Session["department"]'=='Accessories'))
     {
-
           $('#groups').append('<option value="1">Heat treatment</option>')
           $('#groups').append('<option value="2">Accessories</option>')
-
     $('#groupsdiv').show()
     }
     $(document).ready(function () {
         $("#jobCardSelectBox").prop("disabled", true);
         loadMaterialList();
     });
-
     function popUpAlert() {
-
         var selectedMaterial = document.getElementById("materialSelectBox").value;
         if (selectedMaterial == '' ) {
             $.alert({
@@ -168,21 +164,15 @@
             });
         }
     }
-
     var prog_bar = document.getElementById('prog_bar');
-
     function load_prog_bar(fill){
         prog_bar.style.width = +fill+"%";
     }
-
     function loadMaterialList() {
-
         $("#jobCardSelectBox").prop("disabled", true);
-
         setTimeout(function(){
             load_prog_bar(0);
         }, 1);
-
         $.ajax({
             type: "POST",
             dataType: 'text',
@@ -197,13 +187,11 @@
                 opt1.innerHTML = '';
                 opt1.value = '';
                 materialSelectBox.appendChild(opt1);
-
                 for (var i = 0; i < feedback[0].Value.length; i++) {
                     var opt = document.createElement('option');
                     opt.innerHTML = feedback[0].Value[i].Item_No_ + " -- " + feedback[0].Value[i].Description;
                     opt.value = feedback[0].Value[i].Item_No_ ;
                     materialSelectBox.appendChild(opt);
-
                     setTimeout(function(){
                         load_prog_bar( ($('#materialSelectBox option').length/feedback[0].Value.length)*100 );
                     },1);
@@ -214,16 +202,12 @@
             }
         });
     }
-
     function load_nonBOMMaterialList() {
         var url = '@Url.Action("loadNonBOMMaterials", "CellEngineer")'
-
         $("#jobCardSelectBox").prop("disabled", true);
-
         setTimeout(function(){
             load_prog_bar(0);
         }, 1);
-
         $.ajax({
             type: "POST",
             dataType: 'text',
@@ -245,23 +229,18 @@
                     setTimeout(function(){
                         load_prog_bar( ($('#materialSelectBox option').length/feedback[0].Value.length)*100 );
                     }, 1);
-                } 
+                }
             },
             error: function () {
                 alert("Error occurred");
             }
         });
     }
-
     function load_JobCardList() {
-
         $("#jobCardSelectBox").prop("disabled", false);
-
         var url = '@Url.Action("loadJobCardList", "CellEngineer")'
         var item_No = document.getElementById("materialSelectBox").value;
-
         if (document.getElementById('chk_box').checked) {
-
             $.ajax({
                 type: "POST",
                 dataType: 'text',
@@ -287,13 +266,9 @@
                 error: function () {
                     alert("Error occurred");
                 }
-
             });
         }
-
     }
-
-
     $('select').select2({
         placeholder: "Select.....",
         allowClear: false
@@ -302,18 +277,16 @@
         placeholder: "Select Group.....",
         allowClear: false
     });
-
     function SubmitMaterialDelay() {
-
         obj = new Object();
-
         obj.issue_date = new Date();
         obj.material_id = document.getElementById("materialSelectBox").value;
         obj.description = document.getElementById("description").value;
-        obj.line_line_id = @Session["lineId"];
+        obj.line_line_id = @ViewBag.lineid;
         obj.issue_issue_ID = "2";
         obj.responsible_person_emp_id = "";
         obj.issue_satus = "0";
+        obj.empId=@Session["userID"]
         obj.machine = document.getElementById("machine").value;
         obj.jobcard=document.getElementById("jobCardSelectBox").value;
         obj.location =  '@Session["location"]';
@@ -328,7 +301,6 @@
         obj.material = $('#materialSelectBox').find(":selected").text();
         var obj_array = new Array();
         obj_array.push(obj);
-
         var issueJson = JSON.stringify(obj_array);
          var url = '@Url.Action("AddMaterialDelay", "Supervisor")'
         $.ajax({
@@ -342,17 +314,14 @@
                  console.log("Worked")
                  $.connection.ismHub.server.announce();
               }).fail(function () { alert("Can't Refresh Your Line Screen! Plese Inform IT Department!") });
-
-              window.location.href = '@Url.Action("selectIssue", "Supervisor")'; //return to dashbord
+              window.location.href = '@Url.Action("selectIssue", "Supervisor")?lineid=@ViewBag.lineId'; //return to dashbord
             },
             error: function (feedback) {
                 alert(feedback);
             }
         });
     }
-
     function checkBoxOnChange() {
-
         if (document.getElementById('chk_box').checked) {
                 loadMaterialList();
         }
@@ -360,8 +329,6 @@
                 load_nonBOMMaterialList();
         }
     }
-
-
    var id=@Session["lineId"];
     var inputPath="../Content/images/"+id+".jpg"
     var url = '@Url.Action("loadBase64Image", "Admin")';
@@ -371,38 +338,34 @@
     url: url,
     data: {inputPath},
     success: function (mapData) {
-
     if (mapData.length > 0) {
     document.getElementById('canvas1').style.background = "url(data:image/jpeg;base64," + mapData + ")";
     }
     else {
     document.getElementById('canvas1').style.background = "";
     }
-
     document.getElementById('canvas1').style.backgroundSize = "250px 750px";
-
     },
     error: function () {
     alert("Error");
     }
     });
-  
 
     function  getMachineGroup(machine)
-    { 
+    {
       if('@Session["department"]'=='MachineShop')
-        { 
+        {
         var url = '@Url.Action("getMachine", "Supervisor")'
-          
+
         $.ajax({
             type: "POST",
             dataType: 'text',
             url: url,
             data: {machine},
             success: function (feedback) {
-            
+
                document.getElementById("grouptext").value=feedback
-             
+
             },
             error: function (feedback) {
                 alert(feedback);
@@ -410,6 +373,4 @@
           });
         }
     }
-
 </script>
-

@@ -10,7 +10,7 @@
     int userID = (int)Session["userID"];// get current supervisorID
 
 
-    int lineId = (int)Session["lineId"];
+    int lineId = ViewBag.lineid;
 }
 @using IssueManagementSystem.Models
 @model IssueManagementSystem.Models.issue_occurrence
@@ -31,11 +31,11 @@
             <div class="form-group" style="width:100%;margin:auto">
                 <span id="lineID" style="display:none">@lineId</span>
 
-           
+
 
                 <div style="padding-top:20px;margin-top:5%">
                     <label for="exampleFormControlTextarea1">Description</label>
-                    <textarea class="form-control" rows="5" id="description"></textarea>
+                    <textarea class="form-control" rows="5" id="description" spellcheck="true"></textarea>
                 </div>
 
                 <div class="button-holder" style="display:block">
@@ -59,17 +59,15 @@
 <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
 <script src="~/signalr/Hubs"></script>
 <script>
-   
-    $("#submit").click(function () {
 
+    $("#submit").click(function () {
         obj = new Object();
         obj.description = document.getElementById("description").value;
-        obj.line_line_id = @Session["lineId"];
+        obj.line_line_id = @ViewBag.lineid;
         obj.location =  '@Session["location"]';
-  
+       obj.empId=@Session["userID"]
         var obj_array = new Array();
         obj_array.push(obj);
-
         var issueJson = JSON.stringify(obj_array);
          var url = '@Url.Action("AddIssueIT", "Supervisor")'
         $.ajax({
@@ -83,8 +81,7 @@
                  console.log("Worked")
                  $.connection.ismHub.server.announce();
               }).fail(function () { alert("Can't Refresh Your Line Screen! Plese Inform IT Department!") });//return to dashbord
-
-              window.location.href = '@Url.Action("selectIssue", "Supervisor")';
+              window.location.href = '@Url.Action("selectIssue", "Supervisor")?lineid=@ViewBag.lineId';
             },
             error: function (feedback) {
                 alert(feedback);
@@ -96,4 +93,3 @@
         allowClear: false
     });
 </script>
-

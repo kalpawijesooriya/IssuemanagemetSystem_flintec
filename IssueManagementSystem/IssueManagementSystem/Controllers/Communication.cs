@@ -120,6 +120,7 @@ namespace IssueManagementSystem.Controllers
             webReq.Method = "GET";
             HttpWebResponse webResponse = (HttpWebResponse)webReq.GetResponse();
         }
+
         public void lightONMachineshop(string light, string ip,string group)
         {
             string url = "http://" + ip + "/ledmachineshop.php?on=" + light+"&group="+ group;
@@ -127,6 +128,7 @@ namespace IssueManagementSystem.Controllers
             webReq.Method = "GET";
             HttpWebResponse webResponse = (HttpWebResponse)webReq.GetResponse();
         }
+
         public void lightOFFMachineshop(string light, string ip, string group)
         {
             string url = "http://" + ip + "/ledmachineshop.php?off=" + light + "&group=" + group;
@@ -134,29 +136,51 @@ namespace IssueManagementSystem.Controllers
             webReq.Method = "GET";
             HttpWebResponse webResponse = (HttpWebResponse)webReq.GetResponse();
         }
-        public void storesbuzzerOn()
+        public void storesbuzzerOn(string location)
         {
-            //string url = "http://192.168.40.246/led.php?on=1";
-            //// string url = "http://192.168.137.238/led.php?on=1";
+            string url = "";
+            if (location == "KTY")
+            {
+                url = "http://192.168.40.246/led.php?on=1";
+            }
+            else {
+                url = "http://192.168.33.22/led.php?on=1";
+            }
             //HttpWebRequest webReq = (HttpWebRequest)WebRequest.Create(string.Format(url));
             //webReq.Method = "GET";
             //HttpWebResponse webResponse = (HttpWebResponse)webReq.GetResponse();
         }
-        public void storesbuzzerOff()
+        public void storesbuzzerOff(string location)
         {
-            //string url = "http://192.168.40.246/led.php?off=1";
-            ////  string url = "http://192.168.137.238/led.php?off=1";
+            string url = "";
+            if (location == "KTY")
+            {
+                url = "http://192.168.40.246/led.php?off=1";
+            }
+            else
+            {
+                url = "http://192.168.33.22/led.php?off=1";
+            }
             //HttpWebRequest webReq = (HttpWebRequest)WebRequest.Create(string.Format(url));
             //webReq.Method = "GET";
             //HttpWebResponse webResponse = (HttpWebResponse)webReq.GetResponse();
         }
 
-        public void maintenancesbuzzerOn()
+        public void maintenancesbuzzerOn(string location)
         {
-        //    string url1 = "http://192.168.20.240/led.php?on=1";
-        //    string url2 = "http://192.168.20.240/led.php?on=2";
-        //    // string url1 = "http://192.168.137.238/led.php?on=1";
-        //    //  string url2 = "http://192.168.137.238/led.php?on=2";
+            string url1="" ;
+            string url2 ="";
+
+            if (location == "KTY")
+            {
+                url1 = "http://192.168.20.240/led.php?on=1";
+                url2 = "http://192.168.20.240/led.php?on=2";
+            }
+            else
+            {
+                url1 = "http://192.168.33.21/led.php?on=1";
+                url2 = "http://192.168.33.21/led.php?on=2";
+            }
         //    HttpWebRequest webReq1 = (HttpWebRequest)WebRequest.Create(string.Format(url1));
         //    HttpWebRequest webReq2 = (HttpWebRequest)WebRequest.Create(string.Format(url2));
         //    webReq1.Method = "GET";
@@ -165,12 +189,22 @@ namespace IssueManagementSystem.Controllers
         //    HttpWebResponse webResponse2 = (HttpWebResponse)webReq2.GetResponse();
         }
 
-        public void maintenancesbuzzerOff()
+        public void maintenancesbuzzerOff(string location)
         {
-            //string url1 = "http://192.168.20.240/led.php?off=1";
-            //string url2 = "http://192.168.20.240/led.php?off=2";
-            ////  string url1 = "http://192.168.137.238/led.php?off=1";
-            ////  string url2 = "http://192.168.137.238/led.php?off=2";
+            string url1 = "";
+            string url2 = "";
+
+            if (location == "KTY")
+            {
+                url1 = "http://192.168.20.240/led.php?off=1";
+                url2 = "http://192.168.20.240/led.php?off=2";
+            }
+            else
+            {
+                url1 = "http://192.168.33.21/led.php?off=1";
+                url2 = "http://192.168.33.21/led.php?off=2";
+            }
+
             //HttpWebRequest webReq1 = (HttpWebRequest)WebRequest.Create(string.Format(url1));
             //HttpWebRequest webReq2 = (HttpWebRequest)WebRequest.Create(string.Format(url2));
             //webReq1.Method = "GET";

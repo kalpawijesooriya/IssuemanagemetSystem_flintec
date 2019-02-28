@@ -112,6 +112,7 @@
         obj.line_line_id = '@ViewBag.lineid';
         obj.location =  '@Session["location"]';
         obj.machine = document.getElementById("machine").value;
+        obj.empId=@Session["userID"]
         var grouparry=document.getElementById("grouptext").value.split(" ")
         if(grouparry=="")
         {

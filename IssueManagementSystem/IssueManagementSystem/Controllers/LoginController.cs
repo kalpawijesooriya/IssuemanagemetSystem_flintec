@@ -65,7 +65,7 @@ namespace IssueManagementSystem.Controllers
                             Session["lineId"] = lineInfo.line_line_id;
                            
                         }
-                        return RedirectToAction("selectIssue", "Supervisor");
+                        return RedirectToAction("selectIssue", "Supervisor", new { lineid = Session["lineId"] });
                     }
 
                     else if (role.Equals("CellEngineer"))

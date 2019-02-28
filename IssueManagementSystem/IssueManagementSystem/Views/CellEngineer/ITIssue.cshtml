@@ -56,6 +56,7 @@
         obj.description = document.getElementById("description").value;
         obj.line_line_id = '@ViewBag.lineid';
         obj.location =  '@Session["location"]';
+        obj.empId=@Session["userID"]
         var obj_array = new Array();
         obj_array.push(obj);
 
