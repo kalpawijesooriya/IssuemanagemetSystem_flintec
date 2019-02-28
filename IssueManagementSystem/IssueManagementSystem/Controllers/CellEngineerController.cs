@@ -78,6 +78,11 @@ namespace IssueManagementSystem.Controllers
         {
             dynamic materials = new ExpandoObject();
             String location = new LocationAdapter(System.Convert.ToInt32(lineID)).get_NAV_Location();
+
+            //if(location) {
+
+            //}
+
             var sql_query = @"SELECT DISTINCT
                                 poc.[Item No_] AS Item_No_ , '' AS Prod_Order_No_, poc.Description
                                 FROM
