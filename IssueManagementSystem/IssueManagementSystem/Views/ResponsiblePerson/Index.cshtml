@@ -203,14 +203,12 @@ if (Session["userID"] == null)
                     alert(response.responseText);
                 }
             });
-
         }
-
 
         function it(lineName, divissue, issuedata, issueStstus, comment, index) {
             var date = issuedata.issueDate.split(' ');
             var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
-            var msg = 'In <strong> ' + lineName + '</strong> Line new IT / Software Issue has been occoured at <strong> ' + day + '</strong > on ' + date[1] + '.</br> Responsible Person - <strong>'+issuedata.responciblepersonName+'</strong>';
+            var msg = 'In <strong> ' + lineName + '</strong> Line new IT / Software Issue has been occured at <strong> ' + day + '</strong > on ' + date[1] + '.</br> Responsible Person - <strong>'+issuedata.responciblepersonName+'</strong>';
 
             var issue = '<div class="col-md-6 col-lg-3" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--blue"><span class="desc" style="color:white">IT/Software Issue</span><div class="icon" ><i class="zmdi zmdi-windows"></i></div></div><div class="card-body"><h5 class="card-title" id="' + index+'"></h5><p class="card-text">' + msg + '</p> <div class="text-right"> <button style="color:#1183ff" class="card-link" data-toggle="modal" data-target="#moreIssueInfo" data-msg="' + msg + '" data-issueinfo="' + issuedata.issue_occurrence_id + '" data-dis="' + issuedata.description + '" data-ststus="' + issueStstus + '" data-comment="' + comment +'" onclick="myfunction(this)">Show More >></button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
             issueCount++
@@ -226,7 +224,7 @@ if (Session["userID"] == null)
         function mb(lineName, divissue, issuedata, issueStstus, comment, index,bell_ststus) {
             var date = issuedata.issueDate.split(' ');
             var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
-            var msg = 'In <strong> ' + lineName + ' Line </strong> new Machine Brakedown has been occoured on <strong> ' + issuedata.machine_machine_id + '</strong > at <strong >' + day + '</strong > on ' + date[1] + '.</br> Responsible Person - <strong>'+issuedata.responciblepersonName+'</strong>'
+            var msg = 'In <strong> ' + lineName + ' Line </strong> new Machine Brakedown has been occured on <strong> ' + issuedata.machine_machine_id + '</strong > at <strong >' + day + '</strong > on ' + date[1] + '.</br> Responsible Person - <strong>'+issuedata.responciblepersonName+'</strong>'
             var issue = '<div class="col-md-6 col-lg-3" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--red"><span class="desc" style="color:white">Machine Brakedown</span><div class="icon" ><i class="zmdi zmdi-settings zmdi-hc-spin"></i></div></div><div class="card-body"><h5 class="card-title" id="' + index +'"></h5><p class="card-text">' + msg + '</p><div class="text-right" style="margin-top:10%"><button id="' + issuedata.issue_occurrence_id +'bell" data-issue_id="' + issuedata.issue_occurrence_id +'"data-location="'+issuedata.location+'" onclick="buzzeroffmain(this)" style="margin-right:53%" ><i style="font-size: 25px;color:red" class="zmdi zmdi-notifications-active animated infinite wobble zmdi-hc-fw mdc-text-blue"></i> </button> <button style="color:#1183ff" class="card-link" data-toggle="modal" data-target="#moreIssueInfo" data-msg="' + msg + '" data-issueinfo="' + issuedata.issue_occurrence_id + '" data-dis="' + issuedata.description + '" data-ststus="' + issueStstus + '" data-comment="' + comment +'" onclick="myfunction(this)">Show More >></button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
             issueCount++
 
@@ -242,7 +240,7 @@ if (Session["userID"] == null)
         function ti(lineName, divissue, issuedata, issueStstus, comment, index) {
             var date = issuedata.issueDate.split(' ');
             var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
-            var msg = 'In <strong>' + lineName + '</strong> Line new Technical Issue has been occoured. At <strong> ' + day + '</strong> on ' + date[1] +'.</br> Responsible Person - <strong>'+issuedata.responciblepersonName+'</strong>'
+            var msg = 'In <strong>' + lineName + '</strong> Line new Technical Issue has been occured. At <strong> ' + day + '</strong> on ' + date[1] +'.</br> Responsible Person - <strong>'+issuedata.responciblepersonName+'</strong>'
             var issue = '<div class="col-md-6 col-lg-3" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--green"><span class="desc" style="color:white">Technical Issue</span><div class="icon" ><i class="fas fa-wrench"></i></div></div><div class="card-body"><h5 class="card-title" id="' + index +'"></h5><p class="card-text">' + msg + '</p> <div class="text-right"> <button style="color:#1183ff" class="card-link" data-toggle="modal" data-target="#moreIssueInfo" data-msg="' + msg + '" data-issueinfo="' + issuedata.issue_occurrence_id + '" data-dis="' + issuedata.description + '"  data-ststus="' + issueStstus + '" data-comment="' + comment +'" onclick="myfunction(this)">Show More >></button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
             issueCount++
 
@@ -257,7 +255,7 @@ if (Session["userID"] == null)
         function md(lineName, divissue, issuedata, issueStstus, comment, index, matirial,bell_ststus) {
             var date = issuedata.issueDate.split(' ');
             var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
-            var msg = 'In <strong> ' + lineName + ' Line</strong> new Material Delay has been occouered . At <strong> ' + day + '</strong> on ' + date[1] + '.</br> Responsible Person - <strong>'+issuedata.responciblepersonName+'</strong> .</br> <strong>Material : </strong>' + matirial +'.'
+            var msg = 'In <strong> ' + lineName + ' Line</strong> new Material Delay has been occured . At <strong> ' + day + '</strong> on ' + date[1] + '.</br> Responsible Person - <strong>'+issuedata.responciblepersonName+'</strong> .</br> <strong>Material : </strong>' + matirial +'.'
             var issue = '<div class="col-md-6 col-lg-3" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--orange"><span class="desc" style="color:white">Material Delay</span><div class="icon" ><i class="zmdi infinite wobble zmdi-shopping-cart"></i></div></div><div class="card-body"><h5 class="card-title" id="' + index +'"></h5><p class="card-text">' + msg + '</p> <div class="text-right" style="margin-top:10%"><button id="' + issuedata.issue_occurrence_id +'bell" data-issue_id="' + issuedata.issue_occurrence_id +'"data-location="'+issuedata.location+'" onclick="buzzeroff(this)" style="margin-right:53%" ><i style="font-size: 25px;color:red" class="zmdi zmdi-notifications-active animated infinite wobble zmdi-hc-fw mdc-text-blue"></i> </button><button style="color:#1183ff" class="card-link" data-toggle="modal" data-target="#moreIssueInfo" data-msg="' + msg + '" data-issueinfo="' + issuedata.issue_occurrence_id + '" data-dis="' + issuedata.description + '"  data-ststus="' + issueStstus + '" data-comment="' + comment +'" onclick="myfunction(this)">Show More >></button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
             issueCount++
 
@@ -273,7 +271,7 @@ if (Session["userID"] == null)
         function qi(lineName, divissue, issuedata, issueStstus, comment, index) {
             var date = issuedata.issueDate.split(' ');
             var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
-            var msg = 'In <strong>' + lineName + '</strong> Line Quality Issue has been occored at <strong> ' + day + ' </strong> on ' + date[1] + '.</br> Responsible Person - <strong>'+issuedata.responciblepersonName+'</strong>'
+            var msg = 'In <strong>' + lineName + '</strong> Line Quality Issue has been occured at <strong> ' + day + ' </strong> on ' + date[1] + '.</br> Responsible Person - <strong>'+issuedata.responciblepersonName+'</strong>'
             var issue = '<div class="col-md-6 col-lg-3" style=" margin-top: 10px;"><div class="card"> <div class="statistic__item statistic__item--blue"><span class="desc" style="color:white">Qulity Issue</span><div class="icon" ><i class="zmdi zmdi-brightness-auto"></i></div></div><div class="card-body"><h5 class="card-title" id="' + index +'"></h5><p class="card-text"> ' + msg + '</p><div class="text-right"> <button style="color:#1183ff" class="card-link" data-toggle="modal" data-target="#moreIssueInfo" data-msg="' + msg + '" data-issueinfo="' + issuedata.issue_occurrence_id + '" data-dis="' + issuedata.description + '"  data-ststus="' + issueStstus + '" data-comment="' +comment+'" onclick="myfunction(this)">Show More >></button></div></div><div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div></div><div>'
             issueCount++
 

@@ -112,17 +112,28 @@ namespace IssueManagementSystem.Controllers
         }
 
         [HttpPost]
-        public ActionResult loadJobCardList(String item_No)
+        public ActionResult loadJobCardList(String item_No, Boolean loadAll)
         {
-            var sql_query = @"SELECT DISTINCT
-            pol.[Prod_ Order No_] AS Prod_Order_No_,pol.Status, pol.Description
-            FROM
-            FLINTEC.dbo.[FLINTEC$Prod_ Order Line] pol,
-            FLINTEC.dbo.[FLINTEC$Prod_ Order Component] poc
-            WHERE
-            poc.[Item No_] LIKE '"+item_No+@"' AND
-            poc.[Prod_ Order No_] = pol.[Prod_ Order No_] AND
-            poc.Status = 3 ORDER BY Prod_Order_No_";
+
+            String sql_query = "";
+
+            if (loadAll)
+            {
+                sql_query = @"SELECT pol.[Prod_ Order No_] AS Prod_Order_No_,pol.Status, pol.Description FROM  FLINTEC.dbo.[FLINTEC$Prod_ Order Line] pol  WHERE pol.Status = 3";
+                //List<FLINTEC_Prod_Order_Line> jcList = jobCardContext.FLINTEC_Prod_Order_Line.Where(x => x.Status == 3).ToList();
+            }
+            else {
+                sql_query = @"SELECT DISTINCT
+                pol.[Prod_ Order No_] AS Prod_Order_No_,pol.Status, pol.Description
+                FROM
+                FLINTEC.dbo.[FLINTEC$Prod_ Order Line] pol,
+                FLINTEC.dbo.[FLINTEC$Prod_ Order Component] poc
+                WHERE
+                poc.[Item No_] LIKE '" + item_No + @"' AND
+                poc.[Prod_ Order No_] = pol.[Prod_ Order No_] AND
+                poc.Status = 3 ORDER BY Prod_Order_No_";
+
+            }
 
             dynamic jobCards = new ExpandoObject();
 
