@@ -146,9 +146,9 @@ namespace IssueManagementSystem.Controllers
             else {
                 url = "http://192.168.33.22/led.php?on=1";
             }
-            //HttpWebRequest webReq = (HttpWebRequest)WebRequest.Create(string.Format(url));
-            //webReq.Method = "GET";
-            //HttpWebResponse webResponse = (HttpWebResponse)webReq.GetResponse();
+            HttpWebRequest webReq = (HttpWebRequest)WebRequest.Create(string.Format(url));
+            webReq.Method = "GET";
+            HttpWebResponse webResponse = (HttpWebResponse)webReq.GetResponse();
         }
         public void storesbuzzerOff(string location)
         {
@@ -161,9 +161,9 @@ namespace IssueManagementSystem.Controllers
             {
                 url = "http://192.168.33.22/led.php?off=1";
             }
-            //HttpWebRequest webReq = (HttpWebRequest)WebRequest.Create(string.Format(url));
-            //webReq.Method = "GET";
-            //HttpWebResponse webResponse = (HttpWebResponse)webReq.GetResponse();
+            HttpWebRequest webReq = (HttpWebRequest)WebRequest.Create(string.Format(url));
+            webReq.Method = "GET";
+            HttpWebResponse webResponse = (HttpWebResponse)webReq.GetResponse();
         }
 
         public void maintenancesbuzzerOn(string location)
@@ -181,12 +181,12 @@ namespace IssueManagementSystem.Controllers
                 url1 = "http://192.168.33.21/led.php?on=1";
                 url2 = "http://192.168.33.21/led.php?on=2";
             }
-        //    HttpWebRequest webReq1 = (HttpWebRequest)WebRequest.Create(string.Format(url1));
-        //    HttpWebRequest webReq2 = (HttpWebRequest)WebRequest.Create(string.Format(url2));
-        //    webReq1.Method = "GET";
-        //    webReq2.Method = "GET";
-        //    HttpWebResponse webResponse1 = (HttpWebResponse)webReq1.GetResponse();
-        //    HttpWebResponse webResponse2 = (HttpWebResponse)webReq2.GetResponse();
+            HttpWebRequest webReq1 = (HttpWebRequest)WebRequest.Create(string.Format(url1));
+            HttpWebRequest webReq2 = (HttpWebRequest)WebRequest.Create(string.Format(url2));
+            webReq1.Method = "GET";
+            webReq2.Method = "GET";
+            HttpWebResponse webResponse1 = (HttpWebResponse)webReq1.GetResponse();
+            HttpWebResponse webResponse2 = (HttpWebResponse)webReq2.GetResponse();
         }
 
         public void maintenancesbuzzerOff(string location)
@@ -205,12 +205,12 @@ namespace IssueManagementSystem.Controllers
                 url2 = "http://192.168.33.21/led.php?off=2";
             }
 
-            //HttpWebRequest webReq1 = (HttpWebRequest)WebRequest.Create(string.Format(url1));
-            //HttpWebRequest webReq2 = (HttpWebRequest)WebRequest.Create(string.Format(url2));
-            //webReq1.Method = "GET";
-            //webReq2.Method = "GET";
-            //HttpWebResponse webResponse1 = (HttpWebResponse)webReq1.GetResponse();
-            //HttpWebResponse webResponse2 = (HttpWebResponse)webReq2.GetResponse();
+            HttpWebRequest webReq1 = (HttpWebRequest)WebRequest.Create(string.Format(url1));
+            HttpWebRequest webReq2 = (HttpWebRequest)WebRequest.Create(string.Format(url2));
+            webReq1.Method = "GET";
+            webReq2.Method = "GET";
+            HttpWebResponse webResponse1 = (HttpWebResponse)webReq1.GetResponse();
+            HttpWebResponse webResponse2 = (HttpWebResponse)webReq2.GetResponse();
         }
 
         public void sendMail(string emailAddress, string msg,string subject)
