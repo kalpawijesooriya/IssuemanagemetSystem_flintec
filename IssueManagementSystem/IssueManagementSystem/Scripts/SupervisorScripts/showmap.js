@@ -203,12 +203,12 @@ if($('#tt').length){ // if exist
 var div = document.createElement('div');
 div.setAttribute("id","tt");
 div.style.top = (y) +'px';
-div.style.left = (x) +20 +'px';
-div.style.background = "#f2f2f2";
-div.style.background = "#f2f2f2";
+div.style.left = (x) +'px';
+div.style.background = "#6d6d6d";
+div.style.color = "#f2f2f2";
 div.style.position = 'absolute';
 div.style.padding = "3px 10px 3px 10px";
-div.style.borderRadius = "5px";
+div.style.borderRadius = "3px";
 div.innerHTML=toolTipText;
 document.getElementById('container').appendChild(div);
 
