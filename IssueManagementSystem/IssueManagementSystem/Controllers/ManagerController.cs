@@ -56,7 +56,6 @@ namespace IssueManagementSystem.Controllers
             return Json(true);
         }
 
-
         //fill 
         [HttpPost]
         public JsonResult fillChart1(string barChart, string startDate, string endDate, string plantLocation)

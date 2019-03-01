@@ -274,7 +274,7 @@
                 dataType: 'text',
                 async: true,
                 url: url,
-                data: { item_No: item_No },
+                data: { item_No: item_No, loadAll: loadAll  },
                 success: function (feedback) {
                     console.log(feedback);
                     feedback = JSON.parse(feedback);
@@ -302,12 +302,17 @@
             });
         }
     }
+
+    var loadAll = false;
+
     function checkBoxOnChange() {
         if (document.getElementById('chk_box').checked) {
             loadMaterialList();
+            loadAll = false;
         }
         else {
             load_nonBOMMaterialList();
+            loadAll = true;
         }
     }
     function SubmitMaterialDelay() {
