@@ -322,6 +322,7 @@
         obj.description = document.getElementById("description").value;
         obj.line_line_id = @ViewBag.lineid;
         obj.issue_issue_ID = "2";
+        obj.empId=@Session["userID"]
         obj.responsible_person_emp_id = "";
         obj.machine = document.getElementById("machine").value;
         obj.issue_satus = "0";
