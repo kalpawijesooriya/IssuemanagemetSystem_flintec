@@ -78,10 +78,16 @@ namespace IssueManagementSystem.Controllers
         {
             dynamic materials = new ExpandoObject();
             String location = new LocationAdapter(System.Convert.ToInt32(lineID)).get_NAV_Location();
+            location = "KG-RS2/KG-AFL/KG-FL5/KG-ASV";
+            if (location.Contains("/")) {
+                var loc = location.Split('/');
+                int i = 0;
+                foreach (String x in loc) {
+                    location = ((i > 0) ? (location + "','") : ("")) + x;
+                    i++;
+                }
+            }
 
-            //if(location) {
-
-            //}
 
             var sql_query = @"SELECT DISTINCT
                                 poc.[Item No_] AS Item_No_ , '' AS Prod_Order_No_, poc.Description
@@ -89,7 +95,7 @@ namespace IssueManagementSystem.Controllers
                                 FLINTEC.dbo.[FLINTEC$Prod_ Order Line] pol,
                                 FLINTEC.dbo.[FLINTEC$Prod_ Order Component] poc
                                 WHERE
-                                poc.[Location Code] LIKE '" + location + @"' AND
+                                poc.[Location Code] IN( '" + location + @"') AND
                                 poc.[Prod_ Order No_] = pol.[Prod_ Order No_] AND
                                 poc.Status = 3 ORDER BY Item_No_";
 
