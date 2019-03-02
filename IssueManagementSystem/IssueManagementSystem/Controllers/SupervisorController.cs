@@ -263,7 +263,7 @@ namespace IssueManagementSystem.Controllers
                                 msg = msg.Replace("@", Environment.NewLine);
 
                                 ModelState.Clear();
-                                sendCD(line_id, 3, msg, "Tecnical Issue has occered", callNote, issue_occour_id, notification_HandlingModel);
+                                sendCD(line_id, 3, msg, "Tecnical Issue has occurred", callNote, issue_occour_id, notification_HandlingModel);
                                
                             }
 
@@ -354,7 +354,7 @@ namespace IssueManagementSystem.Controllers
                                     msg = msg.Replace("@", Environment.NewLine);
 
                                 ModelState.Clear();
-                                    sendCD(line_id, 5, msg, "IT/Software Issue has occered", callNote, issue_occour_id, notification_HandlingModel);
+                                    sendCD(line_id, 5, msg, "IT/Software Issue has occurred", callNote, issue_occour_id, notification_HandlingModel);
                                 }
                             
 
@@ -426,7 +426,7 @@ namespace IssueManagementSystem.Controllers
                                 com.lightONMachineshop("4", displayInfo.raspberry_ip_address, group); 
                                 
                                 ModelState.Clear();
-                                sendCD(line_id, 4, msg, "Quality Issue has occered", callNote, issue_occour_id, notification_HandlingModel);
+                                sendCD(line_id, 4, msg, "Quality Issue has occurred", callNote, issue_occour_id, notification_HandlingModel);
                                 
                             }
 
@@ -521,7 +521,7 @@ namespace IssueManagementSystem.Controllers
                                 msg = msg.Replace("@", Environment.NewLine);
 
                                 com.storesbuzzerOn(item["location"].ToString());
-                                sendCD(line_id, 2, msg, "MaterialDelay has occered", callNote, issue_occour_id, notification_HandlingModel);
+                                sendCD(line_id, 2, msg, "MaterialDelay has occurred", callNote, issue_occour_id, notification_HandlingModel);
                             
                               
                                 ModelState.Clear();

@@ -38,7 +38,7 @@
 <div class="container" style="margin-top:30px;">
     <div class="row">
 
-        <div class="col-sm-3">
+        <div class="col-mg-4">
             <div class="container-liquid" id="mapdiv">
                 <div style="display:inline-grid;grid-template-columns: 90%  50%">
                     <div id="container">
@@ -326,7 +326,7 @@
         obj.responsible_person_emp_id = "";
         obj.machine = document.getElementById("machine").value;
         obj.issue_satus = "0";
-        obj.location = "KTY";
+        obj.location = '@Session["location"]';
         obj.responsible_person_confirm_status = "0";
          var grouparry=document.getElementById("grouptext").value.split(" ")
         if(grouparry=="")
