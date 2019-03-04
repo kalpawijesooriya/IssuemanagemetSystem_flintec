@@ -63,9 +63,10 @@ namespace IssueManagementSystem.Controllers
             var chart1Data = new List<TempClasses.tempClass>();
             var chart2Data = new List<TempClasses.tempClass4>();
 
-            using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
-            {
+
                 if (barChart.Equals("1") ) {
+
+
                     String query = @"SELECT TOP 10 issue_occurrence.machine_machine_id,
                                     count(issue_occurrence.machine_machine_id) AS count FROM issue_occurrence 
                                     WHERE issue_occurrence.issue_issue_ID = 1 AND issue_occurrence.location IN ('"+plantLocation+@"')
@@ -73,11 +74,17 @@ namespace IssueManagementSystem.Controllers
                                     GROUP BY issue_occurrence.machine_machine_id  ORDER BY count Desc";
 
                     System.Diagnostics.Debug.Print(query);
+                using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
+                {
                     chart1Data = db.Database.SqlQuery<TempClasses.tempClass>(query).ToList();
+                }
                     return Json(chart1Data, JsonRequestBehavior.AllowGet);
+
+
                 }
 
                 if (barChart.Equals("2")) {
+
                     String query = @"SELECT TOP 10 FLINTEC.dbo.FLINTEC$Item.[Search Description] AS Search_Description,
                                     count(issue_management_system.dbo.issue_occurrence.material_id) AS count 
                                     FROM issue_management_system.dbo.issue_occurrence,FLINTEC.dbo.FLINTEC$Item
@@ -88,11 +95,19 @@ namespace IssueManagementSystem.Controllers
                                     GROUP BY FLINTEC.dbo.FLINTEC$Item.[Search Description]
                                     ORDER BY count Desc";
 
-                    chart2Data = db.Database.SqlQuery<TempClasses.tempClass4>(query).ToList();
+                try {
+
+                    using (FLINTEC_Context db = new FLINTEC_Context())
+                    {
+                        chart2Data = db.Database.SqlQuery<TempClasses.tempClass4>(query).ToList();
+                    }
+
+                } catch (Exception ex) { }
+
                     return Json(chart2Data, JsonRequestBehavior.AllowGet);
                 }
                 return Json(chart1Data, JsonRequestBehavior.AllowGet);
-            }
+            
         }
 
         [HttpPost]
@@ -274,7 +289,7 @@ namespace IssueManagementSystem.Controllers
                     data_object.responsible_person_confirm_feedback = DBNull.Value.Equals(row["responsible_person_confirm_feedback"]) ? null : (string)row["responsible_person_confirm_feedback"];//"responsible_person_confirm_feedback"
                     data_object.solved_date = DBNull.Value.Equals(row["solved_date"]) ? (DateTime?)null : (DateTime)row["solved_date"];//"solved_date"
                     data_object.commented_date = DBNull.Value.Equals(row["commented_date"])? (DateTime?)null : (DateTime)row["commented_date"];//"commented_date"
-                    data_object.department = (string)row["department"];//"department"
+                    data_object.department = row["department"] != DBNull.Value ? (string)row["department"] : "";//"department"
                     data_object.solved_emp = DBNull.Value.Equals(row["solved_emp"]) ?  null : (string)row["solved_emp"];//"solved_emp"
                     data_object.buzzer_off_by = DBNull.Value.Equals(row["buzzer_off_by"]) ?  null : (string)row["buzzer_off_by"];//"buzzer_off_by"
                     data_object.buzzer_off_time = DBNull.Value.Equals(row["buzzer_off_time"]) ? (DateTime?)null : (DateTime)row["buzzer_off_time"];//"buzzer_off_time"
@@ -304,7 +319,7 @@ namespace IssueManagementSystem.Controllers
                     data_object.responsible_person_confirm_feedback = DBNull.Value.Equals(row["responsible_person_confirm_feedback"]) ? null : (string)row["responsible_person_confirm_feedback"];//"responsible_person_confirm_feedback"
                     data_object.solved_date = DBNull.Value.Equals(row["solved_date"]) ? (DateTime?)null : (DateTime)row["solved_date"];//"solved_date"
                     data_object.commented_date = DBNull.Value.Equals(row["commented_date"]) ? (DateTime?)null : (DateTime)row["commented_date"];//"commented_date"
-                    data_object.department = (string)row["department"];//"department"
+                    data_object.department = row["department"] != DBNull.Value ? (string)row["department"] : "";//"department"
                     data_object.solved_emp = DBNull.Value.Equals(row["solved_emp"]) ? null : (string)row["solved_emp"];//"solved_emp"
                     data_object.buzzer_off_by = DBNull.Value.Equals(row["buzzer_off_by"]) ? null : (string)row["buzzer_off_by"];//"buzzer_off_by"
                     data_object.buzzer_off_time = DBNull.Value.Equals(row["buzzer_off_time"]) ? (DateTime?)null : (DateTime)row["buzzer_off_time"];//"buzzer_off_time"
