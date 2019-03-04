@@ -105,6 +105,7 @@ namespace IssueManagementSystem.Controllers
                 var date = DateTime.ParseExact(current_time, "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture);
                 int issueid = Int32.Parse(item["issueid"].ToString());
                 int emp_id = Int32.Parse(item["employee_id"].ToString());
+         
                 issue_management_systemEntities1 db = new issue_management_systemEntities1();
                 var issueoccourInfo = db.issue_occurrence.Where(x => x.issue_occurrence_id == issueid).FirstOrDefault();
                 issueoccourInfo.buzzer_off_by = emp_id;
@@ -112,7 +113,7 @@ namespace IssueManagementSystem.Controllers
                 var location = item["location"].ToString();
                 db.SaveChanges();
 
-                var count = db.issue_occurrence.Where(x => x.issue_issue_ID == 1 && x.buzzer_off_by == null).Count();
+                var count = db.issue_occurrence.Where(x => x.issue_issue_ID == 1 && x.buzzer_off_by == null && x.location==location).Count();
 
                 if (count == 0)
                 {
