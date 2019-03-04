@@ -53,7 +53,7 @@ namespace IssueManagementSystem.Controllers
         }
 
         public ActionResult MaterialDelay(int lineid)//Material Delay View
-        {
+        {   
             if ((Session["userID"] == null) || ((string)Session["Role"] != "CellEngineer"))
             {
                 return RedirectToAction("Index", "Login");
@@ -77,25 +77,39 @@ namespace IssueManagementSystem.Controllers
         public ActionResult loadMaterialList(String lineID)
         {
             dynamic materials = new ExpandoObject();
-            String location = new LocationAdapter(System.Convert.ToInt32(lineID)).get_NAV_Location();
-            location = "KG-RS2/KG-AFL/KG-FL5/KG-ASV";
-            if (location.Contains("/")) {
-                var loc = location.Split('/');
+
+/////////////////////////////////////////////////////////////////////////////
+            LocationAdapter location = new LocationAdapter(System.Convert.ToInt32(lineID));
+
+            String loc_ID = location.get_NAV_Location();
+
+            if (loc_ID.Contains("/")) {
+                var loc = loc_ID.Split('/');
                 int i = 0;
                 foreach (String x in loc) {
-                    location = ((i > 0) ? (location + "','") : ("")) + x;
+                    loc_ID = ((i > 0) ? (loc_ID + "','") : ("")) + x;
                     i++;
                 }
             }
 
+            String s_or_f = "";
+            String line_name = location.get_LineName();
+            if (line_name == "Straintec") {
+                s_or_f = "STRAINTEC";
+            }
+            else {
+                s_or_f = "FLINTEC";
+            }
+        
+            ////////////////////////////////////////////////////////////////////////////////////////
 
             var sql_query = @"SELECT DISTINCT
                                 poc.[Item No_] AS Item_No_ , '' AS Prod_Order_No_, poc.Description
                                 FROM
-                                FLINTEC.dbo.[FLINTEC$Prod_ Order Line] pol,
-                                FLINTEC.dbo.[FLINTEC$Prod_ Order Component] poc
+                                FLINTEC.dbo.[" + s_or_f + @"$Prod_ Order Line] pol,
+                                FLINTEC.dbo.[" + s_or_f + @"$Prod_ Order Component] poc
                                 WHERE
-                                poc.[Location Code] IN( '" + location + @"') AND
+                                poc.[Location Code] IN( '"+loc_ID+@"') AND
                                 poc.[Prod_ Order No_] = pol.[Prod_ Order No_] AND
                                 poc.Status = 3 ORDER BY Item_No_";
 
@@ -112,24 +126,53 @@ namespace IssueManagementSystem.Controllers
         }
 
         [HttpPost]
-        public ActionResult loadJobCardList(String item_No, Boolean loadAll)
+        public ActionResult loadJobCardList(String item_No, Boolean loadAll, String lineID)
         {
 
             String sql_query = "";
 
+            //////////////////////////////////////////////////////////////////////////////////////
+            
+            LocationAdapter location = new LocationAdapter(System.Convert.ToInt32(lineID));
+            String loc_ID = location.get_NAV_Location();
+
+            if (loc_ID.Contains("/"))
+            {
+                var loc = loc_ID.Split('/');
+                int i = 0;
+                foreach (String x in loc)
+                {
+                    loc_ID = ((i > 0) ? (loc_ID + "','") : ("")) + x;
+                    i++;
+                }
+            }
+
+            String s_or_f = "";
+            String line_name = location.get_LineName();
+            if (line_name == "Straintec")
+            {
+                s_or_f = "STRAINTEC";
+            }
+            else
+            {
+                s_or_f = "FLINTEC";
+            }
+
+            //////////////////////////////////////////////////////////////////////////////////////
+
             if (loadAll)
             {
-                sql_query = @"SELECT pol.[Prod_ Order No_] AS Prod_Order_No_,pol.Status, pol.Description FROM  FLINTEC.dbo.[FLINTEC$Prod_ Order Line] pol  WHERE pol.Status = 3";
+                sql_query = @"SELECT pol.[Prod_ Order No_] AS Prod_Order_No_,pol.Status, pol.Description FROM FLINTEC.dbo.[" + s_or_f+@"$Prod_ Order Line] pol WHERE pol.Status = 3";
                 //List<FLINTEC_Prod_Order_Line> jcList = jobCardContext.FLINTEC_Prod_Order_Line.Where(x => x.Status == 3).ToList();
             }
             else {
                 sql_query = @"SELECT DISTINCT
                 pol.[Prod_ Order No_] AS Prod_Order_No_,pol.Status, pol.Description
                 FROM
-                FLINTEC.dbo.[FLINTEC$Prod_ Order Line] pol,
-                FLINTEC.dbo.[FLINTEC$Prod_ Order Component] poc
+                FLINTEC.dbo.[" + s_or_f + @"$Prod_ Order Line] pol,
+                FLINTEC.dbo.[" + s_or_f + @"$Prod_ Order Component] poc
                 WHERE
-                poc.[Item No_] LIKE '" + item_No + @"' AND
+                poc.[Item No_] LIKE '"+item_No+@"' AND
                 poc.[Prod_ Order No_] = pol.[Prod_ Order No_] AND
                 poc.Status = 3 ORDER BY Prod_Order_No_";
 

@@ -27,15 +27,12 @@ namespace IssueManagementSystem.Controllers
           
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
             {
-
                 string location = Session["location"].ToString();
                 ViewBag.BrakedownCount = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 1 && location == x.location).Count();
                 ViewBag.MaterialDelayCount = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 2 && x.location == location).Count();
                 ViewBag.TechnicalIssue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 3 && x.location == location).Count();
                 ViewBag.QualityIsuue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 4 && x.location == location).Count();
                 ViewBag.ITIsuue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 5 && x.location == location).Count();
-               
-         
             }
             return View();
         }
@@ -105,8 +102,7 @@ namespace IssueManagementSystem.Controllers
 
                     saveBase64Image("~/Content/images/" + lineID + ".jpg", mapImage); }
                     catch (Exception ex)
-                    { Debug.WriteLine(ex); }
-                    
+                    { Debug.WriteLine("$$$$$$$$$$$$$$$$$$$$$$$" + ex); }
                 }
             }
 
@@ -122,14 +118,21 @@ namespace IssueManagementSystem.Controllers
                 {
                     image = Image.FromStream(ms);
                 }
-
                 var path = System.Web.HttpContext.Current.Server.MapPath(outputPath);
+
+                //if ((System.IO.File.Exists(path)))
+                //{
+                //    using (FileStream stream = System.IO.File.Open(path, FileMode.Open, FileAccess.Write, FileShare.ReadWrite))
+                //    {
+                //        System.IO.File.Delete(path);
+                //    }
+                //}
 
                 var i = new Bitmap(image);
                 i.Save(path, System.Drawing.Imaging.ImageFormat.Jpeg);
             }
             catch (Exception ex) {
-
+                Debug.WriteLine("##########################"+ex);
             }
             // image.Save(fullOutputPath, System.Drawing.Imaging.ImageFormat.Jpeg);
         }
@@ -151,9 +154,11 @@ namespace IssueManagementSystem.Controllers
                     image.Save(m, image.RawFormat);
                     byte[] imageBytes = m.ToArray();
                     string base64String = Convert.ToBase64String(imageBytes);
-
+                    m.Dispose();
+                    image.Dispose();
                     return base64String;
                 }
+
             }
         }
 
