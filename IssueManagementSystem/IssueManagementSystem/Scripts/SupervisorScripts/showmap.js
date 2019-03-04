@@ -202,8 +202,8 @@ if($('#tt').length){ // if exist
 }
 var div = document.createElement('div');
 div.setAttribute("id","tt");
-div.style.top = (y) +'px';
-div.style.left = (x) +'px';
+div.style.top = ((y)-50) +'px';
+div.style.left = (x)-20 +'px';
 div.style.background = "#6d6d6d";
 div.style.color = "#f2f2f2";
 div.style.position = 'absolute';
