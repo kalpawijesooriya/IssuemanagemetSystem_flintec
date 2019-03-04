@@ -624,33 +624,31 @@ function startConverting ()
                 theArray[index] = percentage;
            });
 
-            var maxval = Math.max(...matching_level_array);
-            var command_index = matching_level_array.indexOf(maxval);
-            var lvl2_command_ = "";
-            if (maxval < 100) {
-                //ckeck "keywords_not_found" array with "commands_lvl2" array
+        var maxval = Math.max(...matching_level_array);
+        var command_index = matching_level_array.indexOf(maxval);
+        var lvl2_command_ = "";
+        if (maxval < 100) {
+            //ckeck "keywords_not_found" array with "commands_lvl2" array
 
-                for (var i = 0; i < keywords_not_found.length; i++) {
-                    keywords_not_found[i].forEach(function (ele) {
-
-                        var matching = 0;
-                        commands_lvl2.forEach(function (ele_com, index, theArray) {
-
-                            ele_com.cmd.forEach(function (x) {
-                                if (x == ele) {
-                                    lvl2_command_ = ele_com.action;
-                                }
-                            });
+            for (var i = 0; i < keywords_not_found.length; i++) {
+                keywords_not_found[i].forEach(function (ele) {
+                    var matching = 0;
+                    commands_lvl2.forEach(function (ele_com, index, theArray) {
+                        ele_com.cmd.forEach(function (x) {
+                            if (x == ele) {
+                              lvl2_command_ = ele_com.action;
+                            }
                         });
                     });
-                }
-            }
+                });
+             }
+          }
 
             var count = 0;
             for (var i = 0; i < matching_level_array.length; ++i)
                 {
-                if (matching_level_array[i] == maxval)
-                       count++;
+                    if (matching_level_array[i] == maxval)
+                           count++;
                 }
 
             console.log("cmd lvl1 : " + commands[command_index].action+" lvl2 : "+lvl2_command_);

@@ -44,17 +44,17 @@ namespace IssueManagementSystem
                                 using (BigRedEntities BR = new BigRedEntities())
                                 {
                                     var responsiblePersonInfo = BR.tbl_PPA_User.Where(y => y.EmployeeNumber == items.responsible_person_emp_id).FirstOrDefault();
-                                    string msg = "Good morning!@@ "+ issueInfo.issue1 + " issue is not resolved @ Line : " + lineInfo.line_name + "@ Responsible person : " + responsiblePersonInfo.Name + " @ Thank You!";
+                                    string msg = "Good morning!@@ "+ issueInfo.issue1 + " issue is not resolved @ Line : " + lineInfo.line_name + "@ Responsible person : " + responsiblePersonInfo.Name + " @ Date : "+items.issueDate + " @ Thank You!";
                                 
                                
-                                    if (items.material_id != null)
+                                    if (items.issue_issue_ID == 2)
                                     {
                                     
                                         msg = "Good morning!@@ Material delay is not resolved @ Line : " + lineInfo.line_name + " @ Material : " + items.material_id + "@ Responsible person : " + responsiblePersonInfo.Name + " @ Thank You!";
 
 
                                     }
-                                    if (items.machine_machine_id != null)
+                                    if (items.issue_issue_ID == 1)
                                     {
                                    
                                         msg = "Good morning!@@ Machine Breakdown is not resolved @ Line : " + lineInfo.line_name + " @ Machine : " + items.machine_machine_id + "@ Responsible person : " + responsiblePersonInfo.Name + " @ Thank You!";
