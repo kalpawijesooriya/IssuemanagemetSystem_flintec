@@ -71,6 +71,7 @@
                                                 <th scope="col">Description</th>
                                                 <th scope="col">Responsible Person</th>
                                                 <th scope="col">Area</th>
+                                                <th scope="col">Status</th>
                                                 <th scope="col">Countdown</th>
                                             </tr>
                                         </thead>
@@ -92,6 +93,7 @@
                                                 <th scope="col">Description</th>
                                                 <th scope="col">Responsible Person</th>
                                                 <th scope="col">Area</th>
+                                                <th scope="col">Status</th>
                                                 <th scope="col">Countdown</th>
                                             </tr>
                                         </thead>
@@ -112,6 +114,7 @@
                                                 <th scope="col">Description</th>
                                                 <th scope="col">Responsible Person</th>
                                                 <th scope="col">Area</th>
+                                                <th scope="col">Status</th>
                                                 <th scope="col">Countdown</th>
                                             </tr>
                                         </thead>
@@ -132,6 +135,7 @@
                                                 <th scope="col">Description</th>
                                                 <th scope="col">Responsible Person</th>
                                                 <th scope="col">Area</th>
+                                                <th scope="col">Status</th>
                                                 <th scope="col">Count Up</th>
                                             </tr>
                                         </thead>
@@ -152,6 +156,7 @@
                                                 <th scope="col">Description</th>
                                                 <th scope="col">Responsible Person</th>
                                                 <th scope="col">Area</th>
+                                                <th scope="col">Status</th>
                                                 <th scope="col">Count Up</th>
                                             </tr>
                                         </thead>
@@ -224,15 +229,17 @@ $.ajax({
                     count++
                     var date = issuedata[i].issueDate.split(' ');
                     var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
-                   var standedDate=moment(date[0], 'M/D/Y/').format('Y MMM D ');
+                    var standedDate=moment(date[0], 'M/D/Y/').format('Y MMM D ');
                     var time=date[1] +" "+ date[2]
                     var issue_occurrence_id = issuedata[i].issue_occurrence_id
                     var d = new Date();
                     var startDate = new Date(issuedata[i].issueDate);
                     var today= d.getTime();
                     var milliseconds = startDate.getTime();
-                   var gap = Math.round(Math.abs(today - milliseconds)/1000);
-                   var group= issuedata[i].group
+                    var gap = Math.round(Math.abs(today - milliseconds)/1000);
+                    var group= issuedata[i].group
+                    var confirmStatus
+                    var responsible_person_confirm_status= issuedata[i].responsible_person_confirm_status;
                    if(group==1)
                    {
                    group="Heat Treatment"
@@ -395,14 +402,14 @@ $.ajax({
         setTimeout(function(){
         if(@ViewBag.id==9)
         {
-           window.location.href = "http://localhost:12675/Display/accersariesHeatTreatment/10"
+           window.location.href = "http://localhost:12675/Display/accessoriesHeatTreatment/10"
         }
         if(@ViewBag.id==10)
         {
 
-           window.location.href = "http://localhost:12675/Display/accersariesHeatTreatment/9"
+           window.location.href = "http://localhost:12675/Display/accessoriesHeatTreatment/9"
         }
-    },10000);
+    },90000);
         setTimeout(function(){
           location.reload();
     },3600000);
