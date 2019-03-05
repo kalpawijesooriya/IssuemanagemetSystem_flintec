@@ -56,6 +56,7 @@
                                                 <th scope="col">Material</th>
                                                 <th scope="col">Description</th>
                                                 <th scope="col">Responsible Person</th>
+                                                <th scope="col">Status</th>
                                                 <th scope="col">Count Up</th>
                                             </tr>
                                         </thead>
@@ -125,17 +126,26 @@ $.ajax({
              for (var i = 0; i < issuedata.length; i++) {
 
                 if ((issuedata[i].issue_satus=="1" )&&('@ViewBag.location'==issuedata[i].location))
-                {
+                {   var confirmStatus
                     var responcibleperson_ststus= issuedata[i].responsible_person_confirm_status
                     var issueid = issuedata[i].issue_issue_ID
 
+                    var confirmStatus
+                    var responsible_person_confirm_status= issuedata[i].responsible_person_confirm_status;
+                      if(responsible_person_confirm_status==1)
+                       {
+                       confirmStatus="pending"
+                       }else{
+                      confirmStatus="commented"
+                      }
                     var date = issuedata[i].issueDate.split(' ');
-                    var day = moment(date[0], 'M/D/Y/').format('MMMM D Y');
+                    var day = moment(date[0], 'M/D/Y/').format('Y MMM D');
                     var time=date[1] +" "+ date[2]
                     var issue_occurrence_id = issuedata[i].issue_occurrence_id
                     var d = new Date();
                     var startDate = new Date(issuedata[i].issueDate);
-
+                    var confirmStatus
+                    var responsible_person_confirm_status= issuedata[i].responsible_person_confirm_status;
                     var today= d.getTime();
                     var milliseconds = startDate.getTime();
 
@@ -152,7 +162,7 @@ $.ajax({
                             + issuedata[i].lineName + '</td><td>'
                             + issuedata[i].matirial +'<span style="color:#7a3617;font-style: italic"> &nbsp;('+ issuedata[i].job_card+')</span></td><td>'
                             + issuedata[i].description + '</td><td>'
-                            + issuedata[i].responciblepersonName +'</td><td><span id="countdown'
+                            + issuedata[i].responciblepersonName +'</td><td>'+ confirmStatus+'</td><td><span id="countdown'
                             + count + '" class="timer"></span></td></tr>'
 
                         divissue.append(issue)
