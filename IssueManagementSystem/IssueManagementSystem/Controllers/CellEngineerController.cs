@@ -321,44 +321,17 @@ namespace IssueManagementSystem.Controllers
             return Json(obj, JsonRequestBehavior.AllowGet);
         }
 
-
-
-
-        class user_temp
-        {
-            public string Name { get; set; }
-            public string Department { get; set; }
-            public string Role { get; set; }
-            public string Phone { get; set; }
-            public string EMail { get; set; }
-            public int EmployeeNumber { get; set; }
-        }
-
         [HttpPost]
         public ActionResult getUserDetails(string userID)
         {
             using (BigRedEntities db = new BigRedEntities()) //method for load the map acordinto the surevisor line
             {
                 string query_1 = "SELECT Name,Department,Role,Phone,EMail,EmployeeNumber FROM tbl_PPA_User WHERE tbl_PPA_User.EmployeeNumber ='" + userID + "'";
-                var c = db.Database.SqlQuery<user_temp>(query_1).ToList();
+                var c = db.Database.SqlQuery<TempClasses.user_temp>(query_1).ToList();
                 return Json(c, JsonRequestBehavior.AllowGet);
             }
         }
 
-        class issue_line_person_temp
-        {
-            public string issue_id { get; set; }
-            public string line_id { get; set; }
-            public string EmployeeNumber { get; set; }
-            public string assigned_date { get; set; }
-            public string email { get; set; }
-            public int call { get; set; }
-            public int message { get; set; }
-            public int callRepetitionTime { get; set; }
-            public int sendAlertAfter { get; set; }
-            public int levelOfResponsibility { get; set; }
-            public int issue_line_person_id { get; set; }
-        }
 
         [HttpPost]
         public ActionResult saveList(string userList_json)

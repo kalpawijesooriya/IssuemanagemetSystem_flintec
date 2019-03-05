@@ -15,18 +15,6 @@ using System.Web.Script.Serialization;
 namespace IssueManagementSystem.Controllers
 {
 
-
-
-    class  tempClass10
-    {
-        public int department_id { get; set; }
-        public string department_name { get; set; }
-        public int line_id { get; set; }
-        public string line_name { get; set; }
-        public string issues { get; set; }
-    }
-
-
     public class ManagerController : Controller
     {
         // GET: Manager
@@ -65,7 +53,7 @@ namespace IssueManagementSystem.Controllers
                                 WHERE lines.department_id = deps.department_id AND l_map.line_id = lines.line_id";
             using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) {
 
-                var d_obj1 = db.Database.SqlQuery<tempClass10>(query1).ToList();
+                var d_obj1 = db.Database.SqlQuery<TempClasses.tempClass10>(query1).ToList();
                 return Json(d_obj1);
             }
         }
@@ -116,24 +104,46 @@ namespace IssueManagementSystem.Controllers
 
                 if (barChart.Equals("2")) {
 
-                    String query = @"SELECT TOP 10 FLINTEC.dbo.FLINTEC$Item.[Search Description] AS Search_Description,
-                                    count(issue_management_system.dbo.issue_occurrence.material_id) AS count 
-                                    FROM issue_management_system.dbo.issue_occurrence,FLINTEC.dbo.FLINTEC$Item
-                                    WHERE issue_occurrence.issue_issue_ID = 2
-                                    AND issue_occurrence.location IN ('"+plantLocation+@"') AND 
-                                    issue_management_system.dbo.issue_occurrence.material_id  COLLATE SQL_Latin1_General_CP1_CS_AS LIKE FLINTEC.dbo.FLINTEC$Item.No_ COLLATE SQL_Latin1_General_CP1_CS_AS
-                                    AND issue_occurrence.issue_date BETWEEN '"+startDate+@"' AND '"+endDate+@"' 
-                                    GROUP BY FLINTEC.dbo.FLINTEC$Item.[Search Description]
-                                    ORDER BY count Desc";
+                //String query = @"SELECT TOP 10 FLINTEC.dbo.FLINTEC$Item.[Search Description] AS Search_Description,
+                //                count(issue_management_system.dbo.issue_occurrence.material_id) AS count 
+                //                FROM issue_management_system.dbo.issue_occurrence,FLINTEC.dbo.FLINTEC$Item
+                //                WHERE issue_occurrence.issue_issue_ID = 2
+                //                AND issue_occurrence.location IN ('"+plantLocation+@"') AND 
+                //                issue_management_system.dbo.issue_occurrence.material_id  COLLATE SQL_Latin1_General_CP1_CS_AS LIKE FLINTEC.dbo.FLINTEC$Item.No_ COLLATE SQL_Latin1_General_CP1_CS_AS
+                //                AND issue_occurrence.issue_date BETWEEN '"+startDate+@"' AND '"+endDate+@"' 
+                //                GROUP BY FLINTEC.dbo.FLINTEC$Item.[Search Description]
+                //                ORDER BY count Desc";
+
+                String query =  @"SELECT TOP 10 ic.material_id AS Search_Description,
+                                count(ic.material_id) AS count 
+                                FROM issue_management_system.dbo.issue_occurrence ic 
+                                WHERE ic.issue_issue_ID = 2
+                                AND ic.location IN ('KOG','KTY')
+                                AND ic.issue_date BETWEEN '2019-02-01 11:39:00.000' AND '2019-03-05 11:39:00.000' 
+                                GROUP BY ic.material_id
+                                ORDER BY count Desc";
 
                 try {
 
-                    using (FLINTEC_Context db = new FLINTEC_Context())
+                    using (issue_management_systemEntities1 db = new issue_management_systemEntities1())
                     {
                         chart2Data = db.Database.SqlQuery<TempClasses.tempClass4>(query).ToList();
                     }
 
                 } catch (Exception ex) { }
+
+                foreach( var obj in chart2Data)
+                {
+                    //obj.Search_Description
+                    using (FLINTEC_Context db1 = new FLINTEC_Context()) {
+                        String query5 = @"SELECT TOP 1 f.[Search Description] AS Search_Description
+                                        FROM  FLINTEC.dbo.FLINTEC$Item f
+                                        WHERE f.No_ = '"+ obj.Search_Description+"'";
+                        var d3 = db1.Database.SqlQuery<String>(query5).FirstOrDefault();
+
+                        obj.Search_Description = d3;
+                    }
+                }
 
                     return Json(chart2Data, JsonRequestBehavior.AllowGet);
                 }
