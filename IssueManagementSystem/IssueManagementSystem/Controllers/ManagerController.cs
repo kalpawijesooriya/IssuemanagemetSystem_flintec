@@ -34,11 +34,28 @@ namespace IssueManagementSystem.Controllers
                     ViewBag.BrakedownCount = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 1).Count();
                     ViewBag.MaterialDelayCount = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 2).Count();
                     ViewBag.TechnicalIssue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 3).Count();
-                    ViewBag.QualityIsuue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 4 ).Count();
-                    ViewBag.ITIsuue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 5 ).Count();
+                    ViewBag.QualityIsuue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 4).Count();
+                    ViewBag.ITIsuue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 5).Count();
                 }
+
+
+                dynamic d_obj1 = new System.Dynamic.ExpandoObject();
+                //Departments //Lines
+                string query1 = "SELECT deps.department_id,deps.department_name FROM issue_management_system.dbo.departments deps";
+                d_obj1 = db.Database.ExecuteSqlCommand(query1);
+                ViewBag.Departments = d_obj1;
+
+
+                //dynamic d_obj2 = new System.Dynamic.ExpandoObject();
+                //string query2 = "";
+                //d_obj2 = db.Database.ExecuteSqlCommand(query2);
+                //ViewBag.Departments = d_obj2;
+
+
+
+
+                return View();
             }
-            return View();
         }
         [HttpGet]
         public JsonResult GetNotification()
@@ -109,10 +126,10 @@ namespace IssueManagementSystem.Controllers
                                 DATEDIFF(minute, issue_occurrence.issue_date, issue_occurrence.solved_date) AS DateDiff
                                 FROM
                                 issue_management_system.dbo.issue_occurrence,BigRed.dbo.tbl_PPA_User,issue_management_system.dbo.issues
-                                WHERE issue_occurrence.location IN ('" + plantLocation + @"') AND 
+                                WHERE issue_occurrence.location IN ('"+plantLocation+@"') AND 
                                 BigRed.dbo.tbl_PPA_User.UserName LIKE issue_management_system.dbo.issue_occurrence.responsible_person_emp_id AND
                                 issue_management_system.dbo.issue_occurrence.issue_issue_ID = issue_management_system.dbo.issues.issue_id 
-                                 AND issue_occurrence.issue_date BETWEEN '" + startDate + @"' AND '" + endDate + @"' 
+                                AND issue_occurrence.issue_date BETWEEN '"+startDate+@"' AND '"+endDate+@"' 
                                 ORDER BY DateDiff DESC";
 
                 var chart1Data = db.Database.SqlQuery<TempClasses.tempClass2>(query).ToList();
@@ -127,7 +144,7 @@ namespace IssueManagementSystem.Controllers
             {
                 String query = @"SELECT TOP 10 issues.issue , count(issue_issue_ID) AS 'count'
                                  FROM issue_occurrence,issues 
-                                 WHERE issue_occurrence.location IN ('" + plantLocation + @"') AND  issue_date BETWEEN  '" + startDate + @"' AND '" + endDate + @"' 
+                                 WHERE issue_occurrence.location IN ('"+plantLocation+@"') AND  issue_date BETWEEN  '" + startDate + @"' AND '" + endDate + @"' 
                                  AND issues.issue_id = issue_occurrence.issue_issue_ID GROUP BY issue";
 
                 var chart1Data = db.Database.SqlQuery<TempClasses.tempClass3>(query).ToList();
@@ -322,6 +339,7 @@ namespace IssueManagementSystem.Controllers
         [HttpPost]
         public JsonResult notificationOnOff(string issue_line_person_id, string issue_occurrence_id, string status)
         {
+
             /*
               String query = @"UPDATE c SET  c.email = 0,c.call = 0,c.message = 0 FROM issue_line_person AS c ,issues,lines
                   WHERE c.assigned_date = (
@@ -332,6 +350,8 @@ namespace IssueManagementSystem.Controllers
                   AND lines.line_name ='"+line+@"' AND issues.issue = '"+issue+ @"' AND d.issue_line_person_id='"+issue_line_person_id+@"'
                   )AND lines.line_name ='" + line+@"' AND issues.issue ='"+issue+ @"' AND c.issue_line_person_id='"+issue_line_person_id+@"'";
             */
+
+
             String query = @"UPDATE notification_handling 
                             SET 
                             notification_handling.notification_status="+status+@"

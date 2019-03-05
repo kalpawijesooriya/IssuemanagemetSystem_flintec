@@ -31,14 +31,11 @@ $(document).ready(function() {
         $("#datetimepicker3").datepicker().datepicker("setDate", d);
         $("#datetimepicker4").datepicker().datepicker("setDate",d2);
 
-
-
         filterByDate();
         createTable();
 
         loadTableData();
         loadTablePage(1);
-
 });
 
  var data_obj = new Array();

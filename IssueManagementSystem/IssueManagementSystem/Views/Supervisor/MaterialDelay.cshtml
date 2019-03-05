@@ -91,10 +91,10 @@
                 <div onclick="popUpAlert()">
                     <select class="js-example-placeholder-single js-states form-control" id="jobCardSelectBox" style="width:100%" onchange="" multiple="multiple">
                         <option></option>
-                        @foreach (var j in Model.jobCards)
+                        @*@foreach (var j in Model.jobCards)
                         {
                             <option value="@j.Prod_Order_No_">@j.Prod_Order_No_    &nbsp;- &nbsp;&nbsp; @j.Description </option>
-                        }
+                        }*@
                     </select>
                 </div>
 
@@ -260,7 +260,6 @@
         $("#jobCardSelectBox").prop("disabled", false);
         var url = '@Url.Action("loadJobCardList", "CellEngineer")'
         var item_No = document.getElementById("materialSelectBox").value;
-        if (document.getElementById('chk_box').checked) {
 
             setTimeout(function () {
                 load_prog_bar2(0);
@@ -298,7 +297,6 @@
                     alert("Error occurred");
                 }
             });
-        }
     }
 
     $('select').select2({
