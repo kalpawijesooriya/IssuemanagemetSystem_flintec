@@ -10,9 +10,23 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace IssueManagementSystem.Controllers
 {
+
+
+
+    class  tempClass10
+    {
+        public int department_id { get; set; }
+        public string department_name { get; set; }
+        public int line_id { get; set; }
+        public string line_name { get; set; }
+        public string issues { get; set; }
+    }
+
+
     public class ManagerController : Controller
     {
         // GET: Manager
@@ -38,25 +52,25 @@ namespace IssueManagementSystem.Controllers
                     ViewBag.ITIsuue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 5).Count();
                 }
 
-
-                dynamic d_obj1 = new System.Dynamic.ExpandoObject();
-                //Departments //Lines
-                string query1 = "SELECT deps.department_id,deps.department_name FROM issue_management_system.dbo.departments deps";
-                d_obj1 = db.Database.ExecuteSqlCommand(query1);
-                ViewBag.Departments = d_obj1;
-
-
-                //dynamic d_obj2 = new System.Dynamic.ExpandoObject();
-                //string query2 = "";
-                //d_obj2 = db.Database.ExecuteSqlCommand(query2);
-                //ViewBag.Departments = d_obj2;
-
-
-
-
                 return View();
             }
         }
+
+        public JsonResult filterSelectBoxes() {
+            //Departments //Lines //Issues
+            string query1 = @"SELECT DISTINCT deps.department_id,deps.department_name,
+                                lines.line_id,lines.line_name,l_map.issues AS issues
+                                FROM issue_management_system.dbo.departments deps , issue_management_system.dbo.lines lines,
+                                issue_management_system.dbo.line_map l_map
+                                WHERE lines.department_id = deps.department_id AND l_map.line_id = lines.line_id";
+            using (issue_management_systemEntities1 db = new issue_management_systemEntities1()) {
+
+                var d_obj1 = db.Database.SqlQuery<tempClass10>(query1).ToList();
+                return Json(d_obj1);
+            }
+        }
+
+
         [HttpGet]
         public JsonResult GetNotification()
         {

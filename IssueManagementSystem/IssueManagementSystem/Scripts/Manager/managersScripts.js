@@ -33,9 +33,9 @@ $(document).ready(function() {
 
         filterByDate();
         createTable();
-
         loadTableData();
         loadTablePage(1);
+        filterTableData();
 });
 
  var data_obj = new Array();
