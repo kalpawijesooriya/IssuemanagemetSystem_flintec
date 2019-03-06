@@ -332,12 +332,22 @@ if (Session["userID"] == null)
                         body.append('<P style="color:red" class="text-center">Your comment is saved. Waiting for the production line supervisors confirmation.</br>Thank You.</p>');
                         $("#savecomment").hide();
                          getDataissue()
+                           $.connection.hub.start()//Refresh Screen
+                        .done(function () {
+                         console.log("Worked")
+                         $.connection.ismHub.server.announce();
+                      }).fail(function () { alert("Can't Refresh Your Line Screen! Plese Inform IT Department!") });//return to dashbord
                     }
                     else {
                         body.append('<P style="color:green" class="text-center">Issue is Solved. Great work!</br>Thank You.</p>');
                         $("#savecomment").hide();
                         getDataissue()
-                    }
+                         $.connection.hub.start()//Refresh Screen
+                        .done(function () {
+                         console.log("Worked")
+                         $.connection.ismHub.server.announce();
+                      }).fail(function () { alert("Can't Refresh Your Line Screen! Plese Inform IT Department!") });//return to dashbord
+                            }
                 }).fail(function (response) {
                     console.log('Error: ' + response);
                 });
