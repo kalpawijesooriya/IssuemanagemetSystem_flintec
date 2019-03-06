@@ -152,11 +152,14 @@
       $('#machineshopdiv').show()
       $('#machinediv').show()
     }
-    if(('@Session["department"]'=='HeatTreatment')||('@Session["department"]'=='Accessories'))
+     if((@ViewBag.lineid==9)||(@ViewBag.lineid==10))
     {
-          $('#groups').append('<option value="1">Heat treatment</option>')
-          $('#groups').append('<option value="2">Accessories</option>')
-    $('#groupsdiv').show()
+        $('#groups').append('<option value="1">Heat treatment</option>')
+        $('#groups').append('<option value="2">Accessories</option>')
+        $('#groupsdiv').show()
+        $('#machineshopdiv').hide()
+        $('#mapdiv').hide()
+        $('#machinediv').hide()
     }
     $(document).ready(function () {
         $("#jobCardSelectBox").prop("disabled", true);
@@ -320,7 +323,7 @@
         obj.issue_satus = "0";
         obj.empId=@Session["userID"]
         obj.machine = document.getElementById("machine").value;
-        obj.jobcard = ""; 
+        obj.jobcard = "";
 
         var jc = $('#jobCardSelectBox').val();
 
@@ -332,7 +335,7 @@
 
             });
         }
-        
+
         obj.location = '@Session["location"]';
         obj.responsible_person_confirm_status = "0";
        var grouparry=document.getElementById("grouptext").value.split(" ")
@@ -374,7 +377,7 @@
                 load_nonBOMMaterialList();
         }
     }
-   var id=@Session["lineId"];
+   var id=@ViewBag.lineid;
     var inputPath="../Content/images/"+id+".jpg"
     var url = '@Url.Action("loadBase64Image", "Admin")';
     $.ajax({

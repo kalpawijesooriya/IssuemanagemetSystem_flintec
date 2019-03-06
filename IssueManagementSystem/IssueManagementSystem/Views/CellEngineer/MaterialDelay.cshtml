@@ -155,11 +155,14 @@
       $('#machineshopdiv').show()
       $('#machinediv').show()
     }
-       if(('@Session["department"]'=='HeatTreatment')||('@Session["department"]'=='Accessories'))
+     if((@ViewBag.lineid==9)||(@ViewBag.lineid==10))
     {
-           $('#groups').append('<option value="1">Heat treatment</option>')
-           $('#groups').append('<option value="2">Accessories</option>')
-    $('#groupsdiv').show()
+        $('#groups').append('<option value="1">Heat treatment</option>')
+        $('#groups').append('<option value="2">Accessories</option>')
+        $('#groupsdiv').show()
+        $('#machineshopdiv').hide()
+        $('#mapdiv').hide()
+        $('#machinediv').hide()
     }
     $('select').select2({
         placeholder: "Select.....",
@@ -379,6 +382,23 @@
                 $.connection.ismHub.server.announce();
             })
             .fail(function () { alert("ERROR!") });
+    });
+
+      $(function() {
+      $('#groups').change(function(){
+       if( $(this).val()=='2')
+        {
+         $('#mapdiv').hide()
+         $('#machineText').hide()
+         $('#machinediv').show()
+         $('#selectMachine').hide()
+        }else{
+        $('#mapdiv').show()
+        $('#machineText').show()
+         $('#machinediv').hide()
+        $('#selectMachine').show()
+        }
+      });
     });
      var id=@ViewBag.lineid.ToString();
     var inputPath="../Content/images/"+id+".jpg"

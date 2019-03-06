@@ -37,8 +37,8 @@
     <input type="hidden" value="@Session["userID"]" id="userId" />
     <div class="row">
 
-        <div class="col-md-3">
-            <div class="container-liquid" id="mapdiv">
+        <div class="col-md-3" id="mapdiv">
+            <div class="container-liquid" >
                 <div style="display:inline-grid;grid-template-columns: 90%  50%">
                     <div id="container">
                         <canvas id="canvas1" style="border: 1px solid black;background-size: 100% 100%;" width="250" height="750">
@@ -48,9 +48,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 machine">
+        <div class="col-sm-6 machine" id="inputs">
             <div id="groupsdiv" style="margin-top:5%">
-                <label for="exampleFormControlTextarea1" style="margin-top:5%">Select Area</label>
+                <label for="exampleFormControlTextarea1" >Select Area</label>
                 <select class="js-example-placeholder-single js-states form-control" id="groups" name="Material" style="width:100%;">
                     <option></option>
 
@@ -58,7 +58,7 @@
             </div>
 
             <div id="machinediv" style="margin-top:5%">
-                <label for="exampleFormControlTextarea1">Select Area</label>
+                <label for="exampleFormControlTextarea1">Select Machine</label>
                 <select class="js-example-placeholder-single js-states form-control" id="machineSelect" name="Material" style="width:100%;" onchange="">
                     <option></option>
                     @foreach (var item in mList)
@@ -81,7 +81,7 @@
                 <label for="exampleFormControlTextarea1">Extra Information</label>
                 <textarea class="form-control" rows="4" id="description" spellcheck="true"></textarea>
             </div>
-            <div class="container-fluid row">
+            <div class="container-fluid row" style="margin-left:30%">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 button-holder">
@@ -120,11 +120,12 @@
     {
       $('#machineshopdiv').show()
     }
-    if(('@Session["department"]'=='HeatTreatment')||('@Session["department"]'=='Accessories'))
+    if((@ViewBag.lineid==9)||(@ViewBag.lineid==10))
     {
         $('#groups').append('<option value="1">Heat treatment</option>')
         $('#groups').append('<option value="2">Accessories</option>')
-    $('#groupsdiv').show()
+        $('#groupsdiv').show()
+        $('#machineshopdiv').hide()
     }
    $("#submit").click(function () {
          var selectedDep = $('#groups').find(":selected").text();
@@ -168,7 +169,7 @@
             }
         });
     });
-    $(function() {
+      $(function() {
       $('#groups').change(function(){
        if( $(this).val()=='2')
         {
@@ -176,15 +177,17 @@
          $('#machineText').hide()
          $('#machinediv').show()
          $('#selectMachine').hide()
+         $('#inputs').css('margin','auto');
         }else{
         $('#mapdiv').show()
         $('#machineText').show()
          $('#machinediv').hide()
         $('#selectMachine').show()
+         $('#inputs').css('margin','');
         }
       });
     });
-    var id=@Session["lineId"];
+    var id=@ViewBag.lineid;
     var inputPath="../Content/images/"+id+".jpg"
     var url = '@Url.Action("loadBase64Image", "Admin")';
     $.ajax({
@@ -222,7 +225,7 @@
              document.getElementById("grouptext").value=feedback
             },
             error: function (feedback) {
-                alert(feedback);
+
              }
           });
         }
