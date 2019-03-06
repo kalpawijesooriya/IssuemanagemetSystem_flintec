@@ -245,6 +245,12 @@ $.ajax({
 
                    var gap = Math.round(Math.abs(today - milliseconds)/1000);
                    var group= "Group "+issuedata[i].group
+                   if(responsible_person_confirm_status==1)
+                   {
+                   confirmStatus="pending"
+                   }else{
+                  confirmStatus="commented"
+                  }
 
                    seconds.push(gap)
                     if (issueid == 1)//breakedown
