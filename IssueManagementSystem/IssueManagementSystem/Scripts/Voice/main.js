@@ -18,32 +18,37 @@ var set_functions = {
                 },
                 func5: function (lvl2_command_) {//Technical
                     search_issue_data("Technical Issue",lvl2_command_);
+                },
+                func6: function (lvl2_command_) {//All
+                    search_issue_data("All",lvl2_command_);
                 }
 };
 
-function search_issue_data(issue,lvl2_command_){ //search issue data in previously recieved JSON data set
-        /*
-        Name: "bbb"
-        buzzer_off_by: "bbb"
-        buzzer_off_time: "/Date(1549001760000)/"
-        commented_date: "/Date(1549001788000)/"
-        dep_occured: 1
-        department: "Maintenance"
-        description: "xxxxxxxxxxxxxxx"
-        issue: "Machine Breakdown"
-        issue_date: "/Date(1549001280000)/"
-        issue_issue_ID: 1
-        issue_occurrence_id: 5540
-        issue_satus: "0"
-        line_line_id: 1
-        line_name: "Potted"
-        location: "KOG"
-        machine_machine_id: "BigRed9"
-        material_id: null
-        });
-        */
+function search_issue_data(issue,lvl2_command_){ 
 
-        var dataSet = raw_data;
+        //search issue data in previously recieved JSON data set
+            /*
+                Name: "bbb"
+                buzzer_off_by: "bbb"
+                buzzer_off_time: "/Date(1549001760000)/"
+                commented_date: "/Date(1549001788000)/"
+                dep_occured: 1
+                department: "Maintenance"
+                description: "xxxxxxxxxxxxxxx"
+                issue: "Machine Breakdown"
+                issue_date: "/Date(1549001280000)/"
+                issue_issue_ID: 1
+                issue_occurrence_id: 5540
+                issue_satus: "0"
+                line_line_id: 1
+                line_name: "Potted"
+                location: "KOG"
+                machine_machine_id: "BigRed9"
+                material_id: null
+            });
+            */
+
+        var dataSet = raw_data; //Raw data is taken from a script from Index.cshtml
 
         var unsolved_issues = new Array();
         var voice_data_set= new Array();

@@ -655,7 +655,7 @@ function drawChart2() {
                 fontSize: 9
             },
         animation:{
-          duration: 1000,
+          duration: 2000,
           easing: 'out',
           startup: true
               }
@@ -914,7 +914,7 @@ function notificationOnOff(issue_occurrence_id){
 
 
 function numberOfIssues(){
-    
+    var location = $('#plantSelectBox').val().join("','");
     var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
     var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 23:59 UTC")).toISOString();
 
@@ -925,7 +925,7 @@ function numberOfIssues(){
             dataType: 'text',
             async:false,
             url:url_totalNumberOfIssues,
-            data: {startDate:startDate,endDate:endDate },
+            data: {startDate:startDate,endDate:endDate,plant:location },
             success: function (feedback) {
                 count = feedback;
             },
