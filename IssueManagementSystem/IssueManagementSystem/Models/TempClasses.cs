@@ -72,5 +72,41 @@ namespace IssueManagementSystem.Models
             public string line_name { get; set; }
         }
 
+        public class tempClass10
+        {
+            public int department_id { get; set; }
+            public string department_name { get; set; }
+            public int line_id { get; set; }
+            public string line_name { get; set; }
+            public string issues { get; set; }
+        }
+
+
+        public class user_temp
+        {
+            public string Name { get; set; }
+            public string Department { get; set; }
+            public string Role { get; set; }
+            public string Phone { get; set; }
+            public string EMail { get; set; }
+            public int EmployeeNumber { get; set; }
+        }
+
+        public class issue_line_person_temp
+        {
+            public string issue_id { get; set; }
+            public string line_id { get; set; }
+            public string EmployeeNumber { get; set; }
+            public string assigned_date { get; set; }
+            public string email { get; set; }
+            public int call { get; set; }
+            public int message { get; set; }
+            public int callRepetitionTime { get; set; }
+            public int sendAlertAfter { get; set; }
+            public int levelOfResponsibility { get; set; }
+            public int issue_line_person_id { get; set; }
+        }
+
+
     }
 }

@@ -368,11 +368,9 @@
                         <p style="margin-right:13px;">Department</p>
                         <select class="js-example-placeholder-single js-states form-control" id="dptSelectBox" style="width:100%;float:right !important;" onchange="filterTableData()">
                             <option value="" selected="selected">All</option>
-                            <option value="1">Assembly</option>
-                            <option value="2">Machining</option>
                         </select>
                     </div>
-
+                   @* filter_SelectBoxData*@
                     <div class="col-lg-2">
                         <p style="margin-right:13px;">Issue</p>
                         <select class="js-example-placeholder-single js-states form-control" id="issueSelectBox" style="width:100%;float:right !important;" onchange="filterTableData()">
@@ -389,12 +387,6 @@
                         <p style="margin-right:13px;">Line</p>
                         <select class="js-example-placeholder-single js-states form-control" id="lineSelectBox" style="width:100%;float:right !important;" onchange="filterTableData()">
                             <option value="" selected="selected">All</option>
-                            <option value="Potted">Potted</option>
-                            <option value="Welded">Welded</option>
-                            <option value="Guaging">Guaging</option>
-                            <option value="MD2">MD2</option>
-                            <option value="SM">SM</option>
-                            <option value="Rocker">Rocker</option>
                         </select>
                     </div>
 
@@ -465,7 +457,6 @@
         var hub = $.connection.issueHub;
         var issueCount = 0;
 
-
        window.getDataissue = function()
         {
             
@@ -477,6 +468,9 @@
         // Start the connection
         $.connection.hub.start();
         getDataissue();
+
+        loadDepartmentSelectBox();
+        loadLineSelectBox();
     })
 </script>
 
@@ -595,14 +589,14 @@ function startConverting ()
 
        var matching_level_array = new Array(commands.length).fill(0.00);
        var keywords_not_found = new Array();
-      
+
        for (var i = 0; i < commands.length; i++)
        {
            var obj = new Array();
-            voice_string_array.forEach(function (word_searching) { 
+            voice_string_array.forEach(function (word_searching) {
                 var matching = 0;
                 var flag = 0;
-                   commands[i].cmd.forEach(function (word_current)  
+                   commands[i].cmd.forEach(function (word_current)
                    {
                        if (word_searching == word_current){matching++;flag = 1;}
                    });
@@ -661,13 +655,116 @@ function startConverting ()
                set_functions[func_name](lvl2_command_);
            }
            else {
-               getVoice("command is not clear..........please try again"); 
+               getVoice("command is not clear..........please try again");
            }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
        setTimeout(function () { $('.search_input').val(''); $("#listening").show();  } , 3000);
   }
 
+function loadDepartmentSelectBox(){
+
+            $.ajax({
+            type: "POST",
+            async: false,
+            dataType: 'text',
+            url:url_filterSelectBoxes,
+            success: function (feedback) {
+
+                    data = JSON.parse(feedback);
+                  
+                    var filtered = new Array();
+
+                    data.forEach(function(ele){
+
+                            if(filtered.length>0){
+                            var flag = 0;
+                            filtered.forEach(function(i){
+                                if(i.department_id == ele.department_id){
+                                  flag = 1 ;
+                                }
+                            });
+
+                            if(flag == 0){
+                                var v =new Object(); 
+                                v = {department_id:ele.department_id,department_name:ele.department_name};
+                                filtered.push(v);      
+                            }
+                            }
+                            else{
+                                var v =new Object(); 
+                                v = {department_id:ele.department_id,department_name:ele.department_name}
+                                filtered.push(v);
+                            }     
+                    });
+
+                    var selectBox =document.getElementById('dptSelectBox');
+
+                    for (var i = 0; i < filtered.length; i++) {
+                        var opt = document.createElement('option');
+                        opt.innerHTML = filtered[i].department_name;
+                        opt.value =filtered[i].department_id;
+                        selectBox.appendChild(opt);
+                    } 
+                }
+            });
+        }
+
+
+function loadLineSelectBox(){
+
+
+     $.ajax({
+            type: "POST",
+            async: false,
+            dataType: 'text',
+            url:url_filterSelectBoxes,
+            success: function (feedback) {
+
+                    data = JSON.parse(feedback);
+                  
+                    var filtered = new Array();
+
+                    data.forEach(function(ele){
+
+                            if(filtered.length>0){
+                            var flag = 0;
+                            filtered.forEach(function(i){
+                                if(i.line_id == ele.line_id){
+                                  flag = 1 ;
+                                }
+                            });
+
+                            if(flag == 0){
+                                var v =new Object(); 
+                                v = {line_id:ele.line_id,line_name:ele.line_name};
+                                filtered.push(v);      
+                            }
+                            }
+                            else{
+                                var v =new Object(); 
+                                v = {line_id:ele.line_id,line_name:ele.line_name}
+                                filtered.push(v);
+                            }     
+                    });
+
+                    var selectBox =document.getElementById('lineSelectBox');
+
+                    for (var i = 0; i < filtered.length; i++) {
+                        var opt = document.createElement('option');
+                        opt.innerHTML = filtered[i].line_name;
+                        opt.value =filtered[i].line_name;
+                        selectBox.appendChild(opt);
+                    } 
+                }
+            });
+    }
+
+function loadIssuesSelectBox(){
+
+    var selectBox =document.getElementById('dptSelectBox');
+
+    }
 
 $('.searchbar').click(function() {
       $( '.search_input').css("padding", "0 10px");
@@ -677,6 +774,9 @@ $('.searchbar').click(function() {
       $( '.search_icon').css("background", "white");
       $( '.search_icon').css("color", "#e74c3c");
 });
+
+
+
 </script>
 
 <script>
@@ -688,6 +788,7 @@ $('.searchbar').click(function() {
          url_notificationOnOff = '@Url.Action("notificationOnOff","Manager")';
          url_totalNumberOfIssues = '@Url.Action("totalNumberOfIssues","Manager")';
          url_voiceDataFilter = '@Url.Action("voiceDataFilter", "Manager")';
+         url_filterSelectBoxes= '@Url.Action("filterSelectBoxes", "Manager")';
 </script>
 
 <script src="~/Scripts/AdminScripts/jscolar.js"></script>
