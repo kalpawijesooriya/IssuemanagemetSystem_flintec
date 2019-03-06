@@ -646,21 +646,23 @@ function drawChart2() {
             role: "annotation"
         }, 2]);
 
+
     var options = {
-        bar: { groupWidth: "95%" },
-        legend: { position: "none" },
-        chartArea: { 'width': '100%', 'height': '60%', 'top': '0' },
-        hAxis: {
-            textStyle: {
-                fontSize: 9
-            },
-        animation:{
-          duration: 1000,
-          easing: 'out',
-          startup: true
-              }
-        }
-    };
+                    bar: { groupWidth: "95%" },
+                    legend: { position: "none" },
+                    chartArea: { 'width': '100%', 'height': '60%', 'top': '0' },
+                    hAxis: {
+                        textStyle: {
+                            fontSize: 9
+                        }
+                    },
+                    animation:{
+                    duration: 2000,
+                    easing: 'out',
+                    startup: true
+                        }
+     };
+
     var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values1"));
     chart.draw(view, options);
 }
@@ -914,7 +916,7 @@ function notificationOnOff(issue_occurrence_id){
 
 
 function numberOfIssues(){
-    
+    var location = $('#plantSelectBox').val().join("','");
     var startDate = (new Date(document.getElementById('datetimepicker1').value+" 00:00 UTC")).toISOString();
     var endDate   = (new Date(document.getElementById('datetimepicker2').value+" 23:59 UTC")).toISOString();
 
@@ -925,7 +927,7 @@ function numberOfIssues(){
             dataType: 'text',
             async:false,
             url:url_totalNumberOfIssues,
-            data: {startDate:startDate,endDate:endDate },
+            data: {startDate:startDate,endDate:endDate,plant:location },
             success: function (feedback) {
                 count = feedback;
             },

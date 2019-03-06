@@ -39,7 +39,6 @@ namespace IssueManagementSystem.Controllers
                     ViewBag.QualityIsuue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 4).Count();
                     ViewBag.ITIsuue = db.issue_occurrence.Where(x => x.issue_satus == "1" && x.issue_issue_ID == 5).Count();
                 }
-
                 return View();
             }
         }
@@ -57,7 +56,6 @@ namespace IssueManagementSystem.Controllers
                 return Json(d_obj1);
             }
         }
-
 
         [HttpGet]
         public JsonResult GetNotification()
@@ -98,8 +96,6 @@ namespace IssueManagementSystem.Controllers
                     chart1Data = db.Database.SqlQuery<TempClasses.tempClass>(query).ToList();
                 }
                     return Json(chart1Data, JsonRequestBehavior.AllowGet);
-
-
                 }
 
                 if (barChart.Equals("2")) {
@@ -114,12 +110,12 @@ namespace IssueManagementSystem.Controllers
                 //                GROUP BY FLINTEC.dbo.FLINTEC$Item.[Search Description]
                 //                ORDER BY count Desc";
 
-                String query =  @"SELECT TOP 10 ic.material_id AS Search_Description,
+                String query = @"SELECT TOP 10 ic.material_id AS Search_Description,
                                 count(ic.material_id) AS count 
                                 FROM issue_management_system.dbo.issue_occurrence ic 
                                 WHERE ic.issue_issue_ID = 2
-                                AND ic.location IN ('KOG','KTY')
-                                AND ic.issue_date BETWEEN '2019-02-01 11:39:00.000' AND '2019-03-05 11:39:00.000' 
+                                AND ic.location IN ('"+plantLocation+ @"')
+                                AND ic.issue_date BETWEEN '" + startDate + @"' AND '" + endDate + @"' 
                                 GROUP BY ic.material_id
                                 ORDER BY count Desc";
 
@@ -144,7 +140,6 @@ namespace IssueManagementSystem.Controllers
                         obj.Search_Description = d3;
                     }
                 }
-
                     return Json(chart2Data, JsonRequestBehavior.AllowGet);
                 }
                 return Json(chart1Data, JsonRequestBehavior.AllowGet);
@@ -428,12 +423,12 @@ namespace IssueManagementSystem.Controllers
         }
 
         [HttpPost]
-        public JsonResult totalNumberOfIssues(string startDate, string endDate) {
+        public JsonResult totalNumberOfIssues(string startDate, string endDate, string plant) {
 
             String query = @"SELECT COUNT(issue_occurrence.issue_occurrence_id) AS issuesCount 
-                                FROM issue_occurrence 
-                                WHERE issue_occurrence.issue_date 
-                                BETWEEN '"+ startDate + @"' AND '"+ endDate + @"'";
+                            FROM issue_occurrence 
+                            WHERE issue_occurrence.issue_date BETWEEN '" + startDate + @"' AND '"+ endDate + @"'
+                            AND issue_occurrence.location IN('"+plant+@"')";
 
             int resultVar;
 

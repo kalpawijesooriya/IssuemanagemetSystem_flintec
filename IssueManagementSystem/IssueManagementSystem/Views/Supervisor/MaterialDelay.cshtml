@@ -13,7 +13,6 @@
     using (issue_management_systemEntities1 db = new issue_management_systemEntities1())//method for load the map acordinto the surevisor line
     {
 
-
         var mapInfo = db.line_map.Where(y => y.line_id == lineId).FirstOrDefault();
         ViewData["map"] = mapInfo.map.ToString().Trim();//get the map arry to ViewData
 
@@ -275,7 +274,7 @@
                 dataType: 'text',
                 async: true,
                 url: url,
-                data: { item_No: item_No },
+                data: { item_No: item_No, loadAll: loadAll, lineID:@ViewBag.lineid },
                 success: function (feedback) {
                     console.log(feedback);
                     feedback = JSON.parse(feedback);
@@ -311,6 +310,19 @@
         placeholder: "Select Group.....",
         allowClear: false
     });
+
+        var loadAll = false;
+
+    function checkBoxOnChange() {
+        if (document.getElementById('chk_box').checked) {
+            loadMaterialList();
+            loadAll = false;
+        }
+        else {
+            load_nonBOMMaterialList();
+            loadAll = true;
+        }
+    }
 
     function SubmitMaterialDelay() {
         obj = new Object();
@@ -378,6 +390,8 @@
         }
     }
    var id=@ViewBag.lineid;
+
+
     var inputPath="../Content/images/"+id+".jpg"
     var url = '@Url.Action("loadBase64Image", "Admin")';
     $.ajax({
