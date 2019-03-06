@@ -646,21 +646,23 @@ function drawChart2() {
             role: "annotation"
         }, 2]);
 
+
     var options = {
-        bar: { groupWidth: "95%" },
-        legend: { position: "none" },
-        chartArea: { 'width': '100%', 'height': '60%', 'top': '0' },
-        hAxis: {
-            textStyle: {
-                fontSize: 9
-            },
-        animation:{
-          duration: 2000,
-          easing: 'out',
-          startup: true
-              }
-        }
-    };
+                    bar: { groupWidth: "95%" },
+                    legend: { position: "none" },
+                    chartArea: { 'width': '100%', 'height': '60%', 'top': '0' },
+                    hAxis: {
+                        textStyle: {
+                            fontSize: 9
+                        }
+                    },
+                    animation:{
+                    duration: 2000,
+                    easing: 'out',
+                    startup: true
+                        }
+     };
+
     var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values1"));
     chart.draw(view, options);
 }
