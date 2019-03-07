@@ -515,30 +515,49 @@ function myfunction(param)
 $(function(){
   if ('speechSynthesis' in window) {
     speechSynthesis.onvoiceschanged = function() {}
-    window.getVoice = function(voicemsg) {
-      var msg = new SpeechSynthesisUtterance();
-      var voices = window.speechSynthesis.getVoices();
-      msg.voice = voices[1];
-      msg.rate = 1;
-      msg.pitch = 1;
-      msg.text = voicemsg;
-      msg.onend = function(e) {
-      console.log('Finished in ' + event.elapsedTime + ' seconds.');
-    };
-      speechSynthesis.speak(msg);
-     }
-    }
+        window.getVoice = function(voicemsg,start_var) 
+                {
+                        try {
+                            speechRecognizer.abort();///////////////////////////////////////////////////////
+                        }
+                        catch(err) {
+                            console.log(err)
+                        }
+
+                    var msg = new SpeechSynthesisUtterance();
+                    var voices = window.speechSynthesis.getVoices();
+                    msg.voice = voices[1];
+                    msg.rate = 1;
+                    msg.pitch = 1;
+                    msg.text = voicemsg;
+                    msg.onend = function(e) {console.log('Finished in ' + event.elapsedTime + ' seconds.');
+                    if(start_var){
+                        try {
+                                speechRecognizer.start();///////////////////////////////////////////////////////
+                            }
+                            catch(err) {
+                                console.log(err)
+                            }
+                        }
+                    };
+                    speechSynthesis.speak(msg);
+
+                 }
+        }
   });
+
+var speechRecognizer = new webkitSpeechRecognition();
 
 function startConverting ()
     {    $("#listening").show();
-        getVoice("Hello "+ '@Session["name"]' +" I'm listening to you!");
+
+        getVoice("Hello "+ '@Session["name"]' +" I'm listening to you!",true);
+
 		if('webkitSpeechRecognition' in window){
-			var speechRecognizer = new webkitSpeechRecognition();
+			
 			speechRecognizer.continuous = true;
 			speechRecognizer.interimResults = true;
 			speechRecognizer.lang = 'en-IN';
-			speechRecognizer.start();
 			var finalTranscripts = '';
 			speechRecognizer.onresult = function(event){
 				var interimTranscripts = '';
@@ -556,6 +575,7 @@ function startConverting ()
 			};
 			speechRecognizer.onerror = function (event) {
 			};
+
 		}else{
 			r.value = 'Your browser is not supported. If google chrome, please upgrade!';
 		}
@@ -575,17 +595,17 @@ function startConverting ()
        var commands = [
            { cmd: [""],action: "func0"},
            { cmd: ["material", "materials", "delay", "delays"],action: "func1"},
-           { cmd: ["it", "software", "issues","issue","id","ID","shoes","shoe","show","shows"],action: "func2"},
-           { cmd: ["quality", "issues", "issue"],action: "func3"},
+           { cmd: ["it", "software","id","ID","issues","issues","shoes","shoe","show","shows"],action: "func2"},
+           { cmd: ["quality","issues","issues","shoes","shoe","show","shows"],action: "func3"},
            { cmd: ["machine", "breakdown", "machines", "breakdowns"],action: "func4"},
-           { cmd: ["technical","issue","issues","tech"],action: "func5"},
-           { cmd: ["issue","issues"],action: "func6"}
+           { cmd: ["technical","tech","issues","issues","shoes","shoe","show","shows"],action: "func5"},
+           { cmd: ["issue","issues","shoes","shoe","show","shows"],action: "func6"}
        ];
 
        var commands_lvl2 = [
            { cmd: [""],action:"none"},
-           { cmd: ["cartoon","nayak","nayaka","kathanayaka","sathanayaka"],action:"KTY"},
-           { cmd: ["Google","kakara","cooker","kaggle","single","singer","Kolkata","Singh"],action:"KOG"}
+           { cmd: ["Katunayaka","cartoon","nayak","nayaka","kathanayaka","sathanayaka"],action:"KTY"},
+           { cmd: ["Google","Koggala","cooker","kaggle","single","singer","Kolkata","Singh"],action:"KOG"}
        ];
 
        var matching_level_array = new Array(commands.length).fill(0.00);
@@ -649,14 +669,14 @@ function startConverting ()
             console.log("cmd lvl1 : " + commands[command_index].action+" lvl2 : "+lvl2_command_);
             console.log(matching_level_array);
 
-               var thresholdVal = 30;
+               var thresholdVal = 10;
 
            if (count == 1 && maxval >= thresholdVal) {
                var func_name = commands[command_index].action;
                set_functions[func_name](lvl2_command_);
            }
            else {
-               getVoice("command is not clear..........please try again");
+               getVoice("command is not clear..........please try again",true);
            }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

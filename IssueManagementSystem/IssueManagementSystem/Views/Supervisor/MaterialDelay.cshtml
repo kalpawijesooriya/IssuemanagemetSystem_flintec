@@ -260,11 +260,10 @@
         var url = '@Url.Action("loadJobCardList", "CellEngineer")'
         var item_No = document.getElementById("materialSelectBox").value;
 
-            setTimeout(function () {
-                load_prog_bar2(0);
-            }, 1);
+                setTimeout(function () {
+                    load_prog_bar2(0);
+                }, 1);
 
-            load_prog_bar2(20);
 
             $.ajax({
                 type: "POST",
@@ -273,7 +272,6 @@
                 url: url,
                 data: { item_No: item_No, loadAll: loadAll, lineID:@Session["lineId"] },
                 success: function (feedback) {
-                    console.log(feedback);
                     feedback = JSON.parse(feedback);
                     var jobCardSelectBox = document.getElementById("jobCardSelectBox");
                     jobCardSelectBox.options.length = 0;
@@ -298,17 +296,7 @@
             });
     }
 
-    $('select').select2({
-        placeholder: "Select.....",
-        allowClear: false
-    });
-
-     $('#groups').select2({
-        placeholder: "Select Group.....",
-        allowClear: false
-    });
-
-        var loadAll = false;
+    var loadAll = false;
 
     function checkBoxOnChange() {
         if (document.getElementById('chk_box').checked) {
@@ -320,6 +308,19 @@
             loadAll = true;
         }
     }
+
+
+
+    $('select').select2({
+        placeholder: "Select.....",
+        allowClear: false
+    });
+
+     $('#groups').select2({
+        placeholder: "Select Group.....",
+        allowClear: false
+    });
+
 
     function SubmitMaterialDelay() {
         obj = new Object();
