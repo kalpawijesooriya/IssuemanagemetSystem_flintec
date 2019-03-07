@@ -274,7 +274,7 @@
                     dataType: 'text',
                     async: true,
                     url: url,
-                    data: { item_No: item_No, loadAll: loadAll, lineID:@Session["lineId"] },
+                    data: { item_No: item_No, loadAll: loadAll, lineID:@ViewBag.lineId },
                     success: function (feedback) {
                         feedback = JSON.parse(feedback);
                         var jobCardSelectBox = document.getElementById("jobCardSelectBox");
