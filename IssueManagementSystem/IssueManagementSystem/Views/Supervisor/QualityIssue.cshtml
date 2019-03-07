@@ -91,11 +91,14 @@
       $('#machineshopdiv').show()
       $('#machinediv').show()
     }
-    if(('@Session["department"]'=='HeatTreatment')||('@Session["department"]'=='Accessories'))
+     if((@ViewBag.lineid==9)||(@ViewBag.lineid==10))
     {
-             $('#groups').append('<option value="1">Heat treatment</option>')
-           $('#groups').append('<option value="2">Accessories</option>')
-    $('#groupsdiv').show()
+        $('#groups').append('<option value="1">Heat treatment</option>')
+        $('#groups').append('<option value="2">Accessories</option>')
+        $('#groupsdiv').show()
+        $('#mapdiv').hide()
+        $('#machineshopdiv').hide()
+        $('#machinediv').hide()
     }
   $("#submit").click(function () {
       obj = new Object();
